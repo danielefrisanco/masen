@@ -128,6 +128,44 @@ for (const tier of TIERS) {
   const coverPath = `data/cover-${tier}.json`;
   await writeFile(coverPath, JSON.stringify(cover), "utf8");
 
+  /**
+   * Disputed and breakaway areas, out of the bundle for the third time and for
+   * the same reason — nothing that reads the bundle pays for a layer it did
+   * not ask for.
+   *
+   * **Emitted at both tiers from one 50m source.**
+   * `ne_110m_admin_0_breakaway_disputed_areas` does not exist, so the coarse
+   * tier is rounded down from the fine one — the same move land cover makes
+   * when it borrows its classification from 10m. The areas end up finer than
+   * the 110m country outline and can overhang it, which is the price of the
+   * coarse tier being able to mark a contested border at all.
+   */
+  {
+    // Vendored at 50m only, because that is the only tier Natural Earth
+    // publishes one at. The 110m file is emitted from the same source at the
+    // coarse tier's own precision — see the note above.
+    const rawDisputed = JSON.parse(await readFile(`vendor/disputed-50m.raw.json`, "utf8"));
+    const disputed = {
+      type: "FeatureCollection",
+      features: rawDisputed.features.map((f) => ({
+        type: "Feature",
+        properties: { n: f.properties.n, k: f.properties.k, note: f.properties.note },
+        geometry: { type: f.geometry.type, coordinates: round(f.geometry.coordinates, digits) },
+      })),
+    };
+    const disputedPath = `data/disputed-${tier}.json`;
+    await writeFile(disputedPath, JSON.stringify(disputed), "utf8");
+    const kinds = {};
+    for (const f of disputed.features) kinds[f.properties.k] = (kinds[f.properties.k] ?? 0) + 1;
+    const { size: disputedSize } = await (await import("node:fs")).promises.stat(disputedPath);
+    console.log(
+      `  ${disputedPath}  ${(disputedSize / 1024).toFixed(0)} KB` +
+        `  (${disputed.features.length} areas: ` +
+        Object.entries(kinds).map(([k, n]) => `${n} ${k}`).join(", ") +
+        `)`,
+    );
+  }
+
   // Written first and separately: nothing in the bundle refers to it, and
   // nothing that reads the bundle pays for it.
   const ocean = waterLayer(sane, "ocean", digits);

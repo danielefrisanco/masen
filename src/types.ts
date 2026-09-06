@@ -28,6 +28,9 @@ export type Size = readonly [width: number, height: number];
 /** Source generalisation tier. Smaller number = more detail, larger file. */
 export type Detail = "110m" | "50m" | "10m";
 
+/** The kinds of water `.mp-hydro` can carry, each emitted as its own `data-kind`. */
+export type Water = "lake" | "river";
+
 /**
  * Projections are resolved through a lookup table rather than a switch,
  * so composite projections and insets can be added without touching callers.
@@ -563,6 +566,29 @@ export interface MapOptions {
    * and the two readings stack instead of one replacing the other.
    */
   readonly stripe?: readonly string[];
+
+  /**
+   * Draw Natural Earth's disputed and breakaway areas as a hatched overlay.
+   * Defaults to **on**, and that default is a position taken on purpose.
+   *
+   * The country geometry this library draws resolves contested territory *de
+   * facto*: Crimea falls inside Russia, not Ukraine. That is inherited from
+   * `world-atlas` and was never chosen. Left alone, the map asserts something
+   * contested in the library's own voice, without being asked and without
+   * saying so — and the readers this is built for are newsrooms.
+   *
+   * The overlay marks the contested edge rather than resolving it, which is
+   * why it is a default anyone can defend. Set `false` to draw the country
+   * geometry unannotated; nothing stops you, but the map then makes the claim
+   * silently.
+   *
+   * **Both tiers carry it, but 110m is derived.** Natural Earth publishes no
+   * 110m breakaway file, so the coarse tier is emitted from the 50m geometry.
+   * The areas are therefore finer than the country outline beneath them and can
+   * overhang a coarse coastline — which is a smaller error than a map that
+   * resolves a contested border in silence.
+   */
+  readonly disputed?: boolean;
   /**
    * Raise each country off the map, so height reads as quantity.
    *
@@ -758,6 +784,23 @@ export interface MapOptions {
    * the stack is a fixed contract, so this controls what goes in a slot, never
    * whether the slot exists. The saving is file size, not appearance.
    */
+  /**
+   * Which kinds of water to draw. Defaults to **both**.
+   *
+   * ```ts
+   * water: false            // no lakes, no rivers
+   * water: ["lake"]         // lakes only — a river is a line and reads as a border
+   * ```
+   *
+   * The analogue of `terrain`, and separate from `layers.hydro` for the reason
+   * `terrain` is separate from `layers.terrain`: **`layers` says whether a group
+   * renders at all, this says what goes in it.** Rivers are the kind anyone
+   * actually wants to drop — at small scale a river and a border are both thin
+   * lines, and a reader who cannot tell them apart is worse off than one who
+   * sees neither.
+   */
+  readonly water?: boolean | readonly Water[];
+
   readonly layers?: Readonly<Partial<Record<LayerName, boolean>>>;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "masen-map",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "description": "Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.",
   "keywords": [
     "map",
@@ -77,6 +77,7 @@
   },
   "devDependencies": {
     "@mapbox/maki": "^8.2.0",
+    "@rapideditor/temaki": "^5.13.0",
     "@types/d3-geo": "^3.1.0",
     "@types/node": "^22.10.2",
     "@types/topojson-client": "^3.1.5",

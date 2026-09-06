@@ -147,8 +147,17 @@ it has one, a `.mp-label` carrying `data-kind="pin"`. A callout is a
 An arrow is a `.mp-anno.mp-arrow` group holding one `.mp-arrow-line` path, with
 its head drawn by a `.mp-arrow-head` marker in the defs block. A pin whose
 `kind` names an icon also carries a `.mp-icon` group, tagged `data-icon`.
-`.mp-watermark`, `.mp-legend`, `.mp-scale` and `.mp-compass` are claimed but
-not yet emitted.
+`.mp-watermark`, `.mp-scale` and `.mp-compass` are emitted when asked for —
+though the scale bar and the north arrow only when the frame's *measured*
+distortion earns them, so asking is not the same as getting. `.mp-legend` is
+claimed and not yet emitted.
+
+`.mp-hatch` is the overlay for the thing that is not a quantity — disputed,
+claimed, excluded. It is drawn **over** the land rather than in place of it, so
+two readings stack: `stripe` hatches whole countries and its paths carry
+`data-iso`, while contested areas carry `data-kind` and `data-name`. The stroke
+comes from `.mp-hatch-line` inside the pattern, so a theme restyles the hatch by
+styling that.
 
 Every layer but the last is geographic — its contents move when the projection
 or region changes. `.mp-furniture` is the exception: a credit line or watermark
@@ -284,7 +293,7 @@ dash or the type:
 | `sand` | Warm paper and a deep green accent |
 | `slate` | Cool neutral grey, one cold blue — the register of a report |
 | `moss` | Warm greens on stone, the colouring of a walking map |
-| `limes` | Editorial plates — brick and ochre on a deep teal sea, near-black linework |
+| `patina` | Editorial plates — brick and ochre on a deep teal sea, near-black linework |
 | `dusk` | Night blues, for a dark page |
 
 ### Every preset keeps its coastlines findable
@@ -668,7 +677,7 @@ instead of pretending to be water.
 **It shows only where `--bg` is not already your ocean.** `sand`, `slate`,
 `moss` and `minimal` have a paper ground, so their `--sea` is a different
 colour and the layer changes what you see. `atlas`, `noir`, `blueprint`,
-`dusk` and `limes` set `--sea` to their background exactly, so turning it on
+`dusk` and `patina` set `--sea` to their background exactly, so turning it on
 cannot change a coastal map that was already right — override `--bg` if you
 want the two to differ.
 
@@ -1079,13 +1088,14 @@ its `data-kind` for a theme to style, so a category of your own invention goes
 on working. `ICON_NAMES` is exported if you want to check first, and
 `isIconName()` if you want to ask.
 
-The set is **[Maki](https://github.com/mapbox/maki)**, which is **CC0** — public
-domain, no attribution obligation. That is the whole reason it is the set this
-library uses: anything under MIT or ISC would propagate a credit-line
+The sets are **[Maki](https://github.com/mapbox/maki)** and
+**[Temaki](https://github.com/rapideditor/temaki)**, both **CC0** — public
+domain, no attribution obligation. That is the whole reason they are the sets
+this library uses: anything under MIT or ISC would propagate a credit-line
 requirement into every map anyone generates, and quietly doing that to you is
 not something a map library should do. Nothing in your output credits anyone.
 
-Twenty-nine icons, grouped by what a map is usually saying:
+Forty icons, grouped by what a map is usually saying:
 
 | | |
 |---|---|
@@ -1095,14 +1105,33 @@ Twenty-nine icons, grouped by what a map is usually saying:
 | Settlement | `town` `city` `village` |
 | Land and landmark | `mountain` `park` `lighthouse` `monument` |
 | Situation | `danger` `roadblock` `shelter` |
+| Energy and extraction | `oil` `natural-gas` `storage-tank` `mine` `power-station` `nuclear` |
+| Borders and conflict | `military` `bunker` `camp` `border-crossing` `ruins` |
 
 Deliberately small: a vocabulary nobody can hold in their head is one where
 every author picks a different icon for the same thing.
 
-Maki covers what sits on the ground. It has no `oil`, `natural-gas`, `pipeline`
-or `mine` — the geopolitical half a news map runs on does not exist in any
-public-domain set, and drawing one to Maki's weight and grid is its own piece of
-work, not yet done.
+**The last two groups arrived by measurement rather than by drawing.** Maki
+covers what sits on the ground and has none of `oil`, `natural-gas`, `pipeline`
+or `mine`, and this file said for six versions that the geopolitical half a news
+map runs on did not exist in any public-domain set and would have to be drawn.
+That was wrong. Temaki is an expansion pack for Maki from the iD/Rapid editor
+team, also CC0, and it carries most of that vocabulary already.
+
+Two things about it are guarded rather than assumed, and both were found by
+rendering the candidates instead of reading their names. **Its grid is not
+uniform** — 485 of its 557 icons are 15×15 and the rest are drawn at 48, 50 or
+100, so the vendoring script refuses anything that is not on the grid. And **its
+line-drawn glyphs do not survive pin size**: `power_tower` and `wind_turbine`
+are legible in a picker and turn to mush at the 15 units a pin actually draws,
+so what is vendored here is deliberately the solid half. Names were remapped on
+the way in, because Temaki names a file for the object drawn and this vocabulary
+is named for what a map is saying with it — `lift_gate` is a barrier arm,
+`border-crossing` is why anyone puts one on a map.
+
+**`pipeline` is the one named gap left**, and it does have to be drawn: Temaki's
+`pipe` is a tobacco pipe. `ruins` is a proxy for conflict rather than an answer
+to it.
 
 The glyph is inked from `--anno-ink` on a mark filled with `--anno`, and the
 mark grows to hold it. The path is **inlined into each pin** rather than
@@ -1323,6 +1352,69 @@ every `url(#…)` resolves to whichever map came first. The gallery builder
 namespaces them per map; anyone embedding two maps on a page has to do the same
 until that is fixed.
 
+## Which kinds of water
+
+Lakes and rivers both draw by default. `water` narrows that, the way `terrain`
+selects cover kinds:
+
+```ts
+water: false        // no lakes, no rivers
+water: ["lake"]     // lakes only
+```
+
+It is separate from `layers.hydro` on purpose — **`layers` decides whether a
+group renders at all, `water` decides what goes in it** — and the two are not a
+contradiction when both say no. Rivers are the kind worth dropping: at small
+scale a river and a border are both thin lines, and a reader who cannot tell
+them apart is worse off than one who sees neither.
+
+## Contested borders
+
+**The country geometry this library draws resolves disputed territory *de
+facto*, and it did not choose to.** Crimea falls inside Russia, not Ukraine —
+Simferopol at 34.10°E, 44.95°N is inside feature 643 at every tier shipped here.
+That is inherited from `world-atlas`, and through it from Natural Earth's
+default country layer. Nobody picked it; it arrived with the data.
+
+Left alone, that makes the map assert something contested in this library's own
+voice, without being asked and without saying so. The readers this is built for
+are newsrooms, and **a journalist who draws Ukraine and does not zoom in would
+be publishing a position they never took and were never told about.**
+
+So **disputed and breakaway areas are drawn as a hatched overlay, on by
+default.** The overlay marks the contested edge rather than resolving it:
+
+```ts
+const map = await masen({ region: ["UA"] });   // Crimea is hatched
+const bare = await masen({ region: ["UA"], disputed: false });
+```
+
+Twenty-eight areas from `ne_50m_admin_0_breakaway_disputed_areas`, each drawn as
+`.mp-hatch` carrying `data-kind` — `disputed`, `breakaway` or `indeterminate` —
+and `data-name`. Crimea, the Golan Heights, Western Sahara, Northern Cyprus, the
+Kashmir claims, Abkhazia, South Ossetia, Transnistria, Artsakh, Somaliland, the
+Ukrainian breakaway oblasts and the Kuril Islands are all in it. Each carries a
+`<title>` with Natural Earth's own status line — Crimea's reads *"Admin. by
+Russia; Claimed by Ukraine"* — quoted rather than composed here, because saying
+who claims what is not this project's sentence to write.
+
+**Three limits, stated rather than left to be discovered.**
+
+- **110m is derived, not downloaded.** Natural Earth publishes no 110m
+  breakaway file — it 404s — so the coarse tier is emitted from the 50m
+  geometry, the same way land cover borrows its classification from 10m. The
+  areas are finer than the country outline beneath them there and can overhang
+  a coarse coastline. That is a smaller error than a coarse map resolving a
+  contested border in silence, which is what it did before.
+- **Hatching is not reassignment.** Crimea is still *filled* as Russia
+  underneath. Reassigning needs Natural Earth's point-of-view country layer,
+  which is 10m-only and 13.2 MB. The overlay says the border is contested, which
+  is the part not in dispute; it does not say who is right.
+- **This is a position, not neutrality.** A library that ships a default has
+  taken one whether it admits to it or not, and the previous default was taken
+  by accident. Choosing on purpose and saying so is the most that can honestly
+  be claimed here.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
@@ -1341,11 +1433,12 @@ kept on public-domain sources on purpose rather than by luck.
 | Projection maths | `d3-geo` | ISC | None |
 | Topology decoding | `topojson-client` | ISC | None |
 | Pin icons | [Maki](https://labs.mapbox.com/maki-icons/) by Mapbox, vendored into `src/icons.ts` | CC0-1.0 | None |
+| Pin icons | [Temaki](https://github.com/rapideditor/temaki) by the iD/Rapid editor team, vendored into `src/icons.ts` | CC0-1.0 | None |
 
 `d3-geo` and `topojson-client` are ordinary dependencies rather than bundled
 into `dist`, so their own licence files arrive with them and their terms are
-satisfied without this package restating anything. Maki is CC0 and vendored,
-because 29 inlined path strings is cheaper than a dependency. The Natural Earth
+satisfied without this package restating anything. Maki and Temaki are CC0 and
+vendored, because 40 inlined path strings is cheaper than two dependencies. The Natural Earth
 extracts under `vendor/` are committed rather than fetched, which is why
 `npm run build:data` needs no network — and why a publish does not either.
 

@@ -16,6 +16,184 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [0.17.0] — 2026-09-06
+
+**A minor bump rather than a patch, and the default is the whole reason.**
+Nothing was renamed and nothing reordered, so on the letter of the policy above
+this is a patch. It is not one. The disputed-areas overlay ships **on**, which
+means an existing caller's map gains nodes it never asked for — and `.mp-hatch`
+is a class `stripe` already uses, so **a theme in the wild that styles it now
+paints Crimea and Western Sahara exactly as it paints the countries that caller
+marked on purpose.** `data-kind` is there to tell the two apart, but no theme
+written before today reads it. A surprised theme author costs more than a minor
+bump does.
+
+Set `disputed: false` to get 0.16.0's output back.
+
+### Breaking
+
+**The `limes` palette is now `patina`.** Same colours, same file, new name.
+`limes` is Latin for a frontier, which suited an editorial map palette and read
+as the fruit to everyone else — and the palette is teal, parchment and
+terracotta, so the fruit reading was actively misleading. `patina` is the
+blue-green film on aged copper, which is what `#1D5C64` against warm parchment
+actually is, and it sits in the register the other four already occupy: `dusk`,
+`moss`, `sand`, `slate` all name a look rather than a subject.
+
+A palette name is public API — a caller passes it as `palette: "limes"` — so
+this is the breaking half of the minor bump, alongside the default above.
+
+### Added — the map no longer claims Crimea is Russia without saying so
+
+**The map no longer claims Crimea is Russia without saying so.** Disputed and
+breakaway areas are drawn as a hatched overlay, **on by default**, from
+`ne_50m_admin_0_breakaway_disputed_areas` — 28 areas, 35 KB. New `disputed`
+option to turn it off. New `.mp-hatch` features carrying `data-kind`
+(`disputed` / `breakaway` / `indeterminate`) and `data-name`, inside the
+existing `.mp-land` group — **no new layer slot, so the frozen paint order is
+untouched.**
+
+### Why this was a defect and not a feature request
+
+The country geometry resolves contested territory *de facto*: Simferopol falls
+inside feature 643, Russia, at every tier shipped. That came in with
+`world-atlas` and was never chosen. The library was asserting something
+contested in its own voice, unasked, to an audience of newsrooms. Hatching marks
+the contested edge instead of resolving it — reassignment would need Natural
+Earth's point-of-view layer, which is 10m-only and 13.2 MB, and would swap one
+silent claim for another.
+
+Each area carries a `<title>` with Natural Earth's own status line. Crimea's is
+*"Admin. by Russia; Claimed by Ukraine"* — quoted, not composed here.
+
+### What measuring found
+
+- **`NAME` is the claimant, not the territory.** It reads "India" seven times
+  and "Ukraine" twice. `BRK_NAME` is the territory — Crimea, Abkhazia,
+  Transnistria, Aksai Chin — and the build now fails if it is ever absent.
+- **The overlay had to be clipped.** It is a global list, so unclipped a map of
+  Ukraine emitted Arunachal Pradesh and North Borneo as path data nobody could
+  see. Clipped to the canvas, the same map draws four areas.
+- **Clipping was not enough.** The gallery caught what the tests did not: a map
+  of the Sahara put hatch slivers in the eastern Mediterranean, because the
+  Golan Heights and the Ilemi Triangle are inside that frame's longitudes with
+  no land drawn under them. Areas are now matched against the countries
+  actually drawn, which is the rule the water filter already followed — a lake
+  filtered on the viewport alone floats over open sea for the same reason.
+- **50m only.** `ne_110m_admin_0_breakaway_disputed_areas` is a 404. A 110m map
+  draws nothing here, and the README says so rather than leaving it to be found.
+
+The overlay is deliberately not disputed-specific machinery: a hatched area is
+geometry plus a kind plus a name, which is equally "excluded", "evacuated" or
+"under review". Widening `stripe` to take a polygon breaks no caller, so it
+waits for a real map that asks.
+
+### Added — eleven icons for the half of a news map Maki does not cover
+
+**Eleven icons for the half of a news map Maki does not cover** — `oil`,
+`natural-gas`, `storage-tank`, `mine`, `power-station`, `nuclear`, `military`,
+`bunker`, `camp`, `border-crossing`, `ruins`. Forty in the vocabulary now, in
+two new groups: *energy and extraction*, and *borders and conflict*. Purely
+additive; no existing name moved.
+
+### Why this was cheaper than the plan thought
+
+The plan said for six phases that this vocabulary **did not exist in any
+public-domain set and would have to be drawn by hand**. That was asserted rather
+than measured, and it was wrong. [Temaki](https://github.com/rapideditor/temaki)
+is an expansion pack for Maki from the iD/Rapid editor team, **also CC0**, 557
+icons, carrying most of it already. Nothing in anyone's output credits anyone,
+which is the property that ruled out Tabler and Lucide and still rules.
+
+### What measuring found that reading names did not
+
+Both of these came from rendering the candidates, and both would have shipped as
+defects otherwise:
+
+- **Temaki's grid is not uniform.** 485 of its 557 icons are 15×15; the rest are
+  drawn at 48, 50 or 100. A 50-unit path in a 15-unit box draws a shape more
+  than three times too big and nothing downstream would say so. The vendoring
+  script now refuses anything off the grid, and refuses any icon drawn with a
+  `<circle>` or `<rect>` rather than silently vendoring half of it.
+- **Its line-drawn glyphs do not survive pin size.** `power_tower`,
+  `wind_turbine` and `military_checkpoint` are legible in a picker at 44px and
+  turn to grey mush at the 15 units a pin actually draws. What is vendored is
+  deliberately the solid half, because the standard is that a map using both
+  sets must not show two house styles side by side. Rendered on a real map, it
+  does not.
+
+Two candidates were rejected on what they depict rather than on weight:
+Temaki's `gas` is a flame, and Maki's `fire-station` is already a flame — two
+glyphs that look alike is the failure a small vocabulary exists to avoid. And
+`pipe` is a **tobacco pipe**.
+
+Names are remapped on the way in, because Temaki names a file for the object
+drawn while this vocabulary is named for what a map is saying with it:
+`lift_gate` is a barrier arm, `border-crossing` is why anyone puts one on a map.
+The published side keeps Maki's hyphens rather than importing snake_case into
+one vocabulary.
+
+### Still to draw
+
+**`pipeline`** — the one named gap that Temaki genuinely does not fill — and a
+true conflict glyph, for which `ruins` is a proxy rather than an answer. Two
+drawings, where the plan had budgeted a set.
+
+### Added — lakes and rivers can be switched off, and so can the marking
+
+`water` selects which kinds of water draw, defaulting to **both**. The analogue
+of `terrain`, and separate from `layers.hydro` for the same reason `terrain` is
+separate from `layers.terrain`: **`layers` says whether a group renders at all,
+these say what goes in it.**
+
+```ts
+water: false        // no lakes, no rivers
+water: ["lake"]     // lakes only
+```
+
+Rivers are the kind anyone actually wants to drop. At small scale a river and a
+border are both thin lines, and a reader who cannot tell them apart is worse off
+than one who sees neither.
+
+The tool now exposes both these and `disputed`, as *Lakes*, *Rivers* and **Mark
+contested borders**. The last was deliberately hidden when the overlay shipped
+and that was wrong: the library has always had the switch, and one you cannot
+see is obscurity rather than an editorial position. Because the whole config
+lives in the URL, `disputed=0` travels in a shared link — so the choice is
+**visible to whoever opens the map**, which the silent default never was.
+Unchecking it says what the map now does, beside the box that did it.
+
+### Changed — the coarse tier can say a border is contested
+
+Disputed areas now draw at **110m as well as 50m**. Natural Earth publishes no
+110m breakaway file, so the coarse tier is emitted from the 50m geometry, which
+is the same move land cover makes when it borrows its classification from 10m.
+
+This mattered more than it looks: **110m is the tool's own default**, so before
+this the default map made exactly the silent claim the overlay exists to break.
+The cost is honest and stated — the areas are finer than the country outline
+beneath them, so a hatch can overhang a coarse coastline. That is a smaller
+error than resolving a contested border without saying so.
+
+### Changed — the tool reports a refused scale bar
+
+A scale bar is declined when local scale varies too much across the frame for
+one length to be true of all of it. Correct, and indistinguishable from a broken
+checkbox: **mercator over western Europe varies 62%, equal-earth 69%**, so both
+silently drew nothing. The tool now says why, next to the control that asked —
+the same rule every other note in that panel follows, read back off the drawn
+map rather than predicted. Conic-conformal, albers and orthographic earn a bar
+on a regional frame at 1.03–1.07.
+
+### Fixed — three taxonomy claims in the README that were false
+
+`.mp-watermark`, `.mp-scale` and `.mp-compass` were all documented as "claimed
+but not yet emitted". All three have been emitted for versions; only
+`.mp-legend` is genuinely still reserved. `.mp-hatch` was not documented in the
+taxonomy at all, which mattered more after this release than before it — it is
+now the class two different features draw with, and a theme author styling it
+for `stripe` needs to know contested areas land there too.
+
 ## [0.16.0] — 2026-09-06
 
 **The library is called `masen`.** It was `neatline` from 0.11.0 to 0.15.1, and
@@ -1986,7 +2164,8 @@ and grew to carry the legend, the ocean layer and a brighter palette — each is
 something the tool needs and none is large alone. Routes split out of it because
 that one is gated on acquiring data, not on drawing it.
 
-[Unreleased]: https://github.com/danielefrisanco/masen/compare/v0.16.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/masen/compare/v0.17.0...HEAD
+[0.17.0]: https://github.com/danielefrisanco/masen/compare/v0.16.0...v0.17.0
 [0.16.0]: https://github.com/danielefrisanco/masen/compare/v0.15.1...v0.16.0
 [0.15.1]: https://github.com/danielefrisanco/masen/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/danielefrisanco/masen/compare/v0.14.0...v0.15.0

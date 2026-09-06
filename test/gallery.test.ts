@@ -729,7 +729,7 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       region: "africa",
       projection: "albers",
       theme: "minimal",
-      palette: "limes",
+      palette: "patina",
       size: [900, 900],
       graticule: { step: 10 },
       title: "The equator and the tropics, told apart from the grid",
@@ -758,12 +758,12 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
     // The palette that is not atlas-muted. Flat editorial plates on a dark
     // sea — which is why its furniture ink is light where every other
     // palette's is dark.
-    "europe-limes",
+    "europe-patina",
     {
       region: "europe",
       projection: "conic-conformal",
       theme: "atlas",
-      palette: "limes",
+      palette: "patina",
       size: [1000, 900],
       fill: "political",
       credit: "Natural Earth",

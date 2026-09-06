@@ -29,22 +29,6 @@
       <form id="form" class="panel" autocomplete="off"></form>
 
       <main class="stage">
-        <!-- The zoom is a property of the preview, not of the map: it changes
-             how big the picture looks on this screen and nothing about the
-             document, which is why it is here and not in the form. -->
-        <div class="preview">
-          <label class="field-hint" for="zoom">Preview</label>
-          <select id="zoom">
-            <option value="fit">Fit the column</option>
-            <option value="1">100% — true size</option>
-            <option value="0.5">50%</option>
-            <option value="2">200%</option>
-          </select>
-          <!-- Where the pointer is, in the units every mark is stored in. Beside
-               the map rather than on it: a coordinate that follows the cursor
-               covers the thing being pointed at. -->
-          <output id="where" class="where" for="map"></output>
-        </div>
         <!-- Focusable, because since 09d this is the tool's main input surface
              and it was reachable only with a mouse. The label says what the
              keys do, since there is nothing on screen to read until the cross
@@ -56,7 +40,27 @@
           tabindex="0"
           aria-label="The map. With a gesture chosen under Marks, the arrow keys move a cross and Enter places a mark."
         ></figure>
-        <p id="status" class="status" role="status">Loading the map data…</p>
+        <!-- The row under the map: how long it took, and the two readouts that
+             belong to this screen rather than to the document. The zoom sat
+             above the map until it was pointed out that it reads better beside
+             the draw time — both are facts about the preview, not about the
+             map, and neither belongs in the form. -->
+        <div class="under">
+          <p id="status" class="status" role="status">Loading the map data…</p>
+          <div class="preview">
+            <label class="field-hint" for="zoom">Preview</label>
+            <select id="zoom">
+              <option value="fit">Fit the column</option>
+              <option value="1">100% — true size</option>
+              <option value="0.5">50%</option>
+              <option value="2">200%</option>
+            </select>
+            <!-- Where the pointer is, in the units every mark is stored in. Beside
+                 the map rather than on it: a coordinate that follows the cursor
+                 covers the thing being pointed at. -->
+            <output id="where" class="where" for="map"></output>
+          </div>
+        </div>
         <label class="share">
           <span class="field-label">Link to this map</span>
           <input id="share" type="text" readonly spellcheck="false" />
@@ -83,6 +87,20 @@
         </div>
       </main>
     </div>
+
+    <!-- Natural Earth asks for nothing: everything here is public domain, which
+         is the property the whole project was built around. One line, because a
+         footnote that needs a paragraph is not a footnote — and the mechanism
+         rather than the example, so a map of Chile does not open by mentioning
+         Crimea. The specifics live in the README, where somebody deciding
+         whether to trust this will actually look. -->
+    <footer class="colophon">
+      <p>
+        Data from
+        <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a>
+        — public domain, no attribution required. Contested borders are hatched, not resolved.
+      </p>
+    </footer>
 
     <script type="module" src="./src/main.ts"></script>
   </body>
