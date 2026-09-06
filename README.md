@@ -147,8 +147,17 @@ it has one, a `.mp-label` carrying `data-kind="pin"`. A callout is a
 An arrow is a `.mp-anno.mp-arrow` group holding one `.mp-arrow-line` path, with
 its head drawn by a `.mp-arrow-head` marker in the defs block. A pin whose
 `kind` names an icon also carries a `.mp-icon` group, tagged `data-icon`.
-`.mp-watermark`, `.mp-legend`, `.mp-scale` and `.mp-compass` are claimed but
-not yet emitted.
+`.mp-watermark`, `.mp-scale` and `.mp-compass` are emitted when asked for —
+though the scale bar and the north arrow only when the frame's *measured*
+distortion earns them, so asking is not the same as getting. `.mp-legend` is
+claimed and not yet emitted.
+
+`.mp-hatch` is the overlay for the thing that is not a quantity — disputed,
+claimed, excluded. It is drawn **over** the land rather than in place of it, so
+two readings stack: `stripe` hatches whole countries and its paths carry
+`data-iso`, while contested areas carry `data-kind` and `data-name`. The stroke
+comes from `.mp-hatch-line` inside the pattern, so a theme restyles the hatch by
+styling that.
 
 Every layer but the last is geographic — its contents move when the projection
 or region changes. `.mp-furniture` is the exception: a credit line or watermark

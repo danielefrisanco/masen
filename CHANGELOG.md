@@ -30,30 +30,6 @@ bump does.
 
 Set `disputed: false` to get 0.16.0's output back.
 
-### Added — lakes and rivers can be switched off, and so can the marking
-
-`water` selects which kinds of water draw, defaulting to **both**. The analogue
-of `terrain`, and separate from `layers.hydro` for the same reason `terrain` is
-separate from `layers.terrain`: **`layers` says whether a group renders at all,
-these say what goes in it.**
-
-```ts
-water: false        // no lakes, no rivers
-water: ["lake"]     // lakes only
-```
-
-Rivers are the kind anyone actually wants to drop. At small scale a river and a
-border are both thin lines, and a reader who cannot tell them apart is worse off
-than one who sees neither.
-
-The tool now exposes both these and `disputed`, as *Lakes*, *Rivers* and **Mark
-contested borders**. The last was deliberately hidden when the overlay shipped
-and that was wrong: the library has always had the switch, and one you cannot
-see is obscurity rather than an editorial position. Because the whole config
-lives in the URL, `disputed=0` travels in a shared link — so the choice is
-**visible to whoever opens the map**, which the silent default never was.
-Unchecking it says what the map now does, beside the box that did it.
-
 ### Breaking
 
 **The `limes` palette is now `patina`.** Same colours, same file, new name.
@@ -66,28 +42,6 @@ actually is, and it sits in the register the other four already occupy: `dusk`,
 
 A palette name is public API — a caller passes it as `palette: "limes"` — so
 this is the breaking half of the minor bump, alongside the default above.
-
-### Changed — the coarse tier can say a border is contested
-
-Disputed areas now draw at **110m as well as 50m**. Natural Earth publishes no
-110m breakaway file, so the coarse tier is emitted from the 50m geometry, which
-is the same move land cover makes when it borrows its classification from 10m.
-
-This mattered more than it looks: **110m is the tool's own default**, so before
-this the default map made exactly the silent claim the overlay exists to break.
-The cost is honest and stated — the areas are finer than the country outline
-beneath them, so a hatch can overhang a coarse coastline. That is a smaller
-error than resolving a contested border without saying so.
-
-### Changed — the tool reports a refused scale bar
-
-A scale bar is declined when local scale varies too much across the frame for
-one length to be true of all of it. Correct, and indistinguishable from a broken
-checkbox: **mercator over western Europe varies 62%, equal-earth 69%**, so both
-silently drew nothing. The tool now says why, next to the control that asked —
-the same rule every other note in that panel follows, read back off the drawn
-map rather than predicted. Conic-conformal, albers and orthographic earn a bar
-on a regional frame at 1.03–1.07.
 
 ### Added — the map no longer claims Crimea is Russia without saying so
 
@@ -184,6 +138,61 @@ one vocabulary.
 **`pipeline`** — the one named gap that Temaki genuinely does not fill — and a
 true conflict glyph, for which `ruins` is a proxy rather than an answer. Two
 drawings, where the plan had budgeted a set.
+
+### Added — lakes and rivers can be switched off, and so can the marking
+
+`water` selects which kinds of water draw, defaulting to **both**. The analogue
+of `terrain`, and separate from `layers.hydro` for the same reason `terrain` is
+separate from `layers.terrain`: **`layers` says whether a group renders at all,
+these say what goes in it.**
+
+```ts
+water: false        // no lakes, no rivers
+water: ["lake"]     // lakes only
+```
+
+Rivers are the kind anyone actually wants to drop. At small scale a river and a
+border are both thin lines, and a reader who cannot tell them apart is worse off
+than one who sees neither.
+
+The tool now exposes both these and `disputed`, as *Lakes*, *Rivers* and **Mark
+contested borders**. The last was deliberately hidden when the overlay shipped
+and that was wrong: the library has always had the switch, and one you cannot
+see is obscurity rather than an editorial position. Because the whole config
+lives in the URL, `disputed=0` travels in a shared link — so the choice is
+**visible to whoever opens the map**, which the silent default never was.
+Unchecking it says what the map now does, beside the box that did it.
+
+### Changed — the coarse tier can say a border is contested
+
+Disputed areas now draw at **110m as well as 50m**. Natural Earth publishes no
+110m breakaway file, so the coarse tier is emitted from the 50m geometry, which
+is the same move land cover makes when it borrows its classification from 10m.
+
+This mattered more than it looks: **110m is the tool's own default**, so before
+this the default map made exactly the silent claim the overlay exists to break.
+The cost is honest and stated — the areas are finer than the country outline
+beneath them, so a hatch can overhang a coarse coastline. That is a smaller
+error than resolving a contested border without saying so.
+
+### Changed — the tool reports a refused scale bar
+
+A scale bar is declined when local scale varies too much across the frame for
+one length to be true of all of it. Correct, and indistinguishable from a broken
+checkbox: **mercator over western Europe varies 62%, equal-earth 69%**, so both
+silently drew nothing. The tool now says why, next to the control that asked —
+the same rule every other note in that panel follows, read back off the drawn
+map rather than predicted. Conic-conformal, albers and orthographic earn a bar
+on a regional frame at 1.03–1.07.
+
+### Fixed — three taxonomy claims in the README that were false
+
+`.mp-watermark`, `.mp-scale` and `.mp-compass` were all documented as "claimed
+but not yet emitted". All three have been emitted for versions; only
+`.mp-legend` is genuinely still reserved. `.mp-hatch` was not documented in the
+taxonomy at all, which mattered more after this release than before it — it is
+now the class two different features draw with, and a theme author styling it
+for `stripe` needs to know contested areas land there too.
 
 ## [0.16.0] — 2026-09-06
 
