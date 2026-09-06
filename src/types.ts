@@ -28,6 +28,9 @@ export type Size = readonly [width: number, height: number];
 /** Source generalisation tier. Smaller number = more detail, larger file. */
 export type Detail = "110m" | "50m" | "10m";
 
+/** The kinds of water `.mp-hydro` can carry, each emitted as its own `data-kind`. */
+export type Water = "lake" | "river";
+
 /**
  * Projections are resolved through a lookup table rather than a switch,
  * so composite projections and insets can be added without touching callers.
@@ -781,6 +784,23 @@ export interface MapOptions {
    * the stack is a fixed contract, so this controls what goes in a slot, never
    * whether the slot exists. The saving is file size, not appearance.
    */
+  /**
+   * Which kinds of water to draw. Defaults to **both**.
+   *
+   * ```ts
+   * water: false            // no lakes, no rivers
+   * water: ["lake"]         // lakes only — a river is a line and reads as a border
+   * ```
+   *
+   * The analogue of `terrain`, and separate from `layers.hydro` for the reason
+   * `terrain` is separate from `layers.terrain`: **`layers` says whether a group
+   * renders at all, this says what goes in it.** Rivers are the kind anyone
+   * actually wants to drop — at small scale a river and a border are both thin
+   * lines, and a reader who cannot tell them apart is worse off than one who
+   * sees neither.
+   */
+  readonly water?: boolean | readonly Water[];
+
   readonly layers?: Readonly<Partial<Record<LayerName, boolean>>>;
 }
 

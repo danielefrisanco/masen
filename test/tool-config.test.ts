@@ -50,6 +50,8 @@ const CHOSEN: Config = {
   gridLabels: true,
   neighbours: true,
   terrain: ["glacier", "mountain"],
+  water: ["river"],
+  disputed: false,
   placeRank: 3,
   labelRank: 2,
   borderWidth: 2.5,

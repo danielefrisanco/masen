@@ -1,4 +1,4 @@
-import type { Cover, MapOptions } from "../../src/index.js";
+import type { Cover, Water, MapOptions } from "../../src/index.js";
 import { decodeMarks, encodeMarks, MARK_KEYS, NO_MARKS, type Marks } from "./marks.js";
 
 /**
@@ -49,6 +49,16 @@ export interface Config extends Marks {
   gridLabels: boolean;
   neighbours: boolean;
   terrain: readonly Cover[];
+  /** Which kinds of water. Both by default — this one is opt-*out*. */
+  water: readonly Water[];
+  /**
+   * Mark contested borders. On by default, and the off switch is offered rather
+   * than hidden: the library has always had it, and a flag you cannot see is
+   * obscurity rather than a position. Because the whole config lives in the
+   * URL, `disputed=0` travels in a shared link — so the choice is visible to
+   * whoever opens the map, which a silent default never was.
+   */
+  disputed: boolean;
   /** How far down the settlement ranking to draw. 0 draws none. */
   placeRank: 0 | 1 | 2 | 3;
   /** How far down the same ranking to name what was drawn. 0 names none. */
@@ -110,6 +120,8 @@ export const DEFAULTS: Config = {
   gridLabels: false,
   neighbours: false,
   terrain: [],
+  water: ["lake", "river"],
+  disputed: true,
   placeRank: 2,
   labelRank: 1,
   borderWidth: 0.8,
@@ -122,6 +134,7 @@ export const DEFAULTS: Config = {
 };
 
 const COVERS: readonly Cover[] = ["desert", "mountain", "glacier"];
+const WATERS: readonly Water[] = ["lake", "river"];
 
 /** Which keys are numbers, so decoding does not have to guess. */
 const NUMBERS = [
@@ -134,7 +147,7 @@ const NUMBERS = [
   "labelSize",
   "pinSize",
 ] as const;
-const FLAGS = ["sea", "seaNames", "graticule", "gridLabels", "neighbours", "scaleBar"] as const;
+const FLAGS = ["sea", "seaNames", "graticule", "gridLabels", "neighbours", "scaleBar", "disputed"] as const;
 
 /**
  * The config as a query string, carrying only what was actually chosen.
@@ -155,6 +168,13 @@ export function encode(config: Config): string {
     if (key === "terrain") {
       const cover = value as readonly Cover[];
       if (cover.length > 0) params.set("terrain", [...cover].sort().join(","));
+      continue;
+    }
+    if (key === "water") {
+      const kinds = value as readonly Water[];
+      // Written whenever it is not the full set, empty string included — the
+      // opposite of terrain, because this one starts on.
+      if (kinds.length !== WATERS.length) params.set("water", [...kinds].sort().join(","));
       continue;
     }
     if (value === fallback) continue;
@@ -238,6 +258,13 @@ export function decode(search: string, vocabulary: Vocabulary): Config {
     }
   }
 
+  const water = params.get("water");
+  if (water !== null) {
+    config.water = water
+      .split(",")
+      .filter((kind): kind is Water => (WATERS as readonly string[]).includes(kind));
+  }
+
   const terrain = params.get("terrain");
   if (terrain !== null) {
     config.terrain = terrain
@@ -315,6 +342,8 @@ export function toOptions(config: Config): MapOptions {
     graticule: config.graticule ? (config.gridLabels ? { labels: true } : true) : false,
     neighbours: config.neighbours,
     ...(config.terrain.length > 0 ? { terrain: config.terrain } : {}),
+    water: config.water,
+    disputed: config.disputed,
     ...(config.highlight.length > 0 ? { highlight: config.highlight } : {}),
     ...(config.pins.length > 0 ? { pins: config.pins } : {}),
     ...(config.arrows.length > 0 ? { arrows: config.arrows } : {}),

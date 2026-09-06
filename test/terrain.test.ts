@@ -188,3 +188,45 @@ describe("land cover", () => {
     expect(terrain(map.svg)).toBe("");
   });
 });
+
+/**
+ * Water kinds, which take the same shape as the cover kinds above and the
+ * opposite default.
+ *
+ * `terrain` is opt-in because a desert tint is a decision; water is opt-out
+ * because a map has lakes and rivers unless you say otherwise. The kind worth
+ * dropping is the river: at small scale a river and a border are both thin
+ * lines, and a reader who cannot tell them apart is worse off than one who
+ * sees neither.
+ */
+describe("which kinds of water", () => {
+  const FRAME = { region: ["FR", "DE", "CH"], detail: "50m" } as const;
+
+  const kinds = (svg: string): Set<string> =>
+    new Set([...svg.matchAll(/class="mp-water" data-kind="([^"]*)"/g)].map((m) => m[1] as string));
+
+  it("draws both when nothing is said", async () => {
+    const map = await masen({ ...FRAME });
+    expect(kinds(map.svg)).toEqual(new Set(["lake", "river"]));
+  });
+
+  it("draws only the kinds named", async () => {
+    const map = await masen({ ...FRAME, water: ["lake"] });
+    expect(kinds(map.svg)).toEqual(new Set(["lake"]));
+  });
+
+  it("draws none when told none, without emptying the layer's neighbours", async () => {
+    const map = await masen({ ...FRAME, water: false });
+    expect(kinds(map.svg)).toEqual(new Set());
+    // The rest of the map is untouched: this selects a kind, it is not a
+    // second way to switch the layer off.
+    expect(map.svg).toContain('class="mp-country"');
+  });
+
+  it("is separate from the layer switch", async () => {
+    // `layers.hydro` says whether the group renders at all; `water` says what
+    // goes in it. Both off is not a contradiction, it is the same answer twice.
+    const map = await masen({ ...FRAME, water: ["lake", "river"], layers: { hydro: false } });
+    expect(kinds(map.svg)).toEqual(new Set());
+  });
+});

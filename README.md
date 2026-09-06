@@ -1343,6 +1343,22 @@ every `url(#…)` resolves to whichever map came first. The gallery builder
 namespaces them per map; anyone embedding two maps on a page has to do the same
 until that is fixed.
 
+## Which kinds of water
+
+Lakes and rivers both draw by default. `water` narrows that, the way `terrain`
+selects cover kinds:
+
+```ts
+water: false        // no lakes, no rivers
+water: ["lake"]     // lakes only
+```
+
+It is separate from `layers.hydro` on purpose — **`layers` decides whether a
+group renders at all, `water` decides what goes in it** — and the two are not a
+contradiction when both say no. Rivers are the kind worth dropping: at small
+scale a river and a border are both thin lines, and a reader who cannot tell
+them apart is worse off than one who sees neither.
+
 ## Contested borders
 
 **The country geometry this library draws resolves disputed territory *de

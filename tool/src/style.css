@@ -204,8 +204,7 @@ main {
 .preview {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
 }
 
 .preview label {
@@ -248,6 +247,32 @@ main {
 .status.is-error {
   color: var(--error);
   font-weight: 500;
+}
+
+/* The row under the map. The draw time on the left, the preview's own controls
+   on the right — both are facts about this screen rather than about the
+   document, which is why neither is in the form. Wraps rather than crushes:
+   below the narrow breakpoint the readout drops to its own line instead of
+   squeezing the select. */
+.under {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: 0.85rem;
+}
+
+.under .status {
+  margin: 0;
+}
+
+.under .preview {
+  margin-bottom: 0;
+  /* `.where` pushes itself to the far end with `margin-left: auto`, which in a
+     space-between row would drag the select away from its own label. Letting
+     this group size to its contents keeps the three items together. */
+  flex: 0 1 auto;
 }
 
 /* ---- the form, and the room the map gets ---- */

@@ -56,6 +56,7 @@ import type {
   Region,
   RenderOptions,
   Size,
+  Water,
 } from "./types.js";
 
 export { isoTable, resolveId, type IsoEntry } from "./iso.js";
@@ -142,6 +143,7 @@ export type {
   RouteStop,
   ScaleBar,
   Size,
+  Water,
   Watermark,
 } from "./types.js";
 
@@ -816,10 +818,24 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   // rectangle. A lake carries no country of its own, and filtering on the
   // viewport alone floats Scandinavian lakes over open sea on a map whose
   // northern edge stops at Denmark.
-  if (wants("hydro")) {
+  /**
+   * Which kinds of water, defaulting to both — `layers.hydro` still decides
+   * whether the group renders at all. Same shape as `terrain`: the layer switch
+   * and the kind selection are different questions and a caller asks them
+   * separately.
+   */
+  const waterKinds =
+    options.water === false
+      ? new Set<Water>()
+      : options.water === undefined || options.water === true
+        ? new Set<Water>(["lake", "river"])
+        : new Set<Water>(options.water);
+
+  if (wants("hydro") && waterKinds.size > 0) {
     const drawn = frame.countries.map((c) => ({ box: boxOf(c.geometry), geometry: c.geometry }));
     const water: SvgNode[] = [];
     for (const kind of ["lake", "river"] as const) {
+      if (!waterKinds.has(kind)) continue;
       const collection = world.water(kind) as { features: readonly unknown[] };
       const kept = collection.features.filter((f) => {
         const box = boxOf(f);

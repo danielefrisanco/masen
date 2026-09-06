@@ -178,6 +178,7 @@ export interface Vocabularies {
 }
 
 const COVERS = ["desert", "mountain", "glacier"] as const;
+const WATERS = ["lake", "river"] as const;
 
 /** The settlement ranking, with a way out of it at the top. */
 const RANKS = (none: string): { value: string; label: string }[] => [
@@ -380,6 +381,33 @@ export function buildForm(
             }),
           notes[kind],
         ),
+      ),
+      // Water is opt-*out*, unlike the cover kinds above it: a map has lakes and
+      // rivers unless you say otherwise. Rivers are the one anyone actually
+      // wants to drop — at small scale a river and a border are both thin
+      // lines, and a reader who cannot tell them apart is worse off than one
+      // who sees neither.
+      ...WATERS.map((kind) =>
+        checkbox(
+          kind === "lake" ? "Lakes" : "Rivers",
+          config.water.includes(kind),
+          (on) =>
+            onChange({
+              water: on
+                ? [...config.water, kind]
+                : config.water.filter((other) => other !== kind),
+            }),
+          notes[kind],
+        ),
+      ),
+      // Offered rather than hidden. The library has always had this switch, and
+      // one you cannot see is obscurity rather than an editorial position; the
+      // note under it says what the map does once it is off.
+      checkbox(
+        "Mark contested borders",
+        config.disputed,
+        (on) => onChange({ disputed: on }),
+        notes["disputed"],
       ),
       field(
         "Cities shown",

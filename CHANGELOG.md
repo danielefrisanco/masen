@@ -30,6 +30,30 @@ bump does.
 
 Set `disputed: false` to get 0.16.0's output back.
 
+### Added — lakes and rivers can be switched off, and so can the marking
+
+`water` selects which kinds of water draw, defaulting to **both**. The analogue
+of `terrain`, and separate from `layers.hydro` for the same reason `terrain` is
+separate from `layers.terrain`: **`layers` says whether a group renders at all,
+these say what goes in it.**
+
+```ts
+water: false        // no lakes, no rivers
+water: ["lake"]     // lakes only
+```
+
+Rivers are the kind anyone actually wants to drop. At small scale a river and a
+border are both thin lines, and a reader who cannot tell them apart is worse off
+than one who sees neither.
+
+The tool now exposes both these and `disputed`, as *Lakes*, *Rivers* and **Mark
+contested borders**. The last was deliberately hidden when the overlay shipped
+and that was wrong: the library has always had the switch, and one you cannot
+see is obscurity rather than an editorial position. Because the whole config
+lives in the URL, `disputed=0` travels in a shared link — so the choice is
+**visible to whoever opens the map**, which the silent default never was.
+Unchecking it says what the map now does, beside the box that did it.
+
 ### Breaking
 
 **The `limes` palette is now `patina`.** Same colours, same file, new name.

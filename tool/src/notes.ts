@@ -70,6 +70,23 @@ export function notesFor(svg: string, config: Config): Notes {
   }
 
   /**
+   * The one note that reports a *decision* rather than an absence, flagged
+   * because the rest of this file is emphatic that a note is read back off the
+   * drawn map. There is nothing to read back when the answer is "you removed
+   * it", so this is the deliberate exception.
+   *
+   * **Lakes and rivers deliberately get no note of their own.** They are on by
+   * default, so their absence is not a surprise anybody created — and a note
+   * about a control nobody touched is the noise this panel exists to avoid.
+   * The cover kinds above are the opposite case: opt-in, so ticking *Glaciers*
+   * over Spain is a question that deserves an answer.
+   */
+  if (!config.disputed) {
+    notes["disputed"] =
+      "Off — the map now draws borders as they stand de facto, with nothing marking the contested ones.";
+  }
+
+  /**
    * The one note here that reports a *decision* rather than an absence.
    *
    * A scale bar is refused when the frame's local scale varies too much across
