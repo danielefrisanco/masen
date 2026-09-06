@@ -57,6 +57,7 @@ const CHOSEN: Config = {
   labelSize: 17,
   pinIcon: "airport",
   pinSize: 11,
+  scaleBar: true,
   credit: "Made by someone",
   highlight: ["GR"],
   pins: [{ at: [23.73, 37.98], label: "Athens" }],

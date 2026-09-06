@@ -305,7 +305,13 @@ export function buildForm(
           config.detail,
           (value) => onChange({ detail: value as Config["detail"] }),
         ),
-        undefined,
+        // Disputed borders are the one thing the coarse tier cannot carry:
+        // Natural Earth publishes no 110m breakaway file. A reader making a map
+        // of Ukraine at 110m gets the de facto borders with nothing saying so,
+        // which is exactly the silence the overlay exists to break.
+        config.detail === "110m"
+          ? "Contested borders are only marked at 50m"
+          : undefined,
         "detail",
       ),
     ]),
@@ -324,6 +330,15 @@ export function buildForm(
       ),
       field("Width", numberBox(config.width, (value) => onChange({ width: value }))),
       field("Height", numberBox(config.height, (value) => onChange({ height: value }))),
+      // Asking for a bar is not the same as getting one: the library measures
+      // the frame's distortion and refuses when the scale varies too much
+      // across the canvas. The note is where that answer is reported.
+      checkbox(
+        "Scale bar",
+        config.scaleBar,
+        (on) => onChange({ scaleBar: on }),
+        notes["scaleBar"],
+      ),
       checkbox(
         "Neighbours",
         config.neighbours,

@@ -82,6 +82,15 @@ export interface Config extends Marks {
   pinIcon: string;
   /** `--pin-size`, the radius of a pin's mark in user units. */
   pinSize: number;
+  /**
+   * A length on the paper labelled with the distance it means.
+   *
+   * Offered rather than assumed, because the library refuses to draw one when
+   * the frame has not earned it: distortion is measured across the canvas, and
+   * a bar on a frame whose scale varies too much is a lie with a ruler on it.
+   * So this switch asks for a bar; whether one appears is the map's answer.
+   */
+  scaleBar: boolean;
   credit: string;
 }
 
@@ -108,6 +117,7 @@ export const DEFAULTS: Config = {
   labelSize: 13,
   pinIcon: "",
   pinSize: 7,
+  scaleBar: false,
   credit: "Natural Earth",
 };
 
@@ -124,7 +134,7 @@ const NUMBERS = [
   "labelSize",
   "pinSize",
 ] as const;
-const FLAGS = ["sea", "seaNames", "graticule", "gridLabels", "neighbours"] as const;
+const FLAGS = ["sea", "seaNames", "graticule", "gridLabels", "neighbours", "scaleBar"] as const;
 
 /**
  * The config as a query string, carrying only what was actually chosen.
@@ -311,6 +321,7 @@ export function toOptions(config: Config): MapOptions {
     ...(config.routes.length > 0 ? { routes: config.routes } : {}),
     placeRank: config.placeRank,
     labelRank: config.labelRank,
+    ...(config.scaleBar ? { scaleBar: true as const } : {}),
     ...(Object.keys(tokens).length > 0 ? { tokens } : {}),
     ...(config.credit === "" ? {} : { credit: config.credit }),
   };

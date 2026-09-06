@@ -943,3 +943,38 @@ input[type="search"] {
     padding: 0.4rem 0.45rem;
   }
 }
+
+/**
+ * The colophon.
+ *
+ * Outside `.layout`, so it sits under the whole page rather than under one
+ * column, and quiet enough that it never competes with the map — but present
+ * on every screen, because the sentence about contested borders is the one a
+ * reader needs *before* they download a map of one.
+ */
+.colophon {
+  max-width: 78ch;
+  margin: 2.5rem auto 3rem;
+  padding: 1.1rem 1.25rem 0;
+  border-top: 1px solid var(--rule, #d8d8d4);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--muted, #6a6a66);
+}
+
+.colophon p {
+  margin: 0 0 0.55rem;
+}
+
+.colophon p:last-child {
+  margin-bottom: 0;
+}
+
+.colophon strong {
+  color: var(--ink, #1a1a18);
+  font-weight: 600;
+}
+
+.colophon code {
+  font-size: 0.94em;
+}
