@@ -305,12 +305,11 @@ export function buildForm(
           config.detail,
           (value) => onChange({ detail: value as Config["detail"] }),
         ),
-        // Disputed borders are the one thing the coarse tier cannot carry:
-        // Natural Earth publishes no 110m breakaway file. A reader making a map
-        // of Ukraine at 110m gets the de facto borders with nothing saying so,
-        // which is exactly the silence the overlay exists to break.
+        // Contested areas are drawn at both tiers, but the coarse one gets them
+        // from the fine one — Natural Earth publishes no 110m breakaway file —
+        // so the hatch is finer than the coastline under it and can overhang.
         config.detail === "110m"
-          ? "Contested borders are only marked at 50m"
+          ? "Contested areas are drawn from finer data and may overhang this outline"
           : undefined,
         "detail",
       ),

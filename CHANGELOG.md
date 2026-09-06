@@ -30,6 +30,41 @@ bump does.
 
 Set `disputed: false` to get 0.16.0's output back.
 
+### Breaking
+
+**The `limes` palette is now `patina`.** Same colours, same file, new name.
+`limes` is Latin for a frontier, which suited an editorial map palette and read
+as the fruit to everyone else — and the palette is teal, parchment and
+terracotta, so the fruit reading was actively misleading. `patina` is the
+blue-green film on aged copper, which is what `#1D5C64` against warm parchment
+actually is, and it sits in the register the other four already occupy: `dusk`,
+`moss`, `sand`, `slate` all name a look rather than a subject.
+
+A palette name is public API — a caller passes it as `palette: "limes"` — so
+this is the breaking half of the minor bump, alongside the default above.
+
+### Changed — the coarse tier can say a border is contested
+
+Disputed areas now draw at **110m as well as 50m**. Natural Earth publishes no
+110m breakaway file, so the coarse tier is emitted from the 50m geometry, which
+is the same move land cover makes when it borrows its classification from 10m.
+
+This mattered more than it looks: **110m is the tool's own default**, so before
+this the default map made exactly the silent claim the overlay exists to break.
+The cost is honest and stated — the areas are finer than the country outline
+beneath them, so a hatch can overhang a coarse coastline. That is a smaller
+error than resolving a contested border without saying so.
+
+### Changed — the tool reports a refused scale bar
+
+A scale bar is declined when local scale varies too much across the frame for
+one length to be true of all of it. Correct, and indistinguishable from a broken
+checkbox: **mercator over western Europe varies 62%, equal-earth 69%**, so both
+silently drew nothing. The tool now says why, next to the control that asked —
+the same rule every other note in that panel follows, read back off the drawn
+map rather than predicted. Conic-conformal, albers and orthographic earn a bar
+on a regional frame at 1.03–1.07.
+
 ### Added — the map no longer claims Crimea is Russia without saying so
 
 **The map no longer claims Crimea is Russia without saying so.** Disputed and

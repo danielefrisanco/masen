@@ -5,7 +5,7 @@ import { contrast } from "./themes/contrast.js";
 import { minimal } from "./themes/minimal.js";
 import { noir } from "./themes/noir.js";
 import { dusk } from "./palettes/dusk.js";
-import { limes } from "./palettes/limes.js";
+import { patina } from "./palettes/patina.js";
 import { moss } from "./palettes/moss.js";
 import { sand } from "./palettes/sand.js";
 import { slate } from "./palettes/slate.js";
@@ -30,7 +30,7 @@ export const PALETTES: Readonly<Record<string, string>> = Object.freeze({
   sand,
   slate,
   moss,
-  limes,
+  patina,
   dusk,
 });
 export const TYPEFACES: Readonly<Record<string, string>> = Object.freeze({

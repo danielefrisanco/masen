@@ -133,12 +133,18 @@ for (const tier of TIERS) {
    * the same reason — nothing that reads the bundle pays for a layer it did
    * not ask for.
    *
-   * **50m only.** `ne_110m_admin_0_breakaway_disputed_areas` does not exist,
-   * so a 110m map cannot say a border is contested and the README has to say
-   * so. The default detail is 50m, so the default map can.
+   * **Emitted at both tiers from one 50m source.**
+   * `ne_110m_admin_0_breakaway_disputed_areas` does not exist, so the coarse
+   * tier is rounded down from the fine one — the same move land cover makes
+   * when it borrows its classification from 10m. The areas end up finer than
+   * the 110m country outline and can overhang it, which is the price of the
+   * coarse tier being able to mark a contested border at all.
    */
-  if (tier === "50m") {
-    const rawDisputed = JSON.parse(await readFile(`vendor/disputed-${tier}.raw.json`, "utf8"));
+  {
+    // Vendored at 50m only, because that is the only tier Natural Earth
+    // publishes one at. The 110m file is emitted from the same source at the
+    // coarse tier's own precision — see the note above.
+    const rawDisputed = JSON.parse(await readFile(`vendor/disputed-50m.raw.json`, "utf8"));
     const disputed = {
       type: "FeatureCollection",
       features: rawDisputed.features.map((f) => ({

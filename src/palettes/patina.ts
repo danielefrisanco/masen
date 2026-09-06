@@ -17,7 +17,7 @@
  * theme has no blue plate: on a map with a sea this colour a blue country
  * reads as water.
  */
-export const limes = `
+export const patina = `
 .mp {
   --bg: #1D5C64;
   --sea: #1D5C64;

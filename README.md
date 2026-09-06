@@ -284,7 +284,7 @@ dash or the type:
 | `sand` | Warm paper and a deep green accent |
 | `slate` | Cool neutral grey, one cold blue — the register of a report |
 | `moss` | Warm greens on stone, the colouring of a walking map |
-| `limes` | Editorial plates — brick and ochre on a deep teal sea, near-black linework |
+| `patina` | Editorial plates — brick and ochre on a deep teal sea, near-black linework |
 | `dusk` | Night blues, for a dark page |
 
 ### Every preset keeps its coastlines findable
@@ -668,7 +668,7 @@ instead of pretending to be water.
 **It shows only where `--bg` is not already your ocean.** `sand`, `slate`,
 `moss` and `minimal` have a paper ground, so their `--sea` is a different
 colour and the layer changes what you see. `atlas`, `noir`, `blueprint`,
-`dusk` and `limes` set `--sea` to their background exactly, so turning it on
+`dusk` and `patina` set `--sea` to their background exactly, so turning it on
 cannot change a coastal map that was already right — override `--bg` if you
 want the two to differ.
 
@@ -1375,9 +1375,12 @@ who claims what is not this project's sentence to write.
 
 **Three limits, stated rather than left to be discovered.**
 
-- **50m and finer only.** Natural Earth publishes no 110m breakaway file — it
-  404s — so a `detail: "110m"` map draws nothing here whatever you set. The
-  default detail is `50m`, so the default map is covered.
+- **110m is derived, not downloaded.** Natural Earth publishes no 110m
+  breakaway file — it 404s — so the coarse tier is emitted from the 50m
+  geometry, the same way land cover borrows its classification from 10m. The
+  areas are finer than the country outline beneath them there and can overhang
+  a coarse coastline. That is a smaller error than a coarse map resolving a
+  contested border in silence, which is what it did before.
 - **Hatching is not reassignment.** Crimea is still *filled* as Russia
   underneath. Reassigning needs Natural Earth's point-of-view country layer,
   which is 10m-only and 13.2 MB. The overlay says the border is contested, which

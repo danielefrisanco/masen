@@ -69,6 +69,20 @@ export function notesFor(svg: string, config: Config): Notes {
     notes["neighbours"] = "Nothing else falls inside this frame.";
   }
 
+  /**
+   * The one note here that reports a *decision* rather than an absence.
+   *
+   * A scale bar is refused when the frame's local scale varies too much across
+   * the canvas for one length to be true of all of it — equal-earth on a world
+   * frame is the obvious case. That is the library being careful, but from this
+   * side it looks identical to a broken checkbox, and a refusal nobody can
+   * inspect is a bug report waiting to happen.
+   */
+  if (config.scaleBar && !svg.includes('class="mp-scale"')) {
+    notes["scaleBar"] =
+      "Not drawn — the scale changes too much across this frame for one bar to be true of all of it.";
+  }
+
   if (config.placeRank > 0 && !svg.includes('<circle class="mp-place"')) {
     notes["placeRank"] = "No city of this rank is in the frame.";
   }

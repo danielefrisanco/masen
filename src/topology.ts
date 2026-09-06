@@ -198,16 +198,17 @@ export async function loadCover(detail: Detail): Promise<GeoJsonFeatureCollectio
  * hatched overlay rather than a reassignment, this says the border is
  * contested, which is true, instead of swapping one silent claim for another.
  *
- * **50m only, and empty elsewhere rather than an error.** Natural Earth
- * publishes no 110m breakaway file — it 404s — so a coarse map genuinely
- * cannot say a border is contested, and a caller must be able to leave the
- * option on across tiers without branching. What must not happen is the limit
- * going unsaid, which is what the README is for.
+ * **Both shipped tiers carry it, and the 110m one is derived rather than
+ * downloaded.** Natural Earth publishes no 110m breakaway file — it 404s — so
+ * the coarse tier is emitted from the 50m geometry at the coarse tier's own
+ * precision, which is the same bargain land cover already takes when it borrows
+ * its classification from 10m. The alternative was a default-detail map that
+ * could not say a border was contested, and the tool's own default is 110m.
  */
 const disputedCache = new Map<Detail, GeoJsonFeatureCollection>();
 
 /** The tiers Natural Earth publishes a breakaway file for. */
-export const DISPUTED_TIERS: readonly Detail[] = Object.freeze(["50m"]);
+export const DISPUTED_TIERS: readonly Detail[] = Object.freeze(["110m", "50m"]);
 
 const NO_AREAS: GeoJsonFeatureCollection = Object.freeze({
   type: "FeatureCollection",

@@ -39,7 +39,7 @@ const CHOSEN: Config = {
   region: "GR,TR,BG",
   projection: "mercator",
   theme: "atlas",
-  palette: "limes",
+  palette: "patina",
   typeface: "serif",
   detail: "50m",
   width: 1200,

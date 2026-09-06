@@ -579,8 +579,11 @@ export interface MapOptions {
    * geometry unannotated; nothing stops you, but the map then makes the claim
    * silently.
    *
-   * **50m and finer only.** Natural Earth publishes no 110m breakaway file, so
-   * a 110m map draws nothing here whatever this is set to.
+   * **Both tiers carry it, but 110m is derived.** Natural Earth publishes no
+   * 110m breakaway file, so the coarse tier is emitted from the 50m geometry.
+   * The areas are therefore finer than the country outline beneath them and can
+   * overhang a coarse coastline — which is a smaller error than a map that
+   * resolves a contested border in silence.
    */
   readonly disputed?: boolean;
   /**

@@ -82,12 +82,16 @@ describe("disputed areas", () => {
     expect(hatches(map.svg)).toHaveLength(0);
   });
 
-  it("draws nothing at 110m, because Natural Earth publishes no such file", async () => {
+  it("marks a contested border at 110m too, from geometry Natural Earth does not publish", async () => {
     // `ne_110m_admin_0_breakaway_disputed_areas` is a 404 — checked, not
-    // assumed. A coarse map genuinely cannot say a border is contested, and
-    // the option staying on across tiers must not throw.
+    // assumed — so the coarse tier is emitted from the 50m source rather than
+    // left unable to say anything. It is the tier the tool defaults to, which
+    // is why it mattered: without this, the default map made the silent claim.
+    // The cost is that the areas are finer than the outline under them and can
+    // overhang a coarse coastline.
     const map = await masen({ ...UKRAINE, detail: "110m" });
-    expect(hatches(map.svg)).toHaveLength(0);
+    const crimea = hatches(map.svg).find((h) => h.name === "Crimea");
+    expect(crimea?.kind).toBe("disputed");
   });
 
   it("does not float a hatch over sea where no country is drawn", async () => {

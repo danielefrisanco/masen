@@ -257,10 +257,10 @@ for (const tier of TIERS) {
  * is an assertion the library makes in its own voice without being asked. This
  * file is what lets a map say *contested* instead of quietly picking a side.
  *
- * **50m only, and that has to be stated rather than discovered.**
+ * **Vendored at 50m, shipped at both.**
  * `ne_110m_admin_0_breakaway_disputed_areas` does not exist — 404, checked —
- * so a 110m map cannot carry this. The default detail is 50m, so the default
- * map can.
+ * so `build-data.mjs` emits the coarse tier from this same geometry rather than
+ * leaving a whole tier unable to say a border is contested.
  *
  * **Three columns rather than the obvious one, because the obvious one is
  * wrong.** `NAME` is usually the *claimant*, not the territory: it reads

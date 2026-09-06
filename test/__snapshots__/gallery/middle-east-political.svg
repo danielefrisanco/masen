@@ -432,6 +432,9 @@
     <path class="mp-country" data-iso="EG" data-name="Egypt" data-fill="2" d="M343.2,537.4L253.1,530.7L165.3,521.5L74.7,509L88.4,419.9L101.7,334L98.4,313.5L106.1,299.4L104.5,288.5L113.8,278.1L141.3,281.7L160.4,290.9L180,300.8L189.2,305.8L206.2,299.9L215.5,294L234.1,293.9L248.6,298.6L253,311.2L258.7,303.7L274.8,311L291,313.8L301.8,308.5L310.8,345L312.4,351.4L305.7,360.8L299.7,378.9L292.9,391.1L287.5,394.9L281,386.5L272.2,374.8L260.2,338.5L257.8,340.5L264.2,367L275.3,392.7L288.5,432L295.6,445.8L301.7,460.2L319.7,488.6L314.9,492.6L314.6,508.5L339.5,532.1Z" fill="#C2D6AE" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Egypt</title>
     </path>
+    <path class="mp-hatch" data-kind="indeterminate" data-name="Golan Heights" d="M337.4,270.2L337.1,271.7L336.1,273.8L334.9,273.7L332.3,274.8L332,273.8L332.4,272.8L333.1,271.7L333,270.2L332.7,269.7L332.3,268.2L332.2,266.7L332.7,266L333.7,264.1L333.8,262.1L333,261.1L333.7,260.1L335.8,259L337.1,258.1L338.2,257L337.7,258.4L337.1,259.1L337,260.1L337.2,260.9L337.3,262.1L337.7,262.4L337.6,263.3L337.4,264.1L337.3,264.6L337.9,265.3L338,267.6L338.5,268.8Z" fill="url(#mp-stripe-0avzihf)" stroke="none">
+      <title>Golan Heights — Admin. By Israel; Claimed by Syria</title>
+    </path>
   </g>
   <g class="mp-layer mp-terrain"/>
   <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-0avzihf)">
