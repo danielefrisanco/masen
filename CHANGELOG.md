@@ -46,8 +46,20 @@ no obligations.
 
 - **The exported function is `masen()`**, not `neatline()`. A rename, nothing
   else — every option, every return value and every behaviour is unchanged.
-- **The package is `masen`**, not `@neatline/map`. Unscoped, because the bare
-  name was free; `@neatline/map` is deprecated on npm and points here.
+- **The package is `masen-map`**, not `@neatline/map`. The project is `masen`
+  everywhere else — the repository, the site, the wordmark, the exported
+  function — but the npm name could not be. **Bare `masen` is refused by npm's
+  similarity filter**, the same mechanism that refused bare `neatline` for
+  being close to `readline`; npm reports it as too near `base`, `case` and
+  `raven`. **And the `masen` organisation is held** by an account with no
+  packages, so `@masen/map` was not available either. `masen-map` is the same
+  shape `@neatline/map` had — the brand, then what it is. `@neatline/map` is
+  deprecated on npm and points here.
+
+  Two lessons, both cheap to have learned twice: **a registry 404 means the
+  name is unregistered, not that it is publishable** — the similarity filter
+  only runs at publish time and cannot be tested any other way. And **an npm
+  scope being empty is not the same as it being available**.
 - **The tool moved** to `danielefrisanco.github.io/masen/`. Old links break —
   GitHub redirects the repository, not the Pages path.
 - **Error messages** are prefixed `masen:` rather than `neatline:`.

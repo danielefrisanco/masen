@@ -1,7 +1,7 @@
 # masen
 
-[![npm](https://img.shields.io/npm/v/masen)](https://www.npmjs.com/package/masen)
-[![license](https://img.shields.io/npm/l/masen)](LICENSE)
+[![npm](https://img.shields.io/npm/v/masen-map)](https://www.npmjs.com/package/masen-map)
+[![license](https://img.shields.io/npm/l/masen-map)](LICENSE)
 
 Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.
 
@@ -9,7 +9,7 @@ No tile server, no fonts pipeline, no API key, no runtime model call.
 Same input, byte-identical output.
 
 ```ts
-import { masen } from "masen";
+import { masen } from "masen-map";
 
 const map = await masen({
   region: "west-europe",
@@ -87,7 +87,7 @@ lakes, rivers, cities, names, the sea, land cover, a graticule and four kinds of
 annotation.
 
 ```sh
-npm i masen
+npm i masen-map
 ```
 
 **Scoped, for two reasons.** npm refuses the bare name `masen` as too close
@@ -165,7 +165,7 @@ cost about thirty bytes and buy a stable stack for the life of v1.
 The taxonomy is also readable at runtime, so tooling never has to hard-code it:
 
 ```ts
-import { LAYERS } from "masen";
+import { LAYERS } from "masen-map";
 
 LAYERS.map((layer) => layer.className);
 // ["mp-neighbours", "mp-land", "mp-hydro", "mp-borders", ...]
@@ -1055,7 +1055,7 @@ decision, not a packing problem.
 ### Icons
 
 ```ts
-import { ICON_NAMES } from "masen";
+import { ICON_NAMES } from "masen-map";
 
 await masen({
   region: "west-europe",

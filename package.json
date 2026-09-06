@@ -1,5 +1,5 @@
 {
-  "name": "masen",
+  "name": "masen-map",
   "version": "0.16.0",
   "description": "Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.",
   "keywords": [
