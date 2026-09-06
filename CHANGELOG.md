@@ -20,6 +20,51 @@ signature — themes in the wild depend on those names.
 
 ### Added
 
+**The map no longer claims Crimea is Russia without saying so.** Disputed and
+breakaway areas are drawn as a hatched overlay, **on by default**, from
+`ne_50m_admin_0_breakaway_disputed_areas` — 28 areas, 35 KB. New `disputed`
+option to turn it off. New `.mp-hatch` features carrying `data-kind`
+(`disputed` / `breakaway` / `indeterminate`) and `data-name`, inside the
+existing `.mp-land` group — **no new layer slot, so the frozen paint order is
+untouched.**
+
+### Why this was a defect and not a feature request
+
+The country geometry resolves contested territory *de facto*: Simferopol falls
+inside feature 643, Russia, at every tier shipped. That came in with
+`world-atlas` and was never chosen. The library was asserting something
+contested in its own voice, unasked, to an audience of newsrooms. Hatching marks
+the contested edge instead of resolving it — reassignment would need Natural
+Earth's point-of-view layer, which is 10m-only and 13.2 MB, and would swap one
+silent claim for another.
+
+Each area carries a `<title>` with Natural Earth's own status line. Crimea's is
+*"Admin. by Russia; Claimed by Ukraine"* — quoted, not composed here.
+
+### What measuring found
+
+- **`NAME` is the claimant, not the territory.** It reads "India" seven times
+  and "Ukraine" twice. `BRK_NAME` is the territory — Crimea, Abkhazia,
+  Transnistria, Aksai Chin — and the build now fails if it is ever absent.
+- **The overlay had to be clipped.** It is a global list, so unclipped a map of
+  Ukraine emitted Arunachal Pradesh and North Borneo as path data nobody could
+  see. Clipped to the canvas, the same map draws four areas.
+- **Clipping was not enough.** The gallery caught what the tests did not: a map
+  of the Sahara put hatch slivers in the eastern Mediterranean, because the
+  Golan Heights and the Ilemi Triangle are inside that frame's longitudes with
+  no land drawn under them. Areas are now matched against the countries
+  actually drawn, which is the rule the water filter already followed — a lake
+  filtered on the viewport alone floats over open sea for the same reason.
+- **50m only.** `ne_110m_admin_0_breakaway_disputed_areas` is a 404. A 110m map
+  draws nothing here, and the README says so rather than leaving it to be found.
+
+The overlay is deliberately not disputed-specific machinery: a hatched area is
+geometry plus a kind plus a name, which is equally "excluded", "evacuated" or
+"under review". Widening `stripe` to take a polygon breaks no caller, so it
+waits for a real map that asks.
+
+### Added
+
 **Eleven icons for the half of a news map Maki does not cover** — `oil`,
 `natural-gas`, `storage-tank`, `mine`, `power-station`, `nuclear`, `military`,
 `bunker`, `camp`, `border-crossing`, `ruins`. Forty in the vocabulary now, in

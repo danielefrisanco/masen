@@ -563,6 +563,26 @@ export interface MapOptions {
    * and the two readings stack instead of one replacing the other.
    */
   readonly stripe?: readonly string[];
+
+  /**
+   * Draw Natural Earth's disputed and breakaway areas as a hatched overlay.
+   * Defaults to **on**, and that default is a position taken on purpose.
+   *
+   * The country geometry this library draws resolves contested territory *de
+   * facto*: Crimea falls inside Russia, not Ukraine. That is inherited from
+   * `world-atlas` and was never chosen. Left alone, the map asserts something
+   * contested in the library's own voice, without being asked and without
+   * saying so — and the readers this is built for are newsrooms.
+   *
+   * The overlay marks the contested edge rather than resolving it, which is
+   * why it is a default anyone can defend. Set `false` to draw the country
+   * geometry unannotated; nothing stops you, but the map then makes the claim
+   * silently.
+   *
+   * **50m and finer only.** Natural Earth publishes no 110m breakaway file, so
+   * a 110m map draws nothing here whatever this is set to.
+   */
+  readonly disputed?: boolean;
   /**
    * Raise each country off the map, so height reads as quantity.
    *

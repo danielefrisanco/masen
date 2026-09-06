@@ -1343,6 +1343,50 @@ every `url(#…)` resolves to whichever map came first. The gallery builder
 namespaces them per map; anyone embedding two maps on a page has to do the same
 until that is fixed.
 
+## Contested borders
+
+**The country geometry this library draws resolves disputed territory *de
+facto*, and it did not choose to.** Crimea falls inside Russia, not Ukraine —
+Simferopol at 34.10°E, 44.95°N is inside feature 643 at every tier shipped here.
+That is inherited from `world-atlas`, and through it from Natural Earth's
+default country layer. Nobody picked it; it arrived with the data.
+
+Left alone, that makes the map assert something contested in this library's own
+voice, without being asked and without saying so. The readers this is built for
+are newsrooms, and **a journalist who draws Ukraine and does not zoom in would
+be publishing a position they never took and were never told about.**
+
+So **disputed and breakaway areas are drawn as a hatched overlay, on by
+default.** The overlay marks the contested edge rather than resolving it:
+
+```ts
+const map = await masen({ region: ["UA"] });   // Crimea is hatched
+const bare = await masen({ region: ["UA"], disputed: false });
+```
+
+Twenty-eight areas from `ne_50m_admin_0_breakaway_disputed_areas`, each drawn as
+`.mp-hatch` carrying `data-kind` — `disputed`, `breakaway` or `indeterminate` —
+and `data-name`. Crimea, the Golan Heights, Western Sahara, Northern Cyprus, the
+Kashmir claims, Abkhazia, South Ossetia, Transnistria, Artsakh, Somaliland, the
+Ukrainian breakaway oblasts and the Kuril Islands are all in it. Each carries a
+`<title>` with Natural Earth's own status line — Crimea's reads *"Admin. by
+Russia; Claimed by Ukraine"* — quoted rather than composed here, because saying
+who claims what is not this project's sentence to write.
+
+**Three limits, stated rather than left to be discovered.**
+
+- **50m and finer only.** Natural Earth publishes no 110m breakaway file — it
+  404s — so a `detail: "110m"` map draws nothing here whatever you set. The
+  default detail is `50m`, so the default map is covered.
+- **Hatching is not reassignment.** Crimea is still *filled* as Russia
+  underneath. Reassigning needs Natural Earth's point-of-view country layer,
+  which is 10m-only and 13.2 MB. The overlay says the border is contested, which
+  is the part not in dispute; it does not say who is right.
+- **This is a position, not neutrality.** A library that ships a default has
+  taken one whether it admits to it or not, and the previous default was taken
+  by accident. Choosing on purpose and saying so is the most that can honestly
+  be claimed here.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

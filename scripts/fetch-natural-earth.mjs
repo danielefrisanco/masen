@@ -247,4 +247,53 @@ for (const tier of TIERS) {
   await write(`vendor/seas-${tier}.raw.json`, seas);
 }
 
+/**
+ * Disputed and breakaway areas — the claim, separated from the geometry.
+ *
+ * **The country layer resolves contested territory silently and de facto.**
+ * Simferopol at 34.10E, 44.95N falls inside feature 643, Russia, at both tiers
+ * this library ships, and Ukraine does not contain it. That is inherited from
+ * `world-atlas` and through it from Natural Earth's default country set, and it
+ * is an assertion the library makes in its own voice without being asked. This
+ * file is what lets a map say *contested* instead of quietly picking a side.
+ *
+ * **50m only, and that has to be stated rather than discovered.**
+ * `ne_110m_admin_0_breakaway_disputed_areas` does not exist — 404, checked —
+ * so a 110m map cannot carry this. The default detail is 50m, so the default
+ * map can.
+ *
+ * **Three columns rather than the obvious one, because the obvious one is
+ * wrong.** `NAME` is usually the *claimant*, not the territory: it reads
+ * "India" seven times and "Ukraine" twice. `BRK_NAME` is the territory —
+ * Crimea, Abkhazia, Transnistria, Aksai Chin — and is the only one usable as a
+ * label. `NOTE_BRK` is the status as a sentence Natural Earth wrote, not one
+ * this project has to compose: Crimea's is "Admin. by Russia; Claimed by
+ * Ukraine", which is precisely what a newsroom needs and precisely the sentence
+ * nobody here should be inventing.
+ */
+const DISPUTED_TIER = "50m";
+{
+  const raw = await fetchJson(`ne_${DISPUTED_TIER}_admin_0_breakaway_disputed_areas`);
+  const areas = raw.features.map((item) => ({
+    type: "Feature",
+    properties: {
+      n: item.properties.BRK_NAME,
+      // Disputed, Breakaway or Indeterminate, lowercased into a `data-kind` a
+      // theme can select on without knowing Natural Earth's capitalisation.
+      k: String(item.properties.TYPE ?? "disputed").toLowerCase(),
+      note: item.properties.NOTE_BRK ?? null,
+    },
+    geometry: item.geometry,
+  }));
+  const missing = areas.filter((a) => !a.properties.n);
+  if (missing.length > 0) {
+    throw new Error(
+      `masen: ${missing.length} disputed areas have no BRK_NAME. That column is the ` +
+        `territory name and the only one usable as a label — NAME is the claimant.`,
+    );
+  }
+  console.log(`\n${DISPUTED_TIER} disputed`);
+  await write(`vendor/disputed-${DISPUTED_TIER}.raw.json`, collection(areas));
+}
+
 console.log("\nvendored");

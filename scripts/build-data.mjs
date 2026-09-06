@@ -128,6 +128,38 @@ for (const tier of TIERS) {
   const coverPath = `data/cover-${tier}.json`;
   await writeFile(coverPath, JSON.stringify(cover), "utf8");
 
+  /**
+   * Disputed and breakaway areas, out of the bundle for the third time and for
+   * the same reason — nothing that reads the bundle pays for a layer it did
+   * not ask for.
+   *
+   * **50m only.** `ne_110m_admin_0_breakaway_disputed_areas` does not exist,
+   * so a 110m map cannot say a border is contested and the README has to say
+   * so. The default detail is 50m, so the default map can.
+   */
+  if (tier === "50m") {
+    const rawDisputed = JSON.parse(await readFile(`vendor/disputed-${tier}.raw.json`, "utf8"));
+    const disputed = {
+      type: "FeatureCollection",
+      features: rawDisputed.features.map((f) => ({
+        type: "Feature",
+        properties: { n: f.properties.n, k: f.properties.k, note: f.properties.note },
+        geometry: { type: f.geometry.type, coordinates: round(f.geometry.coordinates, digits) },
+      })),
+    };
+    const disputedPath = `data/disputed-${tier}.json`;
+    await writeFile(disputedPath, JSON.stringify(disputed), "utf8");
+    const kinds = {};
+    for (const f of disputed.features) kinds[f.properties.k] = (kinds[f.properties.k] ?? 0) + 1;
+    const { size: disputedSize } = await (await import("node:fs")).promises.stat(disputedPath);
+    console.log(
+      `  ${disputedPath}  ${(disputedSize / 1024).toFixed(0)} KB` +
+        `  (${disputed.features.length} areas: ` +
+        Object.entries(kinds).map(([k, n]) => `${n} ${k}`).join(", ") +
+        `)`,
+    );
+  }
+
   // Written first and separately: nothing in the bundle refers to it, and
   // nothing that reads the bundle pays for it.
   const ocean = waterLayer(sane, "ocean", digits);

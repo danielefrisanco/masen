@@ -187,6 +187,51 @@ export async function loadCover(detail: Detail): Promise<GeoJsonFeatureCollectio
   return collection;
 }
 
+/**
+ * Disputed and breakaway areas, loaded apart for the ocean's reason and at a
+ * fraction of its weight: 35 KB, 28 features.
+ *
+ * **This is the layer that stops the map making a claim nobody asked it to
+ * make.** The country geometry resolves contested territory *de facto* —
+ * Simferopol falls inside feature 643, Russia, at every tier this library
+ * ships — and that is inherited from `world-atlas`, not chosen. Drawn as a
+ * hatched overlay rather than a reassignment, this says the border is
+ * contested, which is true, instead of swapping one silent claim for another.
+ *
+ * **50m only, and empty elsewhere rather than an error.** Natural Earth
+ * publishes no 110m breakaway file — it 404s — so a coarse map genuinely
+ * cannot say a border is contested, and a caller must be able to leave the
+ * option on across tiers without branching. What must not happen is the limit
+ * going unsaid, which is what the README is for.
+ */
+const disputedCache = new Map<Detail, GeoJsonFeatureCollection>();
+
+/** The tiers Natural Earth publishes a breakaway file for. */
+export const DISPUTED_TIERS: readonly Detail[] = Object.freeze(["50m"]);
+
+const NO_AREAS: GeoJsonFeatureCollection = Object.freeze({
+  type: "FeatureCollection",
+  features: Object.freeze([]),
+}) as GeoJsonFeatureCollection;
+
+export async function loadDisputed(detail: Detail): Promise<GeoJsonFeatureCollection> {
+  if (!DISPUTED_TIERS.includes(detail)) return NO_AREAS;
+
+  const cached = disputedCache.get(detail);
+  if (cached) return cached;
+
+  const url = dataUrl(`disputed-${detail}`);
+  let collection: GeoJsonFeatureCollection;
+  try {
+    collection = (await readData(url)) as GeoJsonFeatureCollection;
+  } catch (cause) {
+    throw unreadable("disputed areas", detail, url, cause);
+  }
+
+  disputedCache.set(detail, collection);
+  return collection;
+}
+
 interface Bundle {
   readonly countries: { objects: { countries: { geometries: readonly unknown[] } } };
   readonly lakes: unknown;

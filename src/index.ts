@@ -37,7 +37,13 @@ import {
   ROOT_CLASS,
   type LayerName,
 } from "./taxonomy.js";
-import { loadCover, loadOcean, loadWorld, type CountryFeature } from "./topology.js";
+import {
+  loadCover,
+  loadDisputed,
+  loadOcean,
+  loadWorld,
+  type CountryFeature,
+} from "./topology.js";
 import type {
   BBox,
   Cover,
@@ -628,6 +634,109 @@ export async function masen(options: MapOptions): Promise<MapResult> {
     }
   }
   land.push(...hatched);
+
+  /**
+   * Disputed and breakaway areas, hatched over the countries rather than
+   * reassigned between them.
+   *
+   * **The library was making a claim nobody asked it to make.** The country
+   * geometry resolves contested territory de facto — Simferopol falls inside
+   * feature 643, Russia — and that came in with `world-atlas` rather than
+   * being chosen. A journalist who draws Ukraine and does not zoom in was
+   * publishing a position they had not taken and had not been told about.
+   *
+   * **Hatched rather than reassigned, deliberately.** Reassigning needs
+   * Natural Earth's point-of-view country layer, which is 10m-only and 13.2 MB,
+   * and it would swap one silent claim for another. An overlay says the border
+   * is contested, which is the part that is not in dispute.
+   *
+   * Drawn last in the layer, after the country hatching, so two readings stack
+   * — which is what `stripe` was built for in Phase 5.
+   *
+   * **This is deliberately not disputed-specific machinery.** A hatched
+   * overlay is geometry plus a kind plus a name, which is equally the shape of
+   * "excluded", "evacuated" or "under review". Widening `stripe` to take a
+   * polygon as well as a country code would break no caller, so it costs
+   * nothing to wait for a real map that asks — the same bargain `neighbours`
+   * and `pins` already took with their own widenings.
+   */
+  if (options.disputed !== false) {
+    const areas = await loadDisputed(detail);
+    // Clipped to the canvas, for the reason the ocean is: this is a global
+    // list of 28 polygons and most maps show none of them. Unclipped, a map of
+    // Ukraine emits Arunachal Pradesh and North Borneo as path data nobody can
+    // see. `path()` returns "" for a shape clipped away entirely, which is
+    // what skips it below.
+    projection.clipExtent([
+      [0, 0],
+      [width, height],
+    ]);
+    try {
+      renderDisputed(areas.features);
+    } finally {
+      // Put back immediately: the projection is shared, and every other layer
+      // has to keep drawing past the edges so its strokes are not cut.
+      projection.clipExtent(null);
+    }
+  }
+
+  function renderDisputed(features: readonly unknown[]): void {
+    /**
+     * Matched against the countries actually drawn, not the framed rectangle —
+     * the rule the water filter above already follows, for the same reason it
+     * follows it.
+     *
+     * A disputed area carries no country of its own, so a viewport test alone
+     * floats the Golan Heights and the Ilemi Triangle over open sea on a map of
+     * the Sahara: both are inside the frame's longitudes, neither has any land
+     * drawn beneath it, and a contested-area mark with no country under it is
+     * a smudge rather than a statement. With `neighbours` on the map draws
+     * whatever land is in view, so anything may legitimately carry a hatch;
+     * with it off, only the region's own countries can.
+     */
+    const under =
+      options.neighbours === true && wants("neighbours") ? world.countries : frame.countries;
+
+    for (const raw of features) {
+      // `features` is `readonly unknown[]` on the collection type, the same
+      // shape land cover reads through — this file is the seam where vendored
+      // data becomes typed, and it narrows rather than trusting.
+      const area = raw as {
+        readonly geometry?: unknown;
+        readonly properties?: {
+          readonly n?: string;
+          readonly k?: string;
+          readonly note?: string | null;
+        };
+      };
+      const d = path(area.geometry as never);
+      if (!d) continue;
+      const points = samples(area);
+      if (!points.some((point) => under.some((c) => geoContains(c.geometry as never, point)))) {
+        continue;
+      }
+      const props = area.properties ?? {};
+      const areaName = props.n ?? "";
+      land.push(
+        el(
+          "path",
+          {
+            class: "mp-hatch",
+            "data-kind": props.k ?? "disputed",
+            "data-name": areaName === "" ? undefined : areaName,
+            d,
+          },
+          // Natural Earth's own sentence, not one composed here: Crimea's reads
+          // "Admin. by Russia; Claimed by Ukraine". Saying who claims what is
+          // exactly the thing this project should be quoting rather than
+          // writing.
+          typeof props.note === "string" && props.note !== ""
+            ? [el("title", {}, [text(`${areaName} — ${props.note}`)])]
+            : [],
+        ),
+      );
+    }
+  }
   // Highlight names are collected even when the layer is off, so the accessible
   // description stays true to what was asked for.
   if (wants("land")) {
