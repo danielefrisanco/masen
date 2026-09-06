@@ -16,6 +16,59 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [Unreleased]
+
+### Added
+
+**Eleven icons for the half of a news map Maki does not cover** — `oil`,
+`natural-gas`, `storage-tank`, `mine`, `power-station`, `nuclear`, `military`,
+`bunker`, `camp`, `border-crossing`, `ruins`. Forty in the vocabulary now, in
+two new groups: *energy and extraction*, and *borders and conflict*. Purely
+additive; no existing name moved.
+
+### Why this was cheaper than the plan thought
+
+The plan said for six phases that this vocabulary **did not exist in any
+public-domain set and would have to be drawn by hand**. That was asserted rather
+than measured, and it was wrong. [Temaki](https://github.com/rapideditor/temaki)
+is an expansion pack for Maki from the iD/Rapid editor team, **also CC0**, 557
+icons, carrying most of it already. Nothing in anyone's output credits anyone,
+which is the property that ruled out Tabler and Lucide and still rules.
+
+### What measuring found that reading names did not
+
+Both of these came from rendering the candidates, and both would have shipped as
+defects otherwise:
+
+- **Temaki's grid is not uniform.** 485 of its 557 icons are 15×15; the rest are
+  drawn at 48, 50 or 100. A 50-unit path in a 15-unit box draws a shape more
+  than three times too big and nothing downstream would say so. The vendoring
+  script now refuses anything off the grid, and refuses any icon drawn with a
+  `<circle>` or `<rect>` rather than silently vendoring half of it.
+- **Its line-drawn glyphs do not survive pin size.** `power_tower`,
+  `wind_turbine` and `military_checkpoint` are legible in a picker at 44px and
+  turn to grey mush at the 15 units a pin actually draws. What is vendored is
+  deliberately the solid half, because the standard is that a map using both
+  sets must not show two house styles side by side. Rendered on a real map, it
+  does not.
+
+Two candidates were rejected on what they depict rather than on weight:
+Temaki's `gas` is a flame, and Maki's `fire-station` is already a flame — two
+glyphs that look alike is the failure a small vocabulary exists to avoid. And
+`pipe` is a **tobacco pipe**.
+
+Names are remapped on the way in, because Temaki names a file for the object
+drawn while this vocabulary is named for what a map is saying with it:
+`lift_gate` is a barrier arm, `border-crossing` is why anyone puts one on a map.
+The published side keeps Maki's hyphens rather than importing snake_case into
+one vocabulary.
+
+### Still to draw
+
+**`pipeline`** — the one named gap that Temaki genuinely does not fill — and a
+true conflict glyph, for which `ruins` is a proxy rather than an answer. Two
+drawings, where the plan had budgeted a set.
+
 ## [0.16.0] — 2026-09-06
 
 **The library is called `masen`.** It was `neatline` from 0.11.0 to 0.15.1, and

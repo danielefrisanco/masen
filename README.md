@@ -1079,13 +1079,14 @@ its `data-kind` for a theme to style, so a category of your own invention goes
 on working. `ICON_NAMES` is exported if you want to check first, and
 `isIconName()` if you want to ask.
 
-The set is **[Maki](https://github.com/mapbox/maki)**, which is **CC0** — public
-domain, no attribution obligation. That is the whole reason it is the set this
-library uses: anything under MIT or ISC would propagate a credit-line
+The sets are **[Maki](https://github.com/mapbox/maki)** and
+**[Temaki](https://github.com/rapideditor/temaki)**, both **CC0** — public
+domain, no attribution obligation. That is the whole reason they are the sets
+this library uses: anything under MIT or ISC would propagate a credit-line
 requirement into every map anyone generates, and quietly doing that to you is
 not something a map library should do. Nothing in your output credits anyone.
 
-Twenty-nine icons, grouped by what a map is usually saying:
+Forty icons, grouped by what a map is usually saying:
 
 | | |
 |---|---|
@@ -1095,14 +1096,33 @@ Twenty-nine icons, grouped by what a map is usually saying:
 | Settlement | `town` `city` `village` |
 | Land and landmark | `mountain` `park` `lighthouse` `monument` |
 | Situation | `danger` `roadblock` `shelter` |
+| Energy and extraction | `oil` `natural-gas` `storage-tank` `mine` `power-station` `nuclear` |
+| Borders and conflict | `military` `bunker` `camp` `border-crossing` `ruins` |
 
 Deliberately small: a vocabulary nobody can hold in their head is one where
 every author picks a different icon for the same thing.
 
-Maki covers what sits on the ground. It has no `oil`, `natural-gas`, `pipeline`
-or `mine` — the geopolitical half a news map runs on does not exist in any
-public-domain set, and drawing one to Maki's weight and grid is its own piece of
-work, not yet done.
+**The last two groups arrived by measurement rather than by drawing.** Maki
+covers what sits on the ground and has none of `oil`, `natural-gas`, `pipeline`
+or `mine`, and this file said for six versions that the geopolitical half a news
+map runs on did not exist in any public-domain set and would have to be drawn.
+That was wrong. Temaki is an expansion pack for Maki from the iD/Rapid editor
+team, also CC0, and it carries most of that vocabulary already.
+
+Two things about it are guarded rather than assumed, and both were found by
+rendering the candidates instead of reading their names. **Its grid is not
+uniform** — 485 of its 557 icons are 15×15 and the rest are drawn at 48, 50 or
+100, so the vendoring script refuses anything that is not on the grid. And **its
+line-drawn glyphs do not survive pin size**: `power_tower` and `wind_turbine`
+are legible in a picker and turn to mush at the 15 units a pin actually draws,
+so what is vendored here is deliberately the solid half. Names were remapped on
+the way in, because Temaki names a file for the object drawn and this vocabulary
+is named for what a map is saying with it — `lift_gate` is a barrier arm,
+`border-crossing` is why anyone puts one on a map.
+
+**`pipeline` is the one named gap left**, and it does have to be drawn: Temaki's
+`pipe` is a tobacco pipe. `ruins` is a proxy for conflict rather than an answer
+to it.
 
 The glyph is inked from `--anno-ink` on a mark filled with `--anno`, and the
 mark grows to hold it. The path is **inlined into each pin** rather than
@@ -1341,11 +1361,12 @@ kept on public-domain sources on purpose rather than by luck.
 | Projection maths | `d3-geo` | ISC | None |
 | Topology decoding | `topojson-client` | ISC | None |
 | Pin icons | [Maki](https://labs.mapbox.com/maki-icons/) by Mapbox, vendored into `src/icons.ts` | CC0-1.0 | None |
+| Pin icons | [Temaki](https://github.com/rapideditor/temaki) by the iD/Rapid editor team, vendored into `src/icons.ts` | CC0-1.0 | None |
 
 `d3-geo` and `topojson-client` are ordinary dependencies rather than bundled
 into `dist`, so their own licence files arrive with them and their terms are
-satisfied without this package restating anything. Maki is CC0 and vendored,
-because 29 inlined path strings is cheaper than a dependency. The Natural Earth
+satisfied without this package restating anything. Maki and Temaki are CC0 and
+vendored, because 40 inlined path strings is cheaper than two dependencies. The Natural Earth
 extracts under `vendor/` are committed rather than fetched, which is why
 `npm run build:data` needs no network — and why a publish does not either.
 
