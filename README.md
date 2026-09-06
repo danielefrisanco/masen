@@ -78,7 +78,7 @@ it over.
 
 ## Status
 
-Early, but complete enough to use, and **on npm**. Phases 0–9 are done: the
+Early, but complete enough to use, and **on npm**. Phases 0–10b are done: the
 library, and [a tool over it](https://danielefrisanco.github.io/masen/) where
 you pick a region, a projection and a theme, click the map to mark it, and take
 the result away as a file. The package builds under both ESM and CJS, resolves
@@ -90,11 +90,14 @@ annotation.
 npm i masen-map
 ```
 
-**Scoped, for two reasons.** npm refuses the bare name `masen` as too close
-to `readline` — and `masen` is a project rather than a single library, so the
-org is where a second one would go. This is the map; `@masen/graph` is the
-kind of thing that would sit beside it. The repository, the site and the `mp-`
-class prefix are unchanged.
+**Unscoped, and not by choice.** npm's similarity filter refuses the bare name
+`masen` — too close to `base`, `case` and `raven` — and the `masen`
+organisation is held by an account with no packages, so `@masen/map` was not
+available either. Hence `masen-map`. Everywhere else the project is simply
+`masen`: the repository, the site and the `mp-` class prefix are unchanged. The
+price of a prefix rather than a scope is worth stating — a scope owns its
+family, a prefix only asks politely, so `masen-themes` and `masen-data-50m` are
+ordinary names anyone can take.
 
 **`0.x` is doing real work here.** The class taxonomy below is what a `1.0.0`
 would be promising to hold still, and it has not been in enough hands yet to
