@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ICON_NAMES,
-  neatline,
+  masen,
   PALETTE_NAMES,
   PROJECTION_NAMES,
   REGION_PRESET_NAMES,
@@ -72,13 +72,13 @@ describe("marks in the URL", () => {
 
   /**
    * The one mark the library refuses. `ZZ` is not a country, and handing it on
-   * would throw inside `neatline` and lose the map — so it is dropped here,
+   * would throw inside `masen` and lose the map — so it is dropped here,
    * quietly, the way an unknown region already is.
    */
   it("drops a highlight code the library would throw on", async () => {
     const config = round("highlight=ZZ&hl=ZZ,FR,QQ,de");
     expect(config.highlight).toEqual(["FR", "DE"]);
-    await expect(neatline({ ...toOptions(config), size: [300, 200] })).resolves.toBeTruthy();
+    await expect(masen({ ...toOptions(config), size: [300, 200] })).resolves.toBeTruthy();
   });
 
   it("takes a numeric code as readily as an alphabetic one", () => {
@@ -167,7 +167,7 @@ describe("marks on the map", () => {
     const config = round(
       "region=west-europe&hl=FR&pin=2.3522,48.8566,Paris&arrow=2.3522,48.8566,13.405,52.52&route=2.3522,48.8566;4.9,52.37;13.405,52.52",
     );
-    const map = await neatline({ ...toOptions(config), detail: "110m", size: [640, 420] });
+    const map = await masen({ ...toOptions(config), detail: "110m", size: [640, 420] });
     expect(map.svg).toContain("is-highlighted");
     expect(map.svg).toContain("mp-pin");
     expect(map.svg).toContain("mp-arrow");
@@ -188,7 +188,7 @@ describe("marks on the map", () => {
         { projection: "mercator", size: [800, 400] as [number, number] },
         { projection: "albers", size: [400, 700] as [number, number] },
       ].map(async (framing) =>
-        neatline({
+        masen({
           ...toOptions({ ...DEFAULTS, region: "west-europe", pins: [{ at }] }),
           detail: "110m",
           ...framing,

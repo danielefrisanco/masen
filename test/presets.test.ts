@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { parseCss, type Rule } from "../src/css.js";
 import { loadWorld } from "../src/topology.js";
 import { politicalFill } from "../src/political.js";
-import { neatline } from "../src/index.js";
+import { masen } from "../src/index.js";
 import { PALETTES, THEMES, TYPEFACES } from "../src/theme.js";
 import { TOKENS } from "../src/tokens.js";
 
@@ -236,7 +236,7 @@ describe("political fill", () => {
   it.each(["europe", "africa", "world"] as const)(
     "gives no country in %s a neighbour's colour",
     async (region) => {
-      const map = await neatline({ region, detail: "110m", fill: "political" });
+      const map = await masen({ region, detail: "110m", fill: "political" });
       const coloured = new Map(
         [...map.svg.matchAll(/data-iso="([A-Z]{2})"[^>]*data-fill="(\d)"/g)].map((m) => [
           m[1] as string,
@@ -267,7 +267,7 @@ describe("political fill", () => {
   });
 
   it("defers to a band, so one country never carries two encodings", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       fill: "political",
@@ -321,8 +321,8 @@ describe.each(typefaces)("typeface %s", (name, css) => {
 
 describe("choosing a typeface", () => {
   it("changes the type without touching the colour", async () => {
-    const base = await neatline({ region: ["FR"], detail: "110m", theme: "atlas" });
-    const set = await neatline({
+    const base = await masen({ region: ["FR"], detail: "110m", theme: "atlas" });
+    const set = await masen({
       region: ["FR"],
       detail: "110m",
       theme: "atlas",
@@ -335,7 +335,7 @@ describe("choosing a typeface", () => {
   });
 
   it("loses to a token override, which is applied last", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       theme: "atlas",
@@ -349,8 +349,8 @@ describe("choosing a typeface", () => {
 
   it("fits more names when the face is narrower", async () => {
     const region = { region: "europe", detail: "110m", size: [900, 800], theme: "minimal" } as const;
-    const wide = await neatline(region);
-    const narrow = await neatline({ ...region, typeface: "condensed" });
+    const wide = await masen(region);
+    const narrow = await masen({ ...region, typeface: "condensed" });
     const shown = (svg: string): number =>
       (svg.match(/<text class="mp-label"(?![^>]*data-fit="0")/g) ?? []).length;
     expect(shown(narrow.svg)).toBeGreaterThanOrEqual(shown(wide.svg));

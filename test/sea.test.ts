@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { geoContains } from "d3-geo";
-import { neatline } from "../src/index.js";
+import { masen } from "../src/index.js";
 import { loadOcean } from "../src/topology.js";
 
 /**
@@ -33,14 +33,14 @@ const seaPaths = (svg: string): string[] =>
 
 describe("the sea", () => {
   it("is not drawn unless asked for", async () => {
-    const off = await neatline({ ...base, region: ["GR"] });
+    const off = await masen({ ...base, region: ["GR"] });
     expect(ocean(off.svg)).toBe("");
     // The slot exists either way: the stack is a contract, not a suggestion.
     expect(off.svg).toContain('class="mp-layer mp-ocean"');
   });
 
   it("sits under the graticule, because an atlas draws meridians over water", async () => {
-    const map = await neatline({ ...base, region: ["GR"], sea: true, graticule: true });
+    const map = await masen({ ...base, region: ["GR"], sea: true, graticule: true });
     const sea = map.svg.indexOf('class="mp-layer mp-ocean"');
     const grid = map.svg.indexOf('class="mp-layer mp-graticule"');
     const land = map.svg.indexOf('class="mp-layer mp-land"');
@@ -81,13 +81,13 @@ describe("the sea", () => {
   it("draws nothing at all for an inland frame", async () => {
     // Not an omission — the honest answer. No ocean reaches Switzerland, so
     // there is no sea to draw, and the canvas ground is what shows.
-    const map = await neatline({ ...base, region: ["CH"], sea: true });
+    const map = await masen({ ...base, region: ["CH"], sea: true });
     expect(seaPaths(map.svg)).toHaveLength(0);
     expect(ocean(map.svg)).toBe("");
   });
 
   it("draws the sea for a coastal frame", async () => {
-    const map = await neatline({ ...base, region: ["GR"], sea: true });
+    const map = await masen({ ...base, region: ["GR"], sea: true });
     expect(seaPaths(map.svg).length).toBeGreaterThan(0);
   });
 
@@ -96,7 +96,7 @@ describe("the sea", () => {
     // 520x400 map of Greece came out 806 KB of path data to show a few gulfs,
     // and a map of Switzerland came out 858 KB to show nothing. This is the
     // difference between shipping the layer and not.
-    const map = await neatline({ ...base, region: ["GR"], sea: true });
+    const map = await masen({ ...base, region: ["GR"], sea: true });
     const numbers = (seaPaths(map.svg)[0] as string).match(/-?[\d.]+/g) ?? [];
     expect(numbers.length).toBeGreaterThan(20);
     for (let i = 0; i + 1 < numbers.length; i += 2) {
@@ -114,15 +114,15 @@ describe("the sea", () => {
     // The clip is set on the shared projection and put back straight away. If
     // it leaked, coastlines would be cut off square at the canvas edge and
     // their strokes would end in mid-air.
-    const clipped = await neatline({ ...base, region: ["GR"], sea: true });
-    const plain = await neatline({ ...base, region: ["GR"] });
+    const clipped = await masen({ ...base, region: ["GR"], sea: true });
+    const plain = await masen({ ...base, region: ["GR"] });
     const countries = (svg: string) =>
       [...svg.matchAll(/<path class="mp-country"[^>]*\sd="([^"]*)"/g)].map((m) => m[1]);
     expect(countries(clipped.svg)).toEqual(countries(plain.svg));
   });
 
   it("is a colour every preset carries, distinct from the ground where the ground is paper", async () => {
-    const map = await neatline({ ...base, region: ["GR"], palette: "sand", sea: true });
+    const map = await masen({ ...base, region: ["GR"], palette: "sand", sea: true });
     // The *last* value, not the first: a theme is written before its palette
     // and the cascade settles it that way round. Reading the first match here
     // measured atlas's sea against atlas's ground and ignored the palette.
@@ -137,7 +137,7 @@ describe("the sea", () => {
   });
 
   it("keeps its paint through the flattening pass", async () => {
-    const map = await neatline({ ...base, region: ["GR"], sea: true });
+    const map = await masen({ ...base, region: ["GR"], sea: true });
     const flat = await map.render();
     expect(flat).toMatch(/<path class="mp-sea"[^>]*fill="#[0-9A-Fa-f]{3,6}"/);
   });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline, type MapOptions } from "../src/index.js";
+import { masen, type MapOptions } from "../src/index.js";
 
 /**
  * The graticule is the one layer generated rather than read.
@@ -16,7 +16,7 @@ const SIZE = [800, 600] as const;
 const TROPIC = 23.4362;
 
 async function map(options: Partial<MapOptions> = {}) {
-  return neatline({
+  return masen({
     region: "world",
     size: [...SIZE],
     graticule: true,

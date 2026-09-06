@@ -54,7 +54,7 @@ async function embed(image: string): Promise<string> {
   const mime = MIME[extension];
   if (mime === undefined) {
     throw new Error(
-      `neatline: watermark.image "${image}" is neither a data: URI nor a path ` +
+      `masen: watermark.image "${image}" is neither a data: URI nor a path ` +
         `ending in ${Object.keys(MIME).join(", ")}`,
     );
   }
@@ -66,7 +66,7 @@ async function embed(image: string): Promise<string> {
   try {
     bytes = await readFile(image);
   } catch {
-    throw new Error(`neatline: could not read watermark.image "${image}"`);
+    throw new Error(`masen: could not read watermark.image "${image}"`);
   }
   return `data:${mime};base64,${bytes.toString("base64")}`;
 }
@@ -87,10 +87,10 @@ export async function watermarkLayer(
 ): Promise<SvgNode[]> {
   const { text, image } = watermark;
   if (text !== undefined && image !== undefined) {
-    throw new Error("neatline: watermark takes text or image, not both");
+    throw new Error("masen: watermark takes text or image, not both");
   }
   if (text === undefined && image === undefined) {
-    throw new Error("neatline: watermark needs text or image");
+    throw new Error("masen: watermark needs text or image");
   }
   const anchor = checkAnchor(watermark.anchor ?? "centre", "watermark.anchor");
 

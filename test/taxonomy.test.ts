@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { neatline, LAYERS } from "../src/index.js";
+import { masen, LAYERS } from "../src/index.js";
 
 /** Layer group classes, in the order they appear in the document. */
 function layerOrder(svg: string): string[] {
   return [...svg.matchAll(/class="mp-layer ([a-z-]+)"/g)].map((m) => m[1] as string);
 }
 
-const map = await neatline({ region: "west-europe", detail: "110m", projection: "conic-conformal" });
+const map = await masen({ region: "west-europe", detail: "110m", projection: "conic-conformal" });
 
 describe("document shape", () => {
   it("puts the background behind every layer", () => {
@@ -104,7 +104,7 @@ describe("layer stack", () => {
   // The 110m tier carries only the world's largest lakes, none of them in
   // Western Europe — so water is checked where water exists.
   it("draws water at a detail tier that has some", async () => {
-    const detailed = await neatline({ region: "west-europe", detail: "50m" });
+    const detailed = await masen({ region: "west-europe", detail: "50m" });
     expect(detailed.svg).toContain('class="mp-water" data-kind="lake"');
     expect(detailed.svg).toContain('class="mp-water" data-kind="river"');
   });
@@ -139,7 +139,7 @@ describe("accessibility", () => {
   });
 
   it("mentions what is highlighted", async () => {
-    const highlighted = await neatline({
+    const highlighted = await masen({
       region: "west-europe",
       detail: "110m",
       highlight: ["FR", "BE"],
@@ -149,7 +149,7 @@ describe("accessibility", () => {
   });
 
   it("lets the caller say what the map is actually about", async () => {
-    const titled = await neatline({
+    const titled = await masen({
       region: "west-europe",
       detail: "110m",
       title: "Rail freight volume, 2024",
@@ -159,7 +159,7 @@ describe("accessibility", () => {
   });
 
   it("describes a coordinate region without a preset name", async () => {
-    const box = await neatline({ region: { bbox: [-10, 36, 5, 52] }, detail: "110m" });
+    const box = await masen({ region: { bbox: [-10, 36, 5, 52] }, detail: "110m" });
     expect(box.svg).toContain('aria-label="Map of the area from 10°W 36°N to 5°E 52°N"');
   });
 });
@@ -178,20 +178,20 @@ describe("borders", () => {
   });
 
   it("leaves the layer empty when nothing is shared", async () => {
-    const single = await neatline({ region: ["FR"], detail: "110m" });
+    const single = await masen({ region: ["FR"], detail: "110m" });
     expect(single.svg).toContain('<g class="mp-layer mp-borders" fill="none"/>');
   });
 
   it("does not draw a coastline as a border", async () => {
     // Ireland and Great Britain share no land boundary with each other.
-    const islands = await neatline({ region: ["IE", "IS"], detail: "110m" });
+    const islands = await masen({ region: ["IE", "IS"], detail: "110m" });
     expect(islands.svg).toContain('<g class="mp-layer mp-borders" fill="none"/>');
   });
 });
 
 describe("canvas", () => {
   it("handles a non-square canvas without distorting the projection", async () => {
-    const wide = await neatline({ region: "west-europe", detail: "110m", size: [1200, 600] });
+    const wide = await masen({ region: "west-europe", detail: "110m", size: [1200, 600] });
     expect(wide.svg).toContain('viewBox="0 0 1200 600"');
     expect(wide.svg).toContain('width="1200"');
     expect(wide.svg).toContain('height="600"');
@@ -229,13 +229,13 @@ describe("custom geometry", () => {
   };
 
   it("draws a caller-supplied FeatureCollection", async () => {
-    const custom = await neatline({ region: collection, detail: "110m" });
+    const custom = await masen({ region: collection, detail: "110m" });
     expect(custom.svg).toContain('class="mp-country"');
     expect(custom.svg).toContain('data-iso="FR"');
   });
 
   it("escapes markup in names, in attributes and in text", async () => {
-    const custom = await neatline({ region: collection, detail: "110m" });
+    const custom = await masen({ region: collection, detail: "110m" });
     expect(custom.svg).toContain('data-name="Sales region &lt;A&gt; &amp; &lt;B&gt;"');
     expect(custom.svg).toContain("<title>Sales region &lt;A&gt; &amp; &lt;B&gt;</title>");
     expect(custom.svg).not.toContain("<A>");
@@ -244,13 +244,13 @@ describe("custom geometry", () => {
   // The caller's outlines are their own; meshing them against the bundled
   // arcs would draw boundaries that do not follow the geometry on screen.
   it("does not invent borders for geometry it did not supply", async () => {
-    const custom = await neatline({ region: collection, detail: "110m" });
+    const custom = await masen({ region: collection, detail: "110m" });
     expect(custom.svg).toContain('<g class="mp-layer mp-borders" fill="none"/>');
   });
 
   it("rejects an empty collection", async () => {
     await expect(
-      neatline({ region: { type: "FeatureCollection", features: [] } }),
+      masen({ region: { type: "FeatureCollection", features: [] } }),
     ).rejects.toThrow(/empty/);
   });
 });

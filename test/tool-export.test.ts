@@ -40,16 +40,16 @@ describe("what the file is called", () => {
     const [size] = exportSizes(960, 620);
     expect(size).toBeDefined();
     if (size === undefined) return;
-    expect(fileName("west-europe", size, "svg")).toBe("neatline-west-europe-960x620.svg");
+    expect(fileName("west-europe", size, "svg")).toBe("masen-west-europe-960x620.svg");
   });
 
   it("turns a list of codes into something a file system will take", () => {
     const size = { scale: 2, width: 1920, height: 1240, label: "2×" };
-    expect(fileName("GR,TR,BG", size, "png")).toBe("neatline-gr-tr-bg-1920x1240.png");
+    expect(fileName("GR,TR,BG", size, "png")).toBe("masen-gr-tr-bg-1920x1240.png");
   });
 
   it("still produces a name when the region is nothing it can spell", () => {
     const size = { scale: 1, width: 300, height: 200, label: "1×" };
-    expect(fileName("...", size, "png")).toBe("neatline-map-300x200.png");
+    expect(fileName("...", size, "png")).toBe("masen-map-300x200.png");
   });
 });

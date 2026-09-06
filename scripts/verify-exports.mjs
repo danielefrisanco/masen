@@ -14,9 +14,9 @@ for (const [label, mod] of [
   ["esm", esm],
   ["cjs", cjs],
 ]) {
-  assert.equal(typeof mod.neatline, "function", `${label}: named export missing`);
+  assert.equal(typeof mod.masen, "function", `${label}: named export missing`);
 
-  const map = await mod.neatline({ region: "west-europe", detail: "110m", size: [640, 480] });
+  const map = await mod.masen({ region: "west-europe", detail: "110m", size: [640, 480] });
   assert.ok(map.svg.startsWith("<svg"), `${label}: no svg emitted`);
   assert.ok(map.svg.includes("<path"), `${label}: no geometry emitted`);
   assert.ok(Array.isArray(map.project([2.35, 48.86])), `${label}: project() broken`);
@@ -27,7 +27,7 @@ for (const [label, mod] of [
   console.log(`  ✓ ${label}`);
 }
 
-// The exports map promises `neatline/themes/minimal.css`. A promise that
+// The exports map promises `masen/themes/minimal.css`. A promise that
 // resolves to a missing file is worse than not making it.
 const { readFile } = await import("node:fs/promises");
 for (const [directory, table] of [

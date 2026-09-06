@@ -140,14 +140,14 @@ export function resolveCentre(
   if (center === undefined) return null;
   const [lon, lat] = typeof center === "number" ? [center, 0] : [center[0], center[1]];
   if (!Number.isFinite(lon) || lon < -180 || lon > 180) {
-    throw new Error(`neatline: center longitude must be between -180 and 180, got ${lon}`);
+    throw new Error(`masen: center longitude must be between -180 and 180, got ${lon}`);
   }
   if (!Number.isFinite(lat) || lat < -90 || lat > 90) {
-    throw new Error(`neatline: center latitude must be between -90 and 90, got ${lat}`);
+    throw new Error(`masen: center latitude must be between -90 and 90, got ${lat}`);
   }
   if (lat !== 0 && !TWO_AXIS.has(name)) {
     throw new Error(
-      `neatline: ${name} can only be centred on a meridian. Tilting it off the ` +
+      `masen: ${name} can only be centred on a meridian. Tilting it off the ` +
         `equator makes an oblique aspect — a different map, not a recentred one. ` +
         `Pass a longitude on its own, or use ${[...TWO_AXIS].join(", ")}.`,
     );

@@ -9,16 +9,16 @@ const DATA = resolve(here, "data");
 /**
  * The base path, and the trap it exists to spring early.
  *
- * A GitHub *project* site is served from `/neatline/`, not from `/`. That one
+ * A GitHub *project* site is served from `/masen/`, not from `/`. That one
  * segment is the whole reason 09b deploys a page that does almost nothing: if
  * the base is wrong the map does not fail loudly — it asks for a file, gets the
  * 404 page, and reports a JSON parse error from three modules down.
  *
  * The dev server runs on the same base for the same reason. A local site served
- * from `/` and a deployed one served from `/neatline/` are not the same site,
+ * from `/` and a deployed one served from `/masen/` are not the same site,
  * and the difference should not first appear in an action log.
  */
-const BASE = "/neatline/";
+const BASE = "/masen/";
 
 /**
  * Check that there is data to serve, and get out of the way.
@@ -43,7 +43,7 @@ const BASE = "/neatline/";
  */
 function dataPresent(): Plugin {
   return {
-    name: "neatline-data-present",
+    name: "masen-data-present",
 
     /**
      * Emit `.nojekyll`, because one of our own filenames is a Jekyll landmine.
@@ -71,7 +71,7 @@ function dataPresent(): Plugin {
       }
       if (names.length === 0) {
         this.error(
-          "neatline: data/ has no map data in it. Run `npm run build:data` before building the tool — " +
+          "masen: data/ has no map data in it. Run `npm run build:data` before building the tool — " +
             "Vite globs that directory at build time, and an empty glob ships a tool that cannot draw anything.",
         );
       }

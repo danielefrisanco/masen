@@ -66,7 +66,7 @@ const LIMIT = 4000;
  */
 const COOLDOWN = 30_000;
 
-const SENT_AT = "neatline:v1:feedback";
+const SENT_AT = "masen:v1:feedback";
 
 function lastSent(): number {
   try {
@@ -268,7 +268,7 @@ export function mountFeedback(
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: ACCESS_KEY,
-          subject: "neatline — feedback from the tool",
+          subject: "masen — feedback from the tool",
           // Sent only when there is one. An empty string in this field is not
           // "no reply address" to Web3Forms, it is an invalid one, and the
           // whole message is refused for it.

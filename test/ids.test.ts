@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline, type MapOptions } from "../src/index.js";
+import { masen, type MapOptions } from "../src/index.js";
 
 /**
  * Two maps in one document.
@@ -57,7 +57,7 @@ const MAPS: ReadonlyArray<readonly [string, MapOptions]> = [
 
 describe("svg ids", () => {
   it.each(MAPS)("resolves every reference inside %s itself", async (_name, options) => {
-    const map = await neatline(options);
+    const map = await masen(options);
     const document = await map.render();
     const defined = new Set(ids(document));
     const used = references(document);
@@ -68,7 +68,7 @@ describe("svg ids", () => {
   });
 
   it("gives no two different maps a shared id", async () => {
-    const built = await Promise.all(MAPS.map(([, options]) => neatline(options)));
+    const built = await Promise.all(MAPS.map(([, options]) => masen(options)));
     const documents = await Promise.all(built.map((map) => map.render()));
 
     const seen = new Map<string, number>();
@@ -89,8 +89,8 @@ describe("svg ids", () => {
     // The real failure, stated as the thing that went wrong: put two maps in one
     // page and check that nothing in the second one names anything in the first.
     const [a, b] = await Promise.all([
-      neatline({ region: ["FR"], detail: "110m", theme: "atlas" }),
-      neatline({ region: ["IT"], detail: "110m", theme: "atlas" }),
+      masen({ region: ["FR"], detail: "110m", theme: "atlas" }),
+      masen({ region: ["IT"], detail: "110m", theme: "atlas" }),
     ]);
     const first = await a.render();
     const second = await b.render();
@@ -106,7 +106,7 @@ describe("svg ids", () => {
   it("still lets a theme ask for a definition by the name the docs promise", async () => {
     // The authored name never changes. A stylesheet in the wild says
     // `url(#mp-relief)`, and it has to keep working — only the emitted pair moves.
-    const map = await neatline({
+    const map = await masen({
       region: "africa",
       detail: "110m",
       theme: ".mp .mp-land { filter: url(#mp-relief); }",
@@ -123,14 +123,14 @@ describe("svg ids", () => {
   it("gives the same map the same ids every time", async () => {
     // Derived, never counted: a counter would make a map's bytes depend on how
     // many maps were built before it.
-    const once = await neatline({ region: ["FR"], detail: "110m", theme: "atlas" });
-    const twice = await neatline({ region: ["FR"], detail: "110m", theme: "atlas" });
+    const once = await masen({ region: ["FR"], detail: "110m", theme: "atlas" });
+    const twice = await masen({ region: ["FR"], detail: "110m", theme: "atlas" });
     expect(ids(await once.render())).toEqual(ids(await twice.render()));
   });
 
   it("leaves an id the caller invented alone", async () => {
     // Only the built-in names are namespaced. Someone else's gradient is theirs.
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       theme: ".mp .mp-country { fill: url(#my-own-gradient); }",

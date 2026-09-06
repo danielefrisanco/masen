@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline } from "../src/index.js";
+import { masen } from "../src/index.js";
 import { inlineStyles } from "../src/inline.js";
 import { parseCss } from "../src/css.js";
 import { el, text } from "../src/svg.js";
@@ -103,7 +103,7 @@ describe("flattening", () => {
 
 describe("end to end", () => {
   it("writes computed paint onto the countries", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       theme: "minimal",
@@ -120,7 +120,7 @@ describe("end to end", () => {
   });
 
   it("leaves the geometry untouched without the flag", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m", theme: "minimal" });
+    const map = await masen({ region: ["FR"], detail: "110m", theme: "minimal" });
     expect(map.toString()).not.toContain('fill="#E4E4E1"');
   });
 });

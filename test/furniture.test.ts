@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { ANCHORS, isAnchor, neatline, type Anchor } from "../src/index.js";
+import { ANCHORS, isAnchor, masen, type Anchor } from "../src/index.js";
 
 /**
  * Furniture is the one layer that is not geographic.
@@ -68,7 +68,7 @@ function credit(svg: string): Line | null {
 }
 
 async function withAnchor(anchor: Anchor) {
-  return await neatline({
+  return await masen({
     region: "west-europe",
     detail: "110m",
     size: SIZE,
@@ -107,10 +107,10 @@ describe("a credit line", () => {
     // stopped being furniture and become a caption on the ground.
     const base = { detail: "110m", size: SIZE, padding: PADDING, credit: "Reuters" } as const;
     const maps = await Promise.all([
-      neatline({ ...base, region: "west-europe", projection: "conic-conformal" }),
-      neatline({ ...base, region: "africa", projection: "orthographic" }),
-      neatline({ ...base, region: "world", projection: "equal-earth" }),
-      neatline({ ...base, region: ["JP"], projection: "mercator" }),
+      masen({ ...base, region: "west-europe", projection: "conic-conformal" }),
+      masen({ ...base, region: "africa", projection: "orthographic" }),
+      masen({ ...base, region: "world", projection: "equal-earth" }),
+      masen({ ...base, region: ["JP"], projection: "mercator" }),
     ]);
     const placed = maps.map((m) => credit(m.svg));
     for (const line of placed) {
@@ -125,14 +125,14 @@ describe("a credit line", () => {
   it("follows the padding the map was drawn inside", async () => {
     // Furniture lines up with the margin the map already has rather than
     // inventing a second one.
-    const tight = await neatline({
+    const tight = await masen({
       region: "west-europe",
       detail: "110m",
       size: SIZE,
       padding: 8,
       credit: "x",
     });
-    const loose = await neatline({
+    const loose = await masen({
       region: "west-europe",
       detail: "110m",
       size: SIZE,
@@ -144,21 +144,21 @@ describe("a credit line", () => {
   });
 
   it("takes a bare string at the default anchor", async () => {
-    const map = await neatline({ region: "west-europe", detail: "110m", credit: "Reuters" });
+    const map = await masen({ region: "west-europe", detail: "110m", credit: "Reuters" });
     const line = credit(map.svg);
     expect(line?.text).toBe("Reuters");
     expect(line?.anchor).toBe("bottom-right");
   });
 
   it("puts nothing in the layer when there is nothing to say", async () => {
-    const none = await neatline({ region: "west-europe", detail: "110m" });
+    const none = await masen({ region: "west-europe", detail: "110m" });
     expect(furniture(none.svg).trim()).toBe("");
-    const empty = await neatline({ region: "west-europe", detail: "110m", credit: "" });
+    const empty = await masen({ region: "west-europe", detail: "110m", credit: "" });
     expect(furniture(empty.svg).trim()).toBe("");
   });
 
   it("leaves the layer emitted and empty when furniture is switched off", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       credit: "Reuters",
@@ -170,7 +170,7 @@ describe("a credit line", () => {
 
   it("refuses an anchor that is not one of the nine", async () => {
     await expect(
-      neatline({
+      masen({
         region: "west-europe",
         detail: "110m",
         credit: { text: "x", anchor: "middle-left" as Anchor },
@@ -181,7 +181,7 @@ describe("a credit line", () => {
   it("stays out of the accessible description", async () => {
     // A credit says who made the map, which is not what the map is *of*.
     // Announcing it would put the byline ahead of the subject.
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       credit: "Reuters graphics",
@@ -269,13 +269,13 @@ function compass(svg: string): { x: number; y: number; d: string; anchor: string
 
 describe("what the projection does to the ground", () => {
   it("reports a small frame as uniform and a world map as not", async () => {
-    const swiss = await neatline({
+    const swiss = await masen({
       region: ["CH"],
       detail: "110m",
       size: SIZE,
       projection: "mercator",
     });
-    const world = await neatline({
+    const world = await masen({
       region: "world",
       detail: "110m",
       size: SIZE,
@@ -292,7 +292,7 @@ describe("what the projection does to the ground", () => {
     // read off the projection's family: mercator is conformal and *fails* the
     // scale test at this extent while passing the north test perfectly.
     for (const region of ["world", "europe", ["CH"]] as const) {
-      const map = await neatline({
+      const map = await masen({
         region: region as never,
         detail: "110m",
         size: SIZE,
@@ -303,7 +303,7 @@ describe("what the projection does to the ground", () => {
   });
 
   it("measures once and keeps the answer", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m", size: SIZE });
+    const map = await masen({ region: ["FR"], detail: "110m", size: SIZE });
     expect(map.distortion()).toBe(map.distortion());
   });
 });
@@ -324,7 +324,7 @@ describe("a scale bar", () => {
       { region: ["US"], projection: "orthographic" },
     ];
     for (const one of cases) {
-      const map = await neatline({
+      const map = await masen({
         region: one.region as never,
         detail: "110m",
         size: SIZE,
@@ -361,8 +361,8 @@ describe("a scale bar", () => {
     // Europe the same ruler reads nearly three times longer at one end of the
     // frame than the other.
     const base = { region: "europe", detail: "110m", size: SIZE, scaleBar: true } as const;
-    const lying = await neatline({ ...base, projection: "mercator" });
-    const honest = await neatline({ ...base, projection: "conic-conformal" });
+    const lying = await masen({ ...base, projection: "mercator" });
+    const honest = await masen({ ...base, projection: "conic-conformal" });
 
     expect(lying.distortion().scale).toBeGreaterThan(2);
     expect(bar(lying.svg), "a bar was drawn on a frame that varies 2:1").toBeNull();
@@ -372,8 +372,8 @@ describe("a scale bar", () => {
 
   it("takes the caller's tolerance when they know their map", async () => {
     const base = { region: "africa", detail: "110m", size: SIZE, projection: "albers" } as const;
-    const strict = await neatline({ ...base, scaleBar: true });
-    const relaxed = await neatline({ ...base, scaleBar: { tolerance: 1.5 } });
+    const strict = await masen({ ...base, scaleBar: true });
+    const relaxed = await masen({ ...base, scaleBar: { tolerance: 1.5 } });
     expect(base && strict.distortion().scale).toBeGreaterThan(1.1);
     expect(bar(strict.svg)).toBeNull();
     expect(bar(relaxed.svg)).not.toBeNull();
@@ -383,7 +383,7 @@ describe("a scale bar", () => {
     // A bar reading 237 km is a bar nobody can step across a map. The width is
     // derived from the number, never the number from the width.
     for (const region of [["CH"], ["FR"], ["IN"], ["ID"]] as const) {
-      const map = await neatline({
+      const map = await masen({
         region: region as never,
         detail: "110m",
         size: SIZE,
@@ -400,7 +400,7 @@ describe("a scale bar", () => {
   });
 
   it("says miles when asked, and means them", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       size: SIZE,
@@ -421,7 +421,7 @@ describe("a scale bar", () => {
     // `place` positions a point; a bar is a box, and anchoring a box to the
     // right means its far corner sits at the inset, not its origin.
     for (const anchor of ANCHORS) {
-      const map = await neatline({
+      const map = await masen({
         region: ["FR"],
         detail: "110m",
         size: SIZE,
@@ -441,15 +441,15 @@ describe("a scale bar", () => {
   });
 
   it("draws nothing unless it is asked for", async () => {
-    const none = await neatline({ region: ["FR"], detail: "110m", size: SIZE });
+    const none = await masen({ region: ["FR"], detail: "110m", size: SIZE });
     expect(bar(none.svg)).toBeNull();
-    const off = await neatline({ region: ["FR"], detail: "110m", size: SIZE, scaleBar: false });
+    const off = await masen({ region: ["FR"], detail: "110m", size: SIZE, scaleBar: false });
     expect(bar(off.svg)).toBeNull();
   });
 
   it("refuses an anchor that is not one of the nine", async () => {
     await expect(
-      neatline({
+      masen({
         region: ["FR"],
         detail: "110m",
         scaleBar: { anchor: "middle-left" as Anchor },
@@ -460,7 +460,7 @@ describe("a scale bar", () => {
 
 describe("a north arrow", () => {
   it("appears wherever up is north and nowhere else", async () => {
-    const wide = await neatline({
+    const wide = await masen({
       region: "europe",
       detail: "110m",
       size: SIZE,
@@ -468,7 +468,7 @@ describe("a north arrow", () => {
       compass: true,
       scaleBar: true,
     });
-    const fanned = await neatline({
+    const fanned = await masen({
       region: "west-europe",
       detail: "110m",
       size: SIZE,
@@ -490,7 +490,7 @@ describe("a north arrow", () => {
   });
 
   it("points up", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["CH"],
       detail: "110m",
       size: SIZE,
@@ -507,7 +507,7 @@ describe("a north arrow", () => {
 
   it("keeps its whole box inside the padding at every anchor", async () => {
     for (const anchor of ANCHORS) {
-      const map = await neatline({
+      const map = await masen({
         region: ["CH"],
         detail: "110m",
         size: SIZE,
@@ -529,7 +529,7 @@ describe("a north arrow", () => {
 
   it("shares the canvas with the other furniture without collision", async () => {
     // The three defaults are three different corners on purpose.
-    const map = await neatline({
+    const map = await masen({
       region: ["CH"],
       detail: "110m",
       size: SIZE,
@@ -544,7 +544,7 @@ describe("a north arrow", () => {
   });
 
   it("stays out of the accessible description", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["CH"],
       detail: "110m",
       projection: "mercator",
@@ -583,13 +583,13 @@ describe("a watermark", () => {
     const { mkdtemp, writeFile } = await import("node:fs/promises");
     const { tmpdir } = await import("node:os");
     const { join } = await import("node:path");
-    const dir = await mkdtemp(join(tmpdir(), "neatline-wm-"));
+    const dir = await mkdtemp(join(tmpdir(), "masen-wm-"));
     logoPath = join(dir, "logo.svg");
     await writeFile(logoPath, LOGO, "utf8");
   });
 
   it("takes a bare string as words at the centre", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       size: SIZE,
@@ -608,7 +608,7 @@ describe("a watermark", () => {
 
   it("anchors words the way the credit does, alignment and all", async () => {
     for (const anchor of ANCHORS) {
-      const map = await neatline({
+      const map = await masen({
         region: ["FR"],
         detail: "110m",
         size: SIZE,
@@ -634,7 +634,7 @@ describe("a watermark", () => {
     // The whole point of this library's output is that one file is the whole
     // map. A watermark that referenced a logo on disk would stop working the
     // moment the SVG was emailed to anyone.
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       size: SIZE,
@@ -653,7 +653,7 @@ describe("a watermark", () => {
     // The library cannot measure an image's aspect ratio outside a browser —
     // the same wall --label-advance exists to get around. So the caller gives a
     // box and the logo is fitted inside it.
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       size: SIZE,
@@ -670,7 +670,7 @@ describe("a watermark", () => {
 
   it("passes a data URI through untouched", async () => {
     const uri = "data:image/png;base64,iVBORw0KGgo=";
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       watermark: { image: uri },
@@ -682,7 +682,7 @@ describe("a watermark", () => {
     // Four of this phase's defects were a value nothing consumed yet. A
     // watermark flattened without its opacity is a logo printed at full
     // strength across the middle of the map.
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       theme: "noir",
@@ -699,24 +699,24 @@ describe("a watermark", () => {
   it("refuses what it cannot draw, by name", async () => {
     const base = { region: ["FR"] as const, detail: "110m" as const };
     await expect(
-      neatline({ ...base, watermark: { text: "x", image: "data:image/png;base64,a" } }),
+      masen({ ...base, watermark: { text: "x", image: "data:image/png;base64,a" } }),
     ).rejects.toThrow(/not both/);
-    await expect(neatline({ ...base, watermark: {} })).rejects.toThrow(/needs text or image/);
-    await expect(neatline({ ...base, watermark: { image: "./logo.tiff" } })).rejects.toThrow(
+    await expect(masen({ ...base, watermark: {} })).rejects.toThrow(/needs text or image/);
+    await expect(masen({ ...base, watermark: { image: "./logo.tiff" } })).rejects.toThrow(
       /neither a data: URI nor a path/,
     );
-    await expect(neatline({ ...base, watermark: { image: "./absent.png" } })).rejects.toThrow(
+    await expect(masen({ ...base, watermark: { image: "./absent.png" } })).rejects.toThrow(
       /could not read/,
     );
     await expect(
-      neatline({ ...base, watermark: { text: "x", anchor: "middle-left" as Anchor } }),
+      masen({ ...base, watermark: { text: "x", anchor: "middle-left" as Anchor } }),
     ).rejects.toThrow(/is not one of/);
   });
 
   it("says nothing when there is nothing to say", async () => {
-    const empty = await neatline({ region: ["FR"], detail: "110m", watermark: "" });
+    const empty = await masen({ region: ["FR"], detail: "110m", watermark: "" });
     expect(watermark(empty.svg)).toBeNull();
-    const off = await neatline({
+    const off = await masen({
       region: ["FR"],
       detail: "110m",
       watermark: "DRAFT",
@@ -728,7 +728,7 @@ describe("a watermark", () => {
   it("stays out of the accessible description", async () => {
     // Same reason the credit does: a mark of provenance is not what the map is
     // *of*, and announcing it would put the stamp ahead of the subject.
-    const map = await neatline({ region: ["FR"], detail: "110m", watermark: "DRAFT" });
+    const map = await masen({ region: ["FR"], detail: "110m", watermark: "DRAFT" });
     expect(/aria-label="([^"]*)"/.exec(map.svg)?.[1]).not.toContain("DRAFT");
   });
 });

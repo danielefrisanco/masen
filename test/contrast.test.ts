@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline, PALETTE_NAMES, THEME_NAMES } from "../src/index.js";
+import { masen, PALETTE_NAMES, THEME_NAMES } from "../src/index.js";
 
 /**
  * A floor under how close two colours a map puts side by side may be.
@@ -138,7 +138,7 @@ const presets: [string, string | null][] = [
 
 describe("every preset keeps its coastlines findable", () => {
   it.each(presets)("%s with palette %s", async (theme, palette) => {
-    const map = await neatline({
+    const map = await masen({
       region: ["CH"],
       detail: "110m",
       size: [10, 10],

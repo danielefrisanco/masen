@@ -1,23 +1,23 @@
 import { describe, expect, it } from "vitest";
-import { neatline, THEME_NAMES, PALETTE_NAMES, TOKENS, LAYERS } from "../src/index.js";
+import { masen, THEME_NAMES, PALETTE_NAMES, TOKENS, LAYERS } from "../src/index.js";
 import { parseCss, scopeSelector, serializeCss } from "../src/css.js";
 import { resolveTheme } from "../src/theme.js";
 
 describe("resolution", () => {
   it("applies a bundled theme", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m", theme: "minimal" });
+    const map = await masen({ region: ["FR"], detail: "110m", theme: "minimal" });
     expect(map.css).toContain("--land");
     expect(map.css).toContain(".mp-country");
   });
 
   it("leaves css empty when nothing was themed", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m" });
+    const map = await masen({ region: ["FR"], detail: "110m" });
     expect(map.css).toBe("");
     expect(map.svg).not.toContain("<style");
   });
 
   it("accepts a stylesheet inline", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "110m",
       theme: ".mp .mp-country { fill: #123456; }",
@@ -27,17 +27,17 @@ describe("resolution", () => {
 
   it("names what it knows when given a name it does not", async () => {
     await expect(
-      neatline({ region: ["FR"], detail: "110m", theme: "nonexistent" }),
+      masen({ region: ["FR"], detail: "110m", theme: "nonexistent" }),
     ).rejects.toThrow(/unknown theme "nonexistent".*minimal/s);
   });
 
   it("ships every advertised theme and palette", async () => {
     for (const theme of THEME_NAMES) {
-      const map = await neatline({ region: ["FR"], detail: "110m", theme });
+      const map = await masen({ region: ["FR"], detail: "110m", theme });
       expect(map.css).not.toBe("");
     }
     for (const palette of PALETTE_NAMES) {
-      const map = await neatline({ region: ["FR"], detail: "110m", theme: "minimal", palette });
+      const map = await masen({ region: ["FR"], detail: "110m", theme: "minimal", palette });
       expect(map.css).not.toBe("");
     }
   });
@@ -93,7 +93,7 @@ describe("scoping", () => {
   // a scope, two themed maps on one page would overwrite each other, and a map
   // would restyle anything sharing a class name.
   it("scopes every rule to one map", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m", theme: "minimal" });
+    const map = await masen({ region: ["FR"], detail: "110m", theme: "minimal" });
     const scope = /class="mp (mp-t-[a-z0-9]+)"/.exec(map.svg)?.[1];
     expect(scope).toBeDefined();
     for (const node of parseCss(map.css)) {
@@ -104,8 +104,8 @@ describe("scoping", () => {
 
   it("gives different themes different scopes", async () => {
     const [a, b] = await Promise.all([
-      neatline({ region: ["FR"], detail: "110m", theme: "minimal" }),
-      neatline({ region: ["FR"], detail: "110m", theme: "atlas" }),
+      masen({ region: ["FR"], detail: "110m", theme: "minimal" }),
+      masen({ region: ["FR"], detail: "110m", theme: "atlas" }),
     ]);
     const scopeOf = (svg: string) => /class="mp (mp-t-[a-z0-9]+)"/.exec(svg)?.[1];
     expect(scopeOf(a.svg)).not.toBe(scopeOf(b.svg));
@@ -113,8 +113,8 @@ describe("scoping", () => {
 
   it("gives the same theme the same scope, so output stays deterministic", async () => {
     const [a, b] = await Promise.all([
-      neatline({ region: ["FR"], detail: "110m", theme: "minimal" }),
-      neatline({ region: ["DE"], detail: "110m", theme: "minimal" }),
+      masen({ region: ["FR"], detail: "110m", theme: "minimal" }),
+      masen({ region: ["DE"], detail: "110m", theme: "minimal" }),
     ]);
     const scopeOf = (svg: string) => /class="mp (mp-t-[a-z0-9]+)"/.exec(svg)?.[1];
     expect(scopeOf(a.svg)).toBe(scopeOf(b.svg));
@@ -130,34 +130,34 @@ describe("scoping", () => {
 
 describe("document", () => {
   it("keeps svg geometry-only and toString complete", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m", theme: "minimal" });
+    const map = await masen({ region: ["FR"], detail: "110m", theme: "minimal" });
     expect(map.svg).not.toContain("<style");
     expect(map.toString()).toContain("<style>");
     expect(map.toString()).toContain("--land");
   });
 
   it("puts the scope class on the root even when css is served separately", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m", theme: "minimal" });
+    const map = await masen({ region: ["FR"], detail: "110m", theme: "minimal" });
     expect(map.svg).toMatch(/class="mp mp-t-[a-z0-9]+"/);
   });
 
   it("refuses css that would break out of the style element", async () => {
     await expect(
-      neatline({ region: ["FR"], detail: "110m", theme: ".mp { fill: red } </style><script>" }),
+      masen({ region: ["FR"], detail: "110m", theme: ".mp { fill: red } </style><script>" }),
     ).rejects.toThrow(/cannot be embedded/);
   });
 });
 
 describe("layers option", () => {
   it("empties a slot without removing it", async () => {
-    const map = await neatline({ region: "west-europe", detail: "110m", layers: { borders: false } });
+    const map = await masen({ region: "west-europe", detail: "110m", layers: { borders: false } });
     expect(map.svg).toContain('<g class="mp-layer mp-borders" fill="none"/>');
     expect(map.svg).not.toContain('class="mp-border"');
     expect(map.svg).toContain('class="mp-country"');
   });
 
   it("keeps the full stack whatever is switched off", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       layers: { land: false, borders: false },
@@ -168,7 +168,7 @@ describe("layers option", () => {
   });
 
   it("still describes highlights that were switched off", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       highlight: ["FR"],

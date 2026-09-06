@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   ICON_NAMES,
-  neatline,
+  masen,
   PALETTE_NAMES,
   PROJECTION_NAMES,
   REGION_PRESET_NAMES,
@@ -168,7 +168,7 @@ describe("the config as library options", () => {
     expect(toOptions({ ...DEFAULTS, pinSize: 7 }).tokens).toBeUndefined();
     expect(toOptions({ ...DEFAULTS, pinSize: 14 }).tokens).toEqual({ "--pin-size": "14" });
 
-    const big = await neatline({
+    const big = await masen({
       ...toOptions({
         ...DEFAULTS,
         pinSize: 14,
@@ -178,7 +178,7 @@ describe("the config as library options", () => {
       size: [400, 300],
       theme: "minimal",
     });
-    const small = await neatline({
+    const small = await masen({
       ...toOptions({ ...DEFAULTS, pins: [{ at: [2.35, 48.86], kind: "airport" }] }),
       detail: "110m",
       size: [400, 300],
@@ -206,7 +206,7 @@ describe("the config as library options", () => {
    */
   it("draws every configuration the URL can express", async () => {
     for (const config of [DEFAULTS, CHOSEN, decode("region=world&projection=orthographic&graticule=1", VOCABULARY)]) {
-      const map = await neatline({ ...toOptions(config), detail: "110m", size: [400, 300] });
+      const map = await masen({ ...toOptions(config), detail: "110m", size: [400, 300] });
       expect(map.svg.startsWith("<svg")).toBe(true);
       expect(map.svg).toContain("<path");
     }

@@ -1,7 +1,7 @@
 /**
  * Write the bundled themes, palettes and typefaces out as real `.css` files.
  *
- * They are authored as TypeScript strings so that `neatline()` stays isomorphic —
+ * They are authored as TypeScript strings so that `masen()` stays isomorphic —
  * reading a stylesheet from disk at call time would make the library Node-only,
  * which is exactly the constraint Phase 4 is working to remove. But consumers
  * still want the plain files: to link one in a page, to fork one as a starting

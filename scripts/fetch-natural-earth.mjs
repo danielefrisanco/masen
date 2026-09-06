@@ -205,7 +205,7 @@ for (const tier of TIERS) {
   // broken one, which is the kind of failure that ships. Say so instead.
   if (unclassed > 0) {
     throw new Error(
-      `neatline: ${unclassed} of ${regions.features.length} regions at ${tier} have no 10m classification. ` +
+      `masen: ${unclassed} of ${regions.features.length} regions at ${tier} have no 10m classification. ` +
         `The NE_ID join is the only thing standing between this file and an unclassed blob — fix it rather than working around it.`,
     );
   }

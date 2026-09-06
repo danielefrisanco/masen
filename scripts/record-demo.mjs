@@ -44,7 +44,7 @@ import { join } from "node:path";
 
 const CHROME = process.env.CHROME ?? "/usr/bin/google-chrome";
 const PORT = 9444;
-const URL_BASE = process.env.DEMO_URL ?? "https://danielefrisanco.github.io/neatline/";
+const URL_BASE = process.env.DEMO_URL ?? "https://danielefrisanco.github.io/masen/";
 const OUT = "media";
 const FRAMES = ".demo-frames";
 // 16:10, which is the shape the map wants and the shape a social card crops
@@ -103,7 +103,7 @@ async function connect(port) {
       await wait(250);
     }
   }
-  throw new Error("neatline: Chrome never answered on the debugging port");
+  throw new Error("masen: Chrome never answered on the debugging port");
 }
 
 /* --------------------------------------------------------------- staging --- */
@@ -238,7 +238,7 @@ async function main() {
       awaitPromise: true,
     });
     if (exceptionDetails !== undefined) {
-      throw new Error(`neatline: the page threw — ${exceptionDetails.text}`);
+      throw new Error(`masen: the page threw — ${exceptionDetails.text}`);
     }
     return result.value;
   };
@@ -257,7 +257,7 @@ async function main() {
 
   /** Move the drawn pointer, and give the transition time to run. */
   const point = async (spot) => {
-    if (spot === null) throw new Error("neatline: nothing to point at");
+    if (spot === null) throw new Error("masen: nothing to point at");
     await evaluate(`demo.move(${spot.x}, ${spot.y})`);
     await wait(600);
   };
@@ -406,7 +406,7 @@ async function main() {
 
   /* ---- encode ---- */
 
-  if (frames.length < 10) throw new Error(`neatline: only ${frames.length} frames captured`);
+  if (frames.length < 10) throw new Error(`masen: only ${frames.length} frames captured`);
 
   const list = [];
   for (const [index, frame] of frames.entries()) {

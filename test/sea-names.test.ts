@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { geoContains } from "d3-geo";
-import { neatline } from "../src/index.js";
+import { masen } from "../src/index.js";
 import { loadWorld } from "../src/topology.js";
 
 /**
@@ -53,12 +53,12 @@ const AEGEAN = ["GR", "TR", "BG", "MK", "AL"];
 
 describe("sea names", () => {
   it("are not drawn unless asked for", async () => {
-    const map = await neatline({ ...base, region: AEGEAN });
+    const map = await masen({ ...base, region: AEGEAN });
     expect(seaNames(map.svg)).toEqual([]);
   });
 
   it("name the water they sit on", async () => {
-    const map = await neatline({ ...base, region: AEGEAN, seaNames: 3, sea: true });
+    const map = await masen({ ...base, region: AEGEAN, seaNames: 3, sea: true });
     const drawn = seaNames(map.svg).filter((s) => !s.hidden);
     expect(drawn.length).toBeGreaterThan(0);
 
@@ -76,7 +76,7 @@ describe("sea names", () => {
   });
 
   it("gets the Aegean onto a map of the Aegean", async () => {
-    const map = await neatline({ ...base, region: AEGEAN, seaNames: 3, sea: true });
+    const map = await masen({ ...base, region: AEGEAN, seaNames: 3, sea: true });
     const names = seaNames(map.svg).map((s) => s.name);
     expect(names).toContain("Aegean Sea");
   });
@@ -90,8 +90,8 @@ describe("sea names", () => {
    */
   it("thins by rank", async () => {
     const region = AEGEAN;
-    const shallow = await neatline({ ...base, region, seaNames: true, sea: true });
-    const deep = await neatline({ ...base, region, seaNames: 3, sea: true });
+    const shallow = await masen({ ...base, region, seaNames: true, sea: true });
+    const deep = await masen({ ...base, region, seaNames: 3, sea: true });
     const at = (svg: string): string[] => seaNames(svg).map((s) => s.name);
     expect(at(shallow.svg)).not.toContain("Aegean Sea");
     expect(at(deep.svg)).toContain("Aegean Sea");
@@ -109,7 +109,7 @@ describe("sea names", () => {
   it("never sets half a name against the frame", async () => {
     const [width, height] = SIZE;
     for (const region of [AEGEAN, ["IT", "HR", "SI"], ["FR", "ES", "PT"]]) {
-      const map = await neatline({ ...base, region, seaNames: 3, sea: true });
+      const map = await masen({ ...base, region, seaNames: 3, sea: true });
       for (const sea of seaNames(map.svg)) {
         // Generous: the estimate the placer used is the same one being checked,
         // so this catches a name centred at the edge rather than a glyph or two.
@@ -131,7 +131,7 @@ describe("sea names", () => {
    * map that proves it is wired up.
    */
   it("keeps the far side of a globe off the near side", async () => {
-    const map = await neatline({
+    const map = await masen({
       ...base,
       region: "africa",
       projection: "orthographic",
@@ -151,7 +151,7 @@ describe("sea names", () => {
   it("yields to the names on land", async () => {
     // Sea names are judged last, so they are the ones marked unfit when a
     // country or a city wants the same space — never the other way round.
-    const map = await neatline({ ...base, region: AEGEAN, seaNames: 3, sea: true });
+    const map = await masen({ ...base, region: AEGEAN, seaNames: 3, sea: true });
     const labels = [...map.svg.matchAll(/<text class="mp-label"[^>]*data-kind="(\w+)"/g)].map(
       (m) => m[1],
     );
@@ -160,7 +160,7 @@ describe("sea names", () => {
   });
 
   it("takes a caller's own name for a sea", async () => {
-    const map = await neatline({
+    const map = await masen({
       ...base,
       region: AEGEAN,
       seaNames: 3,
@@ -173,7 +173,7 @@ describe("sea names", () => {
   });
 
   it("obeys the layer switch", async () => {
-    const map = await neatline({
+    const map = await masen({
       ...base,
       region: AEGEAN,
       seaNames: 3,

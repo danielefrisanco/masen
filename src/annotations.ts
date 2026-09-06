@@ -114,7 +114,7 @@ function round(value: number): number {
  * place and no validation can find it.
  */
 function assertPosition(at: Position, index: number, what: string, field: string): void {
-  const where = `neatline: ${what}[${index}].${field}`;
+  const where = `masen: ${what}[${index}].${field}`;
   if (!Array.isArray(at) || at.length !== 2) {
     throw new Error(`${where} must be a [lon, lat] pair`);
   }

@@ -29,7 +29,7 @@ node_modules/
 # Untracked on purpose: the published page is canonical, and a 75 KB single-file
 # HTML page in git produces a diff nobody can read. There is deliberately no
 # second Markdown copy — two plans drift.
-neatline-plan.html
+masen-plan.html
 
 # Reference images — maps someone else drew, kept beside the tests as a target
 # for what to build next. Not ours to redistribute, and not inputs to any test.

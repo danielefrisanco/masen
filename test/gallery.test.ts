@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline, type MapOptions } from "../src/index.js";
+import { masen, type MapOptions } from "../src/index.js";
 
 /**
  * A gallery, not a checksum.
@@ -622,7 +622,7 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
         { at: [-1.55, 47.22], kind: "flooding", label: "No icon for this" },
       ],
       title: "Seven marks, six of which name an icon",
-      credit: "Boundaries: Natural Earth · neatline",
+      credit: "Boundaries: Natural Earth · masen",
     },
   ],
   // The furniture layer, which is the only one that is not geographic. The
@@ -686,7 +686,7 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       size: [1000, 600],
       scaleBar: { units: "mi", anchor: "bottom-left" },
       compass: { anchor: "top-left" },
-      credit: "neatline",
+      credit: "masen",
       title: "Bar, arrow and credit, in three corners",
     },
   ],
@@ -894,7 +894,7 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
 
 describe("gallery", () => {
   it.each(GALLERY)("renders %s", async (name, options) => {
-    const map = await neatline({ detail: "110m", ...options });
+    const map = await masen({ detail: "110m", ...options });
     // `render()`, not `toString()`: these files exist to be opened, and many
     // viewers ignore <style>. The stylesheet still ships inside them.
     await expect(await map.render()).toMatchFileSnapshot(
@@ -905,7 +905,7 @@ describe("gallery", () => {
   // Every file in the gallery has to survive a reader that ignores stylesheets,
   // or the gallery cannot do the one job it exists for.
   it.each(GALLERY)("gives %s paint a viewer can see without css", async (_name, options) => {
-    const map = await neatline({ detail: "110m", ...options });
+    const map = await masen({ detail: "110m", ...options });
     const artifact = await map.render();
     const withoutStyle = artifact.replace(/<style>[\s\S]*?<\/style>/, "");
     // An extruded map draws prisms rather than flat countries, so either
@@ -916,7 +916,7 @@ describe("gallery", () => {
   });
 
   it("keeps the small stylesheet-only form available", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m", theme: "atlas" });
+    const map = await masen({ region: ["FR"], detail: "110m", theme: "atlas" });
     const small = map.toString();
     const portable = await map.render();
     expect(small).not.toContain('fill="#F2EAD8"');

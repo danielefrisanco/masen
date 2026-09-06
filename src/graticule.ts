@@ -259,7 +259,7 @@ function stepFor(span: number): number {
 function checkStep(value: number, what: string): number {
   if (!Number.isFinite(value) || value <= 0 || value > MAX_STEP) {
     throw new Error(
-      `neatline: graticule ${what} must be a positive number of degrees up to ${MAX_STEP}, got ${value}`,
+      `masen: graticule ${what} must be a positive number of degrees up to ${MAX_STEP}, got ${value}`,
     );
   }
   return value;
