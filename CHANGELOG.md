@@ -16,9 +16,21 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
-## [Unreleased]
+## [0.17.0] — 2026-09-06
 
-### Added
+**A minor bump rather than a patch, and the default is the whole reason.**
+Nothing was renamed and nothing reordered, so on the letter of the policy above
+this is a patch. It is not one. The disputed-areas overlay ships **on**, which
+means an existing caller's map gains nodes it never asked for — and `.mp-hatch`
+is a class `stripe` already uses, so **a theme in the wild that styles it now
+paints Crimea and Western Sahara exactly as it paints the countries that caller
+marked on purpose.** `data-kind` is there to tell the two apart, but no theme
+written before today reads it. A surprised theme author costs more than a minor
+bump does.
+
+Set `disputed: false` to get 0.16.0's output back.
+
+### Added — the map no longer claims Crimea is Russia without saying so
 
 **The map no longer claims Crimea is Russia without saying so.** Disputed and
 breakaway areas are drawn as a hatched overlay, **on by default**, from
@@ -63,7 +75,7 @@ geometry plus a kind plus a name, which is equally "excluded", "evacuated" or
 "under review". Widening `stripe` to take a polygon breaks no caller, so it
 waits for a real map that asks.
 
-### Added
+### Added — eleven icons for the half of a news map Maki does not cover
 
 **Eleven icons for the half of a news map Maki does not cover** — `oil`,
 `natural-gas`, `storage-tank`, `mine`, `power-station`, `nuclear`, `military`,
@@ -2084,7 +2096,8 @@ and grew to carry the legend, the ocean layer and a brighter palette — each is
 something the tool needs and none is large alone. Routes split out of it because
 that one is gated on acquiring data, not on drawing it.
 
-[Unreleased]: https://github.com/danielefrisanco/masen/compare/v0.16.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/masen/compare/v0.17.0...HEAD
+[0.17.0]: https://github.com/danielefrisanco/masen/compare/v0.16.0...v0.17.0
 [0.16.0]: https://github.com/danielefrisanco/masen/compare/v0.15.1...v0.16.0
 [0.15.1]: https://github.com/danielefrisanco/masen/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/danielefrisanco/masen/compare/v0.14.0...v0.15.0
