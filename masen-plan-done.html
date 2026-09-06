@@ -1,0 +1,982 @@
+<title>Masen Shipped Phases</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+  :root {
+    --bg:       #EFF1EC;
+    --surface:  #F8F9F6;
+    --sunken:   #E5E8E1;
+    --ink:      #1A1F1C;
+    --ink-soft: #414A44;
+    --muted:    #6E7A72;
+    --line:     #D3D9D0;
+    --hair:     #C2CABF;
+    --accent:   #9C5B34;
+    --mark:     #A6326E;
+    --water:    #7FA8B8;
+
+    --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --f-body:    "Source Serif 4", Georgia, "Times New Roman", serif;
+    --f-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+    --measure: 68ch;
+    --gutter: 6.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:       #121614;
+      --surface:  #191E1B;
+      --sunken:   #0D100E;
+      --ink:      #E3E8E3;
+      --ink-soft: #BAC3BC;
+      --muted:    #8B978F;
+      --line:     #2A312D;
+      --hair:     #39413B;
+      --accent:   #CE8B5D;
+      --mark:     #D97BAA;
+      --water:    #7FA8B8;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:       #121614;
+    --surface:  #191E1B;
+    --sunken:   #0D100E;
+    --ink:      #E3E8E3;
+    --ink-soft: #BAC3BC;
+    --muted:    #8B978F;
+    --line:     #2A312D;
+    --hair:     #39413B;
+    --accent:   #CE8B5D;
+    --mark:     #D97BAA;
+    --water:    #7FA8B8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* ---------- header ---------- */
+
+  .head {
+    position: relative;
+    padding: 4.5rem 0 2.5rem;
+    overflow: hidden;
+  }
+
+  .grat {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .26;
+    pointer-events: none;
+  }
+  .grat path {
+    fill: none;
+    stroke: var(--hair);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .head-inner { position: relative; }
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: .75rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.1rem;
+  }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(2.3rem, 5.5vw, 3.35rem);
+    line-height: 1.02;
+    letter-spacing: -.028em;
+    text-wrap: balance;
+    margin: 0 0 1rem;
+  }
+
+  .standfirst {
+    max-width: 56ch;
+    font-size: 1.15rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 2.2rem;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .meta div {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+  }
+  .meta dt {
+    font-family: var(--f-mono);
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .meta dd {
+    margin: 0;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: .95rem;
+    letter-spacing: -.01em;
+  }
+
+  /* ---------- sections ---------- */
+
+  section {
+    padding-top: 3.5rem;
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.55rem;
+    letter-spacing: -.02em;
+    line-height: 1.15;
+    text-wrap: balance;
+    margin: 0 0 .55rem;
+  }
+
+  .lede {
+    max-width: var(--measure);
+    color: var(--ink-soft);
+    margin: 0 0 2rem;
+  }
+
+  p { max-width: var(--measure); }
+
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  code {
+    font-family: var(--f-mono);
+    font-size: .855em;
+    background: var(--sunken);
+    padding: .12em .38em;
+    border-radius: 3px;
+  }
+
+  pre {
+    font-family: var(--f-mono);
+    font-size: .8125rem;
+    line-height: 1.6;
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.1rem 1.25rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  .c-key { color: var(--accent); }
+  .c-com { color: var(--muted); font-style: italic; }
+  .c-new { color: var(--mark); }
+
+  /* ---------- locked decisions ---------- */
+
+  .locked {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .locked > div {
+    background: var(--surface);
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+  .locked dt {
+    font-family: var(--f-mono);
+    font-size: .7rem;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .locked dd {
+    margin: 0;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: .97rem;
+    letter-spacing: -.012em;
+  }
+  .locked dd span {
+    display: block;
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: .84rem;
+    color: var(--muted);
+    letter-spacing: 0;
+    margin-top: .2rem;
+  }
+
+  /* ---------- pipeline ---------- */
+
+  .pipe {
+    display: flex;
+    align-items: stretch;
+    gap: .5rem;
+    overflow-x: auto;
+    padding-bottom: .5rem;
+    margin-top: 1.5rem;
+  }
+  .pipe-step {
+    flex: 1 1 0;
+    min-width: 132px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--accent);
+    border-radius: 3px;
+    padding: .85rem .9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+  }
+  .pipe-step.is-css { border-top-color: var(--mark); }
+  .pipe-step b {
+    font-family: var(--f-mono);
+    font-size: .78rem;
+    font-weight: 500;
+    letter-spacing: -.01em;
+  }
+  .pipe-step span {
+    font-size: .8rem;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+  .pipe-arrow {
+    align-self: center;
+    color: var(--hair);
+    font-size: .9rem;
+    flex: 0 0 auto;
+  }
+
+  /* ---------- phases ---------- */
+
+  .phase {
+    display: grid;
+    grid-template-columns: var(--gutter) 1fr;
+    gap: 0 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .phase.is-first { border-top: 1px solid var(--line); }
+
+  .phase-mark {
+    font-family: var(--f-mono);
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+    padding-top: .3rem;
+  }
+  .phase-num {
+    font-family: var(--f-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1;
+    color: var(--mark);
+    font-variant-numeric: tabular-nums;
+  }
+  .phase-days { font-variant-numeric: tabular-nums; }
+
+  .phase.is-next .phase-num { color: var(--hair); }
+
+  .phase.is-done .phase-num { color: var(--accent); }
+  .phase-status {
+    display: inline-block;
+    font-family: var(--f-mono);
+    font-size: .62rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    padding: .1rem .3rem;
+    align-self: flex-start;
+  }
+  .phase.is-next .phase-body h3 { color: var(--ink-soft); }
+
+  .phase-body h3 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.12rem;
+    letter-spacing: -.015em;
+    margin: 0 0 .4rem;
+  }
+  .phase-body > p {
+    margin: 0 0 .9rem;
+    color: var(--ink-soft);
+  }
+  .phase-body ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .38rem;
+    max-width: var(--measure);
+  }
+  .phase-body li { font-size: .95rem; line-height: 1.5; }
+  .phase-body li::marker { color: var(--hair); }
+
+  .out {
+    margin-top: 1rem;
+    padding: .6rem .85rem;
+    background: var(--surface);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 3px 3px 0;
+    font-size: .88rem;
+    max-width: var(--measure);
+  }
+  .out b {
+    font-family: var(--f-mono);
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: .15rem;
+  }
+
+  .rail {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 3rem 0 0;
+    font-family: var(--f-mono);
+    font-size: .72rem;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .rail::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--hair);
+  }
+
+  /* ---------- tables ---------- */
+
+  .scroll { overflow-x: auto; margin: 1.5rem 0 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+    min-width: 540px;
+  }
+  th {
+    text-align: left;
+    font-family: var(--f-mono);
+    font-size: .69rem;
+    font-weight: 500;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 1.1rem .6rem 0;
+    border-bottom: 1px solid var(--hair);
+    white-space: nowrap;
+  }
+  td {
+    padding: .7rem 1.1rem .7rem 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+  td:last-child, th:last-child { padding-right: 0; }
+  td code { font-size: .82em; }
+  .t-name { font-family: var(--f-display); font-weight: 600; letter-spacing: -.01em; }
+  .t-mono { font-family: var(--f-mono); font-size: .82rem; white-space: nowrap; }
+  .t-note { color: var(--muted); font-size: .87rem; }
+  .t-res { color: var(--muted); }
+  .t-res .t-mono { color: var(--mark); }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--f-mono);
+    font-size: .68rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .16rem .45rem;
+    border-radius: 3px;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+  }
+  .tag-free { color: var(--accent); }
+  .tag-attr { color: var(--mark); }
+  .tag-cost { color: var(--muted); }
+
+  /* ---------- scope ---------- */
+
+  .scope {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.75rem;
+    margin-top: 1.5rem;
+  }
+  .scope-col {
+    border-top: 2px solid var(--accent);
+    padding-top: .95rem;
+  }
+  .scope-col.is-next { border-top-color: var(--mark); }
+  .scope-col.is-out  { border-top-color: var(--hair); }
+  .scope-col h3 {
+    font-family: var(--f-mono);
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 .8rem;
+  }
+  .scope-col ul {
+    margin: 0;
+    padding-left: 1.05rem;
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+  }
+  .scope-col li { font-size: .93rem; line-height: 1.45; }
+  .scope-col li::marker { color: var(--hair); }
+  .scope-col.is-out li { color: var(--muted); }
+
+  /* ---------- close ---------- */
+
+  .close { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--line); }
+  .close p { font-size: 1.02rem; color: var(--ink-soft); }
+
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 1.25rem 4rem; }
+    .head { padding-top: 3rem; }
+    .phase { grid-template-columns: 1fr; gap: .8rem; }
+    .phase-mark { flex-direction: row; align-items: baseline; gap: .7rem; padding-top: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="head">
+    <svg class="grat" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M150 -30 Q 96 150 150 330"></path>
+      <path d="M300 -30 Q 264 150 300 330"></path>
+      <path d="M450 -30 Q 432 150 450 330"></path>
+      <path d="M600 -30 L 600 330"></path>
+      <path d="M750 -30 Q 768 150 750 330"></path>
+      <path d="M900 -30 Q 936 150 900 330"></path>
+      <path d="M1050 -30 Q 1104 150 1050 330"></path>
+      <path d="M-30 60 Q 600 24 1230 60"></path>
+      <path d="M-30 105 Q 600 80 1230 105"></path>
+      <path d="M-30 150 L 1230 150"></path>
+      <path d="M-30 195 Q 600 220 1230 195"></path>
+      <path d="M-30 240 Q 600 276 1230 240"></path>
+    </svg>
+
+    <div class="head-inner">
+      <div class="eyebrow">Shipped record · phases 00–10b · <code>masen-map</code> 0.16.0</div>
+      <h1>Masen Shipped Phases</h1>
+      <p class="standfirst">A TypeScript library that turns a region and a stylesheet into a standalone SVG map. Deterministic geometry, CSS theming, public-domain data.</p>
+      <p class="t-note" style="max-width:56ch;margin:-1.4rem 0 2rem;">Called <b>mapper</b> through Phase 6, then <b>neatline</b> to 0.15.1, and <b>masen</b> from 0.16.0. <i>mapper</i> went because npm had the name. <i>neatline</i> went for a better reason: <b>somebody else's map software already had the word</b> — an Omeka plugin from the Scholars' Lab, fourteen years old, holding <code>neatline.org</code>. Never a registry collision, since it has never been on npm; a collision in the only place that matters for a launch, which is what a person finds when they go looking. <i>masen</i> was picked for having nothing behind it at all. The <code>mp-</code> prefix has survived both renames, because <code>mp</code> is short for <i>map</i>, not for the project.</p>
+
+      <p class="t-note" style="max-width:56ch;margin:0 0 2rem;"><b>This page is the record, not the plan.</b> Every phase here shipped, and each keeps its <i>Delivered</i> note — including the ones where the plan turned out to be wrong and measurement said so, which are the entries worth re-reading. The work still open lives in <a href="masen-plan.html">the build plan</a>.</p>
+
+      <dl class="meta">
+        <div><dt>Shipped</dt><dd>Phases 0–10b</dd></div>
+        <div><dt>Runtime deps</dt><dd>2</dd></div>
+        <div><dt>Licence</dt><dd>MIT</dd></div>
+        <div><dt>Published</dt><dd><code>masen-map</code> 0.16.0</dd></div>
+        <div><dt>Built for</dt><dd>Newsrooms, company sites</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <section>
+    <h2>Phases that shipped</h2>
+    <p class="lede">Thirty-one phases, in the order they were built. Each ends in a <i>Delivered</i> note written after the fact rather than a promise written before it — which is why several of them record the plan being wrong.</p>
+
+    <div class="phase is-first is-done">
+      <div class="phase-mark"><span class="phase-num">00</span><span class="phase-days">0.5 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Scaffold</h3>
+        <p>Get the boring infrastructure decided once so it never comes up again.</p>
+        <ul>
+          <li>pnpm workspace, TypeScript strict, <code>tsup</code> for dual ESM/CJS output</li>
+          <li>vitest, configured for SVG string snapshots from the start</li>
+          <li>Runtime deps pinned to exactly two: <code>d3-geo</code>, <code>topojson-client</code></li>
+          <li><code>src/</code> · <code>themes/</code> · <code>data/</code> · <code>test/__snapshots__/</code></li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A package that builds, tests, and imports cleanly in both module systems.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">01</span><span class="phase-days">2 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Geometry core</h3>
+        <p>The heart of the library: region in, path strings out. Everything else is presentation on top of this.</p>
+        <ul>
+          <li>Region resolvers — named preset, ISO-3166 list, bbox tuple, raw GeoJSON — all normalising to one FeatureCollection</li>
+          <li>Projection registry as a <strong>lookup table</strong>: <code>mercator</code>, <code>conic-conformal</code>, <code>albers</code>, <code>equal-earth</code>, <code>orthographic</code></li>
+          <li>Camera via <code>projection.fitExtent()</code> — solves centre, scale and padding in one call</li>
+          <li>Expose <code>map.project()</code> on the result — the single hook the whole annotation layer will hang from</li>
+          <li>Coordinate rounding with <code>geoPath.digits(1)</code>; cuts output size well over half</li>
+          <li>Explicit handling for non-contiguous territories, so West Europe does not acquire Guadeloupe</li>
+        </ul>
+        <div class="out"><b>Delivered</b>13 countries, correctly framed. Two things the plan did not predict: <code>masen()</code> had to become <strong>async</strong> (8 MB of source data cannot ship to every consumer, so geometry loads per region), and five features — Kosovo, Somaliland, N. Cyprus and two disputed areas — carry <strong>no id at all</strong>, so they take user-assigned codes from the <code>X</code> range rather than a numeric fallback. <b>Those codes are a trap for any region typed by hand.</b> The <code>africa</code> preset carries <code>XS</code> and <code>europe</code> carries <code>XK</code>; a hand-written ISO list will not think to. And leaving Somaliland out of an East Africa map does not leave it blank — it leaves a hole in the Horn, because Somalia's polygon stops at a border the map is not drawing.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">02</span><span class="phase-days">2.5 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Class taxonomy &amp; emitter</h3>
+        <p>The real public API is the DOM shape, not the function signature. Every theme anyone ever writes depends on these names, so they get versioned like an API and changed only on a major.</p>
+        <ul>
+          <li>Fix the class list and data attributes (table below); document it before writing the emitter</li>
+          <li>Build the SVG as a <strong>node tree</strong>, serialised once — makes every future layer a non-event</li>
+          <li>Fixed layer order: background → neighbours → land → water → borders → roads → places → labels → <em>annotations (empty)</em></li>
+          <li>Reserve the <code>.mp-anno</code>, <code>.mp-pin</code>, <code>.mp-arrow</code>, <code>.mp-callout</code> names in the documented taxonomy</li>
+          <li>Highlighting: <code>highlight: ["FR"]</code> adds <code>.is-highlighted</code> alongside the existing <code>data-iso</code></li>
+          <li>Per-feature <code>&lt;title&gt;</code> elements and <code>aria-label</code> on the root for accessibility</li>
+          <li>viewBox and aspect-ratio handling, including non-square canvases</li>
+          <li>Reserve <code>.mp-neighbour</code> and its layer slot, above the background and below the region — the context feature is deferred, but retrofitting a layer under existing ones would reorder the stack and break every theme</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A frozen, documented taxonomy — the contract the rest of the project builds against.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">03</span><span class="phase-days">1.5 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Theming, palettes &amp; layer control</h3>
+        <p>Mechanically small, because the cascade does the work. No merge logic, no schema, no validation layer.</p>
+        <ul>
+          <li>Settle a vocabulary of roughly twelve tokens, named by role — <code>--ink</code>, never <code>--dark-gray</code></li>
+          <li>Theme resolution: bundled preset name, path to a <code>.css</code> file, or a plain token object</li>
+          <li><b>Split palette from theme.</b> A theme carries structure — line weights, type, dash patterns, density. A palette carries only colour. Both target users want the same thing: keep the style, change the colours. Because tokens are named by role, a palette <em>is</em> a set of token values, so <code>theme: "minimal", palette: "dusk"</code> is two stylesheets in cascade order and needs no new machinery</li>
+          <li><b>A <code>layers</code> option that fills slots, never removes them.</b> Turning borders off must empty <code>.mp-borders</code>, not delete it — the stack is the frozen contract, and a document whose shape depends on its options is not one a theme can be written against. The payoff is file size, not appearance: hiding a layer is one CSS rule, but <em>not emitting</em> its path data is real bytes at 50m detail</li>
+          <li>Overrides land as a later declaration on the root element; nothing else to implement</li>
+          <li>Every preset styles <code>.is-highlighted</code> from <code>--accent</code>, so brand colour is one override</li>
+          <li>Reserve <code>--anno</code>, <code>--anno-ink</code>, <code>--neighbour</code> and <code>--furniture-ink</code> in the vocabulary; leave them unused</li>
+          <li>An <code>inlineStyles</code> pass that flattens computed values onto presentation attributes for design tools — and for the renderers that let a presentation attribute beat a stylesheet, which Phase 2 found the hard way</li>
+          <li><b>Scope every rule to a class derived from the stylesheet itself.</b> A <code>&lt;style&gt;</code> block inside inline SVG applies to the whole HTML page, so two differently themed maps on one page would otherwise overwrite each other. Hashing the resolved CSS keeps the scope deterministic: same theme, same class, byte-identical output</li>
+          <li><b>A gallery of committed snapshot SVGs</b>, not one. Phase 2 shipped a black map that every string assertion passed — the snapshots have to be worth opening, and they have to cover themes, palettes, projections and canvas shapes. <b>Since extended with a contact sheet</b> — <code>npm run gallery</code> — because forty-two files in a directory is not something anyone opens either. All of them inline on one page, at a size where a flat choropleth is obvious at a glance, and with what each map demonstrates <i>read back off the markup</i> rather than off the test that wrote it, so the page cannot claim a feature a file does not contain</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>Two themes and two palettes applied end to end, a gallery of renders to look at, and the same map exported for Figma.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">04</span><span class="phase-days">2 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Data pipeline</h3>
+        <p>Turning Natural Earth into something small enough to ship inside an npm package.</p>
+        <ul>
+          <li>Ingest <code>world-atlas</code> 110m and 50m tiers; add 10m only where a region demands it</li>
+          <li><b>Ingest a second dataset — Natural Earth populated places.</b> <code>world-atlas</code> has country polygons and nothing else, so <code>.mp-place</code>, <code>.mp-label</code> and their <code>data-pop</code> / <code>data-rank</code> attributes have no source until this lands. Phase 6 cannot start without it</li>
+          <li>Simplify with <code>topojson-simplify</code> — <code>presimplify</code> then <code>simplify</code>, on the topology</li>
+          <li>Region extraction as a build step so bundled files carry only what a preset needs</li>
+          <li><b>Bundle generously; do not let file size govern this phase.</b> A lite build and an on-demand loader are a later split, not a constraint on what gets ingested now — deciding otherwise up front would rule out contour lines and 10m detail before anyone has seen whether they are worth having. The one thing that must hold is that the loading seam stays asynchronous and swappable, which it already is, so moving a layer from bundled to fetched never reaches a caller</li>
+          <li>Ingest the physical layers a terrain style needs: glaciated areas, playas, bathymetry depth bands, elevation points. All are real Natural Earth vectors — unlike land contour lines, which no one ships and which would have to be derived from an elevation model at build time</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>West Europe at 50m detail, under 100 KB, with no gaps along shared borders, and a ranked place list for its capitals.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">05</span><span class="phase-days">3 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Presets &amp; fill modes</h3>
+        <p>Design work, not engineering work, and the longest phase for that reason. This is what people will choose the library for — and the thing that separates it from a mapshaper one-liner. If this phase gets cut for time, you have built a worse mapshaper.</p>
+        <p><b>The phase opened by finding that the last one had shipped blind.</b> The flattening pass matched class selectors only, so every rule keyed on a data attribute was dropped on the way out — which meant 0.7's choropleth exported as a single flat colour and rivers exported with no stroke at all. Both were correct in a browser, so the gallery looked right to anything that reads <code>&lt;style&gt;</code> and wrong to everything else. Political fill, keyed on <code>data-fill</code>, would have landed in the same hole an hour later.</p>
+        <p><b><code>paper</code> was dropped and <code>atlas</code> kept in its place.</b> <code>atlas</code> was built in Phase 3 and was never in this plan; it fills the printed-map slot <code>paper</code> was drawn for, and shipping both would have put two near-identical warm themes side by side in the docs. Five presets, as planned — a different five.</p>
+        <ul>
+          <li><b>minimal</b> — land, water, borders, nothing else</li>
+          <li><b>atlas</b> — printed-atlas paper on a cold sea, dashed boundaries, serif <span class="t-note">(replaces <code>paper</code>)</span></li>
+          <li><b>noir</b> — dark ground, hairline borders, no fills</li>
+          <li><b>blueprint</b> — white linework on blue, dashed administrative boundaries</li>
+          <li><b>contrast</b> — solid black and white, accessibility-first</li>
+          <li>Every preset ships a dark-mode block; tokens are role-named so this is a value swap. An explicit <code>palette</code> still wins, because it is applied after the theme and the cascade settles it — automatic dark is the default, never an override</li>
+          <li>Every preset shows a convincing highlighted state — that is the shot people will judge</li>
+          <li><b>One shared structural stylesheet.</b> Five themes repeating forty rules is five places for them to drift, so the rules live once and read entirely from tokens. The vocabulary grew to carry what the duplication used to: widths, dash patterns, and the fill and stripe ramps</li>
+          <li><b>Political fill — shipped.</b> Every country a different colour from each of its neighbours, as <code>data-fill</code>. As cheap as predicted: the border mesh already visits every shared arc, so the adjacency graph falls out of the same pass. Four colours suffice for Europe and five for the world</li>
+          <li><b>Hatching — added in flight.</b> Diagonal stripes over named countries, for the thing a map has to say that is not a quantity: disputed, claimed, excluded, no data. An overlay rather than a fill, so the two readings stack. The first thing to use the <code>&lt;defs&gt;</code> slot reserved in Phase 2 for a pattern</li>
+          <li><b>Choropleth fill — shipped in 0.7.</b> <code>values</code> and <code>bins</code>, classified by rank rather than by equal intervals, emitted as <code>data-bin</code> for the theme to colour. It was absent from every earlier draft of this plan: an omission, not a decision</li>
+          <li><b>Relief — shipped in 0.6, and not as planned.</b> This called for <code>filter: drop-shadow(...)</code>; a shadow only separates a shape from its ground, where relief needs a lit face and an unlit one. It is a real <code>feDiffuseLighting</code> filter emitted into <code>&lt;defs&gt;</code>, which a stylesheet asks for by name</li>
+        </ul>
+        <div class="out"><b>Delivered</b>Five presets with dark blocks, two fill modes that need no data, and 25 gallery renders — one for every continent, Antarctica included. Four bugs surfaced only by rendering and looking: prism walls lighter than the tops they carried, a highlight losing to a band on identical specificity, rivers running off the map to the Black Sea, and <code>mercator</code> and <code>equal-earth</code> never turning to face their region — so Asia was drawn from the far edge of a Greenwich-centred projection while the conics and <code>orthographic</code>, which do rotate, looked fine.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">06</span><span class="phase-days">2 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Labels</h3>
+        <p>Called the weakest part of the SVG approach, and scoped down accordingly. It shipped stronger than planned, because two of the three things this phase promised to hand-wave turned out to have geometric answers.</p>
+        <p><b>The curated anchor table was never built.</b> This plan called for thirty hand-tuned overrides for Norway, Chile, France and Croatia. What shipped instead finds the anchor by geometry: the balance point of the largest piece of the country <i>that is on the canvas</i>, and where that falls outside the country — every crescent, every Croatia — the point furthest from any edge, found by refining a grid. A table would have gone stale the first time the source data moved; the geometry cannot.</p>
+        <p><b>And the fit test could not tell a scattered country from a small one.</b> It measured a name against the width of the shape beneath the anchor — right for a landmass, wrong for an archipelago, so <i>Philippines</i> was written into every document and then hidden, because no single island is as wide as the word while every printed atlas sets it across the whole group. Fixed on the way into Phase 8: when a country is more than one piece and no piece can hold its name, the room it has is the reach of the group, and the name overhangs from an anchor that does not move — so the change can reveal a name and never relocate one. It reveals Philippines on every map of Asia, and Angola, Chile, Fiji, Japan and Indonesia on the world maps. Brunei and Timor-Leste stay hidden, which is what the test is for.</p>
+        <p><b>Collision detection was documented as absent and then written anyway.</b> A world map with every capital on it is 470 labels and unreadable. The suppression is greedy and first-come rather than a real placement solver, ranked so the important names win — but the honest description is no longer "none".</p>
+        <ul>
+          <li>Country names anchored by area-weighted centroid, falling back to pole-of-inaccessibility by grid refinement</li>
+          <li>Two-line wrapping at the most even word gap — what rescues <i>United Kingdom</i>, <i>South Korea</i>, <i>Papua New Guinea</i></li>
+          <li><code>data-rank</code> and <code>data-fit</code> on every label: the engine states facts, the stylesheet decides what to hide</li>
+          <li><code>--label-advance</code>, the channel by which a stylesheet tells the geometry its own font metrics — SVG cannot measure text outside a browser</li>
+          <li>Five <b>typefaces</b> as a third preset axis, reusing the palette machinery exactly</li>
+          <li>A <code>names</code> option taking caller-supplied words, which covers every language without vendoring translation tables</li>
+        </ul>
+        <div class="out"><b>Delivered</b>Names on every preset, verified by rendering and looking rather than by string assertion. Three fixes came out of that: a country name colliding with its own capital's name, Croatia anchored in a 0.7-pixel-wide arm, and a world map that was mush until suppression landed.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">07</span><span class="phase-days">1 day · 0.12</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Harden</h3>
+        <p>This was called <b>Ship</b>, and it bundled two different things: <i>being ready to publish</i> and <i>publishing</i>. Only the first is engineering work, so they are split. Publishing is now a decision that happens when it is asked for, and nothing downstream waits on it — the tool can build against the repository.</p>
+        <ul>
+          <li><b>The cross product as invariants, not as pictures.</b> Nine regions by five projections by five themes is 225 maps; committing 225 snapshots means nobody opens one, which is the exact failure this project has had three times. The curated gallery stays human-sized, and the combinations nobody will look at are checked for the things that can be stated as facts: it renders, it draws something, every number is finite, the land is on the canvas, the same input gives the same output, and every token resolves</li>
+          <li>README built around the class taxonomy — <b>largely already true</b>, since the taxonomy has been the second section since Phase 3</li>
+          <li>A semver policy that treats taxonomy changes as breaking, <b>enforced by a lock rather than stated in prose</b> — a snapshot of the exported layers, classes and tokens, so renaming one fails a test</li>
+          <li>Licence and attribution notes. <code>package.json</code> has declared MIT since Phase 0 and there has never been a <code>LICENSE</code> file</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A repository someone else could pick up: the contract enforced, the licence present, and no combination of options that silently produces a broken map.</div>
+      </div>
+    </div>
+
+    <div class="rail">After Phase 7 — do not start early</div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">08</span><span class="phase-days">3 days · v1.1</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Annotations</h3>
+        <p>The journalist's actual need: a dot where the thing happened, a label pointing at it. Every hook this requires already exists by the end of Phase 3, so this is composition rather than surgery.</p>
+        <ul>
+          <li><b><code>map.invert([x, y])</code> — shipped.</b> The gap this plan never noticed, and the one piece the rest of the phase had to be built on top of. <code>project()</code> turns a coordinate into pixels, which is everything a developer placing a pin by hand needs. A person <i>dragging</i> a pin works the other way: the drop happens in pixels and has to be stored as lon/lat, or the icon detaches from the ground the moment the region or projection changes. The work turned out not to be the inverse but knowing when there isn't one: d3 clamps its inverse trigonometry rather than failing, so a pixel past the edge of an orthographic globe comes back as a coordinate on the limb instead of as nothing, and the corner of a canvas invents a place in the Atlantic. So the answer is put back through the projection and checked against the pixel it came from — a real point returns within a thousandth of a unit, a clamped one misses by more than twenty</li>
+          <li><b>Pins — shipped.</b> <code>pins: [{ at: [lon, lat], label?, id?, kind?, offset? }]</code>, rendering into <code>.mp-annotations</code>. This is where the annotation API got decided rather than where one primitive got built: arrows, callouts and icons all have to say <i>where</i>, and they will all say it this way. <code>at</code> takes a coordinate and nothing else — accepting an ISO code or a place name is cheap to add later, since widening an option breaks no caller, while deciding today what <code>at: "Springfield"</code> means settles a question no real map has asked. <b>Wanted, and deliberately deferred:</b> <code>from: "Odesa"</code> reads better than a pair of numbers and is the form a person writing a story would reach for. It waits on three answers nobody needs yet — what happens when two settlements share a name, whether it means the bundled name or the one <code>names</code> rewrote it to, and what a code resolves to when its country is off the frame. The same bargain <code>neighbours</code> took with its distance and code-list forms: a widened option breaks no caller, so it costs nothing to wait for a real map that wants it. And <b>the far side of a globe had to be caught, which the plan did not foresee</b>: this is the <code>invert()</code> clamping problem running backwards and it is worse, because <code>project()</code> hands a Pacific coordinate a perfectly plausible pixel in the middle of Angola and nothing in the markup says it is wrong. Same guard, other direction — a coordinate that survives the round trip was visible; one that does not is dropped rather than mirrored. A mark that is real but off-canvas is drawn carrying <code>data-fit="0"</code>, the same bargain the labels take</li>
+          <li><b>A fourth and fifth, caught by a test rather than by a render — which is the point.</b> Four of this phase's defects were one mistake wearing different names: a preset copying a neighbouring value into a token nothing consumed yet, where it sat unverified because nothing drew it. Nine reserved tokens are in exactly that position today, set by every preset and never once rendered. What cannot be checked is whether they look good; what can is that each differs from the thing it will be drawn against, because a tint the colour of its ground is not a tint. That test found <code>contrast</code> — the accessibility-first theme — setting <code>--glacier</code> to exactly <code>--land</code>, so ice would have rendered as nothing, and inheriting a black <code>--road</code> onto black land in its dark block. Both were years from being drawn and are fixed now</li>
+          <li><b>And a third, in the same family, found by looking at the finished deliverable.</b> <code>--anno</code> was a byte-for-byte copy of <code>--accent</code> in all nine presets — harmless while nothing read it, and wrong the moment something did. On the one map this layer exists to make, a region with a highlight <i>and</i> a mark on it, the pin, the leader and the balloon were all drawn in the highlighted country's own colour. The casing hid half of it: a cased mark survives a colour it matches and a filled box does not. Every preset now takes a deeper shade in light and a lifted one in dark, the box is outlined in <code>--anno-ink</code>, and a preset test asserts <code>--anno</code> differs from both <code>--accent</code> and <code>--label-halo</code>. Three of this phase's defects have now been in the annotation tokens, all three from presets copying a neighbouring value into a token nothing consumed yet</li>
+          <li><b>Two defects found by rendering and looking, both in the reserved tokens.</b> <code>--anno</code> is set to the same value as <code>--accent</code> in all nine presets, so the first pin dropped on a highlighted country was drawn in the country's own colour and disappeared — on precisely the map named in this phase's deliverable. The mark is cased in <code>--label-halo</code> now, the same casing its label gets. And <code>--anno-ink</code> equals <code>--label-halo</code> in every preset, because what it was authored to mean is ink drawn <i>on</i> a mark: filling a pin's label with it would have painted white on white. It stays reserved until a callout has a box to put ink inside, and the label takes <code>--ink</code> like every other name on the map</li>
+          <li><b>Callouts — shipped.</b> <code>callouts: [{ at, text, offset?, width?, id?, kind? }]</code> — the same <code>at</code>, the same validation, the same round-trip guard, which is what settling the pin first was for. It is a second primitive rather than an option on the pin because the two differ in which half carries the meaning: a pin says <i>there is something here</i> and the mark is the subject, a callout says <i>this sentence is about here</i> and the words are. Hence the box — a word sits on a coastline behind a halo and a sentence does not — and hence no mark at the anchor, since the leader already ends there and a caller who wants a dot adds a pin at the same coordinate. <code>offset</code> places the corner of the box nearest the point and the box grows away from it, so the sign of the offset is the direction it goes and the leader always lands on a corner you can predict</li>
+          <li><b>And the box had to teach the width estimator two things.</b> SVG cannot measure text outside a browser, so a box is sized from <code>--label-advance</code> — which the label engine deliberately tunes to read <i>low</i>, because a name that does not fit is hidden and over-reading would hide names that fit. A box fails the other way round, and the first render printed its caption straight out through the side. So it rounds up 30%, measured in a browser across the three bundled stacks at three weights, where a realistic caption runs at most 1.28× the estimate. Then <code>noir</code> did it again: <code>--label-track</code> was being read by nothing at all, and 0.3 units per character over a twenty-character line is six units the box never had</li>
+          <li><b>Arrows — shipped.</b> <code>arrows: [{ from, to, bow?, id?, kind? }]</code>. The first primitive with two coordinates rather than one, so the locator settled for the pin has to hold twice over — and an arrow with either end behind a globe is dropped <i>whole</i>, because half an arrow is a line pointing at somewhere the reader was never told about. <code>bow</code> is how far the curve leaves the straight line and its <i>sign is the side it bows to</i>, which is how a caller gets one off a coastline or out from under another running the other way. Drawn beneath the pins and callouts: a connection is context for the things it connects, not the reverse. <b>And the head caught a fourth instance of an old failure</b> — <code>marker-end</code> is a presentation attribute the flattening pass did not carry, so an arrow exported for a reader that ignores stylesheets would have arrived as a line with no head, exactly as the choropleth once exported flat and the prism once exported as a silhouette. Found by reading the list this time rather than by looking at the render</li>
+          <li><b>Maki — shipped, 29 icons.</b> A pin's <code>kind</code> doubles as the icon name; there is no separate option, because the vocabulary's names <i>are</i> the conventional values for <code>kind</code>, which is what it was reserved for. A kind naming no icon stays a plain mark and keeps its <code>data-kind</code>, so a caller's own category goes on working. Inlined per pin rather than referenced from a <code>&lt;symbol&gt;</code>: a <code>&lt;use&gt;</code> puts its content in a shadow tree where a class-based fill is unreliable and unreachable by the flattening pass, and duplicating a few hundred bytes is much the cheaper mistake than an icon that vanishes on export. <b>And the vendoring script nearly shipped 29 blank marks</b> — Maki carries line breaks inside its <code>d</code> attributes as <code>&amp;#xA;</code>, which escapes on the way into the document and arrives as literal text no path command recognises. It decodes and then validates now, and a test asserts the same of the committed data</li>
+          <li><b>The geopolitical half is measured now rather than asserted.</b> Maki has 215 icons and no <code>oil</code>, <code>natural-gas</code>, <code>pipeline</code> or <code>mine</code>. Checked, not assumed. Drawing them to Maki's weight and grid is <b>Phase 13</b></li>
+          <li><b>Two icon vocabularies, because the map needs both.</b> <b>Maki</b> covers what sits on the ground — airport, rail, hospital, factory, port — and is CC0, drawn for maps at small sizes. What it does not cover is the geopolitical half a news map runs on: capitals, military, oil and gas, border crossings, conflict, pipelines. Those have to be drawn, to Maki's weight and grid, rather than borrowed from a second house style that would sit visibly beside it. <b>Moved to Phase 13</b>, because nothing engineering-shaped is left in it</li>
+          <li><b>Public domain only, on both halves.</b> A set that requires a credit line propagates that obligation into every map anyone generates, which is what rules out Tabler (MIT) and Lucide (ISC) however good they look. Inlined as symbols — never external references</li>
+          <li>All of it rendering into the <code>mp-annotations</code> group reserved in Phase 2 — now <span class="tag tag-attr">live</span> rather than reserved</li>
+          <li><b>The SVG ids are scoped — done, and done before the icons rather than after.</b> They were constants while the stylesheets were properly hashed, so two maps in one document shared <code>mp-land-clip</code>, <code>mp-stripe</code> and <code>mp-relief</code> and every reference resolved to whichever map the parser met first. Three names then; an icon set would have made it three plus one per icon, and the tool's live preview was blocked behind it either way. The authored name is unchanged — a theme still writes <code>url(#mp-relief)</code> — and only the emitted pair moves, together. <code>scripts/build-gallery.mjs</code> had been rewriting ids by hand since the contact sheet landed, which fixed the gallery and nobody else's page; that workaround is gone</li>
+          <li><b>The icon half wanted its own planning pass, and now has its own phase.</b> Two vocabularies, one of which has to be drawn to Maki's weight and grid, and both public domain — a design job with a licensing constraint, not an afternoon. That is <b>Phase 13</b> rather than an item left open behind a phase that is otherwise finished</li>
+        </ul>
+        <div class="out"><b>Delivered</b>A story-ready map: region, highlight, marker, and a captioned callout — one gallery entry carrying all four, a second carrying three arrows out of one port, and a third carrying six Maki icons and one mark that names none. The geopolitical icon set was the one thing left, and it left with its measurement rather than staying open here — <b>Phase 13</b>, a drawing job rather than an engineering one. Two defects came out of rendering that entry and looking at it, and neither would have failed an assertion: the caption overflowed its box, and the pin was labelled <i>Odesa corridor</i> while sitting on Kyiv's coordinates.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">08b</span><span class="phase-days">1 day</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Neighbours</h3>
+        <p>A map of Western Europe used to stop dead at the German border. Real maps fade into their surroundings — Poland faintly present, unlabelled, clearly not the subject. This came in early and cheaply, because the geometry was already loaded and the class name had been reserved in Phase 2 — and it came in narrower than what is written below.</p>
+        <ul>
+          <li><code>neighbours: true</code> — shipped. Everything that falls inside the frame and is not the subject</li>
+          <li><b>A distance in degrees, or an explicit code list — deferred, and cheap to defer.</b> The automatic pick is the one people want; these two exist for the map where it chooses badly, and no such map has turned up yet. Nothing has to be claimed in advance, which is exactly what separates an option from a layer: widening <code>boolean</code> to <code>boolean | number | string[]</code> breaks no caller, while inserting a layer restacks every theme above it. So this waits for a real map that needs it rather than for a version number</li>
+          <li>Rendered into the reserved layer beneath the region, styled from <code>--neighbour</code></li>
+          <li>Never labelled and never highlighted — context must not compete with the subject</li>
+          <li>Excluded from the camera, so adding context never changes the framing</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>West Europe that fades into Poland and the Czech Republic instead of ending at a hard edge.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">08c</span><span class="phase-days">2 days · 0.13</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Furniture</h3>
+        <p><b>This phase predicted its own promotion and was right.</b> It was written as deferred-to-v2, built with the tool, on the reasoning that a developer can append a credit line by hand but someone downloading a file from a browser cannot. The tool's specified flow now has <i>building a legend</i> as one of its five steps, so furniture is no longer optional-with-the-tool: it is a prerequisite for it.</p>
+        <p>Everything that belongs on the canvas rather than on the map. The test for whether furniture is library scope or tool scope is who cannot live without it: a developer using the library can append a credit line to the SVG in three lines, or caption it in the surrounding HTML. Someone who picks a region in a browser and downloads a file has no such option — the credit has to come out of the generator or it does not exist. Nothing forces it earlier either, since Natural Earth is public domain and requires no attribution.</p>
+        <ul>
+          <li><b>A text credit line — shipped.</b> <code>credit: "…"</code> or <code>{ text, anchor }</code>, at one of nine canvas positions, styled from <code>--furniture-ink</code>. The anchor is to this layer what <code>at</code> is to the annotations: the decision the watermark, the legend, the scale bar and the north arrow all copy. It carries an <i>alignment</i> as well as a point — a credit anchored bottom-right is text whose <i>end</i> sits there, and placed by coordinate alone a long one runs off the canvas. The test that matters is that the same credit on four regions under four projections lands on the same pixel, because the moment it moves it has stopped being furniture</li>
+          <li><b>Watermarks — shipped.</b> A wordmark or a logo, the logo read from disk and embedded as a data URI so one file stays the whole map. Given a <i>box</i> and fitted inside it rather than sized to it, because the library cannot measure an image's aspect ratio outside a browser — the same wall <code>--label-advance</code> exists to get around. Text and image are exclusive: a logo above a wordmark is a lockup, and a lockup's proportions belong to whoever owns the mark. <b>With this, 8c is complete except the legend</b>, which stays deferred to v2 by decision</li>
+          <li><b>A legend</b> driven by the same tokens the theme uses, so the swatches cannot drift from the map. The tool's version pairs each placed icon with a meaning, which makes the legend a <i>view of the annotation layer</i> rather than a separate thing to keep in sync</li>
+          <li><b>Placing it is two modes, and the second is the hard one.</b> A legend <i>on</i> the map is furniture: anchored to one of nine canvas positions, no camera involvement. A legend <i>beside</i> the map means the canvas grows and the map's viewport shrinks — which reaches back into framing, because <code>fitExtent</code> has to solve for a reserved gutter rather than the whole canvas</li>
+          <li><b>Scale bar — shipped, and this plan's rule for it was wrong in both directions.</b> "Meaningful only for the conformal and equal-area projections" was never measured. Sampling local scale across the whole drawn canvas, both axes: <code>europe/mercator</code> varies by <b>2.76</b> and mercator is conformal, so the rule would allow a bar that lies by nearly three to one; <code>IN/orthographic</code> varies by <b>1.07</b> and orthographic is neither family, so the rule would forbid one closer to true than the bar it just permitted. Honesty depends on the <i>extent</i>, not the projection family, and it is measurable. <code>scaleBar: true</code> samples the frame through <code>project</code> and <code>invert</code> and draws a bar only where max/min sits inside <code>tolerance</code>, default <b>1.1</b>. Same discipline as the <code>invert()</code> round trip: measure the property, do not assert the category. The number is always 1, 2 or 5 × 10ⁿ, so the <i>width is derived from the number</i> — a bar reading 237 km is a bar nobody can step across a map. Verified by laying the drawn length down in three places on each canvas and asking the sphere how far that is: worst error <b>3.8%</b> across eight maps</li>
+          <li><b>North arrow — shipped</b>, gated the same way and on the same measurement. It is the narrower of the two claims: a conic fitted to a region holds its scale to three per cent while its meridians fan <b>22°</b> apart at the corners, so <code>west-europe/conic-conformal</code> earns a bar and no arrow while <code>europe/mercator</code> earns an arrow and no bar. Neither fact is derivable from the projection's family, which is the whole point. Tolerance in degrees off vertical, default <b>5</b> — five degrees moves the tip of a 26-unit needle by about its own width where it tapers</li>
+          <li><b>The refusal is inspectable.</b> <code>map.distortion()</code> returns <code>{ scale, north, kmPerUnit, samples }</code>, measured once and kept. A caller who asks for a bar and gets none can answer <i>by how much</i> rather than guess — and Phase 09's tool needs exactly this to tell someone why the box they ticked drew nothing</li>
+          <li>All of it anchored to one of nine canvas positions, never to a coordinate</li>
+          <li>Treat a watermark as <em>attribution, not protection</em>. It is a text node in a file the reader can open — it marks provenance and it cannot enforce anything. Say so in the docs rather than letting anyone assume otherwise</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A map that can carry a masthead, a credit, a watermark and an honest scale bar without anything being pasted on afterwards. <b>Prerequisite for Phase 09</b> — the tool cannot ship a downloadable SVG with no way to credit it.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">08d</span><span class="phase-days">4 days · v1.4</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The graticule, and what the land is made of</h3>
+        <p>Five requests that arrived together during Phase 5, and they sort into three quite different sizes of problem.</p>
+        <p><b>Two of them needed a decision immediately, and got one.</b> A graticule and a land-cover tint are each a new <em>layer</em>, and the paint order is frozen at 1.0 — inserting one afterwards restacks everything above it and breaks every theme already written. So both slots are reserved now, empty, along with the eight tokens they will read. The graticule sits at the very bottom, the grid the world is drawn on. Land cover sits directly above the land it tints and below the water, because a river runs over a forest. Neither placement can be made twice.</p>
+        <ul>
+          <li><b>Parallels, meridians, the equator and the tropics — shipped.</b> The slot reserved at v1 is filled and <em>nothing above it moved</em>, which is the entire return on having reserved it. Spacing comes off the region unless the caller names one: about six lines across the span, snapped to a rung a reader can count in (0.5, 1, 2, 5, 10, 15, 30, 45), so Switzerland gets a degree grid and the world gets 45° without either being asked for. The equator and the tropics are drawn from <code>--equator</code>, and the parallel set <em>skips those three latitudes</em> — zero is a multiple of every rung, so without that they would be stroked twice in two colours on one pixel row. <b>The plan said <code>d3.geoGraticule()</code> and that turned out to be wrong:</b> a generator returning an undifferentiated MultiLineString cannot say which of its lines is the equator, which is the one thing this item exists to do. The lines are built here instead — a parallel is a latitude sampled every 2°, which is thirty lines of code and knows what each of them is</li>
+          <li><b>Centre the map on a given meridian — shipped.</b> <code>center: 160</code> builds the projection around that meridian; <code>center: [100, 20]</code> turns a globe to face that coordinate. The naming matters and the docs say it twice: this is the projection's <em>axis</em>, not the middle of the canvas. <code>fitExtent</code> still frames the region wherever the rotation puts it, so what moves is how far the meridians fan and how much the map shears, never where the subject sits on the paper. It also beats the 180° rule that keeps a world map Atlantic-centred, which is the whole point — a Pacific-centred world map is precisely what no automatic rule will produce. A latitude is taken only by a projection that turns in both axes; a cylinder or a cone <em>throws</em> rather than quietly returning an oblique aspect, which is a different map rather than a recentred one</li>
+          <li><b>The sea as geometry — shipped, and the plan's contradiction resolved.</b> This section said the graticule sat "at the very bottom" and then said the sea layer did too; only one could. The sea goes <em>under</em> the grid, because an atlas draws its meridians across water — a twelfth slot below all eleven, which restacks nothing and is additive exactly as claimed. <code>--bg</code> was never a sea colour: it means <i>nothing was drawn here</i>, and that is only the same as water when the region has coastline all the way round. <b>Clipping is what made it shippable.</b> The ocean is one polygon carrying every coastline on earth: drawn straight, a 520×400 map of Greece came out <b>806 KB</b> of path data for a few visible gulfs and a map of Switzerland came out <b>858 KB</b> to draw nothing at all. Clipped to the viewport first, Greece is 11 KB and an inland frame emits nothing — the honest answer, since no ocean reaches Bern. The geometry ships in a file of its own and is read only when <code>sea</code> is on, because an opt-in layer every caller downloads is not opt-in. Half the presets set <code>--sea</code> to their own <code>--bg</code> on purpose, so turning it on cannot change a map that was already right</li>
+          <li><b>A brighter palette — shipped as <code>limes</code>,</b> which folds this item and the next into one file rather than two</li>
+          <li><b>The Limes palette — shipped.</b> Flat editorial plates: brick red and ochre against olive, on a deep teal sea, with near-black linework. Its one structural consequence is worth naming, because no other palette has it — <b>the sea is the dark half</b>, so <code>--furniture-ink</code> and <code>--sea-ink</code> are <em>light</em>. A credit line and the name of a gulf are both set on the water, and every other palette can take its furniture ink straight from its muted ink. This one cannot</li>
+          <li><b>A contrast floor — shipped, and three palettes were under it.</b> <code>sand</code> set <code>--land-edge</code> to the background colour exactly, <code>dusk</code> did the same, and <code>slate</code> set it to white on a near-white sea. All three now have a coastline: <code>#CDBB98</code>, <code>#2E4053</code>, <code>#B6BFC9</code>. It was a test and not a redesign, exactly as scoped. <b>But the metric named here was wrong.</b> A <em>ratio</em> floor was tried first and it fails <code>atlas</code> at 1.04 — atlas draws a warm tan coast on a cold blue sea at almost identical lightness, and that coast is unmistakable on screen. WCAG cannot see hue and half the cartography here is hue. ΔE in Lab sorts the presets the way an eye does: <b>contrast 92 · blueprint 64 · noir 28 · atlas 23 · moss 14 — floor — dusk 8.7 · slate 5.9 · sand 5.8</b>, and everything below the line vanished when rendered and looked at. The floor of 10 is set from <code>moss</code>, the weakest preset judged readable, rather than from a round number. The rule is compound because the failure is: a country reads if <em>either</em> its fill differs from the sea <em>or</em> its outline does. One thing the measurement turned up on the way — a palette is appended after a theme's dark block and <code>@media</code> carries no specificity, so <b>a palette replaces a theme's dark mode</b> rather than being overridden by it</li>
+        </ul>
+        <div class="out"><b>Delivered</b>A graticule with a weighted equator, an explicit projection axis, a real sea, a fifth palette that is not atlas-muted, and a contrast floor with three palettes fixed under it. <b>Two of the plan's own prescriptions were wrong and measurement said so:</b> <code>d3.geoGraticule()</code> cannot say which of its lines is the equator, and a WCAG contrast ratio fails <code>atlas</code> at 1.04 because atlas separates its coast from the sea by hue rather than lightness. <b>Land cover and sea names moved to 08e</b> rather than staying open here — both start with a Natural Earth download, and a phase does not stay half-finished behind the one after it.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">08e</span><span class="phase-days">1 day · 0.14</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The second ingest</h3>
+        <p>Everything left that <b>started with a download rather than with a keystroke</b>. Roads and rail were always this phase; land cover and sea names arrived here from 08d, which closed without them rather than carrying them half-done. Three shipped, one was closed by being written down as impossible, and <b>one moved forward on a measurement</b> — which is the rule working as intended rather than a phase slipping.</p>
+        <ul>
+          <li><b>Desert, mountain, glacier — shipped.</b> <code>terrain: true</code> fills <code>.mp-terrain</code>, reserved since v1, and nothing above it moved. Each shape carries <code>data-kind</code>; <code>--desert</code>, <code>--mountain</code> and <code>--glacier</code> go live. A list rather than <code>true</code> draws only what it names. <b>But this plan was wrong about the source, and the pre-flight caught it.</b> It said the classification was there; it is there <i>at 10m only</i>. <code>geography_regions_polys</code> ships <code>FEATURECLA</code> populated at 10m and <b>blank on every single feature</b> at 50m and 110m, which makes those files a list of named shapes with no way to tell the Sahara from Scandinavia. <code>NE_ID</code> is stable across tiers, so the ingest joins the 10m table onto the coarser geometry — <b>60 of 60 at 110m, 522 of 522 at 50m</b> — and throws rather than shipping an unclassed blob. The class is still Natural Earth's; nothing guesses from a name. Clipped twice: to the viewport for the ocean's reason, and to the land the map drew, because a cover polygon is a climate band on a coarse outline and runs out over the sea wherever the coast is finer than the band</li>
+          <li><b>Forest — closed, not deferred.</b> There is no forest polygon in Natural Earth at any tier, checked rather than assumed. Land cover of that kind lives in rasters, and deriving one from a climate band would make this the only layer in the library that invents its subject. <code>--forest</code> stays a reserved token against the day a source exists, which is the honest way to leave it</li>
+          <li><b>Sea names — shipped.</b> Set in italic on the water in <code>--sea-ink</code>, in the same labels layer country and city names use, carrying <code>data-kind="sea"</code>. The rule is one a reader can check: <b>a sea is named when its middle is on the map.</b> The anchor is the interior point furthest from that sea's own shore — a centroid is not good enough for the shapes worth naming, since the Mediterranean's falls over Sicily — computed once at build time, and the polygon then discarded. That is the trade, stated rather than hidden: <b>1.5 MB of coastline becomes 9 KB of anchors</b>, and a map framed on a sliver of a sea whose middle lies elsewhere does not get that sea's name. Ranked 1–3 like settlements, and judged <i>last</i> in the collision pass, so a name on the water gives way to every name on land</li>
+          <li><b>A route — shipped, and it needed nothing downloaded.</b> <code>routes: [{ stops: [{ at, label? }, …] }]</code>. A pin is a mark with a name beside it and an arrow is a line between two coordinates, so a route is <i>n</i> of the first threaded onto <i>n-1</i> of the second. The only new thing is the ordering, and the ordering is the meaning: a reader <i>follows</i> a route. <code>kind: "minor"</code> draws a smaller ring so a branch reads as a branch. <b>A stop the camera cannot see breaks the line rather than being threaded past</b> — skipping it would draw a leg between two places that are not adjacent, and on a globe that leg is a chord straight through the planet</li>
+          <li><b>Roads and rail — moved to Phase 12, on a count rather than a feeling.</b> The files were downloaded and measured before deciding. Of the roads Natural Earth carries, the share classified at all: <b>North America 8,802 of 9,237 · Oceania 746 of 856 · Europe 3,382 of 9,849 · Asia 5,250 of 25,505 · South America 274 of 4,204 · Africa 208 of 6,761.</b> Africa has 420,000 km of road in the file and <b>7,000 km of it is classified</b>. A map of the Sahel drawing only what is classified shows almost nothing; drawing everything shows an unlabelled tangle. Both are wrong and neither is fixable by rendering code. The weight is the second half: vendored and trimmed, roads are <b>5.4 MB</b> and rail <b>23.6 MB</b> against 884 KB for everything else this phase vendored, and both exist at 10m only, so a world map has no thinned version to fall back on. What roads need first is a <b>thinning pipeline and a coverage gate</b>, and both are build machinery rather than a road feature</li>
+          <li><b>Depth in the sea — still filed, still not now.</b> Bathymetry is 10m-only and enormous, the same wall roads hit. The rendering would be nothing new — <code>data-depth</code> and <code>--sea-1…n</code>, the shape the choropleth already has, inside the <code>.mp-ocean</code> layer that now exists. It travels with roads to Phase 12, because it waits on the same thinning pipeline</li>
+          <li><b>The ingest is reproducible now</b>, which it was not. <code>scripts/fetch-natural-earth.mjs</code> downloads, trims and vendors every Natural Earth source no npm package carries. <code>vendor/places-*.raw.json</code> had sat there since Phase 4 with no record of where it came from. Files are trimmed <i>on the way in</i> — a Natural Earth GeoJSON carries about thirty translation columns per feature — so what is committed is what will be used: 884 KB rather than five megabytes</li>
+        </ul>
+        <div class="out"><b>Delivered</b>Ground that is desert where it is desert, water that carries its own names, and routes drawn from an ordered list of places. <b>The plan was wrong once and measurement said so again:</b> the land-cover classification exists at 10m alone, and had to be joined back onto the coarser tiers by Natural Earth's own stable ids. <b>Three themes were carrying cover colours that had never been rendered</b> — the fifth defect of exactly that shape here, and the first caught in the same week its token went live. <b>Roads and rail moved to Phase 12</b> with the numbers written down.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">09</span><span class="phase-days">unscoped</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The tool</h3>
+        <p>The larger audience, and the one the library alone cannot reach. Reporters do not run <code>npm i</code>. This is where Kartograph actually found its users.</p>
+        <p><b>The line between the library and the tool, stated once:</b> the library emits a <i>document</i>; the tool emits a <i>picture</i>. A document is themeable, diffable and re-renderable at any size forever. A picture is finished. That sentence decides where every feature below lands — and it is why PNG export sits here rather than in the library, having been listed as deliberately out of scope since this plan was written.</p>
+        <p><b>It is a static page, and that is a hosting decision as much as an architectural one.</b> Everything runs in the browser — the library computes the geometry, the stylesheet is a string, and the PNG comes from a canvas — so there is no server to run and no per-render cost to carry. <b>GitHub Pages serves it,</b> free on a public repository, deployed by an action off <code>main</code>. The data goes with it as static files fetched on demand: 152&nbsp;KB for the 110m bundle, 1.5&nbsp;MB for 50m, and the sea and cover files beside them — <b>3.1&nbsp;MB if a reader turns everything on at 50m</b>, which is well inside anything Pages minds and is already split the right way, because 8d and 8e each put their layer in a file of its own.</p>
+
+        <p><b>Three pre-flight corrections, made before splitting the phase.</b> This section said one library change was blocking; it is now three, and they are the same change three times — <code>loadWorld</code>, <code>loadOcean</code> and <code>loadCover</code> each build a <code>new URL(…, import.meta.url)</code> and read it through <code>node:fs/promises</code>. That is better news than it sounds: three copies of one shape collapse into a single <code>readData()</code> helper, which is less code than the branch this section originally described. The weight figure above was two files and is now five. And <b>step four of the flow below used to say the tool builds a legend</b>, which contradicts the decision that moved the legend to v2 — that sentence was stale, not a reopening, and the flow is corrected here rather than argued with.</p>
+
+        <p>The five steps are five sub-phases, the way Phase 8 went. One is a genuine dependency — <b>09a unblocks everything</b> — and one is a judgement call: <b>the deploy is 09b rather than last</b>, so every step after it lands on a page that is actually live. Shipping a static site at the end is how a site turns out to have worked only on the machine that built it.</p>
+
+        <ul>
+          <li>Thin UI over the library API; possible only because no option is a callback</li>
+          <li>Full configuration encoded in the URL, so a map is shareable and reproducible</li>
+          <li>Server-side PNG would need <code>resvg</code> or <code>sharp</code> — a dependency the library will not take, and does not have to, because the browser already has a rasteriser</li>
+        </ul>
+
+        <p style="margin-top:1.25rem;"><b>What the tool needs that does not exist yet.</b> Most of the flow above already works; these are the real gaps, in dependency order.</p>
+
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr><th>Need</th><th>Today</th><th>Gap</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="t-name">Running in a browser at all</td><td><code>loadWorld</code>, <code>loadOcean</code> and <code>loadCover</code> all read <code>data/*.json</code> through <code>node:fs/promises</code></td><td><span class="tag tag-cost">09a</span> · one <code>readData()</code> that fetches and falls back to disk. The other three <code>node:fs</code> imports are lazy and on paths the tool never takes</td></tr>
+              <tr><td class="t-name">Somewhere to put it</td><td>Nothing deployed, and no web build — <code>tsup</code> builds a library, not a page</td><td><span class="tag tag-cost">09b</span> · a bundler for the app and a Pages action off <code>main</code>. Neither exists today, and this section did not previously say so</td></tr>
+              <tr><td class="t-name">Options as dropdowns</td><td><code>MapOptions</code>, plus <code>THEME_NAMES</code>, <code>PALETTE_NAMES</code>, <code>TYPEFACE_NAMES</code>, <code>PROJECTION_NAMES</code>, <code>REGION_PRESET_NAMES</code> and <code>LAYERS</code> all exported</td><td><span class="tag tag-free">None</span></td></tr>
+              <tr><td class="t-name">Thicker borders</td><td><code>--border-width</code> is a live token — <code>tokens: { "--border-width": "2" }</code> works right now</td><td><span class="tag tag-free">None</span> · expose it as a slider</td></tr>
+              <tr><td class="t-name">Live preview</td><td><code>svg</code> and <code>css</code> returned as separate strings</td><td><span class="tag tag-free">None</span></td></tr>
+              <tr><td class="t-name">Drop an icon at a point</td><td><code>invert()</code> turns pixels back into lon/lat, and returns <code>null</code> off the map</td><td><span class="tag tag-attr">Shipped</span> · opened Phase 8</td></tr>
+              <tr><td class="t-name">Draw a line between two points</td><td><code>arrows: [{ from, to, bow? }]</code>, both ends guarded, drawn as a curve with a head</td><td><span class="tag tag-attr">Shipped</span> · the tool places the ends by pointer through <code>invert()</code></td></tr>
+              <tr><td class="t-name">Highlight a country by clicking it</td><td><code>highlight</code> and <code>is-highlighted</code>, live since Phase 3</td><td>None · a click handler over an option that exists</td></tr>
+              <tr><td class="t-name">Two maps on one page</td><td>Stylesheets scoped to a hash of the theme, and every emitted id namespaced by a hash of the map</td><td><span class="tag tag-attr">Shipped</span> · was the one blocker on the live preview</td></tr>
+              <tr><td class="t-name">Drop a pin at a point</td><td><code>pins: [{ at: [lon, lat], … }]</code>, cased so it reads on a highlighted country, dropped when the coordinate is behind the globe</td><td><span class="tag tag-attr">Shipped</span> · Phase 8</td></tr>
+              <tr><td class="t-name">Draw the icon</td><td>29 Maki icons ship and a pin's <code>kind</code> names one</td><td><span class="tag tag-attr">Shipped</span> · Phase 8. The <i>geopolitical</i> set is still undrawn, but the tool does not wait on it</td></tr>
+              <tr><td class="t-name">Legend</td><td><code>.mp-legend</code> reserved in the furniture layer</td><td><span class="tag tag-cost">v2</span> · deferred by decision, and growing the canvas to fit it reaches into framing. The tool ships without one</td></tr>
+              <tr><td class="t-name">Sea</td><td><code>sea: true</code> draws the real ocean polygon into <code>.mp-ocean</code>, clipped to the canvas</td><td><span class="tag tag-attr">Shipped</span> · Phase 8d</td></tr>
+              <tr><td class="t-name">Brighter palette</td><td>Five palettes; <code>limes</code> is flat editorial colour on a dark sea</td><td><span class="tag tag-attr">Shipped</span> · Phase 8d</td></tr>
+              <tr><td class="t-name">Roads and rail</td><td><code>.mp-roads</code> reserved</td><td><span class="tag tag-cost">Phase 12</span> · measured and moved — 1.7% of Africa's road length is classified, and the files are 29 MB at 10m only</td></tr>
+              <tr><td class="t-name">Land cover and sea names</td><td><code>terrain</code> and <code>seaNames</code>, three cover kinds and 118 named waters</td><td><span class="tag tag-attr">Shipped</span> · Phase 8e · two more checkboxes on the form</td></tr>
+              <tr><td class="t-name">Draw a route by clicking a sequence</td><td><code>routes: [{ stops: [{ at, label? }, …] }]</code>, ordered, with a ring at each stop</td><td><span class="tag tag-attr">Shipped</span> · Phase 8e · the tool collects the stops by pointer through <code>invert()</code></td></tr>
+              <tr><td class="t-name">PNG</td><td><code>render()</code> returns self-contained SVG with no external font references</td><td><span class="tag tag-free">Tool-side</span> · canvas + <code>toBlob()</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="out"><b>Deliverable</b>Someone who has never opened a terminal produces a captioned map of their region, annotated by clicking on it, and downloads it as an image — from a URL that reproduces exactly what they made. <b>No legend:</b> that moved to v2 by decision, and the flow above no longer pretends otherwise.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">09a</span><span class="phase-days">0.5 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The library, in a browser</h3>
+        <p>No user interface at all. The one thing in the runtime path that cannot work in a browser, fixed and tested where it is cheapest to test — <b>in the suite that already exists</b>, rather than inside a debugging session about a page that will not load. That is the lesson the scoped ids taught, applied on purpose this time.</p>
+        <ul>
+          <li><b>One <code>readData()</code>, not three branches.</b> <code>loadWorld</code>, <code>loadOcean</code> and <code>loadCover</code> each build a <code>new URL(…, import.meta.url)</code> and read it with <code>node:fs/promises</code>. They collapse into one helper that tries <code>fetch</code> and falls back to the filesystem — <i>fewer</i> lines than there are now, which is the shape of a good blocker</li>
+          <li><b>Which comes first matters.</b> Node has had a global <code>fetch</code> since 18, so "fetch first, fall back to fs" would make a Node caller pay a failed request for a <code>file:</code> URL on every load. Branch on the protocol instead: a <code>file:</code> URL reads from disk, anything else fetches</li>
+          <li><b>The error messages have to survive.</b> Each loader today says which file was missing and that <code>npm run build:data</code> regenerates it. In a browser neither sentence is true, and a message telling a reporter to run a build script is worse than no message</li>
+          <li><b>Proved, not assumed:</b> a test that bundles the library for the browser and asserts <code>node:</code> appears nowhere in the output. The three remaining <code>node:fs</code> imports are lazy and on paths the tool never takes — a theme read from a path, <code>toFile()</code>, a logo read from disk — and the claim that a bundler drops them has never been checked</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A browser bundle of the library that renders a map from data it fetched, and a test that fails if a <code>node:</code> import ever creeps back into it.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">09b</span><span class="phase-days">0.5 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>A skeleton, and a real address</h3>
+        <p><b>Deployed on the first day rather than the last.</b> A static site that is only ever run locally is a static site whose deploy is untested, and the failure arrives at the worst moment — with five sub-phases of work sitting behind it. So this ships a page that does almost nothing, to a URL anyone can open, and everything after it lands on that page.</p>
+        <ul>
+          <li>A bundler for the app. The repository builds a <i>library</i> with <code>tsup</code> and has no notion of a page; this is genuinely new setup, and the plan did not previously say so</li>
+          <li>A Pages action off <code>main</code>, and the data files copied beside the bundle so the fetch in 09a has something to fetch</li>
+          <li>One hard-coded map on the page. Nothing configurable — the point is the pipeline, not the picture</li>
+          <li><b>The base path is the trap.</b> A project Pages site is served from <code>/masen/</code>, not <code>/</code>, so every relative URL the data loader builds is wrong by one segment. Better found now, against one map, than later against a form</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A URL that draws a map. Every later sub-phase is a change to a page that is already live.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">09c</span><span class="phase-days">1–2 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The form, and the URL that reproduces it</h3>
+        <p>Every option the library takes, as a control — and the whole configuration in the address bar. <b>The URL is in this sub-phase and not a later one on purpose:</b> state that is threaded through afterwards has to be retrofitted into every control at once, and doing it while there is one control is nearly free.</p>
+        <ul>
+          <li>Dropdowns for region, projection, theme, palette, typeface, detail, and checkboxes for the layers. Every one is already exported as a name list — <code>THEME_NAMES</code>, <code>PALETTE_NAMES</code>, <code>TYPEFACE_NAMES</code>, <code>PROJECTION_NAMES</code>, <code>REGION_PRESET_NAMES</code>, <code>LAYERS</code> — so this is a form over <code>MapOptions</code> and nothing more</li>
+          <li>Sliders for the tokens worth reaching: <code>--border-width</code>, <code>--label-size</code>, the graticule step. Live tokens already, needing only a control</li>
+          <li><b>The preview is cheap and the reason is worth remembering.</b> The library hands back <code>svg</code> and <code>css</code> as separate strings, so changing a theme swaps a stylesheet and touches no geometry. Changing a <i>region</i> does not, and that is the one interaction that will need a spinner</li>
+          <li>Sea, land cover and sea names are four more checkboxes; each fetches its file the first time it is ticked and never again</li>
+          <li><b>What a URL cannot carry is worth deciding here:</b> a caller-supplied GeoJSON region has no short form. Either the tool refuses to encode one, or the URL stops being the whole state — say which</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>Every library option reachable without typing, and a link that rebuilds the map exactly.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">09d</span><span class="phase-days">1–2 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The map as something you click</h3>
+        <p>The half a form cannot do. Four kinds of mark, and <b>every one of them already exists in the library</b> — what is new is only that a pointer, rather than a keyboard, decides where they go.</p>
+        <p><b>Shipped as planned, with two things this row did not say.</b> The first is that <i>which country was clicked</i> is a question for the document, not for the geometry: the browser has already decided what is under a pixel in order to paint it, and <code>elementsFromPoint</code> asks it for that answer topmost-first, so a city dot or a label sitting over a country is stepped past rather than mistaken for it. A point-in-polygon test would have been the same work done twice, and worse the second time. The second is a qualification of 09c's rule that the URL is the whole state: <b>the marks are in it and the gesture is not</b>. A mode is a thing somebody is doing rather than a thing they made, and a shared link that drops its reader into arrow-drawing mode would be sharing the tool rather than the map.</p>
+        <p>Marks are also the first state here that is a <i>list</i>, which forced a decision the single values never did: a pin's label shares a parameter with its coordinates and has the separators stripped out of it, rather than travelling in a second parallel parameter that can fall out of step with the first. A lost comma is a smaller failure than two lists of different lengths. And one mark is sharper than the rest — <code>highlight</code> is the only one the library <em>throws</em> on, so an unrecognised code does not break one control, it breaks the whole render: the codes are resolved against the library's own table on the way in and dropped if it does not know them.</p>
+        <ul>
+          <li><b>Highlight a country by clicking it.</b> Needs nothing new at all: <code>highlight</code> and <code>is-highlighted</code> have been live since Phase 3, so this is a click handler over an option</li>
+          <li><b>Drop a pin, draw an arrow, trace a route.</b> One click, two clicks, a sequence of clicks — the three annotation primitives are exactly a one-, two- and n-point gesture, which is a coincidence worth exploiting in the interface</li>
+          <li><b>Everything is stored as lon/lat, never as pixels.</b> <code>invert()</code> is what turns a drop into a coordinate, and it is the whole discipline of the layer: a pixel is meaningful only for the exact region, projection and canvas that produced it, so anything stored in pixels detaches the moment the map is reframed</li>
+          <li><b>The far side of a globe has to be handled in the interface too.</b> The library already refuses a coordinate behind an orthographic limb — but a click <i>on</i> the limb comes back <code>null</code>, and the page has to say something rather than silently doing nothing</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A map annotated by pointing at it, reframed without losing a single mark.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">09e</span><span class="phase-days">0.5 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>Taking it away</h3>
+        <p>The step that makes the tool a tool. <b>The library emits a document; this is where it becomes a picture</b>, and that sentence is why PNG lives here and not in the library.</p>
+        <p><b>Shipped, and the size rule turned out to belong to one format rather than both.</b> "The same document twice" is true of a PNG and not of an SVG: a vector file <i>has</i> no size, which is the entire advantage of it, so naming one <code>1920x1240</code> would be a claim about it that is not true. The multiplier applies to the raster and the SVG is written at the canvas it was drawn for. The other correction is smaller and would have shipped a blank file: a canvas has a limit on each side <i>and</i> on its area, and 8000 × 8000 clears the first while being a quarter of a gigabyte of pixels — so a size that cannot be produced is kept out of the menu rather than offered and then failed. 1× is always offered whatever the canvas, because refusing it would be refusing to save the map the tool has just drawn.</p>
+        <ul>
+          <li>PNG by drawing the flattened SVG into a canvas and calling <code>toBlob()</code>. It works only because the flattened form is self-contained with no external font reference — a property the library has had since Phase 3 and which is doing real work here for the first time</li>
+          <li>The SVG too, free, and the better format for anyone who will restyle it later</li>
+          <li><b>Size at export, not on screen.</b> A map re-renders at any size because it is geometry rather than pixels; a preview sized to a browser window and a poster at 2000px are the same document twice, and offering that is nearly free</li>
+          <li>No server-side rasteriser. <code>resvg</code> or <code>sharp</code> would be a dependency the library will not take and does not need, because the browser already has one</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A file on the reader's disk, and a link back to the map that made it.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">09f</span><span class="phase-days">unscoped</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The tool, revisited</h3>
+        <p><b>A design pass, deliberately last.</b> 09a–09e build the thing by capability, one piece at a time, and a form assembled that way is a list of every option in the order they were implemented — which is nobody's idea of how to make a map. This is the phase that arranges it around what a person is actually doing, and it is scheduled after the tool works rather than during, because you cannot lay out a screen whose contents are still arriving.</p>
+        <p>It is also the phase for everything that got noticed while using it and was too small to interrupt for. Those are collected here rather than fixed as they appear, so the map-making does not turn into a stream of one-line UI commits.</p>
+        <ul>
+          <li><b>The form is a workflow now.</b> Subject, Frame, What it shows, Marks, Look. The projection and the canvas decide one thing between them — what is in the picture — and sat in different groups for no reason but history; Neighbours joined them, because it is about what falls inside the frame rather than about a layer somebody wants. Layers and Names merged, since they answer one question between them. Look went last, being the only group whose answers do not change what the reader is being shown, and Credit went with it, which emptied Canvas out of existence. No control gained, lost or renamed</li>
+          <li><b>The last map comes back.</b> The query string is kept and a bare address reopens it, with one rule settling the conflict: <b>a shared link always wins</b>, because somebody opening a link is asking for that map and not for the last one they made themselves. Which creates a trap and so comes with the way out — once a bare address reopens the last map there is no way to ask for a blank one, and <i>Start over</i> forgets and reloads. Every read and write is wrapped, and not for tidiness: <code>localStorage</code> <i>throws</i> in a browser set to block site data, and the answer to that is a default map drawn immediately</li>
+          <li><b>The preview has a scale of its own.</b> Fit stays the default, being right for choosing a region; 50%, 100% and 200% are multiples of the canvas's own units, so 100% is the size the file will actually be, and larger than the room available is the point — the frame scrolls rather than crops. The zoom never enters the URL: it belongs to this screen and this person, so it must not travel in a shared link and must survive being given a different map</li>
+          <li><b>Degree labels on the graticule — shipped, and they found a bug older than themselves.</b> <code>graticule: { labels: true }</code> writes each line's latitude or longitude on the frame. The placement rule is the one the scale bar's was: measure the drawn geometry rather than trust the projection's name. A number goes where its line meets the edge of the <i>drawn map</i>, which is not always the canvas — <code>fitExtent</code> leaves slack on one axis, and a world map in equal-earth sits inset by eighty units at the top. The edge is chosen once per axis rather than once per line, because judged line by line a conic's western meridians leave through the left while its central ones leave through the bottom, and the numbers scatter over two and a half sides of the frame. Longitudes along the bottom, latitudes down the left, unless the conventional edge carries less than two thirds of the grid.
+          <br><b>What it found:</b> the lines were not reaching the frame. They were sampled across the region's bounds plus a quarter, which is not what the canvas shows — reaching the left edge of a west-europe conic at 50°N takes a longitude of 26°W and the margin stopped at 19°W, so every conic ever drawn with a graticule had parallels ending a few units short of the edge. A faint line stopping just inside the frame looks like a faint line; a number that refuses to be placed does not. The grid is sampled across the ground the canvas actually shows now, measured by inverting a grid of pixels through the projection, with the same round-trip guard the annotations take. <span class="t-note">Raised while using the tool, 2026-08-31</span></li>
+          <li><b>A pin's icon and its size — shipped.</b> Both were in the library and neither was reachable from the tool: a pin's <code>kind</code> has doubled as a Maki icon name since Phase 8, and the tool never sent one. It began as one icon for the whole map — a fourth field in the URL and a dropdown in every row of the mark list looked like too much for what it bought — and that was wrong within an hour of it being usable: the first map anyone makes with it wants an airport <i>and</i> a hospital. So each pin carries its own, encoded as <code>lon,lat,label,icon</code> with the empty label slot kept, and the dropdown on the form is <i>the icon the next click drops</i> rather than a property of the map, which is why it appears only while pins are being dropped. The size is a new token, <code>--pin-size</code>, and it had to be one: a pin is a circle <i>and</i> a glyph scaled to sit inside it, so a CSS rule reaching only the circle grows the mark and leaves the icon rattling around in it. The geometry reads the token out of the resolved stylesheet, exactly as it already reads <code>--label-size</code>. <span class="t-note">Asked for while using the tool, 2026-08-31</span></li>
+          <li><b>The map answers back, beside the control that asked — and this row was half wrong.</b> "Errors belong beside the control" assumed there would be errors, and after 09c there are almost none: the decoder sanitises every value on its way in, so the library has nothing left to reject. What happens instead, and far more often, is a control asked for something the frame does not contain and looking <i>exactly</i> as it does when it worked — glaciers over Spain, sea names where none fit, a numbered graticule on a globe whose meridians end on the limb, a highlight on a country the region does not include. Each says so under its own control, in amber rather than red, because none of it is a fault. <b>Read back off the drawn SVG, never predicted</b>: a note that can disagree with the map is worse than no note, and a hidden label counts as absent, since <code>data-fit="0"</code> is precisely "I turned this on and cannot see it"</li>
+          <li><b>The <code>?</code> boxes — done ahead of the pass, because they were unusable rather than untidy.</b> Absolutely positioned inside a panel that scrolls, an explanation is cropped to the width of the sidebar and clipped by its edge, which is a help text nobody can read. Fixed to the viewport and opened clear of the panel, over the map, where a paragraph has room to be one — and closed by a click anywhere else, which is the thing every reader tries first. A group's <code>?</code> also moved up beside its heading instead of floating alone on the line below it. <span class="t-note">Raised while using the tool, 2026-08-31</span></li>
+          <li><b>The map takes a keyboard.</b> It is focusable and draws a cross: arrows move it, Enter places, Escape puts it away, Shift makes the step fine. The cross is held in the map's own units rather than in pixels — the same discipline the marks take, and for the same reason: those units survive the preview being zoomed. Placement runs through the same function a click does, down to the pixel, which matters for highlighting because that asks the <i>document</i> what is under a point and must be asked identically however the point was chosen</li>
+          <li><b>Mobile, tested at 390 × 844.</b> The map goes first: on one column the form is a screen and a half of controls, and putting it above the map means scrolling past everything you are adjusting to see what it did. The panel stops being a sticky scroller inside a scrolling page, which is two scrollbars fighting over one gesture, and the chips, buttons and picker rows get thumb-sized targets</li>
+          <li><b>Asked for while it was being used, and done here:</b> an icon and a size for pins — both already in the library and neither reachable — and a way to draw no cities at all, or cities with no names. <code>placeRank</code> and <code>labelRank</code> take <code>0</code> now, the convention <code>seaNames</code> already used</li>
+        </ul>
+        <div class="out"><b>Deliverable</b>A tool arranged around making a map rather than around the order it was built in — and the small things that were noticed while using it, done in one pass instead of seven.</div>
+      </div>
+    </div>
+
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">10</span><span class="phase-days">0.5 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>A way for anyone to say what is missing</h3>
+        <p><b>One link, and it was the cheapest evidence this project could buy.</b> Every phase after the tool is a bet on somebody wanting something, and the plan had been placing those bets on judgement alone. Phase 12 is the sharpest case: 29 MB of road data whose gate reads "the tool is where anyone will first ask for a road, and asking is the evidence", in a tool where <b>nobody could ask</b>. This built the asking.</p>
+        <p><b>Counting moved out, to Phase 14, and the split is the point.</b> Analytics and a feedback link sat in one phase because both answer <i>is anyone using this</i> — but they answer it at different strengths and cost entirely different things. One person writing "I wanted roads and there were none" is better evidence than a thousand pageviews: it needs no consent question, no third party in the page, and no sentence taken out of the README, and it arrives without waiting for traffic to accumulate.</p>
+        <ul>
+          <li><b>The GitHub issue was dropped before it was built, and this plan had specified it.</b> "A <i>Feedback</i> link that opens a pre-filled GitHub issue" asks the reader for an <i>account</i> before they are allowed to say anything — and the reader this tool was built for, a reporter on deadline, does not have one and will not make one. It also puts their words on a public page, which is wrong for somebody who only wants to report that the thing is broken. <b>What shipped is a form in the tool that sends an email</b>, through Web3Forms: no account for the sender, nothing public, and a free tier that refuses rather than bills</li>
+          <li><b>The map travels with the message, which is the whole reason it lives in the tool</b> rather than on a contact page somebody has to navigate to. 09c made the address bar the complete state of a map and this is the second thing that property has paid for: the first message from the live site arrived carrying <code>?projection=albers&amp;theme=contrast&amp;sea=0</code>, which reopens as the sender had it. The link is read at the moment of sending rather than when the dialog opens, so thinking again and moving the region sends the map they ended up with</li>
+          <li><b>The access key is public and that is not a leak</b>, though it looks like one. The browser does the sending, so the key ships in the bundle; everything it can do is send mail to the one address it was issued for. An <code>.env</code> file would not change that — Vite inlines <code>VITE_</code> variables at build time — and would buy the feeling of a secret plus a variable to configure in CI</li>
+          <li><b>But the honeypot protects against the wrong thing, and saying so is the point of writing it down.</b> A hidden field catches bots that crawl the form and submit it; it does nothing about somebody lifting the key out of the bundle and posting from their own script, because they never load the page. <b>Turnstile is what would</b>, since it is enforced at the far end — and it is <b>not done</b>, so it moves to Phase 11 rather than staying open here. It belongs there anyway: an announcement is what brings the traffic that makes a public endpoint worth attacking</li>
+          <li><b>The confirmation was missed the first time it was used</b>, which is the kind of defect only using a thing finds. It was grey text under the buttons — the last thing on the dialog and the easiest to skip. The dialog now becomes a <i>receipt</i>: the fields go, because an empty box under a success message invites somebody to wonder whether it went and send it twice; the answer moved above the buttons; <i>Send</i> is replaced by <i>Close</i> in the same position; and the page's own status line repeats it, so closing the dialog does not erase the only evidence anything happened. <b>It does not close itself</b> — a dialog that vanishes on success takes the confirmation with it</li>
+          <li><b>The README's promise survived intact</b>, and that was the test each choice had to pass. "No server, no account and nothing sent anywhere" stays true of a link the reader chooses to click. That is exactly what makes this phase cheap and Phase 14 expensive, and it is why they are no longer one phase</li>
+        </ul>
+        <div class="out"><b>Delivered</b>A <i>Feedback</i> button beside the downloads, sending a message and the map that prompted it, with no account asked of anyone and nothing landing in public. <b>The plan specified a GitHub issue and that was wrong</b> — it puts a login between a reader and a sentence they were willing to write. <b>Turnstile moved to Phase 11</b> rather than being left open here: the honeypot catches crawlers and not somebody using the key directly, and pretending otherwise would have been the more comfortable note to write.</div>
+      </div>
+    </div>
+    <div class="phase is-done">
+      <div class="phase-mark"><span class="phase-num">10b</span><span class="phase-days">0.5 days</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The tool looks like its author made it</h3>
+        <p><b>Not a design phase — a credibility one, and it is due before the announcement rather than after.</b> <code>danielefrisanco.github.io</code> lists this tool among its projects and this tool's header links back to it, and until now the two looked like the work of different people. That costs little most of the time and costs most of all in Phase 11, where a newsroom is being asked whether this can be trusted on a deadline. Hence its place in the order: an announcement should point at something that looks finished.</p>
+        <p><b>The identity carried; the decoration did not, and the second half is the one worth writing down.</b> The site's shadows, its cards that lift under a pointer, its 14px corners, its gradient button and its reveal-on-scroll all belong to a page whose job is to make an impression in five seconds. <b>This page's job is the opposite — to disappear behind the map</b> — and anything that moves under the pointer competes with the one thing on screen meant to hold attention. A form of thirty controls at a 14px radius reads as bubbly rather than calm. None of it came.</p>
+        <ul>
+          <li><b>The neutrals are the site's, and they are warm where these were faintly green.</b> Both pages were already token-driven with a light and dark pair, and the vocabularies mapped almost one for one — <code>--bg/--surface/--border/--text/--text-soft</code> onto <code>--page/--panel/--line/--ink/--ink-soft</code>. That correspondence is the whole reason this was half a day and not a rewrite</li>
+          <li><b>The tool gained an accent, which it had never had.</b> It carried an error red and a warning amber, both of which mean <i>something is wrong</i>, and no colour at all for saying <i>this is the thing you are using</i>. <b>The collision was found before it shipped rather than after:</b> <code>--note</code> is amber and the accent is orange, neighbours on the wheel. They stay legible because they never take the same shape — a note is a sentence underneath a control, the accent is never text. It is a ring, a border, a fill. The rule that keeps them apart is exactly that: <i>if the accent ever colours words, it has begun impersonating a warning</i></li>
+          <li><b>The focus ring was the accent's real prize.</b> It had been <code>currentColor</code>, which made it whatever the focused element happened to be — grey on a hint, near-black on an input, and all but invisible against a border of the same weight. One colour now, because <i>where am I</i> is precisely the question an accent exists to answer</li>
+          <li><b>One piece of decoration is here on purpose:</b> the short accent bar under each group heading, which is the site's only real signature. Without it the accent appeared <i>nowhere at rest</i> — every other use is a hover or a focus — so a screenshot of the page had no colour in it at all and the family resemblance went with it. Static, where the original grows a gradient on a heading nobody reads twice</li>
+          <li><b>Inter was left out, and not by oversight.</b> Loading it from Google Fonts would send a request to Google on every page load, which contradicts the README's <i>nothing sent anywhere</i> — the exact promise Phase 10 had just been careful to protect when it chose a form the reader clicks over a beacon that fires on arrival. <b>A typeface is not worth the sentence.</b> Self-hosting it is a separate piece of work and is filed rather than done</li>
+          <li><b>Full width stays.</b> The site's <code>--maxw: 960px</code> is the one token that could not come: a centred column with a map in it is a smaller map, and the map is the product</li>
+        </ul>
+        <div class="out"><b>Delivered</b>Two pages that link to each other and look like it. <b>Verified in both schemes with <code>prefers-color-scheme</code> emulated rather than trusted</b> — the accent swaps orange for amber on the dark ground, where the orange goes muddy — and the map's own theme stays independent of the page around it, which is the thing this phase must never have broken.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
