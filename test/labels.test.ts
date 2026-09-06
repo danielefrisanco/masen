@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline } from "../src/index.js";
+import { masen } from "../src/index.js";
 
 /**
  * Labels are tested by what they promise, not by what they emit.
@@ -81,7 +81,7 @@ function inside(shape: ReadonlyArray<ReadonlyArray<[number, number]>>, x: number
 describe("country labels", () => {
   it("puts every name inside the country it names", async () => {
     for (const region of ["west-europe", "africa", "south-america"] as const) {
-      const map = await neatline({ region, detail: "110m", size: [1000, 900] });
+      const map = await masen({ region, detail: "110m", size: [1000, 900] });
       const named = labels(map.svg).filter((label) => label.kind === "country");
       expect(named.length).toBeGreaterThan(5);
 
@@ -96,7 +96,7 @@ describe("country labels", () => {
   });
 
   it("keeps every name on the canvas", async () => {
-    const map = await neatline({ region: "world", detail: "110m", size: [1200, 700] });
+    const map = await masen({ region: "world", detail: "110m", size: [1200, 700] });
     for (const label of labels(map.svg)) {
       expect(label.x).toBeGreaterThanOrEqual(0);
       expect(label.x).toBeLessThanOrEqual(1200);
@@ -106,7 +106,7 @@ describe("country labels", () => {
   });
 
   it("hides the names a map has no room for rather than dropping them", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       detail: "110m",
       size: [900, 800],
@@ -123,7 +123,7 @@ describe("country labels", () => {
   });
 
   it("flattens the hidden ones onto an attribute, for readers with no CSS", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       detail: "110m",
       size: [900, 800],
@@ -136,17 +136,17 @@ describe("country labels", () => {
 
   it("gives a name more room when the type is set larger", async () => {
     const size = { region: "europe", detail: "110m", size: [900, 800] } as const;
-    const small = labels((await neatline(size)).svg).filter((l) => l.kind === "country" && l.fits);
+    const small = labels((await masen(size)).svg).filter((l) => l.kind === "country" && l.fits);
     const large = labels(
-      (await neatline({ ...size, tokens: { "--label-size": "26" } })).svg,
+      (await masen({ ...size, tokens: { "--label-size": "26" } })).svg,
     ).filter((l) => l.kind === "country" && l.fits);
     expect(large.length).toBeLessThan(small.length);
   });
 
   it("is deterministic", async () => {
     const options = { region: "europe", detail: "110m" } as const;
-    const first = await neatline(options);
-    const second = await neatline(options);
+    const first = await masen(options);
+    const second = await masen(options);
     expect(labels(first.svg)).toEqual(labels(second.svg));
   });
 });
@@ -154,15 +154,15 @@ describe("country labels", () => {
 describe("settlement labels", () => {
   it("names only the ranks asked for, and never one without a dot", async () => {
     const region = { region: "west-europe", detail: "50m" } as const;
-    const one = labels((await neatline(region)).svg).filter((l) => l.kind === "place");
-    const three = labels((await neatline({ ...region, labelRank: 3 })).svg).filter(
+    const one = labels((await masen(region)).svg).filter((l) => l.kind === "place");
+    const three = labels((await masen({ ...region, labelRank: 3 })).svg).filter(
       (l) => l.kind === "place",
     );
     expect(one.length).toBeGreaterThan(0);
     expect(three.length).toBeGreaterThan(one.length);
 
     const dotted = new Set(
-      [...(await neatline(region)).svg.matchAll(/<circle class="mp-place" data-name="([^"]*)"/g)].map(
+      [...(await masen(region)).svg.matchAll(/<circle class="mp-place" data-name="([^"]*)"/g)].map(
         (m) => m[1],
       ),
     );
@@ -175,7 +175,7 @@ describe("settlement labels", () => {
    * `seaNames` uses, where 0 is the absence of a rank rather than the lowest.
    */
   it("draws no settlements at all at rank 0", async () => {
-    const map = await neatline({ region: "west-europe", detail: "110m", placeRank: 0 });
+    const map = await masen({ region: "west-europe", detail: "110m", placeRank: 0 });
     expect(map.svg).not.toContain('<circle class="mp-place"');
     expect(labels(map.svg).some((l) => l.kind === "place")).toBe(false);
     // The country names are a different question and are still answered.
@@ -183,14 +183,14 @@ describe("settlement labels", () => {
   });
 
   it("draws the dots and names none of them at label rank 0", async () => {
-    const map = await neatline({ region: "west-europe", detail: "110m", labelRank: 0 });
+    const map = await masen({ region: "west-europe", detail: "110m", labelRank: 0 });
     expect(map.svg).toContain('<circle class="mp-place"');
     expect(labels(map.svg).some((l) => l.kind === "place")).toBe(false);
   });
 
   /** A name can only be given to a settlement that was drawn. */
   it("has nothing to name when no settlement was drawn", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       placeRank: 0,
@@ -201,7 +201,7 @@ describe("settlement labels", () => {
   });
 
   it("steps a country name clear of its own capital", async () => {
-    const map = await neatline({ region: "west-europe", detail: "50m", size: [1000, 800] });
+    const map = await masen({ region: "west-europe", detail: "50m", size: [1000, 800] });
     const all = labels(map.svg);
     const spain = all.find((l) => l.kind === "country" && l.iso === "ES");
     const madrid = all.find((l) => l.kind === "place" && l.text === "Madrid");
@@ -215,8 +215,8 @@ describe("settlement labels", () => {
 describe("labels on an extruded map", () => {
   it("raises a name onto the surface it belongs to", async () => {
     const values = { FR: 100, DE: 90, ES: 40, IT: 60, GB: 80 };
-    const flat = await neatline({ region: "west-europe", detail: "110m", size: [900, 800] });
-    const raised = await neatline({
+    const flat = await masen({ region: "west-europe", detail: "110m", size: [900, 800] });
+    const raised = await masen({
       region: "west-europe",
       detail: "110m",
       size: [900, 800],
@@ -236,7 +236,7 @@ describe("labels on an extruded map", () => {
 
 describe("the labels layer", () => {
   it("is empty when it is turned off, and the slot still exists", async () => {
-    const map = await neatline({ region: "europe", detail: "110m", layers: { labels: false } });
+    const map = await masen({ region: "europe", detail: "110m", layers: { labels: false } });
     expect(map.svg).toContain('<g class="mp-layer mp-labels"/>');
     // `mp-labels` contains `mp-label`, so the empty slot is not the answer here.
     expect(map.svg).not.toContain('<text class="mp-label');
@@ -245,7 +245,7 @@ describe("the labels layer", () => {
 
 describe("names", () => {
   it("puts the caller's name on the map, everywhere the bundled one appeared", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "50m",
       theme: "minimal",
@@ -266,7 +266,7 @@ describe("names", () => {
   });
 
   it("does not rename a city after its country", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["FR"],
       detail: "50m",
       theme: "minimal",

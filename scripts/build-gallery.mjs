@@ -16,7 +16,7 @@
  * megabytes of inline SVG makes a diff nobody can read. It is built rather
  * than stored — by `npm run gallery` locally, and by the Pages workflow, which
  * copies it into `tool/dist/gallery.html` so the published site carries it at
- * `/neatline/gallery.html`.
+ * `/masen/gallery.html`.
  *
  * That publish is why there is no webfont here any more; the reason is written
  * where the fonts used to be.
@@ -91,7 +91,7 @@ const page = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>neatline gallery — ${files.length} maps</title>
+<title>masen gallery — ${files.length} maps</title>
 <style>
   /*
    * No webfont, and no <link> to one. This page used to load three IBM Plex
@@ -189,14 +189,14 @@ const page = `<!doctype html>
 <body>
 <div class="wrap">
   <header>
-    <p class="eyebrow">neatline · gallery</p>
+    <p class="eyebrow">masen · gallery</p>
     <h1>${files.length} maps, as files someone can open</h1>
     <p class="stand">Every committed snapshot in <code>${DIR}</code>, exactly as it renders. What each map is said to demonstrate is read back off the markup rather than off the test that wrote it, so nothing here can claim a feature the file does not contain.</p>
     <!-- A relative link, so this page works from the built site, from a local
          preview, and from a file:// open of the untracked build. -->
     <nav class="by">
       <a href="./">Open the tool</a>
-      <a href="https://github.com/danielefrisanco/neatline" rel="noopener" target="_blank">Source</a>
+      <a href="https://github.com/danielefrisanco/masen" rel="noopener" target="_blank">Source</a>
     </nav>
   </header>
   <div class="grid">

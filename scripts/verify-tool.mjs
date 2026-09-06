@@ -22,18 +22,18 @@ const OUT = new URL("../tool/dist/", import.meta.url);
 const root = OUT.pathname;
 
 const index = await readFile(join(root, "index.html"), "utf8").catch(() => {
-  throw new Error("neatline: tool/dist/index.html is missing — run `npm run tool:build` first");
+  throw new Error("masen: tool/dist/index.html is missing — run `npm run tool:build` first");
 });
 
 // Everything the page asks the browser to go and get.
-const referenced = [...index.matchAll(/(?:src|href)="(\/neatline\/[^"]+)"/g)].map(
-  (match) => (match[1] ?? "").replace("/neatline/", ""),
+const referenced = [...index.matchAll(/(?:src|href)="(\/masen\/[^"]+)"/g)].map(
+  (match) => (match[1] ?? "").replace("/masen/", ""),
 );
 assert.ok(referenced.length > 0, "index.html references no assets at all");
 
 for (const path of referenced) {
   await stat(join(root, path)).catch(() => {
-    throw new Error(`neatline: index.html points at ${path}, which was not built`);
+    throw new Error(`masen: index.html points at ${path}, which was not built`);
   });
   console.log(`  ✓ ${path}`);
 }
@@ -51,11 +51,11 @@ const assets = await readdir(join(root, "assets"));
 const WANTED = ["110m", "50m", "ocean-110m", "ocean-50m", "cover-110m", "cover-50m"];
 for (const name of WANTED) {
   const found = assets.find((file) => new RegExp(`^${name}-[A-Za-z0-9_-]+\\.json$`).test(file));
-  assert.ok(found, `neatline: no ${name}.json in the build — did \`npm run build:data\` run?`);
+  assert.ok(found, `masen: no ${name}.json in the build — did \`npm run build:data\` run?`);
   const { size } = await stat(join(root, "assets", found));
   // A truncated copy is worse than a missing one: it 200s and then fails to
   // parse, three modules deep.
-  assert.ok(size > 10_000, `neatline: ${found} is only ${size} bytes, which cannot be right`);
+  assert.ok(size > 10_000, `masen: ${found} is only ${size} bytes, which cannot be right`);
   console.log(`  ✓ assets/${found}  ${(size / 1024).toFixed(0)} KB`);
 }
 
@@ -73,20 +73,20 @@ for (const name of WANTED) {
  */
 const gallery = await stat(join(root, "gallery.html")).catch(() => {
   throw new Error(
-    "neatline: the header links to gallery.html and the build does not contain one — " +
+    "masen: the header links to gallery.html and the build does not contain one — " +
       "`npm run gallery -- tool/dist/gallery.html` is part of `tool:build`",
   );
 });
 assert.ok(
   gallery.size > 500_000,
-  `neatline: gallery.html is only ${(gallery.size / 1024).toFixed(0)} KB, which means it was ` +
+  `masen: gallery.html is only ${(gallery.size / 1024).toFixed(0)} KB, which means it was ` +
     "built from an empty test/__snapshots__/gallery",
 );
 console.log(`  ✓ gallery.html  ${(gallery.size / 1024 / 1024).toFixed(1)} MB`);
 
 await stat(join(root, ".nojekyll")).catch(() => {
   throw new Error(
-    "neatline: no .nojekyll in the build. Jekyll silently deletes files whose names begin with " +
+    "masen: no .nojekyll in the build. Jekyll silently deletes files whose names begin with " +
       "an underscore, and Vite names one of its chunks `__vite-browser-external-<hash>.js`.",
   );
 });

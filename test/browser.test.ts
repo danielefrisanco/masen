@@ -46,9 +46,9 @@ describe("reading the bundled data", () => {
       return new Response(JSON.stringify(payload), { status: 200 });
     }) as unknown as typeof fetch;
 
-    const got = await readData(new URL("https://example.invalid/neatline/data/110m.json"));
+    const got = await readData(new URL("https://example.invalid/masen/data/110m.json"));
     expect(got).toEqual(payload);
-    expect(asked).toEqual(["https://example.invalid/neatline/data/110m.json"]);
+    expect(asked).toEqual(["https://example.invalid/masen/data/110m.json"]);
   });
 
   it("does not fetch a file: URL", async () => {
@@ -95,7 +95,7 @@ describe("reading the bundled data", () => {
 
   it("resolves every data file to the same directory", () => {
     // A one-line guard on the thing 09b is about to get wrong: a project Pages
-    // site is served from /neatline/, not /, so every one of these has to move
+    // site is served from /masen/, not /, so every one of these has to move
     // together or none of them does.
     const names = ["110m", "50m", "ocean-110m", "cover-110m"];
     const directories = new Set(

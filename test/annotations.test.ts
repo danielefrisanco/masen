@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline, type Arrow, type Callout, type Pin } from "../src/index.js";
+import { masen, type Arrow, type Callout, type Pin } from "../src/index.js";
 
 /**
  * Pins, tested by where they land rather than by what they print.
@@ -79,7 +79,7 @@ const PARIS: Pin = { at: [2.35, 48.86], label: "Paris" };
 
 describe("pins", () => {
   it("puts the mark where project() says, and only in the annotation layer", async () => {
-    const map = await neatline({ region: "west-europe", pins: [PARIS] });
+    const map = await masen({ region: "west-europe", pins: [PARIS] });
     const at = map.project(PARIS.at);
     expect(at).not.toBeNull();
 
@@ -105,7 +105,7 @@ describe("pins", () => {
       for (let lat = -75; lat <= 75; lat += 15) pins.push({ at: [lon, lat] });
     }
     for (const projection of ["orthographic", "equal-earth", "mercator"] as const) {
-      const map = await neatline({ region: "africa", projection, size: [700, 700], pins });
+      const map = await masen({ region: "africa", projection, size: [700, 700], pins });
       // Only the marks a reader can see. A pixel far outside the canvas can sit
       // near a globe's limb, where the projection is compressed hard enough
       // that rounding the coordinate to a tenth of a unit on the way out moves
@@ -127,7 +127,7 @@ describe("pins", () => {
   it("drops a coordinate on the far side of a globe rather than mirroring it", async () => {
     // Africa-centred. The Pacific is behind the globe, and d3 hands back a
     // pixel for it anyway — one that lands squarely on Angola.
-    const map = await neatline({
+    const map = await masen({
       region: "africa",
       projection: "orthographic",
       size: [800, 800],
@@ -145,7 +145,7 @@ describe("pins", () => {
   });
 
   it("states whether a mark is on the canvas instead of deciding for the caller", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       projection: "conic-conformal",
       theme: "minimal",
@@ -163,7 +163,7 @@ describe("pins", () => {
   });
 
   it("carries the caller's handle and category through to the markup", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       pins: [{ at: [2.35, 48.86], id: "p1", kind: "capital" }],
     });
@@ -173,8 +173,8 @@ describe("pins", () => {
   });
 
   it("moves the label off the mark without moving the mark", async () => {
-    const plain = await neatline({ region: "west-europe", pins: [PARIS] });
-    const shifted = await neatline({
+    const plain = await masen({ region: "west-europe", pins: [PARIS] });
+    const shifted = await masen({
       region: "west-europe",
       pins: [{ ...PARIS, offset: [-30, 0] }],
     });
@@ -191,7 +191,7 @@ describe("pins", () => {
   });
 
   it("draws a mark with no label as a mark and nothing else", async () => {
-    const map = await neatline({ region: "west-europe", pins: [{ at: [2.35, 48.86] }] });
+    const map = await masen({ region: "west-europe", pins: [{ at: [2.35, 48.86] }] });
     const [mark] = marks(map.svg);
     expect(mark).toBeDefined();
     expect(mark?.label).toBeNull();
@@ -205,19 +205,19 @@ describe("pins", () => {
       [[Number.NaN, 0], /finite/],
     ];
     for (const [at, message] of bad) {
-      await expect(neatline({ region: "west-europe", pins: [{ at }] })).rejects.toThrow(message);
+      await expect(masen({ region: "west-europe", pins: [{ at }] })).rejects.toThrow(message);
     }
     // The mistake that actually happens gets told what it was.
     await expect(
-      neatline({ region: "west-europe", pins: [{ at: [48.86, 2.35] as never }] }),
+      masen({ region: "west-europe", pins: [{ at: [48.86, 2.35] as never }] }),
     ).resolves.toBeDefined();
     await expect(
-      neatline({ region: "west-europe", pins: [{ at: [48.86, 102.35] }] }),
+      masen({ region: "west-europe", pins: [{ at: [48.86, 102.35] }] }),
     ).rejects.toThrow(/\[lon, lat\], not \[lat, lon\]/);
   });
 
   it("leaves the layer emitted and empty when annotations are switched off", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       pins: [PARIS],
       layers: { annotations: false },
@@ -232,7 +232,7 @@ describe("pins", () => {
     // Switching a layer off controls what is drawn, not whether the options
     // were valid — otherwise a bad pin hides until someone turns pins back on.
     await expect(
-      neatline({
+      masen({
         region: "west-europe",
         pins: [{ at: [0, 100] }],
         layers: { annotations: false },
@@ -243,8 +243,8 @@ describe("pins", () => {
   it("never moves the camera to take a pin in", async () => {
     // A mark is placed on the map; the map is not reframed around the mark, or
     // every mark already placed shifts under the reader.
-    const without = await neatline({ region: "west-europe", projection: "conic-conformal" });
-    const with_ = await neatline({
+    const without = await masen({ region: "west-europe", projection: "conic-conformal" });
+    const with_ = await masen({
       region: "west-europe",
       projection: "conic-conformal",
       pins: [{ at: [158.65, 53.05], label: "Petropavlovsk" }],
@@ -253,7 +253,7 @@ describe("pins", () => {
   });
 
   it("names in the description only the marks a reader can see", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "africa",
       projection: "orthographic",
       size: [800, 800],
@@ -271,7 +271,7 @@ describe("pins", () => {
   });
 
   it("says nothing about annotations on a map that has none", async () => {
-    const map = await neatline({ region: "west-europe" });
+    const map = await masen({ region: "west-europe" });
     expect(/aria-label="([^"]*)"/.exec(map.svg)?.[1]).not.toContain("marking");
     expect(annotationLayer(map.svg).trim()).toBe("");
   });
@@ -325,7 +325,7 @@ const NOTE: Callout = {
 
 describe("callouts", () => {
   it("points its leader from the coordinate to the corner the offset named", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       callouts: [{ ...NOTE, offset: [60, -90] }],
     });
@@ -355,7 +355,7 @@ describe("callouts", () => {
   });
 
   it("grows the box in the direction the offset points", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       callouts: [
         { ...NOTE, offset: [50, 50] },
@@ -386,7 +386,7 @@ describe("callouts", () => {
     // Over a twenty-character line that is six units, and it was enough to
     // print a caption out through the side of its own box.
     for (const theme of ["minimal", "noir", "atlas"]) {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       theme,
       callouts: [NOTE, { at: [12.5, 41.9], text: "Hamburg" }],
@@ -411,11 +411,11 @@ describe("callouts", () => {
   });
 
   it("wraps to the width it was given and no wider", async () => {
-    const narrow = await neatline({
+    const narrow = await masen({
       region: "west-europe",
       callouts: [{ ...NOTE, width: 90 }],
     });
-    const wide = await neatline({
+    const wide = await masen({
       region: "west-europe",
       callouts: [{ ...NOTE, width: 260 }],
     });
@@ -431,7 +431,7 @@ describe("callouts", () => {
   });
 
   it("shares the pin's guard against the far side of a globe", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "africa",
       projection: "orthographic",
       size: [800, 800],
@@ -446,13 +446,13 @@ describe("callouts", () => {
 
   it("names the option that was wrong when a coordinate cannot be one", async () => {
     await expect(
-      neatline({ region: "west-europe", callouts: [{ at: [0, 100], text: "x" }] }),
+      masen({ region: "west-europe", callouts: [{ at: [0, 100], text: "x" }] }),
     ).rejects.toThrow(/callouts\[0\]\.at/);
   });
 
   it("draws captions over marks, never under them", async () => {
     // A box is opaque. Drawn first, it would be covered by any pin beside it.
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       pins: [{ at: [4.84, 45.76], label: "Lyon" }],
       callouts: [NOTE],
@@ -464,13 +464,13 @@ describe("callouts", () => {
   it("sets the caption on its box rather than on a halo", async () => {
     // The one piece of text on the map with no casing: it has a ground of its
     // own, and a halo over a solid fill only fattens the glyphs.
-    const map = await neatline({ region: "west-europe", theme: "minimal", callouts: [NOTE] });
+    const map = await masen({ region: "west-europe", theme: "minimal", callouts: [NOTE] });
     expect(map.css).toMatch(/\.mp-label\[data-kind="callout"\][^}]*fill:\s*var\(--anno-ink\)/);
     expect(map.css).toMatch(/\.mp-label\[data-kind="callout"\][^}]*stroke:\s*none/);
   });
 
   it("carries its caption into the accessible description", async () => {
-    const map = await neatline({ region: "west-europe", callouts: [NOTE] });
+    const map = await masen({ region: "west-europe", callouts: [NOTE] });
     expect(/aria-label="([^"]*)"/.exec(map.svg)?.[1]).toContain("Rail hub reopened");
   });
 });
@@ -521,7 +521,7 @@ const MADRID: Arrow["to"] = [-3.7, 40.42];
 
 describe("arrows", () => {
   it("runs from one coordinate to the other and nowhere else", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       arrows: [{ from: ODESA, to: MADRID, id: "a1", kind: "grain" }],
     });
@@ -538,7 +538,7 @@ describe("arrows", () => {
   });
 
   it("bows to the side the sign asks for, and not at all at zero", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       arrows: [
         { from: ODESA, to: MADRID, bow: 0.25 },
@@ -569,7 +569,7 @@ describe("arrows", () => {
   it("drops the whole arrow when either end is behind the globe", async () => {
     // Half an arrow is not a partial answer — it is a line pointing at a place
     // the reader was never told about.
-    const map = await neatline({
+    const map = await masen({
       region: "africa",
       projection: "orthographic",
       size: [800, 800],
@@ -585,7 +585,7 @@ describe("arrows", () => {
   });
 
   it("needs both ends on the canvas to call itself fitted", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       projection: "conic-conformal",
       size: [600, 600],
@@ -602,7 +602,7 @@ describe("arrows", () => {
 
   it("draws no arrow between two coordinates that share a pixel", async () => {
     // No direction, so no curve and nothing to orient a head along.
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       detail: "110m",
       arrows: [{ from: [30.73, 46.48], to: [30.7301, 46.4801] }],
@@ -614,7 +614,7 @@ describe("arrows", () => {
     // A marker is a presentation attribute, and the flattened form exists for
     // readers that ignore the stylesheet. An arrow that arrives without its
     // head is a line — the same failure as a choropleth exporting flat.
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       theme: "noir",
       arrows: [{ from: ODESA, to: MADRID }],
@@ -633,27 +633,27 @@ describe("arrows", () => {
     // only thing the defs block can see. So a themed map carries the marker
     // whether or not it draws an arrow — a couple of hundred bytes, and the
     // alternative is making the defs block depend on the content it sits above.
-    const themed = await neatline({ region: "europe", detail: "110m", theme: "noir" });
+    const themed = await masen({ region: "europe", detail: "110m", theme: "noir" });
     expect(themed.svg).toContain("mp-arrowhead");
 
     // With no stylesheet there is nothing to ask, and nothing is emitted.
-    const bare = await neatline({ region: "europe", detail: "110m" });
+    const bare = await masen({ region: "europe", detail: "110m" });
     expect(bare.svg).not.toContain("mp-arrowhead");
     expect(bare.svg).not.toContain("mp-stripe");
   });
 
   it("names which end was wrong", async () => {
     await expect(
-      neatline({ region: "europe", arrows: [{ from: [0, 100], to: MADRID }] }),
+      masen({ region: "europe", arrows: [{ from: [0, 100], to: MADRID }] }),
     ).rejects.toThrow(/arrows\[0\]\.from/);
     await expect(
-      neatline({ region: "europe", arrows: [{ from: ODESA, to: [0, 100] }] }),
+      masen({ region: "europe", arrows: [{ from: ODESA, to: [0, 100] }] }),
     ).rejects.toThrow(/arrows\[0\]\.to/);
   });
 
   it("runs beneath the marks rather than over them", async () => {
     // A connection is context for the things it connects, not the reverse.
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       arrows: [{ from: ODESA, to: MADRID }],
       pins: [{ at: ODESA, label: "Odesa" }],
@@ -708,7 +708,7 @@ function legs(group: string): Array<[number, number]> {
 
 describe("routes", () => {
   it("threads the stops in the order they were given", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["SE", "NO", "FI"],
       routes: [
         {
@@ -741,7 +741,7 @@ describe("routes", () => {
   });
 
   it("puts a mark at every stop, smaller where the stop is minor", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["SE", "NO", "FI"],
       routes: [
         {
@@ -763,7 +763,7 @@ describe("routes", () => {
   });
 
   it("names only the stops that were given names", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["SE", "NO", "FI"],
       routes: [{ stops: [{ at: STOCKHOLM, label: "Stockholm" }, { at: SUNDSVALL }, { at: KIRUNA }] }],
     });
@@ -773,7 +773,7 @@ describe("routes", () => {
   });
 
   it("leaves the line bare when asked", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["SE", "NO", "FI"],
       routes: [{ marks: false, stops: [{ at: STOCKHOLM }, { at: KIRUNA }] }],
     });
@@ -791,7 +791,7 @@ describe("routes", () => {
    * and start again instead.
    */
   it("breaks rather than threading past a stop it cannot see", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       projection: "orthographic",
       routes: [
@@ -817,7 +817,7 @@ describe("routes", () => {
   });
 
   it("draws every visible run when only the middle is missing", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "europe",
       projection: "orthographic",
       routes: [
@@ -840,12 +840,12 @@ describe("routes", () => {
 
   it("refuses a coordinate that cannot be one", async () => {
     await expect(
-      neatline({ region: "europe", routes: [{ stops: [{ at: [200, 0] }] }] }),
+      masen({ region: "europe", routes: [{ stops: [{ at: [200, 0] }] }] }),
     ).rejects.toThrow(/routes\[0\]\.stops\[0\]\.at/);
   });
 
   it("runs beneath the marks, alongside the arrows", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: ["SE", "NO", "FI"],
       routes: [{ stops: [{ at: STOCKHOLM }, { at: KIRUNA }] }],
       pins: [{ at: SUNDSVALL, label: "Sundsvall" }],

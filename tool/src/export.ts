@@ -74,5 +74,5 @@ export function fileName(region: string, size: ExportSize, extension: string): s
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 48);
-  return `neatline-${slug === "" ? "map" : slug}-${size.width}x${size.height}.${extension}`;
+  return `masen-${slug === "" ? "map" : slug}-${size.width}x${size.height}.${extension}`;
 }

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { expandPreset } from "../src/regions.js";
 import {
   countryTable,
-  neatline,
+  masen,
   PALETTE_NAMES,
   PROJECTION_NAMES,
   REGION_PRESET_NAMES,
@@ -56,7 +56,7 @@ const combinations = REGION_PRESET_NAMES.flatMap((region) =>
 
 describe("every region in every projection", () => {
   it.each(combinations)("draws %s in %s", async (region, projection) => {
-    const map = await neatline({ ...base, region, projection });
+    const map = await masen({ ...base, region, projection });
 
     const countries = countryPaths(map.svg);
     expect(countries.length, `${region}/${projection} drew no land`).toBeGreaterThan(0);
@@ -78,7 +78,7 @@ describe("every region in every projection", () => {
    * sending the geometry somewhere off in the millions, not by throwing.
    */
   it.each(combinations)("keeps %s in %s on the canvas", async (region, projection) => {
-    const map = await neatline({ ...base, region, projection });
+    const map = await masen({ ...base, region, projection });
     const xs: number[] = [];
     const ys: number[] = [];
     for (const d of countryPaths(map.svg)) {
@@ -110,7 +110,7 @@ describe("every region in every preset", () => {
    * drawn in the default paint and the theme silently did nothing.
    */
   it.each(themed)("resolves every token for %s in %s", async (region, theme) => {
-    const map = await neatline({ ...base, region, theme });
+    const map = await masen({ ...base, region, theme });
     const flattened = await map.render();
     const withoutStylesheet = flattened.replace(/<style>[\s\S]*?<\/style>/g, "");
     const unresolved = [...withoutStylesheet.matchAll(/var\(--[a-z-]+\)/g)].map((m) => m[0]);
@@ -120,8 +120,8 @@ describe("every region in every preset", () => {
 
 describe("determinism", () => {
   it.each(REGION_PRESET_NAMES)("renders %s identically twice", async (region) => {
-    const once = await neatline({ ...base, region, theme: "atlas" });
-    const twice = await neatline({ ...base, region, theme: "atlas" });
+    const once = await masen({ ...base, region, theme: "atlas" });
+    const twice = await masen({ ...base, region, theme: "atlas" });
     expect(once.svg).toEqual(twice.svg);
     expect(await once.render()).toEqual(await twice.render());
   });
@@ -129,14 +129,14 @@ describe("determinism", () => {
 
 describe("every palette and typeface, on one region", () => {
   it.each(PALETTE_NAMES)("dresses west-europe in %s", async (palette) => {
-    const map = await neatline({ ...base, region: "west-europe", theme: "minimal", palette });
+    const map = await masen({ ...base, region: "west-europe", theme: "minimal", palette });
     expect(countryPaths(map.svg).length).toBeGreaterThan(0);
     const flattened = (await map.render()).replace(/<style>[\s\S]*?<\/style>/g, "");
     expect(flattened).not.toMatch(/var\(--/);
   });
 
   it.each(TYPEFACE_NAMES)("sets west-europe in %s", async (typeface) => {
-    const map = await neatline({ ...base, region: "west-europe", theme: "minimal", typeface });
+    const map = await masen({ ...base, region: "west-europe", theme: "minimal", typeface });
     const flattened = (await map.render()).replace(/<style>[\s\S]*?<\/style>/g, "");
     expect(flattened).toMatch(/font-family="/);
     expect(flattened).not.toMatch(/var\(--/);
@@ -171,8 +171,8 @@ describe("an explicit centre", () => {
   const world = { region: "world", detail: "110m", size: SIZE } as const;
 
   it("puts the meridian it was given down the middle of a world map", async () => {
-    const greenwich = await neatline({ ...world, projection: "equal-earth" });
-    const pacific = await neatline({ ...world, projection: "equal-earth", center: 180 });
+    const greenwich = await masen({ ...world, projection: "equal-earth" });
+    const pacific = await masen({ ...world, projection: "equal-earth", center: 180 });
 
     const middle = SIZE[0] / 2;
     expect((greenwich.project([0, 0]) as [number, number])[0]).toBeCloseTo(middle, 0);
@@ -184,9 +184,9 @@ describe("an explicit centre", () => {
   });
 
   it("turns a globe to face the coordinate it was given", async () => {
-    const turned = await neatline({ ...world, projection: "orthographic", center: [100, 20] });
-    const facing = await neatline({ ...world, projection: "orthographic" });
-    const fromMiddle = (map: Awaited<ReturnType<typeof neatline>>) => {
+    const turned = await masen({ ...world, projection: "orthographic", center: [100, 20] });
+    const facing = await masen({ ...world, projection: "orthographic" });
+    const fromMiddle = (map: Awaited<ReturnType<typeof masen>>) => {
       const [x, y] = map.project([100, 20]) as [number, number];
       return Math.hypot(x - SIZE[0] / 2, y - SIZE[1] / 2);
     };
@@ -203,8 +203,8 @@ describe("an explicit centre", () => {
     // The region still fills the canvas. If this drifted, `center` would have
     // become a camera control, which is the one thing it is documented not
     // to be.
-    const off = await neatline({ region: "asia", detail: "110m", size: SIZE, projection: "albers" });
-    const on = await neatline({
+    const off = await masen({ region: "asia", detail: "110m", size: SIZE, projection: "albers" });
+    const on = await masen({
       region: "asia", detail: "110m", size: SIZE, projection: "albers", center: 80,
     });
     for (const map of [off, on]) {
@@ -215,7 +215,7 @@ describe("an explicit centre", () => {
 
   it("takes a bare longitude on every projection", async () => {
     for (const projection of PROJECTION_NAMES) {
-      const map = await neatline({ ...world, projection: projection as never, center: -60 });
+      const map = await masen({ ...world, projection: projection as never, center: -60 });
       expect(countryPaths(map.svg).length, `${projection} drew no land`).toBeGreaterThan(0);
     }
   });
@@ -223,20 +223,20 @@ describe("an explicit centre", () => {
   it("refuses to tilt a projection that would go oblique", async () => {
     for (const projection of ["mercator", "equal-earth", "albers", "conic-conformal"] as const) {
       await expect(
-        neatline({ ...world, projection, center: [10, 47] }),
+        masen({ ...world, projection, center: [10, 47] }),
       ).rejects.toThrow(/oblique/);
     }
     // The one that turns in both axes takes it.
     await expect(
-      neatline({ ...world, projection: "orthographic", center: [10, 47] }),
+      masen({ ...world, projection: "orthographic", center: [10, 47] }),
     ).resolves.toBeDefined();
   });
 
   it("refuses a coordinate that is not one", async () => {
-    await expect(neatline({ ...world, center: 400 })).rejects.toThrow(/center longitude/);
-    await expect(neatline({ ...world, center: Number.NaN })).rejects.toThrow(/center longitude/);
+    await expect(masen({ ...world, center: 400 })).rejects.toThrow(/center longitude/);
+    await expect(masen({ ...world, center: Number.NaN })).rejects.toThrow(/center longitude/);
     await expect(
-      neatline({ ...world, projection: "orthographic", center: [10, 100] }),
+      masen({ ...world, projection: "orthographic", center: [10, 100] }),
     ).rejects.toThrow(/center latitude/);
   });
 });
@@ -246,7 +246,7 @@ describe("a bbox region", () => {
   const SIZE = [800, 600] as const;
 
   it.each(PROJECTION_NAMES)("fills the canvas with the box under %s", async (projection) => {
-    const map = await neatline({
+    const map = await masen({
       region: { bbox: BOX },
       projection: projection as never,
       size: SIZE,
@@ -279,7 +279,7 @@ describe("a bbox region", () => {
   });
 
   it("puts the middle of the box near the middle of the canvas", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: { bbox: BOX },
       projection: "conic-conformal",
       size: SIZE,

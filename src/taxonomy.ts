@@ -240,6 +240,6 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
 
 export function layer(name: LayerName): LayerSpec {
   const found = LAYERS.find((spec) => spec.name === name);
-  if (!found) throw new Error(`neatline: no layer named "${name}"`);
+  if (!found) throw new Error(`masen: no layer named "${name}"`);
   return found;
 }

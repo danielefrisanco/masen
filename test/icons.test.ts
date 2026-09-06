@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ICONS, ICON_GRID, ICON_NAMES, isIconName, neatline } from "../src/index.js";
+import { ICONS, ICON_GRID, ICON_NAMES, isIconName, masen } from "../src/index.js";
 
 /**
  * The icon vocabulary, and the marks that carry it.
@@ -50,7 +50,7 @@ describe("a pin carrying an icon", () => {
   const AT: readonly [number, number] = [2.35, 48.86];
 
   it("draws the glyph centred on the coordinate", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       pins: [{ at: AT, kind: "airport" }],
@@ -76,12 +76,12 @@ describe("a pin carrying an icon", () => {
   });
 
   it("makes room for the glyph rather than drawing it over the edge", async () => {
-    const plain = await neatline({
+    const plain = await masen({
       region: "west-europe",
       detail: "110m",
       pins: [{ at: AT, label: "here" }],
     });
-    const iconed = await neatline({
+    const iconed = await masen({
       region: "west-europe",
       detail: "110m",
       pins: [{ at: AT, kind: "harbor", label: "here" }],
@@ -107,7 +107,7 @@ describe("a pin carrying an icon", () => {
     // `kind` is free text for a theme to style. The icon names are the
     // conventional values, not the only permitted ones — a caller's own
     // category has to keep working rather than throw or draw a blank.
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       pins: [{ at: AT, kind: "flooding" }],
@@ -121,7 +121,7 @@ describe("a pin carrying an icon", () => {
     // --anno-ink is the token authored for exactly this: ink drawn *on* an
     // annotation, legible against --anno. A pin's label is the other case and
     // takes --ink, because it sits beside the mark rather than inside it.
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       theme: "minimal",
@@ -134,7 +134,7 @@ describe("a pin carrying an icon", () => {
     // Inlined per mark rather than referenced from a <symbol>, because a <use>
     // puts its content in a shadow tree the flattener cannot reach — and the
     // flattened form exists for the reader that ignores stylesheets.
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       theme: "noir",
@@ -148,7 +148,7 @@ describe("a pin carrying an icon", () => {
   });
 
   it("draws every icon in the set without exception", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "world",
       detail: "110m",
       size: [1200, 700],

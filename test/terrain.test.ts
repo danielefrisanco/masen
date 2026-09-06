@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline } from "../src/index.js";
+import { masen } from "../src/index.js";
 import { loadCover } from "../src/topology.js";
 
 /**
@@ -58,14 +58,14 @@ function points(d: string): Array<[number, number]> {
 
 describe("land cover", () => {
   it("is not drawn unless asked for", async () => {
-    const off = await neatline({ ...base, region: SAHARA });
+    const off = await masen({ ...base, region: SAHARA });
     expect(terrain(off.svg)).toBe("");
     // The slot exists either way: the stack is a contract, not a suggestion.
     expect(off.svg).toContain("mp-layer mp-terrain");
   });
 
   it("sits over the land it tints and under the water", async () => {
-    const map = await neatline({ ...base, region: ["CH", "IT", "FR", "AT"], terrain: true });
+    const map = await masen({ ...base, region: ["CH", "IT", "FR", "AT"], terrain: true });
     const land = map.svg.indexOf('class="mp-layer mp-land"');
     const cover = map.svg.indexOf("mp-layer mp-terrain");
     const hydro = map.svg.indexOf("mp-layer mp-hydro");
@@ -74,7 +74,7 @@ describe("land cover", () => {
   });
 
   it("puts desert where the desert is", async () => {
-    const map = await neatline({ ...base, region: SAHARA, terrain: true });
+    const map = await masen({ ...base, region: SAHARA, terrain: true });
     const desert = coverPaths(map.svg).get("desert");
     expect(desert, "a map of the Sahara draws no desert").toBeDefined();
 
@@ -94,7 +94,7 @@ describe("land cover", () => {
   });
 
   it("puts mountains on the Alps and not on the plain", async () => {
-    const map = await neatline({
+    const map = await masen({
       ...base,
       region: ["CH", "IT", "FR", "AT", "DE", "SI"],
       terrain: true,
@@ -120,15 +120,15 @@ describe("land cover", () => {
     // the Tian Shan. Asking for one has to leave the other undrawn, or the
     // option is decoration.
     const region = ["CN", "MN", "KZ", "KG", "UZ", "TJ", "TM"];
-    const all = await neatline({ ...base, region, terrain: true });
-    const one = await neatline({ ...base, region, terrain: ["mountain"] });
+    const all = await masen({ ...base, region, terrain: true });
+    const one = await masen({ ...base, region, terrain: ["mountain"] });
     expect([...coverPaths(all.svg).keys()].sort()).toEqual(["desert", "mountain"]);
     expect([...coverPaths(one.svg).keys()]).toEqual(["mountain"]);
   });
 
   it("draws nothing where there is no cover to draw", async () => {
     // Denmark and the Netherlands: no desert, no range, no ice at 110m.
-    const map = await neatline({ ...base, region: ["DK", "NL"], terrain: true });
+    const map = await masen({ ...base, region: ["DK", "NL"], terrain: true });
     expect(terrain(map.svg)).toBe("");
   });
 
@@ -140,7 +140,7 @@ describe("land cover", () => {
    * ocean did before `clipExtent` — 806 KB to draw a few gulfs.
    */
   it("is cut to the canvas rather than carried past it", async () => {
-    const map = await neatline({ ...base, region: ["MA"], terrain: true });
+    const map = await masen({ ...base, region: ["MA"], terrain: true });
     const [width, height] = SIZE;
     for (const [kind, d] of coverPaths(map.svg)) {
       for (const [x, y] of points(d)) {
@@ -153,8 +153,8 @@ describe("land cover", () => {
   });
 
   it("changes nothing about the land underneath it", async () => {
-    const off = await neatline({ ...base, region: SAHARA });
-    const on = await neatline({ ...base, region: SAHARA, terrain: true });
+    const off = await masen({ ...base, region: SAHARA });
+    const on = await masen({ ...base, region: SAHARA, terrain: true });
     const countries = (svg: string): string[] =>
       [...svg.matchAll(/<path class="mp-country"[^>]*\sd="([^"]*)"/g)].map((m) => m[1] as string);
     expect(countries(on.svg)).toEqual(countries(off.svg));
@@ -169,7 +169,7 @@ describe("land cover", () => {
   });
 
   it("draws ice where there is ice", async () => {
-    const map = await neatline({
+    const map = await masen({
       ...base,
       region: "antarctica",
       projection: "orthographic",
@@ -179,7 +179,7 @@ describe("land cover", () => {
   });
 
   it("obeys the layer switch", async () => {
-    const map = await neatline({
+    const map = await masen({
       ...base,
       region: SAHARA,
       terrain: true,

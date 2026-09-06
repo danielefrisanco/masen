@@ -1,29 +1,29 @@
 import { describe, expect, it } from "vitest";
-import { neatline, PROJECTION_NAMES } from "../src/index.js";
+import { masen, PROJECTION_NAMES } from "../src/index.js";
 import type { Position } from "../src/index.js";
 
 describe("geometry", () => {
   it("draws the region", async () => {
-    const map = await neatline({ region: "west-europe", detail: "110m" });
+    const map = await masen({ region: "west-europe", detail: "110m" });
     expect(map.svg).toContain("<path");
     expect(map.svg).toContain('data-iso="FR"');
     expect(map.svg).toContain('data-name="France"');
   });
 
   it("draws only what the region asked for", async () => {
-    const map = await neatline({ region: ["FR", "DE"], detail: "110m" });
+    const map = await masen({ region: ["FR", "DE"], detail: "110m" });
     expect(map.svg.match(/class="mp-country"/g)).toHaveLength(2);
     expect(map.svg).not.toContain('data-iso="ES"');
   });
 
   it("accepts numeric codes as readily as alpha-2", async () => {
-    const map = await neatline({ region: ["250", "276"], detail: "110m" });
+    const map = await masen({ region: ["250", "276"], detail: "110m" });
     expect(map.svg).toContain('data-iso="FR"');
     expect(map.svg).toContain('data-iso="DE"');
   });
 
   it("marks highlighted countries and leaves the rest alone", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       highlight: ["FR", "BE"],
@@ -33,7 +33,7 @@ describe("geometry", () => {
   });
 
   it("selects by bounding box", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: { bbox: [-10, 36, 5, 52] },
       detail: "110m",
     });
@@ -48,7 +48,7 @@ describe("framing", () => {
   // corner. Guyane is still France and is still drawn — it just falls outside
   // the viewport, the way a paper atlas of Western Europe handles it.
   it("frames Europe, not the Atlantic", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       projection: "conic-conformal",
@@ -73,7 +73,7 @@ describe("framing", () => {
   // viewport, which is what a paper atlas does, and means nothing can go
   // missing from a map that is showing it.
   it("frames continental France while still carrying Guyane", async () => {
-    const map = await neatline({ region: ["FR"], detail: "110m", size: [1000, 1000] });
+    const map = await masen({ region: ["FR"], detail: "110m", size: [1000, 1000] });
     expect(map.svg.match(/class="mp-country"/g)).toHaveLength(1);
 
     // Paris is comfortably inside the canvas: the camera ignored Guyane.
@@ -92,7 +92,7 @@ describe("framing", () => {
   });
 
   it("does not clip a genuinely dispersed region", async () => {
-    const map = await neatline({ region: "world", detail: "110m" });
+    const map = await masen({ region: "world", detail: "110m" });
     expect(map.svg).toContain('data-iso="NZ"');
     expect(map.svg).toContain('data-iso="CL"');
     expect(map.svg).not.toContain("NaN");
@@ -101,19 +101,19 @@ describe("framing", () => {
 
 describe("canvas", () => {
   it("honours an explicit size", async () => {
-    const map = await neatline({ region: "west-europe", detail: "110m", size: [640, 480] });
+    const map = await masen({ region: "west-europe", detail: "110m", size: [640, 480] });
     expect(map.svg).toContain('viewBox="0 0 640 480"');
   });
 
   it("defaults to a 1000-unit square", async () => {
-    const map = await neatline({ region: "west-europe", detail: "110m" });
+    const map = await masen({ region: "west-europe", detail: "110m" });
     expect(map.svg).toContain('viewBox="0 0 1000 1000"');
   });
 });
 
 describe("project", () => {
   it("places a coordinate inside the padded canvas", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       projection: "conic-conformal",
@@ -131,8 +131,8 @@ describe("project", () => {
 
   it("is deterministic", async () => {
     const twice = await Promise.all([
-      neatline({ region: "west-europe", detail: "110m" }),
-      neatline({ region: "west-europe", detail: "110m" }),
+      masen({ region: "west-europe", detail: "110m" }),
+      masen({ region: "west-europe", detail: "110m" }),
     ]);
     expect(twice[0]!.project([2.35, 48.86])).toEqual(twice[1]!.project([2.35, 48.86]));
   });
@@ -152,7 +152,7 @@ describe("invert", () => {
   it("round-trips a coordinate through every projection", async () => {
     const paris: Position = [2.35, 48.86];
     for (const projection of PROJECTION_NAMES) {
-      const map = await neatline({
+      const map = await masen({
         region: "west-europe",
         detail: "110m",
         projection,
@@ -170,11 +170,11 @@ describe("invert", () => {
   // changes. Stored as lon/lat it stays on the same piece of Europe at another
   // size, in another projection.
   it("keeps a dropped pin on the same ground when the map is reframed", async () => {
-    const dropped = await neatline({ region: "west-europe", detail: "110m", size: [1000, 1000] });
+    const dropped = await masen({ region: "west-europe", detail: "110m", size: [1000, 1000] });
     const ground = dropped.invert([500, 500]);
     expect(ground).not.toBeNull();
 
-    const reframed = await neatline({
+    const reframed = await masen({
       region: "west-europe",
       detail: "110m",
       projection: "conic-conformal",
@@ -197,7 +197,7 @@ describe("invert", () => {
   // Storing that would put a pin in the Atlantic because someone dropped it
   // outside the globe.
   it("returns null for a pixel that is not on the globe", async () => {
-    const globe = await neatline({
+    const globe = await masen({
       region: "world",
       detail: "110m",
       projection: "orthographic",
@@ -213,7 +213,7 @@ describe("invert", () => {
   // back where it was found. A grid over a globe crosses the limb in every
   // direction, so it covers both sides of the only hard case there is.
   it("never answers with a place the map would not put back", async () => {
-    const globe = await neatline({
+    const globe = await masen({
       region: "world",
       detail: "110m",
       projection: "orthographic",
@@ -247,7 +247,7 @@ describe("projections", () => {
   it.each(["mercator", "conic-conformal", "albers", "equal-earth", "orthographic"] as const)(
     "renders under %s",
     async (projection) => {
-      const map = await neatline({ region: "west-europe", detail: "110m", projection });
+      const map = await masen({ region: "west-europe", detail: "110m", projection });
       expect(map.svg).toContain("<path");
       expect(map.svg).not.toContain("NaN");
     },
@@ -256,23 +256,23 @@ describe("projections", () => {
 
 describe("errors", () => {
   it("rejects an unknown preset", async () => {
-    await expect(neatline({ region: "narnia" as never })).rejects.toThrow(/unknown region preset/);
+    await expect(masen({ region: "narnia" as never })).rejects.toThrow(/unknown region preset/);
   });
 
   it("rejects an unrecognised country code rather than drawing nothing", async () => {
-    await expect(neatline({ region: ["FR", "ZZ"] })).rejects.toThrow(/unrecognised country code/);
+    await expect(masen({ region: ["FR", "ZZ"] })).rejects.toThrow(/unrecognised country code/);
   });
 
   it("rejects an unrecognised highlight code", async () => {
     await expect(
-      neatline({ region: "west-europe", highlight: ["ZZ"] }),
+      masen({ region: "west-europe", highlight: ["ZZ"] }),
     ).rejects.toThrow(/unrecognised highlight code/);
   });
 });
 
 describe("output", () => {
   it("matches the committed West Europe render", async () => {
-    const map = await neatline({
+    const map = await masen({
       region: "west-europe",
       detail: "110m",
       projection: "conic-conformal",

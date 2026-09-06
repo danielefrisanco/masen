@@ -1,7 +1,7 @@
 import {
   countryTable,
   ICON_NAMES,
-  neatline,
+  masen,
   PALETTE_NAMES,
   PROJECTION_NAMES,
   REGION_PRESET_NAMES,
@@ -83,7 +83,7 @@ const whereHost = must<HTMLElement>("#where");
 
 function must<T extends Element>(selector: string): T {
   const found = document.querySelector<T>(selector);
-  if (found === null) throw new Error(`neatline: the page is missing ${selector}`);
+  if (found === null) throw new Error(`masen: the page is missing ${selector}`);
   return found;
 }
 
@@ -264,7 +264,7 @@ async function render(): Promise<void> {
   say("Drawing…", "busy");
   const started = performance.now();
   try {
-    const result = await neatline(toOptions(config));
+    const result = await masen(toOptions(config));
     // An older render finishing after a newer one has started must not win.
     // Switching detail from 110m to 50m and back is exactly how that happens.
     if (mine !== generation) return;

@@ -26,8 +26,8 @@
  * than decoded. The decoder is total and would survive it, but a key that can
  * be retired costs nothing to have and something to add later.
  */
-const KEY = "neatline:v1:last";
-const ZOOM = "neatline:v1:zoom";
+const KEY = "masen:v1:last";
+const ZOOM = "masen:v1:zoom";
 
 /** Longer than any map the encoder makes, short enough that nothing runs away. */
 const LIMIT = 8000;

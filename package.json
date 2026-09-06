@@ -1,6 +1,6 @@
 {
-  "name": "@neatline/map",
-  "version": "0.15.1",
+  "name": "masen",
+  "version": "0.16.0",
   "description": "Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.",
   "keywords": [
     "map",
@@ -20,11 +20,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danielefrisanco/neatline.git"
+    "url": "git+https://github.com/danielefrisanco/masen.git"
   },
-  "homepage": "https://danielefrisanco.github.io/neatline/",
+  "homepage": "https://danielefrisanco.github.io/masen/",
   "bugs": {
-    "url": "https://github.com/danielefrisanco/neatline/issues"
+    "url": "https://github.com/danielefrisanco/masen/issues"
   },
   "license": "MIT",
   "type": "module",

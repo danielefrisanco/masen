@@ -16,6 +16,49 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [0.16.0] — 2026-09-06
+
+**The library is called `masen`.** It was `neatline` from 0.11.0 to 0.15.1, and
+before that `mapper`. This is the second rename and it is for a better reason
+than the first.
+
+### Why
+
+`mapper` went because npm already had the name. `neatline` goes because
+**somebody else's map-making software already had the word** — Neatline, an
+Omeka plugin from the Scholars' Lab at Virginia, later Performant Software: a
+tool for building exhibits with maps and timelines, fourteen years old, holding
+`neatline.org`. Not a registry collision — it has never been on npm, so
+`@neatline/map` was never contested — but a collision in the only place that
+matters for a project about to be announced, which is what somebody finds when
+they go looking. Two map-drawing tools, one word.
+
+The domain was what prompted the check; the incumbent is what settled it.
+`neatline.dev` was free and could have been taken. It would have meant building
+an audience inside somebody else's search results.
+
+`masen` was chosen for having nothing behind it: no npm package, no PyPI
+package, no repository of the name, no software product anywhere. It is a place
+near where this was written, which is a naming tradition with a long history and
+no obligations.
+
+### Breaking
+
+- **The exported function is `masen()`**, not `neatline()`. A rename, nothing
+  else — every option, every return value and every behaviour is unchanged.
+- **The package is `masen`**, not `@neatline/map`. Unscoped, because the bare
+  name was free; `@neatline/map` is deprecated on npm and points here.
+- **The tool moved** to `danielefrisanco.github.io/masen/`. Old links break —
+  GitHub redirects the repository, not the Pages path.
+- **Error messages** are prefixed `masen:` rather than `neatline:`.
+
+### Not breaking, deliberately
+
+**The `mp-` class prefix does not move**, and neither does any class, data
+attribute or token. `mp` is short for *map*, not for the project, which is why
+it survived the first rename too. Every theme anyone has written still works,
+which is the whole reason the taxonomy is versioned separately from the name.
+
 ## [0.15.1] — 2026-09-05
 
 Three regions that had no name, a frame the size of Russia, and a layer that
@@ -1931,19 +1974,20 @@ and grew to carry the legend, the ocean layer and a brighter palette — each is
 something the tool needs and none is large alone. Routes split out of it because
 that one is gated on acquiring data, not on drawing it.
 
-[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.15.1...HEAD
-[0.15.1]: https://github.com/danielefrisanco/neatline/compare/v0.15.0...v0.15.1
-[0.15.0]: https://github.com/danielefrisanco/neatline/compare/v0.14.0...v0.15.0
-[0.14.0]: https://github.com/danielefrisanco/neatline/compare/v0.13.0...v0.14.0
-[0.13.0]: https://github.com/danielefrisanco/neatline/compare/v0.12.0...v0.13.0
-[0.12.0]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...v0.12.0
-[0.11.0]: https://github.com/danielefrisanco/neatline/compare/v0.10.0...v0.11.0
-[0.7.0]: https://github.com/danielefrisanco/neatline/compare/v0.6.0...v0.7.0
-[0.6.0]: https://github.com/danielefrisanco/neatline/compare/v0.5.0...v0.6.0
-[0.5.0]: https://github.com/danielefrisanco/neatline/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/danielefrisanco/neatline/compare/v0.3.1...v0.4.0
-[0.3.1]: https://github.com/danielefrisanco/neatline/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/danielefrisanco/neatline/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/danielefrisanco/neatline/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/danielefrisanco/neatline/releases/tag/v0.1.0
-[0.0.1]: https://github.com/danielefrisanco/neatline/releases/tag/v0.0.1
+[Unreleased]: https://github.com/danielefrisanco/masen/compare/v0.16.0...HEAD
+[0.16.0]: https://github.com/danielefrisanco/masen/compare/v0.15.1...v0.16.0
+[0.15.1]: https://github.com/danielefrisanco/masen/compare/v0.15.0...v0.15.1
+[0.15.0]: https://github.com/danielefrisanco/masen/compare/v0.14.0...v0.15.0
+[0.14.0]: https://github.com/danielefrisanco/masen/compare/v0.13.0...v0.14.0
+[0.13.0]: https://github.com/danielefrisanco/masen/compare/v0.12.0...v0.13.0
+[0.12.0]: https://github.com/danielefrisanco/masen/compare/v0.11.0...v0.12.0
+[0.11.0]: https://github.com/danielefrisanco/masen/compare/v0.10.0...v0.11.0
+[0.7.0]: https://github.com/danielefrisanco/masen/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/danielefrisanco/masen/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/danielefrisanco/masen/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/danielefrisanco/masen/compare/v0.3.1...v0.4.0
+[0.3.1]: https://github.com/danielefrisanco/masen/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/danielefrisanco/masen/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/danielefrisanco/masen/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/danielefrisanco/masen/releases/tag/v0.1.0
+[0.0.1]: https://github.com/danielefrisanco/masen/releases/tag/v0.0.1

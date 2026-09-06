@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline } from "../src/index.js";
+import { masen } from "../src/index.js";
 
 /**
  * The numbers on the grid, and the bug they uncovered on the way in.
@@ -32,7 +32,7 @@ function labels(svg: string): { text: string; x: number; y: number; line: string
 }
 
 const europe = async (options: Record<string, unknown> = {}) =>
-  neatline({
+  masen({
     region: "west-europe",
     projection: "conic-conformal",
     detail: "110m",

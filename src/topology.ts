@@ -129,7 +129,7 @@ function unreadable(what: string, detail: Detail, url: URL, cause: unknown): Err
     url.protocol === "file:"
       ? "Run `npm run build:data` to regenerate it."
       : `Nothing answered at ${url.href} — serve the package's data/ directory beside the bundle.`;
-  return new Error(`neatline: could not read ${what} for detail "${detail}". ${advice}`, {
+  return new Error(`masen: could not read ${what} for detail "${detail}". ${advice}`, {
     cause,
   });
 }

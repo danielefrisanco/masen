@@ -98,7 +98,7 @@ export function creditLayer(credit: Credit, size: Size, inset: number): SvgNode[
   const anchor = credit.anchor ?? "bottom-right";
   if (!isAnchor(anchor)) {
     throw new Error(
-      `neatline: credit.anchor "${anchor}" is not one of ${ANCHORS.join(", ")}`,
+      `masen: credit.anchor "${anchor}" is not one of ${ANCHORS.join(", ")}`,
     );
   }
   const at = place(size, anchor, inset);
@@ -151,7 +151,7 @@ export function placeBox(
 
 export function checkAnchor(anchor: string, what: string): Anchor {
   if (!isAnchor(anchor)) {
-    throw new Error(`neatline: ${what} "${anchor}" is not one of ${ANCHORS.join(", ")}`);
+    throw new Error(`masen: ${what} "${anchor}" is not one of ${ANCHORS.join(", ")}`);
   }
   return anchor;
 }
@@ -236,7 +236,7 @@ export function scaleLayer(
 
   const units = bar.units ?? "km";
   if (units !== "km" && units !== "mi") {
-    throw new Error(`neatline: scaleBar.units "${units}" is not "km" or "mi"`);
+    throw new Error(`masen: scaleBar.units "${units}" is not "km" or "mi"`);
   }
   const perUnit = units === "mi" ? distortion.kmPerUnit / KM_PER_MILE : distortion.kmPerUnit;
   if (!(perUnit > 0)) return [];

@@ -1,7 +1,7 @@
-# neatline
+# masen
 
-[![npm](https://img.shields.io/npm/v/@neatline/map)](https://www.npmjs.com/package/@neatline/map)
-[![license](https://img.shields.io/npm/l/@neatline/map)](LICENSE)
+[![npm](https://img.shields.io/npm/v/masen)](https://www.npmjs.com/package/masen)
+[![license](https://img.shields.io/npm/l/masen)](LICENSE)
 
 Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.
 
@@ -9,9 +9,9 @@ No tile server, no fonts pipeline, no API key, no runtime model call.
 Same input, byte-identical output.
 
 ```ts
-import { neatline } from "@neatline/map";
+import { masen } from "masen";
 
-const map = await neatline({
+const map = await masen({
   region: "west-europe",
   projection: "conic-conformal",
   highlight: ["FR", "DE", "BE"],
@@ -23,18 +23,22 @@ await map.toFile("europe.svg", { theme: "minimal" });
 
 ## Make a map without installing anything
 
-[![The tool: a map of Europe with neighbours drawn behind it, a pin dropped in
-central Europe, and the whole configuration sitting in a link underneath](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/poster.png)](https://danielefrisanco.github.io/neatline/)
+[![The tool being used: a region chosen, the detail raised, neighbours turned
+on, the stylesheet swapped, and a pin dropped on the map — with the link
+underneath changing as it lands](https://raw.githubusercontent.com/danielefrisanco/masen/main/media/demo.gif)](https://danielefrisanco.github.io/masen/)
 
-**→ [danielefrisanco.github.io/neatline](https://danielefrisanco.github.io/neatline/)**
+**→ [danielefrisanco.github.io/masen](https://danielefrisanco.github.io/masen/)**
 
-**[Twenty-five seconds of it being used](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/demo.mp4)**
-— a region, a level of detail, neighbours, a different stylesheet, and a pin.
-No narration. It is recorded by a script (`npm run demo`) that drives the
-deployed page, so it is remade when the interface moves rather than left to go
-quietly out of date.
+Twenty-six seconds of it being used — a region, a level of detail, neighbours,
+a different stylesheet, and a pin. No narration. Sharper as
+[MP4](https://raw.githubusercontent.com/danielefrisanco/masen/main/media/demo.mp4)
+or [WebM](https://raw.githubusercontent.com/danielefrisanco/masen/main/media/demo.webm),
+and there is a [still](https://raw.githubusercontent.com/danielefrisanco/masen/main/media/poster.png)
+for the places that show a card rather than play a video. All four are made by
+`npm run demo`, which drives the deployed page — so they are remade when the
+interface moves rather than left to go quietly out of date.
 
-**Or see what it draws first: [the gallery](https://danielefrisanco.github.io/neatline/gallery.html)** —
+**Or see what it draws first: [the gallery](https://danielefrisanco.github.io/masen/gallery.html)** —
 every committed snapshot on one page, sixty of them, which is faster than
 reading any of what follows.
 
@@ -47,7 +51,7 @@ The whole configuration lives in the address bar, so a map you made is a link
 you can send and the link rebuilds it exactly:
 
 ```
-…/neatline/?region=GR,TR,BG&projection=mercator&theme=atlas&detail=50m&seaNames=1
+…/masen/?region=GR,TR,BG&projection=mercator&theme=atlas&detail=50m&seaNames=1
 ```
 
 Only what you changed is written down, so a fresh page has a clean URL.
@@ -75,7 +79,7 @@ it over.
 ## Status
 
 Early, but complete enough to use, and **on npm**. Phases 0–9 are done: the
-library, and [a tool over it](https://danielefrisanco.github.io/neatline/) where
+library, and [a tool over it](https://danielefrisanco.github.io/masen/) where
 you pick a region, a projection and a theme, click the map to mark it, and take
 the result away as a file. The package builds under both ESM and CJS, resolves
 real geometry, emits the frozen document shape below, themes it, and carries
@@ -83,12 +87,12 @@ lakes, rivers, cities, names, the sea, land cover, a graticule and four kinds of
 annotation.
 
 ```sh
-npm i @neatline/map
+npm i masen
 ```
 
-**Scoped, for two reasons.** npm refuses the bare name `neatline` as too close
-to `readline` — and `neatline` is a project rather than a single library, so the
-org is where a second one would go. This is the map; `@neatline/graph` is the
+**Scoped, for two reasons.** npm refuses the bare name `masen` as too close
+to `readline` — and `masen` is a project rather than a single library, so the
+org is where a second one would go. This is the map; `@masen/graph` is the
 kind of thing that would sit beside it. The repository, the site and the `mp-`
 class prefix are unchanged.
 
@@ -161,7 +165,7 @@ cost about thirty bytes and buy a stable stack for the life of v1.
 The taxonomy is also readable at runtime, so tooling never has to hard-code it:
 
 ```ts
-import { LAYERS } from "@neatline/map";
+import { LAYERS } from "masen";
 
 LAYERS.map((layer) => layer.className);
 // ["mp-neighbours", "mp-land", "mp-hydro", "mp-borders", ...]
@@ -208,7 +212,7 @@ Three inputs, applied in cascade order. There is no merge step, no schema and
 no validation layer, because the cascade already does that work.
 
 ```ts
-const map = await neatline({
+const map = await masen({
   region: "west-europe",
   theme: "atlas",              // structure: weights, dashes, type
   palette: "dusk",             // colour only, applied over the theme
@@ -310,7 +314,7 @@ test will say so and name the token.
 Type is a category you pick, the same way colour is:
 
 ```ts
-await neatline({ region: "west-europe", theme: "atlas", typeface: "serif" });
+await masen({ region: "west-europe", theme: "atlas", typeface: "serif" });
 ```
 
 | | |
@@ -376,7 +380,7 @@ Bundled themes are `minimal` and `atlas`; bundled palettes are `dusk` and
 passed inline. The files ship too, for linking or forking:
 
 ```ts
-import "neatline/themes/atlas.css";
+import "masen/themes/atlas.css";
 ```
 
 ### Tokens
@@ -482,7 +486,7 @@ of them.
 ### Coordinates and pixels
 
 ```ts
-const map = await neatline({ region: "west-europe" });
+const map = await masen({ region: "west-europe" });
 
 const paris = map.project([2.35, 48.86]); // → [x, y], or null
 const ground = map.invert([500, 500]);    // → [lon, lat], or null
@@ -532,7 +536,7 @@ See `west-europe-relief.svg` in the gallery.
 ### Colour by value
 
 ```ts
-await neatline({
+await masen({
   region: "west-europe",
   values: { DE: 4460, FR: 3050, IT: 2250, ES: 1620, PT: 290 },
   bins: 5,
@@ -557,7 +561,7 @@ number it happened to fall into.
 ### Colour without data
 
 ```ts
-await neatline({ region: "africa", fill: "political" });
+await masen({ region: "africa", fill: "political" });
 ```
 
 Every country gets a colour none of its neighbours has, written out as
@@ -576,7 +580,7 @@ something with its colour, and two encodings on one fill is one of them lying.
 ### Hatching
 
 ```ts
-await neatline({
+await masen({
   region: "europe",
   highlight: [...members],
   stripe: ["AL", "BA", "MD", "ME", "MK", "RS", "UA"],
@@ -596,7 +600,7 @@ where it is used.
 ### Height as quantity
 
 ```ts
-await neatline({
+await masen({
   region: "west-europe",
   extrude: { values: { DE: 4460, FR: 3050, IT: 2250, ES: 1620 }, height: 150 },
 });
@@ -643,7 +647,7 @@ the map. Draw it `orthographic`.
 ### The sea, as a shape
 
 ```ts
-await neatline({ region: ["HR"], sea: true, palette: "sand" });
+await masen({ region: ["HR"], sea: true, palette: "sand" });
 ```
 
 Without this, `--bg` paints the whole canvas and the land is drawn over it — so
@@ -673,8 +677,8 @@ emits nothing at all rather than a megabyte of coastline nobody can see.
 ### Ground that is desert where it is desert
 
 ```ts
-await neatline({ region: ["DZ", "LY", "EG", "TD", "NE"], terrain: true });
-await neatline({ region: ["CH", "IT", "AT"], terrain: ["mountain"] });
+await masen({ region: ["DZ", "LY", "EG", "TD", "NE"], terrain: true });
+await masen({ region: ["CH", "IT", "AT"], terrain: ["mountain"] });
 ```
 
 Three kinds of land cover — `desert`, `mountain`, `glacier` — drawn into
@@ -706,7 +710,7 @@ on.
 ### The names of seas
 
 ```ts
-await neatline({ region: ["GR"], sea: true, seaNames: 3 });
+await masen({ region: ["GR"], sea: true, seaNames: 3 });
 ```
 
 Seas, gulfs, straits and bights, set in italic on the water in `--sea-ink`, into
@@ -730,8 +734,8 @@ that can be spared.
 ### The grid the world is drawn on
 
 ```ts
-await neatline({ region: "south-america", graticule: true });
-await neatline({ region: "world", graticule: { step: 15 } });
+await masen({ region: "south-america", graticule: true });
+await masen({ region: "world", graticule: { step: 15 } });
 ```
 
 Parallels and meridians, at the bottom of the stack under everything else.
@@ -761,8 +765,8 @@ pole is a place.
 ### Centring on a meridian
 
 ```ts
-await neatline({ region: "world", projection: "equal-earth", center: 160 });
-await neatline({ region: "world", projection: "orthographic", center: [100, 20] });
+await masen({ region: "world", projection: "equal-earth", center: 160 });
+await masen({ region: "world", projection: "orthographic", center: [100, 20] });
 ```
 
 Overrides the automatic centring of the section above.
@@ -791,7 +795,7 @@ a river is on land.
 ### Neighbours
 
 ```ts
-await neatline({ region: "west-europe", neighbours: true });
+await masen({ region: "west-europe", neighbours: true });
 ```
 
 The surrounding countries, drawn beneath the region as context. Never labelled,
@@ -801,7 +805,7 @@ cannot move your subject. Styled from `--neighbour`.
 ### Marks
 
 ```ts
-await neatline({
+await masen({
   region: "west-europe",
   highlight: ["FR"],
   pins: [
@@ -854,7 +858,7 @@ A coordinate that cannot be one at all throws, and a latitude past 90 is told
 what it probably was:
 
 ```
-neatline: pins[0].at has a latitude of 102.35, which is outside [-90, 90] —
+masen: pins[0].at has a latitude of 102.35, which is outside [-90, 90] —
 coordinates are [lon, lat], not [lat, lon]
 ```
 
@@ -867,7 +871,7 @@ map this layer exists to make.
 ### Captions
 
 ```ts
-await neatline({
+await masen({
   region: "europe",
   pins: [{ at: [30.73, 46.48], label: "Odesa" }],
   callouts: [
@@ -911,7 +915,7 @@ box too narrow prints the caption out through its own side.
 ### Furniture, and the canvas
 
 ```ts
-await neatline({
+await masen({
   region: "world",
   credit: "Natural Earth · public domain",
   // or: credit: { text: "Reuters graphics", anchor: "bottom-left" }
@@ -944,14 +948,14 @@ says who made the map, which is not what the map is *of* — announcing it would
 put the byline ahead of the subject.
 
 Nothing here is an obligation this library imposes: Natural Earth is public
-domain, Maki is CC0, and neatline is MIT. `credit` exists because a map that
+domain, Maki is CC0, and masen is MIT. `credit` exists because a map that
 leaves a browser as a file has no surrounding page to carry a caption, so the
 credit has to come out of the generator or it does not exist at all.
 
 ### A scale bar and a north arrow, when the map has earned them
 
 ```ts
-const map = await neatline({
+const map = await masen({
   region: ["FR"],
   projection: "conic-conformal",
   scaleBar: true,          // or { anchor, maxWidth, units: "km" | "mi", tolerance }
@@ -1004,7 +1008,7 @@ bar reading 237 km is a bar nobody can step across a map.
 ### Watermarks
 
 ```ts
-await neatline({
+await masen({
   region: "africa",
   watermark: "PROVISIONAL",
   // or: watermark: { image: "./logo.svg", anchor: "bottom-right", width: 90 }
@@ -1051,9 +1055,9 @@ decision, not a packing problem.
 ### Icons
 
 ```ts
-import { ICON_NAMES } from "@neatline/map";
+import { ICON_NAMES } from "masen";
 
-await neatline({
+await masen({
   region: "west-europe",
   pins: [
     { at: [4.48, 51.92], kind: "harbor", label: "Rotterdam" },
@@ -1107,7 +1111,7 @@ ignores stylesheets.
 ### Connections
 
 ```ts
-await neatline({
+await masen({
   region: "europe",
   arrows: [
     { from: [30.73, 46.48], to: [-3.7, 40.42], kind: "grain" },
@@ -1145,7 +1149,7 @@ the defs block, and not where it is used.
 ### Routes
 
 ```ts
-await neatline({
+await masen({
   region: ["SE", "NO", "FI"],
   routes: [{
     label: "Stambanan genom övre Norrland",
@@ -1192,9 +1196,9 @@ Hamburg, Munich, Lyon, Marseille, Turin and Barcelona). Every dot also carries
 Country and settlement names, on by default.
 
 ```ts
-await neatline({ region: "west-europe", theme: "atlas" });     // names included
-await neatline({ region: "west-europe", labelRank: 2 });       // name more cities
-await neatline({ region: "west-europe", layers: { labels: false } });  // none
+await masen({ region: "west-europe", theme: "atlas" });     // names included
+await masen({ region: "west-europe", labelRank: 2 });       // name more cities
+await masen({ region: "west-europe", layers: { labels: false } });  // none
 ```
 
 `labelRank` decides how far down the settlement ranking to *name* the dots that
@@ -1254,7 +1258,7 @@ The bundled data is English. `names` replaces the name of anything the map
 labels — keys are ISO codes for countries and settlement names for cities:
 
 ```ts
-await neatline({
+await masen({
   region: "west-europe",
   names: { DE: "Deutschland", FR: "Frankreich", Munich: "München" },
 });
@@ -1268,7 +1272,7 @@ does not ship.
 ### Choosing layers
 
 ```ts
-await neatline({ region: "west-europe", layers: { borders: false } });
+await masen({ region: "west-europe", layers: { borders: false } });
 ```
 
 This empties `.mp-borders`; it never removes the group. The stack is a fixed

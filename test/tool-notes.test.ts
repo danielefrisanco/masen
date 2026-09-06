@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline } from "../src/index.js";
+import { masen } from "../src/index.js";
 import { DEFAULTS, toOptions, type Config } from "../tool/src/config.js";
 import { notesFor } from "../tool/src/notes.js";
 
@@ -15,7 +15,7 @@ import { notesFor } from "../tool/src/notes.js";
 
 const map = async (config: Partial<Config>): Promise<string> =>
   (
-    await neatline({
+    await masen({
       ...toOptions({ ...DEFAULTS, ...config }),
       detail: "110m",
       size: [800, 520],
