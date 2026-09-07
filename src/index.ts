@@ -3,6 +3,7 @@ import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { arrowLayer, calloutLayer, pinLayer, routeLayer } from "./annotations.js";
 import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
 import { measureDistortion, type Distortion } from "./distortion.js";
+import { omissionsOf, type Omissions } from "./omissions.js";
 import { watermarkLayer } from "./watermark.js";
 import { graticuleLayer, type GridMark } from "./graticule.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
@@ -90,6 +91,7 @@ export async function countryTable(detail: Detail = "110m"): Promise<readonly Co
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 export { FILL_COUNT, politicalFill } from "./political.js";
+export type { Omissions } from "./omissions.js";
 export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
 export { FILTER_NAMES } from "./filters.js";
@@ -207,6 +209,14 @@ function intersectsBBox(country: CountryFeature, bbox: BBox): boolean {
 
 interface ResolvedRegion {
   readonly features: readonly CountryFeature[];
+  /**
+   * The ISO codes the caller named, resolved, before any of them were looked
+   * up in the data. This is the list the drawn map is measured against.
+   *
+   * Empty for a world map, a bounding box or caller-supplied GeoJSON: none of
+   * those names a country, so there is no list to fall short of.
+   */
+  readonly requested: readonly string[];
   /** What the camera frames — the bbox itself, when one was given. */
   readonly frame: FrameGeometry;
   /**
@@ -255,6 +265,7 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     const features = codes === null ? all : pick(codes, all);
     return {
       features,
+      requested: codes === null ? [] : resolveAll(codes),
       frame: framingGeometry(features),
       borderIds: features.map((f) => f.id),
       description: `Map of ${presetLabel(region)}`,
@@ -265,6 +276,7 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     const features = pick(region as readonly string[], all);
     return {
       features,
+      requested: resolveAll(region as readonly string[]),
       frame: framingGeometry(features),
       borderIds: features.map((f) => f.id),
       description: `Map of ${listNames(features.map((f) => f.name).filter(Boolean))}`,
@@ -309,6 +321,9 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     };
     return {
       features,
+      // A box names an area, not a list of countries: whatever falls inside it
+      // is the answer, so there is nothing it can fall short of.
+      requested: [],
       frame: {
         geometry: rectangle,
         bounds: [
@@ -336,6 +351,9 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     }
     return {
       features,
+      // The caller supplied the geometry. Every feature they gave is drawn, so
+      // the only list to compare against is the one they already hold.
+      requested: [],
       frame: framingGeometry(features),
       borderIds: [],
       description: `Map of ${features.length} custom ${features.length === 1 ? "feature" : "features"}`,
@@ -343,6 +361,25 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
   }
 
   throw new Error("masen: region must be a preset name, code list, bbox, or GeoJSON");
+}
+
+/**
+ * The same resolution `pick` does, without the lookup.
+ *
+ * Kept separate rather than returned from `pick`, because the two answer
+ * different questions: `pick` says what the data has, and this says what was
+ * asked for. Comparing them is the whole point — a function that returned only
+ * the intersection could not tell anyone what fell out of it.
+ */
+function resolveAll(codes: readonly string[]): string[] {
+  const resolved: string[] = [];
+  for (const code of codes) {
+    const id = resolveId(code);
+    // An unresolvable code has already thrown in `pick`. Skipping rather than
+    // throwing twice keeps the error message in one place.
+    if (id !== null) resolved.push(id);
+  }
+  return resolved;
 }
 
 function pick(codes: readonly string[], all: readonly CountryFeature[]): CountryFeature[] {
@@ -464,6 +501,21 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   function distortion(): Distortion {
     measured ??= measureDistortion(projectPoint, invertPoint, [width, height]);
     return measured;
+  }
+
+  /**
+   * What was asked for and is not on the map.
+   *
+   * Cheap enough to take eagerly — it is a set difference over at most a few
+   * hundred codes — but computed here beside `distortion()` because it answers
+   * the same kind of question, and because the answer should be reachable from
+   * the built map rather than recomputed by the caller against a list they
+   * would have to keep in step with the data.
+   */
+  const drawnIds = resolved.features.map((feature) => feature.id);
+  const missing = omissionsOf(resolved.requested, drawnIds);
+  function omissions(): Omissions {
+    return missing;
   }
 
   function projectPoint(position: Position): Point | null {
@@ -1272,6 +1324,8 @@ export async function masen(options: MapOptions): Promise<MapResult> {
     invert: invertPoint,
 
     distortion,
+
+    omissions,
 
     toString() {
       return complete;

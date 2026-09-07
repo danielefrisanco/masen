@@ -1,4 +1,5 @@
 import type { Distortion } from "./distortion.js";
+import type { Omissions } from "./omissions.js";
 import type { LayerName } from "./taxonomy.js";
 
 /**
@@ -894,6 +895,18 @@ export interface MapResult {
    * Computed on first call and kept, so asking twice costs nothing.
    */
   distortion(): Distortion;
+  /**
+   * Which of the countries this map was asked for are not on it.
+   *
+   * The same argument as `distortion()`, applied to a worse failure. A scale
+   * bar that declines to draw leaves a visible gap where the caller expected
+   * one; a country that is not in the detail tier leaves nothing at all, and
+   * a map of Europe without the Vatican looks exactly like a map of Europe.
+   *
+   * Empty for a world map, a bounding box or caller-supplied GeoJSON, none of
+   * which names a list of countries to fall short of.
+   */
+  omissions(): Omissions;
   /** Write `render()` output to disk. Node only. */
   toFile(path: string, options?: RenderOptions): Promise<void>;
 }
