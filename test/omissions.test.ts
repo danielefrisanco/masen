@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { masen, REGION_PRESETS } from "../src/index.js";
+import type { RegionPreset } from "../src/types.js";
 
 /**
  * The map has to say what it left out.
@@ -73,7 +74,7 @@ describe("omissions", () => {
    */
   it("holds the coarse tier's shortfall across every preset", async () => {
     const shortfalls: Record<string, string[]> = {};
-    for (const name of Object.keys(REGION_PRESETS)) {
+    for (const name of Object.keys(REGION_PRESETS) as RegionPreset[]) {
       const map = await masen({ region: name, detail: "110m", size: [400, 300] });
       const absent = map.omissions().absent;
       if (absent.length > 0) shortfalls[name] = [...absent].sort();
@@ -85,7 +86,7 @@ describe("omissions", () => {
 
   it("draws every code every preset names at 50m", async () => {
     const shortfalls: Record<string, readonly string[]> = {};
-    for (const name of Object.keys(REGION_PRESETS)) {
+    for (const name of Object.keys(REGION_PRESETS) as RegionPreset[]) {
       const map = await masen({ region: name, detail: "50m", size: [400, 300] });
       const absent = map.omissions().absent;
       if (absent.length > 0) shortfalls[name] = absent;

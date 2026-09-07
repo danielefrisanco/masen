@@ -687,7 +687,6 @@ export async function masen(options: MapOptions): Promise<MapResult> {
       hatched.push(el("path", { class: "mp-hatch", "data-iso": country.id, d }));
     }
   }
-  land.push(...hatched);
 
   /**
    * Disputed and breakaway areas, hatched over the countries rather than
@@ -771,7 +770,7 @@ export async function masen(options: MapOptions): Promise<MapResult> {
       }
       const props = area.properties ?? {};
       const areaName = props.n ?? "";
-      land.push(
+      hatched.push(
         el(
           "path",
           {
@@ -1101,12 +1100,34 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   if (wants("borders") && extrusion === null) {
     const borderGeometry =
       resolved.borderIds.length > 0 ? world.borders(resolved.borderIds) : null;
+    const lines: SvgNode[] = [];
     if (borderGeometry !== null) {
       const d = path(borderGeometry as never);
-      if (d) {
-        content.set("borders", [el("path", { class: "mp-border", "data-kind": "intl", d })]);
-      }
+      if (d) lines.push(el("path", { class: "mp-border", "data-kind": "intl", d }));
     }
+    /**
+     * The hatched overlays paint here, and not with the land they describe.
+     *
+     * **They were in `mp-land`, and land cover buried them.** The paint order
+     * is land, then terrain, then hydro, then borders — so on any map with
+     * `terrain` on, the desert wash went straight over the contested-area
+     * hatching and the caller's own `stripe`. Measured on the Sahara gallery
+     * map: the `W. Sahara` hatch is in the document, carries its pattern fill,
+     * and cannot be seen at any zoom. A map that makes a claim it then hides
+     * is the exact failure this phase exists for, and it was shipping by
+     * default since the overlay went in.
+     *
+     * `borders` is where they belong on the merits, not merely where they are
+     * visible: a contested-area hatch is a statement about a boundary, and the
+     * boundary lines drawing on top of it is the right stack — the line stays
+     * legible over its own hatching.
+     *
+     * Gated on the land layer because that is what they annotate: a hatch with
+     * no country under it is a smudge, which is the same reason the disputed
+     * pass tests for land beneath before drawing anything at all.
+     */
+    if (wants("land")) lines.unshift(...hatched);
+    if (lines.length > 0) content.set("borders", lines);
   }
 
   /**

@@ -120,3 +120,49 @@ describe("disputed areas", () => {
     expect(map.svg).toMatch(/<path class="mp-hatch"/);
   });
 });
+
+/**
+ * The overlay has to be on the page, not merely in the document.
+ *
+ * The hatching shipped in `mp-land`, which paints *before* land cover — so
+ * every map with `terrain` on carried a contested-area hatch that was in the
+ * markup, carried its pattern fill, and could not be seen at any zoom. The
+ * Sahara gallery map is the case that found it: Western Sahara hatched,
+ * buried under the desert wash, on a map whose whole subject is that desert.
+ *
+ * Layer membership rather than a rendering: this is the one property that
+ * decides whether the claim is visible, and it is exactly checkable.
+ */
+describe("the hatch paints above the land it describes", () => {
+  it("puts contested areas in the borders layer, under the boundary lines", async () => {
+    const map = await masen({
+      region: ["MA", "EH", "MR", "DZ"],
+      detail: "110m",
+      terrain: true,
+    });
+    // Sliced between layer groups rather than matched with a lazy `</g>`: the
+    // group carries attributes and its children carry their own closing tags.
+    const opens = map.svg.indexOf('<g class="mp-layer mp-borders"');
+    expect(opens).toBeGreaterThan(-1);
+    const next = map.svg.indexOf('<g class="mp-layer', opens + 1);
+    const inLayer = map.svg.slice(opens, next === -1 ? undefined : next);
+    expect(inLayer).toContain('data-name="W. Sahara"');
+    // Under the lines, not over them: a boundary has to stay legible on top of
+    // its own hatching.
+    expect(inLayer.indexOf('class="mp-hatch"')).toBeLessThan(inLayer.indexOf('class="mp-border"'));
+  });
+
+  it("keeps land cover from painting over it", async () => {
+    const map = await masen({
+      region: ["MA", "EH", "MR", "DZ"],
+      detail: "110m",
+      terrain: true,
+    });
+    const svg = map.svg;
+    // Paint order is the document order of the layer groups, so the terrain
+    // layer opening before the hatch is the whole claim.
+    expect(svg.indexOf('<g class="mp-layer mp-terrain"')).toBeLessThan(
+      svg.indexOf('class="mp-hatch"'),
+    );
+  });
+});

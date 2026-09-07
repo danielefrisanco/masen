@@ -812,7 +812,12 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
     // at 110m carries two deserts for the whole planet.
     "sahara-cover",
     {
-      region: ["DZ", "LY", "EG", "NE", "TD", "ML", "MR", "MA", "TN", "SD"],
+      // EH — Western Sahara — is in this list because it is on the ground.
+      // Leaving it out drew a hole between southern Morocco and Mauritania
+      // that looked like a rendering fault and was a missing code: the map
+      // looked finished and was not. Whether the territory is Moroccan is a
+      // separate question, and the one Phase 16 answers with hatching.
+      region: ["DZ", "LY", "EG", "NE", "TD", "ML", "MR", "MA", "TN", "SD", "EH"],
       detail: "50m",
       projection: "mercator",
       theme: "atlas",
