@@ -155,7 +155,11 @@ describe("what the map left out", () => {
   }, 20_000);
 
   it("says nothing at all about a map that drew everything and drew it big", async () => {
-    const notes = await built({ region: "west-europe" }, "50m", [960, 620]);
+    // Three large countries and no enclaves. `west-europe` cannot be used for
+    // this any more: it carries the five microstates on purpose, because
+    // leaving them out left a hole in the middle of the drawn land rather than
+    // a country beyond the edge of it.
+    const notes = await built({ region: "FR,DE,ES" }, "50m", [960, 620]);
     expect(notes["detail"]).toBeUndefined();
     expect(notes["region"]).toBeUndefined();
   }, 20_000);

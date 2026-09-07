@@ -11,6 +11,8 @@ exports[`omissions > holds the coarse tier's shortfall across every preset 1`] =
   ],
   "asia": [
     "BH",
+    "HK",
+    "MO",
     "MV",
     "SG",
   ],
@@ -50,8 +52,11 @@ exports[`omissions > holds the coarse tier's shortfall across every preset 1`] =
     "VA",
   ],
   "mediterranean": [
+    "AD",
     "MC",
     "MT",
+    "SM",
+    "VA",
   ],
   "middle-east": [
     "BH",
@@ -105,6 +110,13 @@ exports[`omissions > holds the coarse tier's shortfall across every preset 1`] =
   ],
   "west-africa": [
     "CV",
+  ],
+  "west-europe": [
+    "AD",
+    "LI",
+    "MC",
+    "SM",
+    "VA",
   ],
 }
 `;

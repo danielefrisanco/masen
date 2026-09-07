@@ -10,8 +10,24 @@ import type { RegionPreset } from "./types.js";
  * stated in one visible place than inferred.
  */
 export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, readonly string[]>> = {
+  /*
+   * The five microstates are here because leaving them out does not leave them
+   * out — it leaves a hole.
+   *
+   * Andorra sits between Spain and France, San Marino and the Vatican inside
+   * Italy, Liechtenstein between Switzerland and Austria, Monaco in the French
+   * coast. Every one of those countries is in this list, so an absent microstate
+   * is not a country beyond the edge of the map; it is a gap in the middle of
+   * the drawn land, and the sea shows through it. Rendered `west-europe` at 50m
+   * and looked at: Andorra is a white blob on the Pyrenean border, which reads
+   * as a rendering fault rather than as an omission.
+   *
+   * They cost nothing at 110m, where Natural Earth does not carry them at all
+   * and `omissions()` says so.
+   */
   "west-europe": [
     "PT", "ES", "FR", "BE", "NL", "LU", "DE", "CH", "AT", "IT", "GB", "IE", "DK",
+    "AD", "MC", "LI", "SM", "VA",
   ],
   europe: [
     "AL", "AD", "AT", "BY", "BE", "BA", "BG", "HR", "CY", "CZ", "DK", "EE",
@@ -43,6 +59,9 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
     "IR", "IQ", "IL", "JP", "JO", "KZ", "KW", "KG", "LA", "LB", "MY", "MV",
     "MN", "MM", "NP", "KP", "OM", "PK", "PS", "PH", "QA", "SA", "SG", "KR",
     "LK", "SY", "TW", "TJ", "TH", "TL", "TR", "TM", "AE", "UZ", "VN", "YE",
+    // Hong Kong and Macao are separate features in the topology, and China is
+    // here, so leaving them out puts two holes in its southern coast.
+    "HK", "MO",
   ],
   // No `TV`. Tuvalu is below the threshold at both tiers, so naming it left a
   // hole rather than an island — a defect this preset carried from Phase 1
@@ -107,9 +126,15 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
   // The basin, both shores. This is the one preset framed by a *sea* rather
   // than by land, which is the point of it — and it is the map the sea-name
   // layer was built for.
+  // Andorra, San Marino and the Vatican for the same reason as in west-europe:
+  // Spain, France and Italy are all here, so their enclaves are holes in the
+  // drawn land rather than countries outside the frame. Andorra is a Pyrenean
+  // state and not a Mediterranean one, and it is in the list anyway — the
+  // alternative is a white gap on a border this map draws.
   mediterranean: [
     "ES", "FR", "MC", "IT", "MT", "SI", "HR", "BA", "ME", "AL", "GR", "TR",
     "CY", "SY", "LB", "IL", "PS", "EG", "LY", "TN", "DZ", "MA",
+    "AD", "SM", "VA",
   ],
 
   // Mexico is in both this and North America, deliberately: it is
