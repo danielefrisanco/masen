@@ -35,6 +35,7 @@
 import { createRequire } from "node:module";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { feature } from "topojson-client";
+import { geoContains } from "d3-geo";
 
 const require = createRequire(import.meta.url);
 const TIERS = ["110m", "50m"];
@@ -109,7 +110,32 @@ for (const tier of TIERS) {
     await readFile(require.resolve(`sane-topojson/dist/world_${tier}.json`), "utf8"),
   );
   const places = trimPlaces(JSON.parse(await readFile(`vendor/places-${tier}.raw.json`, "utf8")));
-  const seas = JSON.parse(await readFile(`vendor/seas-${tier}.raw.json`, "utf8"));
+  const rawSeas = JSON.parse(await readFile(`vendor/seas-${tier}.raw.json`, "utf8"));
+
+  /**
+   * A sea whose anchor is on land is dropped rather than shipped.
+   *
+   * **Measured, not suspected: two of the 29 rank-1 anchors fall inside
+   * Antarctica** — Indian Ocean at 92.8°E, 80.6°S and Southern Ocean at
+   * 101.0°E, 80.6°S, the same latitude, both well inland. A pole of
+   * inaccessibility for a body of water cannot be on a continent, so those two
+   * are wrong however they were produced, and nothing downstream can tell.
+   *
+   * The vendored file holds an anchor and no polygon — the shapes were dropped
+   * at fetch time to save 1.5 MB — so this cannot recompute a better point; it
+   * can only refuse a bad one. Refusing is the right half to do here anyway: a
+   * label the reader can check against the coastline under it is the one thing
+   * worse than no label, and "Indian Ocean" set across Antarctica is exactly
+   * that.
+   *
+   * The real fix is the one 08c named and deferred: vendor the marine polygons
+   * back, and label the visible part of a sea whose middle is off-frame rather
+   * than only the sea whose middle is on it. Until then this keeps the wrong
+   * ones out of the bundle and says how many it kept out.
+   */
+  // Decoded once: `countries` is a topology, and containment needs shapes.
+  const land = feature(countries, countries.objects.countries).features;
+  const seas = rawSeas.filter((sea) => !land.some((f) => geoContains(f, [sea.x, sea.y])));
   const rawCover = JSON.parse(await readFile(`vendor/cover-${tier}.raw.json`, "utf8"));
 
   const digits = tier === "110m" ? 2 : 3;
@@ -191,7 +217,11 @@ for (const tier of TIERS) {
       ` ${bundle.lakes.features.length} lakes,` +
       ` ${bundle.rivers.features.length} rivers,` +
       ` ${places.length} places,` +
-      ` ${seas.length} sea names)`,
+      ` ${seas.length} sea names` +
+        (rawSeas.length === seas.length
+          ? ""
+          : `, ${rawSeas.length - seas.length} dropped for an anchor on land`) +
+        `)`,
   );
   console.log(
     `  ${oceanPath}  ${((await oceanSize).size / 1024).toFixed(0)} KB` +
