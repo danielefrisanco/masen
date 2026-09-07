@@ -16,6 +16,112 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [0.18.0] — 2026-09-07
+
+**Phase 15: the map now says what it left out, and four things it was hiding
+are visible.**
+
+A minor rather than a patch, and for the reason 0.17.0 gave: nothing is renamed
+and nothing reordered, but **an existing caller's map comes out different**. The
+land layer's paint order changed, the hatched overlays moved layer, three
+presets gained countries, and four sea names left the data. Every one of those
+is a diff in somebody's committed SVG.
+
+### Added
+
+**`MapResult.omissions()`** — what was asked for and is not on the map.
+
+```ts
+const map = await masen({ region: "europe", detail: "110m" });
+map.omissions();
+// { absent: ["AD", "LI", "MT", "MC", "SM", "VA"], unseen: [] }
+```
+
+The same argument as `distortion()`, applied to a worse failure. A scale bar
+that declines to draw leaves a visible gap; a country the detail tier does not
+carry leaves nothing at all, and a map of Europe without the Vatican looks
+exactly like a map of Europe. `absent` is what this tier does not hold — 177
+countries at 110m against 241 at 50m, so `europe` names 45 and draws 39, and
+`south-asia` names eight and draws seven. `unseen` is what was drawn and cannot
+be read. Both are empty for a world map, a bbox or caller-supplied GeoJSON,
+none of which names a list to fall short of.
+
+The coarse tier's shortfall across every preset is now a committed snapshot
+rather than a suspicion: **caribbean loses 18 of the 25 codes it names, pacific
+16, oceania 8**, fifteen presets in all. Every preset draws everything it names
+at 50m. Singapore is on that list, which settles an earlier misdiagnosis — SG
+was filed as a label-collision bug and is not one.
+
+**`data-unseen`** on `.mp-country`, for a country whose longest drawn side is
+shorter than the settlement dot standing on it — 6.4 user units, measured
+rather than rounded, because every 1:1 crop of a microstate shows the dot and
+the capital's name and no country. The bundled themes give those a stroke three
+units wide, the width of the smallest dot this library draws. No geometry is
+invented: the polygon is the one Natural Earth supplies, drawn with a pen thick
+enough to see.
+
+### Fixed
+
+**The contested-area hatch was invisible under land cover.** It shipped in
+`mp-land`, and the paint order is land, terrain, hydro, borders — so on any map
+with `terrain` on, the desert wash went straight over it. The `sahara-cover`
+gallery map had a Western Sahara hatch that was in the document, carried its
+pattern fill, resolved its stripe colour, and could not be seen at any zoom.
+The overlays now paint in `borders`, under the boundary lines, which is where
+they belong on the merits: a contested-area hatch is a statement about a
+boundary, and the line has to stay legible over its own hatching. `stripe`
+moves with them and had the same defect.
+
+**An enclosed microstate was painted over by the country around it.** Features
+arrived in the data's own order, which is not a drawing order: on `europe` at
+50m the Vatican is path 0 and Italy is path 25, so Italy's fill went straight
+over it — as did France over Monaco and Austria over Liechtenstein. Malta was
+fine, being an island. The land layer now paints **largest first**, which is
+what a cartographer does by hand and the only order in which an enclave can be
+seen at all.
+
+**Three presets left holes where their own enclaves should be.** `west-europe`
+did not contain Andorra, Monaco, Liechtenstein, San Marino or the Vatican, so
+Andorra rendered as a white blob on the Spanish–French border. `mediterranean`
+was missing Andorra, San Marino and the Vatican; `asia` was missing Hong Kong
+and Macao, two holes in China's southern coast. Leaving a microstate out of a
+preset does not leave it out — every surrounding country is in the list, so it
+is a gap in the middle of the drawn land rather than a country beyond the edge.
+
+**Four sea anchors fell on land, and one of them was drawing.** The vendored
+sea file carries an anchor and no polygon, so nothing downstream could tell a
+bad interior point from a good one. Measured against the country geometry
+beside them: Indian Ocean and Southern Ocean inside Antarctica at both tiers,
+Luzon Strait inside Taiwan and **Strait of Gibraltar inside Morocco** at 50m.
+The last had been setting "Strait of Gibraltar" across the land bridge in the
+`alps-cover` gallery map since sea names shipped. The build now refuses an
+anchor that falls on land, and a test holds it.
+
+**`sahara-cover` drew a hole where Western Sahara is.** The gallery entry's
+hand-written code list had no `EH`, so the map had a void between southern
+Morocco and Mauritania that read as a rendering fault.
+
+### Changed
+
+`west-europe`, `mediterranean` and `asia` gained the codes above. `REGION_PRESET_NAMES`
+and `expandPreset` now document why the names list is one longer than the record
+— `"world"` has no code list — with tests holding the shape.
+
+The tool reports both halves of `omissions()` as notes under the control that
+cures each: the tier under *Detail*, the canvas size under *Region*.
+
+### Not fixed, and named
+
+An ocean still cannot be labelled on a frame its middle does not fall in, the
+framing pass still drops outlying territories silently, and no small country
+gets its name at any canvas size. All three need geometry the package does not
+carry — the marine polygons, and a second camera for an inset — and are Phase 19
+in the plan rather than left open.
+
+`XN`, Northern Cyprus, is deliberately not added to any preset. It is a
+breakaway, and this library's position is that it draws the de facto geometry
+and hatches what is contested rather than reassigning it between countries.
+
 ## [0.17.0] — 2026-09-06
 
 **A minor bump rather than a patch, and the default is the whole reason.**

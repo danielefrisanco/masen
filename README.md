@@ -78,10 +78,10 @@ it over.
 
 ## Status
 
-Early, but complete enough to use, and **on npm**. Phases 0–10b are done: the
-library, and [a tool over it](https://danielefrisanco.github.io/masen/) where
-you pick a region, a projection and a theme, click the map to mark it, and take
-the result away as a file. The package builds under both ESM and CJS, resolves
+Early, but complete enough to use, and **on npm**. Phases 0–10b, 13, 15 and 16
+are done: the library, and [a tool over it](https://danielefrisanco.github.io/masen/)
+where you pick a region, a projection and a theme, click the map to mark it, and
+take the result away as a file. The package builds under both ESM and CJS, resolves
 real geometry, emits the frozen document shape below, themes it, and carries
 lakes, rivers, cities, names, the sea, land cover, a graticule and four kinds of
 annotation.
@@ -129,10 +129,10 @@ in the wild.
 | `.mp-ocean` | `.mp-sea` | — | The sea as a shape, under everything |
 | `.mp-graticule` | `.mp-grid` | `data-kind` | Parallels, meridians, the equator and tropics |
 | `.mp-neighbours` | `.mp-neighbour` | `data-iso`, `data-name` | Surrounding countries drawn as context |
-| `.mp-land` | `.mp-country` | `data-iso`, `data-name` | Filled land polygons, one node per country |
+| `.mp-land` | `.mp-country` | `data-iso`, `data-name`, `data-unseen` | Filled land polygons, one node per country, largest first |
 | `.mp-terrain` | `.mp-cover` | `data-kind` | Desert, mountain and glacier, tinted over the land |
 | `.mp-hydro` | `.mp-water` | `data-kind` | Lakes and rivers, drawn over the land |
-| `.mp-borders` | `.mp-border` | `data-kind` | Shared boundaries, each drawn once |
+| `.mp-borders` | `.mp-border`, `.mp-hatch` | `data-kind`, `data-name` | Shared boundaries, each drawn once, over the hatched overlays they qualify |
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
@@ -158,6 +158,14 @@ two readings stack: `stripe` hatches whole countries and its paths carry
 `data-iso`, while contested areas carry `data-kind` and `data-name`. The stroke
 comes from `.mp-hatch-line` inside the pattern, so a theme restyles the hatch by
 styling that.
+
+It lives in `.mp-borders` rather than in `.mp-land`, which is a placement worth
+knowing if you write a theme. In the land layer it painted *below* land cover,
+so on any map with `terrain` on the hatching was in the document, carried its
+pattern fill, and could not be seen at any zoom. In the borders layer the cover
+is already down and the boundary lines draw on top of the hatch, which is the
+right stack: a contested-area hatch is a statement about a boundary, and the
+line has to stay legible over its own hatching.
 
 Every layer but the last is geographic — its contents move when the projection
 or region changes. `.mp-furniture` is the exception: a credit line or watermark
@@ -243,9 +251,20 @@ map.invert([x, y])      // a point on the canvas as a coordinate
 
 ### Regions
 
-Twenty-five presets, each a saved list of ISO codes — `"west-europe"` expands to
-exactly what you could have written by hand, which is why they are explicit
+Twenty-eight presets, each a saved list of ISO codes — `"west-europe"` expands
+to exactly what you could have written by hand, which is why they are explicit
 rather than derived from a continent field the topology does not carry.
+
+`REGION_PRESET_NAMES` has one more entry than `REGION_PRESETS` has lists, and
+always will: `"world"` means *every feature*, which is not the same as a list of
+all of them and cannot be written as one. Use `expandPreset`, which is total
+over the names and answers `null` for that case, rather than indexing the record.
+
+**A preset includes the enclaves of its own members.** `west-europe` carries
+Andorra, Monaco, Liechtenstein, San Marino and the Vatican, because Spain,
+France, Switzerland, Austria and Italy are all in it — and leaving a microstate
+out of a preset does not leave it out, it leaves a hole in the middle of the
+drawn land with the sea showing through.
 
 | | |
 |---|---|
@@ -1016,6 +1035,39 @@ call and kept, and a map that never asks never pays for it.
 The bar's number is always a round one — 1, 2 or 5 times a power of ten — so the
 **width is derived from the number** rather than the number from the width. A
 bar reading 237 km is a bar nobody can step across a map.
+
+### What the map could not draw
+
+```ts
+const map = await masen({ region: "europe", detail: "110m" });
+
+map.omissions();
+// { absent: ["AD", "LI", "MT", "MC", "SM", "VA"], unseen: [] }
+```
+
+The same argument as `distortion()`, applied to a worse failure. A scale bar
+that declines to draw leaves a visible gap where you expected one. **A country
+that is not in the detail tier leaves nothing at all** — a map of Europe without
+the Vatican looks exactly like a map of Europe, and you cannot tell the
+difference between *"this country is not in your region"* and *"this country is
+in your region and the map could not draw it"*.
+
+`absent` is what this tier does not carry. Natural Earth's 110m file has 177
+countries and its 50m file has 241, so `europe` at 110m names 45 and draws 39;
+`south-asia` names eight and draws seven, missing the Maldives. The cure is
+usually one word — `detail: "50m"` — which is exactly why it is worth saying.
+
+`unseen` is what was drawn and cannot be read: a country whose longest side
+comes out shorter than the settlement dot standing on it, which is 6.4 user
+units. On a 960 × 620 map of Europe the Vatican is 0.2 × 0.1 units and Monaco is
+0.8 × 0.7. Each one also carries `data-unseen` in the markup, and the bundled
+themes give those a stroke three units wide — the width of the smallest dot the
+library draws — so a country that had disappeared comes back at the size of the
+smallest mark already on the map and no larger. No geometry is invented; the
+polygon is the one Natural Earth supplies, drawn with a pen thick enough to see.
+
+Both lists are empty for a world map, a bounding box or caller-supplied GeoJSON.
+None of those names a list of countries, so there is nothing to fall short of.
 
 ### Watermarks
 
