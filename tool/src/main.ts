@@ -285,7 +285,7 @@ async function render(): Promise<void> {
     // Read off the drawn document rather than predicted from the options, and
     // the form is rebuilt only when the answer changed — a rebuild on every
     // render would be a rebuild in the middle of somebody typing into it.
-    const found = notesFor(result.svg, config);
+    const found = notesFor(result.svg, config, result.omissions());
     const keys = new Set([...Object.keys(found), ...Object.keys(notes)]);
     const changed = [...keys].some((key) => found[key] !== notes[key]);
     notes = found;

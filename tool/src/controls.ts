@@ -295,7 +295,7 @@ export function buildForm(
 
   host.append(
     group("Subject", [
-      field("Region", regions, "A preset, or a list of ISO codes", "region"),
+      field("Region", regions, "A preset, or a list of ISO codes", "region", notes["region"]),
       field(
         "Detail",
         select(
@@ -313,6 +313,7 @@ export function buildForm(
           ? "Contested areas are drawn from finer data and may overhang this outline"
           : undefined,
         "detail",
+        notes["detail"],
       ),
     ]),
 
