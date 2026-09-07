@@ -69,6 +69,7 @@
     "tool:preview": "vite preview",
     "gallery": "node scripts/build-gallery.mjs",
     "demo": "node scripts/record-demo.mjs",
+    "demo:social": "DEMO_CUT=social node scripts/record-demo.mjs",
     "build:icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
