@@ -45,6 +45,39 @@ import { join } from "node:path";
 const CHROME = process.env.CHROME ?? "/usr/bin/google-chrome";
 const PORT = 9444;
 const URL_BASE = process.env.DEMO_URL ?? "https://danielefrisanco.github.io/masen/";
+/**
+ * Which film. `full` is the twenty-six second one the README embeds; `social`
+ * is a five-second loop for a feed, where the whole tour is unwatchable and the
+ * only beat worth keeping is the one where a click becomes a mark and the link
+ * underneath changes with it.
+ */
+const CUT = process.env.DEMO_CUT ?? "full";
+/**
+ * The social cut opens on a finished map rather than building one.
+ *
+ * Five seconds cannot afford the settings, so they arrive in the address bar —
+ * which is honest, because that is exactly what the tool does with them. Two
+ * beats are left on camera, and they are the two a stopped scroll can read
+ * without a caption: **the colour changes, and a click becomes a mark.**
+ *
+ * So the palette is deliberately *not* here. The map opens in the theme's own
+ * colours and the film puts `patina` on it, which recolours the sea from pale
+ * blue to deep teal in one frame — the largest visible change this tool can
+ * make, and the one that says the style is a stylesheet without saying it.
+ * `pinIcon` is here for the opposite reason: choosing the icon is a second trip
+ * to the form, and there is only room for one.
+ */
+const SOCIAL_QUERY =
+  "?region=IT&theme=atlas&detail=50m&neighbours=1" +
+  "&placeRank=1&borderWidth=1.4&landEdgeWidth=1.8&labelSize=23&scaleBar=1&pinIcon=mountain";
+/**
+ * Where the click lands, as a fraction of the drawn map.
+ *
+ * Not eyeballed: the map at SOCIAL_QUERY plus `pin=11.2843,46.275` puts its
+ * mark at 421.9, 68.3 in a 960x620 frame, so these are that point divided by
+ * the frame. Trentino, which is land in this projection and under a mountain.
+ */
+const SOCIAL_PIN = { across: 421.9 / 960, down: 68.3 / 620 };
 const OUT = "media";
 const FRAMES = ".demo-frames";
 // 16:10, which is the shape the map wants and the shape a social card crops
@@ -171,6 +204,19 @@ const STAGE = `
       }
       return null;
     },
+    /**
+     * Centre of an element in viewport pixels, leaving the page where it is.
+     *
+     * The social cut points at the link field a beat after dropping a pin near
+     * the top of the map, and scrolling the field into view would push the pin
+     * off the frame — losing the mark at the exact moment the film is meant to
+     * be showing what it did.
+     */
+    spot(node) {
+      if (node === null) return null;
+      const box = node.getBoundingClientRect();
+      return { x: Math.round(box.left + box.width / 2), y: Math.round(box.top + box.height / 2) };
+    },
     /** Centre of an element in viewport pixels, after scrolling it into view. */
     centre(node) {
       if (node === null) return null;
@@ -243,7 +289,9 @@ async function main() {
     return result.value;
   };
 
-  await cdp.send("Page.navigate", { url: URL_BASE });
+  await cdp.send("Page.navigate", {
+    url: CUT === "social" ? URL_BASE + SOCIAL_QUERY : URL_BASE,
+  });
   await wait(4000);
   await evaluate(STAGE);
 
@@ -306,7 +354,8 @@ async function main() {
    * it is the one the film exists to show: a click on the picture becomes a
    * mark on the ground, and the link underneath changes with it.
    */
-  const clickMap = async (fraction, downFraction) => {
+  /** A pixel on the drawn map, given as a fraction of it. */
+  const mapPixel = async (fraction, downFraction) => {
     const box = await evaluate(`
       (() => {
         const svg = document.querySelector("#map svg");
@@ -314,8 +363,14 @@ async function main() {
         return { x: rect.left, y: rect.top, w: rect.width, h: rect.height };
       })()
     `);
-    const x = Math.round(box.x + box.w * fraction);
-    const y = Math.round(box.y + box.h * downFraction);
+    return {
+      x: Math.round(box.x + box.w * fraction),
+      y: Math.round(box.y + box.h * downFraction),
+    };
+  };
+
+  const clickMap = async (fraction, downFraction) => {
+    const { x, y } = await mapPixel(fraction, downFraction);
     await point({ x, y });
     await evaluate(`demo.press(true)`);
     for (const type of ["mousePressed", "mouseReleased"]) {
@@ -333,73 +388,113 @@ async function main() {
     await wait(1100);
   };
 
+  if (CUT === "social") {
+    // Set off camera, not faked: the gesture is the one setting the tool does
+    // not keep in the URL, so a film that opens ready to click has to reach in
+    // and choose it. Filming the choice would cost a third of the running time
+    // to show a dropdown changing.
+    await evaluate(`
+      (() => {
+        const control = demo.field("Clicking the map");
+        control.value = "pin";
+        control.dispatchEvent(new Event("change", { bubbles: true }));
+      })()
+    `);
+    await wait(400);
+  }
+
   await cdp.send("Page.startScreencast", {
     format: "jpeg",
     quality: 92,
     everyNthFrame: 1,
   });
 
-  await say("A region, a projection, a stylesheet.", 1400);
-  await setField("Region", "europe");
-  // Twenty-eight, counted off REGION_PRESET_NAMES rather than remembered.
-  // A caption is a claim, and this is the one a viewer could check in ten
-  // seconds by opening the dropdown the cursor is resting on.
-  await say("Twenty-eight regions, or your own list of countries.", 650);
+  if (CUT === "social") {
+    /*
+     * Five seconds, and one of them is the click.
+     *
+     * The map is already finished when the film starts, so nothing here is a
+     * tour: choose the gesture, click the map, look at the link. A feed loops
+     * this, which is the argument for ending on the link rather than on a
+     * caption — the second time round, the viewer reads the URL.
+     */
+    await evaluate(`demo.say("The style is a stylesheet.")`);
+    await setField("Palette", "patina");
+    await wait(400);
+    await evaluate(`demo.say("")`);
+    await clickMap(SOCIAL_PIN.across, SOCIAL_PIN.down);
+    // Get out of the way. The pointer is a prop, and leaving it parked on the
+    // mark it just made means the last frame — the one a paused loop shows —
+    // is a map with a fake cursor sitting on the only thing worth looking at.
+    // Down over the open sea: far from the pin, and not on a control, which
+    // would read as pointing at one.
+    await point(await mapPixel(0.16, 0.86));
+  } else {
+    await say("A region, a projection, a stylesheet.", 1400);
+    await setField("Region", "europe");
+    // Twenty-eight, counted off REGION_PRESET_NAMES rather than remembered.
+    // A caption is a claim, and this is the one a viewer could check in ten
+    // seconds by opening the dropdown the cursor is resting on.
+    await say("Twenty-eight regions, or your own list of countries.", 650);
 
-  await setField("Detail", "50m");
-  await say("Two levels of detail, both offline.", 900);
+    await setField("Detail", "50m");
+    await say("Two levels of detail, both offline.", 900);
 
-  await setCheck("Neighbours", true);
-  await say("Neighbours fill the margin with the land that is really there.", 1500);
+    await setCheck("Neighbours", true);
+    await say("Neighbours fill the margin with the land that is really there.", 1500);
 
-  await setField("Theme", "atlas");
-  await say("The style is a stylesheet, so it swaps.", 1400);
+    await setField("Theme", "atlas");
+    await say("The style is a stylesheet, so it swaps.", 1400);
 
-  await setField("Clicking the map", "pin");
-  await say("Now the map is something you click.", 900);
-  // Northern Italy, which is land in every projection this demo could pick and
-  // far enough from the frame that a pin cannot land in the sea.
-  await clickMap(0.54, 0.66);
-  await say("The mark is a longitude and a latitude, not a pixel.", 1600);
+    await setField("Clicking the map", "pin");
+    await say("Now the map is something you click.", 900);
+    // Northern Italy, which is land in every projection this demo could pick and
+    // far enough from the frame that a pin cannot land in the sea.
+    await clickMap(0.54, 0.66);
+    await say("The mark is a longitude and a latitude, not a pixel.", 1600);
 
-  // The proof, and the reason the viewport is 860 tall: the link updated, and
-  // it is on screen at the same time as the map it rebuilds.
-  await point(await evaluate(`demo.centre(document.querySelector("#share"))`));
-  await say("Everything is in the link. Send it, and it rebuilds exactly.", 1800);
+    // The proof, and the reason the viewport is 860 tall: the link updated, and
+    // it is on screen at the same time as the map it rebuilds.
+    await point(await evaluate(`demo.centre(document.querySelector("#share"))`));
+    await say("Everything is in the link. Send it, and it rebuilds exactly.", 1800);
 
-  await point(await evaluate(`demo.centre(document.querySelector("#map"))`));
-  await say("No account, no server, nothing sent anywhere.", 2000);
-  await say("", 700);
+    await point(await evaluate(`demo.centre(document.querySelector("#map"))`));
+    await say("No account, no server, nothing sent anywhere.", 2000);
+    await say("", 700);
+  }
 
   await cdp.send("Page.stopScreencast");
 
-  /* ---- the still, which matters more than the film ---- */
+  // The poster belongs to the long film; the social cut is a loop, not a card.
+  if (CUT === "full") {
+    /* ---- the still, which matters more than the film ---- */
 
-  /*
-   * The still is composed, not grabbed.
-   *
-   * The film ends with the form scrolled down to Marks, which is where the
-   * last gesture was — and a poster is the one frame most people will ever see
-   * of this tool, so it should open on the top of the form rather than on a
-   * pin-size slider. The pointer and the caption go; the pin and the link stay,
-   * because those are the two things the still has to say.
-   */
-  await evaluate(`
-    (() => {
-      document.getElementById("demo-cursor").remove();
-      document.getElementById("demo-caption").remove();
-      document.querySelector(".panel").scrollTo({ top: 0, behavior: "instant" });
-    })()
-  `);
-  await cdp.send("Emulation.setDeviceMetricsOverride", {
-    width: WIDTH,
-    height: HEIGHT,
-    deviceScaleFactor: 2,
-    mobile: false,
-  });
-  await wait(600);
-  const still = await cdp.send("Page.captureScreenshot", { format: "png" });
-  await writeFile(join(OUT, "poster.png"), Buffer.from(still.data, "base64"));
+    /*
+     * The still is composed, not grabbed.
+     *
+     * The film ends with the form scrolled down to Marks, which is where the
+     * last gesture was — and a poster is the one frame most people will ever see
+     * of this tool, so it should open on the top of the form rather than on a
+     * pin-size slider. The pointer and the caption go; the pin and the link stay,
+     * because those are the two things the still has to say.
+     */
+    await evaluate(`
+      (() => {
+        document.getElementById("demo-cursor").remove();
+        document.getElementById("demo-caption").remove();
+        document.querySelector(".panel").scrollTo({ top: 0, behavior: "instant" });
+      })()
+    `);
+    await cdp.send("Emulation.setDeviceMetricsOverride", {
+      width: WIDTH,
+      height: HEIGHT,
+      deviceScaleFactor: 2,
+      mobile: false,
+    });
+    await wait(600);
+    const still = await cdp.send("Page.captureScreenshot", { format: "png" });
+    await writeFile(join(OUT, "poster.png"), Buffer.from(still.data, "base64"));
+  }
 
   cdp.close();
   done();
@@ -416,7 +511,8 @@ async function main() {
     // between them are the timing of the demo. Handing ffmpeg those gaps is
     // what keeps the film at the speed it was performed at.
     const next = frames[index + 1];
-    const seconds = next === undefined ? 1.6 : Math.min((next.at - frame.at) / 1000, 2);
+    const tail = CUT === "social" ? 0.8 : 1.6;
+    const seconds = next === undefined ? tail : Math.min((next.at - frame.at) / 1000, 2);
     list.push(`file '${name}'`, `duration ${seconds.toFixed(3)}`);
   }
   // The concat demuxer ignores the last duration unless the file is named twice.
@@ -435,28 +531,44 @@ async function main() {
 
   const input = ["-f", "concat", "-safe", "0", "-i", join(FRAMES, "list.txt")];
 
-  // MP4 and WebM rather than a GIF, because a GIF of a map is enormous and
-  // dithered, which is a poor advertisement for a tool whose whole argument is
-  // that it emits vector. `yuv420p` and the even-dimension scale are what make
-  // the file play in Safari and in the places that embed rather than link.
-  await run([...input, "-vf", "fps=30,scale=trunc(iw/2)*2:trunc(ih/2)*2,format=yuv420p",
-    "-c:v", "libx264", "-preset", "slow", "-crf", "23", "-movflags", "+faststart",
-    join(OUT, "demo.mp4")]);
+  const made = [];
 
-  await run([...input, "-vf", "fps=30,scale=trunc(iw/2)*2:trunc(ih/2)*2",
-    "-c:v", "libvpx-vp9", "-crf", "34", "-b:v", "0", "-row-mt", "1",
-    join(OUT, "demo.webm")]);
+  if (CUT === "social") {
+    /*
+     * A GIF and nothing else, because the place this is going plays a GIF in
+     * the feed and makes a linked video a click. Fifteen frames a second
+     * rather than twelve: the whole film is five seconds, so the frames are
+     * cheap and the cursor's travel is the only motion there is.
+     */
+    await run([...input, "-vf",
+      "fps=15,scale=800:-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];[b][p]paletteuse=dither=bayer:bayer_scale=3",
+      join(OUT, "social.gif")]);
+    made.push("social.gif");
+  } else {
+    // MP4 and WebM rather than a GIF, because a GIF of a map is enormous and
+    // dithered, which is a poor advertisement for a tool whose whole argument is
+    // that it emits vector. `yuv420p` and the even-dimension scale are what make
+    // the file play in Safari and in the places that embed rather than link.
+    await run([...input, "-vf", "fps=30,scale=trunc(iw/2)*2:trunc(ih/2)*2,format=yuv420p",
+      "-c:v", "libx264", "-preset", "slow", "-crf", "23", "-movflags", "+faststart",
+      join(OUT, "demo.mp4")]);
 
-  // The one place a GIF is still the only thing that plays. Half size, twelve
-  // frames a second, and its own palette so the map's flat colours survive.
-  await run([...input, "-vf",
-    "fps=12,scale=720:-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];[b][p]paletteuse=dither=bayer:bayer_scale=3",
-    join(OUT, "demo.gif")]);
+    await run([...input, "-vf", "fps=30,scale=trunc(iw/2)*2:trunc(ih/2)*2",
+      "-c:v", "libvpx-vp9", "-crf", "34", "-b:v", "0", "-row-mt", "1",
+      join(OUT, "demo.webm")]);
+
+    // The one place a GIF is still the only thing that plays. Half size, twelve
+    // frames a second, and its own palette so the map's flat colours survive.
+    await run([...input, "-vf",
+      "fps=12,scale=720:-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];[b][p]paletteuse=dither=bayer:bayer_scale=3",
+      join(OUT, "demo.gif")]);
+    made.push("demo.mp4", "demo.webm", "demo.gif", "poster.png");
+  }
 
   await rm(FRAMES, { recursive: true, force: true });
 
   const { statSync } = await import("node:fs");
-  for (const name of ["demo.mp4", "demo.webm", "demo.gif", "poster.png"]) {
+  for (const name of made) {
     const kb = statSync(join(OUT, name)).size / 1024;
     console.log(`  ${OUT}/${name}  ${kb > 1024 ? `${(kb / 1024).toFixed(1)} MB` : `${kb.toFixed(0)} KB`}`);
   }
