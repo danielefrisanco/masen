@@ -122,6 +122,33 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
 .mp .mp-prism.is-highlighted .mp-prism-top { fill: var(--accent); }
 .mp .mp-prism.is-highlighted .mp-prism-side { fill: var(--accent-side); }
 
+/*
+ * A country smaller than the dot standing on it, given an outline it can be
+ * seen by.
+ *
+ * The library states the fact and this decides the appearance, which is the
+ * whole bargain: no geometry is invented, no shape is grown, and the polygon
+ * under this rule is exactly the one the data supplies. A stroke centred on a
+ * 0.2-unit outline reads as a dot of the stroke's own width, which is why it
+ * works at all — Vatican cannot be enlarged, but it can be drawn with a pen
+ * thick enough to see.
+ *
+ * The width is 3 rather than a multiple of the border, because calc() is ruled
+ * out above and because 3 is a measurement rather than a taste: it is the
+ * width of the smallest settlement dot this library draws, so a country that
+ * has disappeared comes back at exactly the size of the smallest mark already
+ * on the map, and no larger.
+ *
+ * The paint order keeps the fill above its own stroke, so a highlighted
+ * microstate still shows its accent colour rather than a ring of border ink.
+ */
+.mp .mp-country[data-unseen] {
+  stroke: var(--border);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+
 .mp .mp-hatch { fill: url(#mp-stripe); stroke: none; }
 .mp .mp-hatch-line { fill: none; stroke: var(--stripe); stroke-width: var(--stripe-width); }
 

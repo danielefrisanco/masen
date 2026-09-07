@@ -187,6 +187,23 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
   ],
 } as const;
 
+/**
+ * Every preset a caller may name, `"world"` first.
+ *
+ * **This list is one longer than `REGION_PRESETS` has entries, and always
+ * will be.** `"world"` is a preset with no code list — it means *every
+ * feature*, which is not the same as a list of all of them and cannot be
+ * written as one. So iterating these names and indexing `REGION_PRESETS` hands
+ * back `undefined` on the first one. TypeScript already refuses that index,
+ * because `REGION_PRESETS` is typed `Exclude<RegionPreset, "world">`; a
+ * JavaScript caller gets no such warning, and a throwaway script doing exactly
+ * this is how the asymmetry was found.
+ *
+ * **`expandPreset` is the accessor that is total over this list** — it answers
+ * `null` for `"world"`, which is the difference being reported rather than an
+ * absence of information. Use it rather than the record when walking these
+ * names.
+ */
 export const REGION_PRESET_NAMES = [
   "world",
   ...Object.keys(REGION_PRESETS),
@@ -196,7 +213,13 @@ export function isRegionPreset(value: string): value is RegionPreset {
   return value === "world" || value in REGION_PRESETS;
 }
 
-/** Expand a preset to the codes it stands for. `"world"` means every feature. */
+/**
+ * Expand a preset to the codes it stands for.
+ *
+ * Total over `REGION_PRESET_NAMES`, which the record behind it is not: `null`
+ * means *every feature* rather than none, and it is returned rather than left
+ * as an `undefined` for the caller to interpret.
+ */
 export function expandPreset(preset: RegionPreset): readonly string[] | null {
   if (preset === "world") return null;
   return REGION_PRESETS[preset];

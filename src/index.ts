@@ -167,6 +167,28 @@ const DEFAULT_PADDING = 24;
 const PLACE_RADIUS: Readonly<Record<1 | 2 | 3, number>> = { 1: 3.2, 2: 2.2, 3: 1.5 };
 
 /**
+ * Below this extent a country is drawn and cannot be read.
+ *
+ * **Measured, and deliberately not a round number.** `europe` at 50m on a
+ * 960x620 canvas was rendered and every microstate cropped at 1:1 and looked
+ * at: Vatican 0.2 x 0.1 user units, Monaco 0.8 x 0.7, San Marino 1.5 x 1.6,
+ * Liechtenstein 1.7 x 3.5, Andorra 4.3 x 3.6, Malta 5.4 x 4.6. Not one of them
+ * is distinguishable from the land around it. What every one of those crops
+ * *does* show is the capital's dot and the capital's name — so the map draws a
+ * circle on top of the country that is larger than the country.
+ *
+ * That is the threshold, and it comes from the document rather than from
+ * taste: **a rank-1 place dot is 6.4 user units across, and a country smaller
+ * than the dot standing on it cannot be seen underneath it.** It scales with
+ * the canvas the way the shapes do not — at 4000x2000 Malta reaches 18 x 16
+ * and passes, which is exactly the size at which looking at it shows an island.
+ *
+ * Extent rather than area: a country is unreadable when its *longest* side is
+ * short. Chile is thin and perfectly legible.
+ */
+const UNSEEN_EXTENT = PLACE_RADIUS[1] * 2;
+
+/**
  * Points along a geometry, for testing whether it touches a country.
  *
  * A bounding box is not enough: France's box spans Guadeloupe to Réunion
@@ -513,9 +535,10 @@ export async function masen(options: MapOptions): Promise<MapResult> {
    * would have to keep in step with the data.
    */
   const drawnIds = resolved.features.map((feature) => feature.id);
-  const missing = omissionsOf(resolved.requested, drawnIds);
   function omissions(): Omissions {
-    return missing;
+    // `unseen` is filled as the land layer is built, which happens below this
+    // point, so the report is composed on demand rather than captured here.
+    return omissionsOf(resolved.requested, drawnIds, unseen);
   }
 
   function projectPoint(position: Position): Point | null {
@@ -657,14 +680,51 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   // the layer rather than only over the ones drawn after it.
   const hatched: SvgNode[] = [];
   const highlightedNames: string[] = [];
+  /** Drawn, and too small to be read. Reported by `omissions()`. */
+  const unseen: string[] = [];
+
+  /**
+   * Country paths with the size they came out, so the small ones can be drawn
+   * last.
+   *
+   * **An enclosed microstate was being painted over by the country around it.**
+   * The features arrive in the data's own order, which is not a drawing order:
+   * on `europe` at 50m the Vatican is path 0 and Italy is path 25, so Italy's
+   * fill goes straight over it, and San Marino, Monaco and Liechtenstein are
+   * the same story. Giving them a heavy outline did nothing, because the
+   * outline was underneath. Malta showed up immediately — it is an island, and
+   * nothing is drawn on top of it.
+   *
+   * So the land layer paints largest first. That is what a cartographer does
+   * by hand and it is the only order in which an enclave can be seen at all.
+   */
+  const shapes: { readonly extent: number; readonly node: SvgNode }[] = [];
+
   for (const country of frame.countries) {
     const d = path(country.geometry as never);
     if (!d) continue;
+    /**
+     * How big this country actually comes out, on this canvas, under this
+     * projection. The same `path.bounds` measurement the neighbour layer uses
+     * to decide what is in view, asked a different question.
+     *
+     * Non-finite for a country clipped away entirely — the far side of a globe
+     * — which is not the same as being too small, and is left alone here.
+     */
+    const [[left, top], [right, bottom]] = path.bounds(country.geometry as never);
+    const extent = Math.max(right - left, bottom - top);
+    const tooSmall = Number.isFinite(extent) && extent < UNSEEN_EXTENT;
+    if (tooSmall && country.id !== "") unseen.push(country.id);
     const isHighlighted = country.id !== "" && highlighted.has(country.id);
     const name = nameOf(country.id, country.name);
     if (isHighlighted && name) highlightedNames.push(name);
     const banded = bins?.get(country.id);
-    land.push(
+    shapes.push({
+      // A country whose bounds are not finite is one the projection clipped;
+      // it sorts to the bottom rather than the top, because "unknown size" is
+      // not a reason to paint it over everything else.
+      extent: Number.isFinite(extent) ? extent : Number.POSITIVE_INFINITY,
+      node:
       el(
         "path",
         {
@@ -675,6 +735,11 @@ export async function masen(options: MapOptions): Promise<MapResult> {
           "data-value": banded?.value,
           "data-fill": fillOf(country.id),
           "data-stripe": striped.has(country.id) ? "" : undefined,
+          // A fact, not an appearance: the library says the shape came out
+          // smaller than the dot standing on it, and the theme decides what to
+          // do about it. Nothing is moved, grown or invented — the polygon is
+          // exactly the one Natural Earth supplies.
+          "data-unseen": tooSmall ? "" : undefined,
           d,
         },
         // A per-feature title is a hover tooltip, not an accessibility tree:
@@ -682,11 +747,16 @@ export async function masen(options: MapOptions): Promise<MapResult> {
         // label once instead of announcing two hundred paths.
         name === "" ? [] : [el("title", {}, [text(name)])],
       ),
-    );
+    });
     if (striped.has(country.id)) {
       hatched.push(el("path", { class: "mp-hatch", "data-iso": country.id, d }));
     }
   }
+
+  // Largest first, so an enclave lands on top of whatever encloses it. Sorted
+  // rather than reversed: the data's order is arbitrary, not backwards.
+  shapes.sort((a, b) => b.extent - a.extent);
+  for (const shape of shapes) land.push(shape.node);
 
   /**
    * Disputed and breakaway areas, hatched over the countries rather than

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-06m4hly" role="img" aria-label="Southeast Asia">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-12kzji9" role="img" aria-label="Southeast Asia">
   <title>Southeast Asia</title>
   <style>
-    .mp.mp-t-06m4hly {
+    .mp.mp-t-12kzji9 {
       --bg: #A8C0CC;
       --sea: #A8C0CC;
       --land: #F2EAD8;
@@ -55,92 +55,92 @@
       --pin-size: 7;
       --furniture-ink: #7A7263;
     }
-    .mp.mp-t-06m4hly .mp-bg {
+    .mp.mp-t-12kzji9 .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-06m4hly .mp-sea {
+    .mp.mp-t-12kzji9 .mp-sea {
       fill: var(--sea);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-grid {
+    .mp.mp-t-12kzji9 .mp-grid {
       fill: none;
       stroke: var(--graticule);
       stroke-width: var(--graticule-width);
     }
-    .mp.mp-t-06m4hly .mp-grid[data-kind="equator"], .mp.mp-t-06m4hly .mp-grid[data-kind="tropic"] {
+    .mp.mp-t-12kzji9 .mp-grid[data-kind="equator"], .mp.mp-t-12kzji9 .mp-grid[data-kind="tropic"] {
       stroke: var(--equator);
     }
-    .mp.mp-t-06m4hly .mp-neighbour {
+    .mp.mp-t-12kzji9 .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-country {
+    .mp.mp-t-12kzji9 .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="1"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="2"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="3"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="4"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="5"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="1"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="2"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="3"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="4"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="5"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="6"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-06m4hly .mp-country.is-highlighted {
+    .mp.mp-t-12kzji9 .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-06m4hly .mp-cover {
+    .mp.mp-t-12kzji9 .mp-cover {
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-cover[data-kind="desert"] {
+    .mp.mp-t-12kzji9 .mp-cover[data-kind="desert"] {
       fill: var(--desert);
     }
-    .mp.mp-t-06m4hly .mp-cover[data-kind="mountain"] {
+    .mp.mp-t-12kzji9 .mp-cover[data-kind="mountain"] {
       fill: var(--mountain);
     }
-    .mp.mp-t-06m4hly .mp-cover[data-kind="glacier"] {
+    .mp.mp-t-12kzji9 .mp-cover[data-kind="glacier"] {
       fill: var(--glacier);
     }
-    .mp.mp-t-06m4hly .mp-water[data-kind="lake"] {
+    .mp.mp-t-12kzji9 .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-water[data-kind="river"] {
+    .mp.mp-t-12kzji9 .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-06m4hly .mp-border {
+    .mp.mp-t-12kzji9 .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -148,78 +148,84 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-06m4hly .mp-road {
+    .mp.mp-t-12kzji9 .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-06m4hly .mp-place {
+    .mp.mp-t-12kzji9 .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-06m4hly .mp-prism-side {
+    .mp.mp-t-12kzji9 .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-prism-edge {
+    .mp.mp-t-12kzji9 .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-06m4hly .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-06m4hly .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-12kzji9 .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-06m4hly .mp-hatch {
-      fill: url(#mp-stripe-1galg56);
+    .mp.mp-t-12kzji9 .mp-country[data-unseen] {
+      stroke: var(--border);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-12kzji9 .mp-hatch {
+      fill: url(#mp-stripe-0gbmtal);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-hatch-line {
+    .mp.mp-t-12kzji9 .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-06m4hly .mp-label {
+    .mp.mp-t-12kzji9 .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
@@ -230,102 +236,102 @@
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="place"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="grid"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="grid"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
       letter-spacing: 0.04em;
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="sea"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="sea"] {
       fill: var(--sea-ink);
       font-size: var(--place-label-size);
       font-style: italic;
       letter-spacing: 0.08em;
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-route-line {
+    .mp.mp-t-12kzji9 .mp-route-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-06m4hly .mp-route-stop {
+    .mp.mp-t-12kzji9 .mp-route-stop {
       fill: var(--label-halo);
       stroke: var(--anno);
       stroke-width: 2.2;
     }
-    .mp.mp-t-06m4hly .mp-route-stop[data-kind="minor"] {
+    .mp.mp-t-12kzji9 .mp-route-stop[data-kind="minor"] {
       stroke-width: 1.6;
     }
-    .mp.mp-t-06m4hly .mp-label.is-highlighted {
+    .mp.mp-t-12kzji9 .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-06m4hly .mp-label[data-fit="0"] {
+    .mp.mp-t-12kzji9 .mp-label[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-06m4hly .mp-pin-mark {
+    .mp.mp-t-12kzji9 .mp-pin-mark {
       fill: var(--anno);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
     }
-    .mp.mp-t-06m4hly .mp-icon {
+    .mp.mp-t-12kzji9 .mp-icon {
       fill: var(--anno-ink);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="pin"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="pin"] {
       font-size: var(--place-label-size);
       font-weight: 700;
     }
-    .mp.mp-t-06m4hly .mp-arrow-line {
+    .mp.mp-t-12kzji9 .mp-arrow-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2;
       stroke-linecap: round;
-      marker-end: url(#mp-arrowhead-1galg56);
+      marker-end: url(#mp-arrowhead-0gbmtal);
     }
-    .mp.mp-t-06m4hly .mp-arrow-head {
+    .mp.mp-t-12kzji9 .mp-arrow-head {
       fill: var(--anno);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-callout-leader {
+    .mp.mp-t-12kzji9 .mp-callout-leader {
       fill: none;
       stroke: var(--anno);
       stroke-width: 1.25;
       stroke-linecap: round;
     }
-    .mp.mp-t-06m4hly .mp-callout-box {
+    .mp.mp-t-12kzji9 .mp-callout-box {
       fill: var(--anno);
       stroke: var(--anno-ink);
       stroke-width: 1;
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="callout"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="callout"] {
       fill: var(--anno-ink);
       font-size: var(--place-label-size);
       font-weight: 500;
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-anno[data-fit="0"] {
+    .mp.mp-t-12kzji9 .mp-anno[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-06m4hly .mp-credit, .mp.mp-t-06m4hly .mp-scale-label, .mp.mp-t-06m4hly .mp-compass-label {
+    .mp.mp-t-12kzji9 .mp-credit, .mp.mp-t-12kzji9 .mp-scale-label, .mp.mp-t-12kzji9 .mp-compass-label {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-size: var(--place-label-size);
       letter-spacing: var(--label-track);
     }
-    .mp.mp-t-06m4hly .mp-scale-bar {
+    .mp.mp-t-12kzji9 .mp-scale-bar {
       fill: none;
       stroke: var(--furniture-ink);
       stroke-width: 1.5;
     }
-    .mp.mp-t-06m4hly .mp-compass-needle {
+    .mp.mp-t-12kzji9 .mp-compass-needle {
       fill: var(--furniture-ink);
     }
-    .mp.mp-t-06m4hly .mp-watermark {
+    .mp.mp-t-12kzji9 .mp-watermark {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-weight: 600;
@@ -333,7 +339,7 @@
       opacity: 0.18;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-06m4hly {
+      .mp.mp-t-12kzji9 {
         --bg: #101D26;
         --sea: #101D26;
         --land: #2C2A24;
@@ -372,13 +378,13 @@
     }
   </style>
   <defs class="mp-defs">
-    <clipPath id="mp-land-clip-1galg56">
+    <clipPath id="mp-land-clip-0gbmtal">
       <path d="M854.4,543.6L854,599.3L853.1,654.9L842.2,640.9L829.4,637.5L826.2,642.3L810.1,642.9L815.8,629L823.8,624.2L820.8,605.7L814.9,591.3L790.5,576.9L780,575.4L761.1,559.6L757.3,567.9L752.4,569.4L749.5,563.2L749.5,555.7L739.9,547.3L753.6,541.1L762.6,541.5L761.6,536.9L743,536.9L738,526.7L726.6,523.6L721.3,515.1L738.4,510.9L744.9,505.3L765.3,512.4L767.3,518.7L770.8,546.4L783.9,556.7L794.6,538.5L809.3,528.2L820.6,528.2L831.4,534.1L840.8,540.3ZM650.1,651L651.3,654.4L651.5,659.6L643.2,672.3L632.3,676L630.9,674L632,668.2L637.5,657.8ZM767.5,617L766.4,604.1L768.7,598L771.4,592.2L774.2,597.2L774.1,605.4ZM560.5,428.1L553.3,443.6L562.6,459.8L560.5,467.7L574.7,483.5L559.7,485.6L555.4,497.2L556,512.8L543.7,524.5L543.4,541.6L538.5,567.7L536.7,561.6L522.2,569.3L517.2,558.9L508.1,557.9L501.7,552.4L486.7,558.6L482,550.3L473.7,551.2L463.2,549.3L461.2,526.3L454.9,521.5L448.7,506.9L447,491.9L448.5,476L456,464.6L458.2,476.1L466.9,485.8L475.1,482.3L483.2,483.5L490.6,474.8L496.7,473.3L508.7,478.1L519.1,474.5L525.6,450.7L530.5,444.7L534.9,425.2L549.5,425.2ZM706.6,547L720.5,552L725.1,565.1L714.4,558L703.8,556.6L696.6,557.7L687.9,557.1L690.9,547.7ZM674.8,563.9L666,560.8L663.6,553.4L676.4,552.6L679.6,558.2ZM688.3,461.8L689.3,471.1L696.8,472.6L698,479.6L697.3,494.6L690.8,492.9L688.8,503.3L694.1,512.4L690.5,514.4L685.4,503.6L681.6,481.7L684.1,468ZM624.7,484L639.3,483.3L651.9,470.8L654.1,474.7L643.9,491.7L634.4,495L622.1,491.6L600.9,492.5L589.8,494.9L588,507.9L599.4,523.1L606.2,515.4L630,509.5L628.9,517.4L623.4,514.9L617.9,525L606.6,531.6L618.6,553.6L616.3,559.5L627.7,579.2L627.5,590.4L620.8,595.5L615.8,589.5L622,575.5L609.5,582.1L606.3,577.3L608,570.7L598.9,560.7L599.9,544L591.3,549.2L592.4,569.2L592.9,593.7L584.8,596.1L579.4,591.1L583,575.4L581.1,558.9L575.7,558.7L571.8,547L577.1,535.8L578.9,522.2L585.3,496.3L587.9,489.3L598.8,476.6L608.7,481.6ZM590.9,674.3L574.2,662.4L586,659L592.6,664.2L597,669.4L596.2,674ZM604.2,645L612.7,643.7L624,637.5L622.1,646.9L603.1,651.8L586.3,649.7L586.3,643.4L596.3,639.9ZM565.3,642L573.1,640.6L576.2,647.9L561.6,651.3L552.8,653.6L546,653.4L550.4,643.6L557.3,643.5L560.7,637.5ZM441.4,608.9L443.1,615L467.5,616.7L470.2,609.7L493.7,617.9L498.4,628.9L517.4,632L533,642.2L518.5,648.6L504.6,641.8L493.1,642.2L480,641L468.2,637.9L453.4,631.4L444.1,629.7L438.9,631.9L415.7,624.8L413.5,617.5L401.8,616.2L410.4,599.9L425.8,600.9L436.1,607.6ZM388.7,517.6L390.9,529.5L395.4,539.1L404.7,540.6L410.9,551.4L407.8,572.7L407.5,599.2L393.4,599.5L382.6,585.2L366.2,571.3L360.7,560.9L351,547L344.7,534.1L334.9,510.2L323.7,495.9L320,481.1L315.4,467.8L304,457L297.4,442.3L287.9,432.7L274.9,413.9L273.9,405.2L282,405.9L301.6,409.2L312.7,425.9L322.4,437.5L329.4,444.6L341.3,463L354.3,463.3L364.9,475L372.3,489.4L381.9,497.2L376.9,511.2L384.1,517.1ZM650.1,651L651.6,647L662.5,643.2L671.3,642.6L675.3,640.5L680.1,642.6L675.4,647.2L662.2,654.7L651.5,659.6L651.3,654.4ZM367.9,291L365.3,270.6L373.7,256.5L389.9,253.3L401.7,255.7L411.9,262.4L417.8,250.8L428.8,256.9L431.5,268.2L429.7,288.5L408.4,301.5L413.8,311.8L400.5,313L389.5,319.8L379,317.3L374,308.5ZM401.7,255.7L389.9,253.3L373.7,256.5L365.3,270.6L367.9,291L356.8,283.2L346,283.6L348.2,270.3L337.1,270.4L335.7,289L328.4,313.7L324,328.7L324.6,341.1L332.8,341.6L337.7,357.1L339.8,371.9L346.8,381.6L354.4,383.6L360.9,392.5L356.7,399.5L348.3,401.6L347.4,392.8L337.1,385.3L334.9,388.4L329.9,381.8L327.9,373.4L321.3,363.7L315.3,355.6L313,365.7L310.8,356.2L312.3,345.5L316.4,329.3L322.9,311.8L330.1,296L325.6,280.5L325.9,272.7L324.7,263.3L316.8,249.9L314,241.4L318.5,238.3L323.4,223.7L318.7,212.7L311.2,200.5L305.8,185.8L311.1,182.8L317.5,164.8L326.2,164.1L333.7,156.9L340.9,153L346.1,158.1L346.4,168.1L354.8,168.9L351.2,186.4L351,201.4L364.4,191.4L368,194.4L375.3,193.9L378,188.1L387.3,189.2L396.4,202.8L396.9,219.3L406.7,233.9L405.9,248.2ZM428.8,256.9L417.8,250.8L411.9,262.4L401.7,255.7L405.9,248.2L406.7,233.9L396.9,219.3L396.4,202.8L387.3,189.2L378,188.1L375.3,193.9L368,194.4L364.4,191.4L351,201.4L351.2,186.4L354.8,168.9L346.4,168.1L346.1,158.1L340.9,153L343.8,146.9L354.7,136.2L355.6,140.1L362.2,140.5L361,121.7L367.5,119.3L374.2,132.3L379.2,147.3L394.4,147.4L398.8,161.9L390.8,166.2L387,172.2L401.6,182.1L411.5,201.8L419.1,216.6L428.3,228.2L431.3,240.1ZM340.9,153L333.7,156.9L326.2,164.1L317.5,164.8L311.1,182.8L305.8,185.8L311.2,200.5L318.7,212.7L323.4,223.7L318.5,238.3L314,241.4L316.8,249.9L324.7,263.3L325.9,272.7L325.6,280.5L330.1,296L322.9,311.8L316.4,329.3L315.4,316.6L319.6,303.6L315.6,293.6L317.1,275.2L312.2,266.4L308.7,246.3L307.1,225L302.2,211.1L293.7,219.6L279.1,231.5L272.1,230L264.6,226.1L269.7,205.3L267.8,189.7L259,170.5L260.8,164.5L253.6,162.4L245.6,148.9L245.6,135.6L249.7,138.1L250.7,126.2L256.9,122.3L256,115.4L259.1,109.8L260.7,92.8L269.9,96.6L276.2,83.1L277.3,75.2L284.8,61.6L285.1,52.3L301.3,41.2L309.8,44.1L309.4,34.2L313.8,31.3L313.3,25.2L320.3,24L323.8,33.4L328.8,37.3L328.5,49.6L327.3,62.9L315.1,76.5L312.7,95.8L325.7,93.1L327.9,108.1L335.5,111.3L331.3,125L340.1,131.2L345.4,134.2L354.5,129.4L354.7,136.2L343.8,146.9ZM389.5,319.8L400.5,313L413.8,311.8L408.4,301.5L429.7,288.5L431.5,268.2L428.8,256.9L431.3,240.1L428.3,228.2L419.1,216.6L411.5,201.8L401.6,182.1L387,172.2L390.8,166.2L398.8,161.9L394.4,147.4L379.2,147.3L374.2,132.3L367.5,119.3L374.2,115.3L383.9,115.3L395.9,113.5L406.6,104.7L412.3,110.9L423.4,113.9L421.2,123.3L426.9,130L439.2,134.3L422.4,148.4L411.8,164.1L408.8,175.6L417.9,193.2L429.1,215L440.3,225.4L447.7,238.9L453.1,270.1L451.1,299.8L440.5,311L425.9,321.9L415.4,336.1L399.5,351.9L395,341L398.7,329.5ZM597.5,282.2L591,269.4L601.7,270L606.2,276.1L602.9,290.7ZM619.8,328.4L623,323.7L624.3,313.1L631.2,312.1L629.3,323.6L638.5,307.2L637.4,323.4L632.9,329L629.1,339.7L625.1,344.7L617.3,333ZM668,355.1L669.3,366.4L670.1,376L666,391.6L661.2,374.2L655.3,382.9L659.5,395.4L655.9,403.4L640.9,393.5L637.3,381.2L641.1,373.1L633,365L629.1,372.1L623.1,371.4L613.8,380.9L611.7,375.9L616.6,361.6L624.5,356.8L631.4,350.3L635.9,358.1L645.5,353.4L647.5,345.8L656.4,345.3L655.6,332.2L665.9,340.2L667,348.8ZM568.3,339.7L551.5,355.9L557.7,344L566.8,333.5L574.4,321.7L580.9,304.9L583.2,318.7L574.9,328ZM615.5,189.5L613.5,196.4L617.9,208.4L614.8,222.3L607.5,227.9L605.6,241.4L608.5,254.8L615.2,256.7L620.7,254.7L636.5,264.1L635.3,273.2L639.5,277.3L638.3,285.1L628.4,276.8L623.7,267.9L620.5,274.1L612.4,264L601,266.5L594.8,262.8L595.4,255.8L599.3,251.5L595.5,247.6L593.9,253.7L587.7,244L585.8,236.7L585.2,220.6L590.3,226.1L591.4,199.9L595.3,184.8L602.9,184.8L610.5,189.6L614.3,185.3ZM612.8,304.1L610.8,296L618.3,301.2L626.4,301.2L626.2,308.3L620.4,315.5L612.4,320.6L611.9,312.7ZM656.3,291.4L660,310.3L650.3,305.8L650.6,311.5L653.7,322L647.8,325.8L647.2,313.9L643.3,313L641.3,302.7L648.7,304.1L648.5,297.7L640.7,284.7L652.7,285.1ZM334.9,388.4L337.1,385.3L347.4,392.8L348.3,401.6L356.7,399.5L360.9,392.5L363.8,394.1L371.2,404.4L376.4,415.9L377.1,427.4L375.7,435.2L376.9,441.1L377.8,451.2L382.2,455.9L387.2,471.1L386.9,476.8L377.9,478L365.9,465.3L350.9,451.7L349.5,443L342.2,431.5L340.6,417.4L336.1,408L337.6,395.6ZM560.5,428.1L549.5,425.2L534.9,425.2L530.5,444.7L525.6,450.7L519.1,474.5L508.7,478.1L496.7,473.3L490.6,474.8L483.2,483.5L475.1,482.3L466.9,485.8L458.2,476.1L456,464.6L465.4,470.5L475.2,467.3L477.8,452.8L483.2,449.6L498.4,445.8L507.6,432.3L513.8,421.5L519.6,430.4L522.3,424.5L528.3,425.1L529.1,414.2L529.7,405.7L539.5,393.8L545.8,380.5L551,380.4L557.5,389.1L558.1,396.5L566.4,401.3L577,406.4L576.1,413.1L567.6,414L569.9,422.3ZM529.7,405.7L529.1,414.2L528.3,425.1L522.3,424.5L519.6,430.4L513.8,421.5L518.9,415.1Z"/>
     </clipPath>
-    <pattern id="mp-stripe-1galg56" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <pattern id="mp-stripe-0gbmtal" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6E6152" stroke-width="1.8"/>
     </pattern>
-    <marker id="mp-arrowhead-1galg56" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <marker id="mp-arrowhead-0gbmtal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path class="mp-arrow-head" d="M0,0 L10,5 L0,10 Z" fill="#5E2230" stroke="none"/>
     </marker>
   </defs>
@@ -390,40 +396,40 @@
     <path class="mp-country" data-iso="ID" data-name="Indonesia" d="M854.4,543.6L854,599.3L853.1,654.9L842.2,640.9L829.4,637.5L826.2,642.3L810.1,642.9L815.8,629L823.8,624.2L820.8,605.7L814.9,591.3L790.5,576.9L780,575.4L761.1,559.6L757.3,567.9L752.4,569.4L749.5,563.2L749.5,555.7L739.9,547.3L753.6,541.1L762.6,541.5L761.6,536.9L743,536.9L738,526.7L726.6,523.6L721.3,515.1L738.4,510.9L744.9,505.3L765.3,512.4L767.3,518.7L770.8,546.4L783.9,556.7L794.6,538.5L809.3,528.2L820.6,528.2L831.4,534.1L840.8,540.3ZM650.1,651L651.3,654.4L651.5,659.6L643.2,672.3L632.3,676L630.9,674L632,668.2L637.5,657.8ZM767.5,617L766.4,604.1L768.7,598L771.4,592.2L774.2,597.2L774.1,605.4ZM560.5,428.1L553.3,443.6L562.6,459.8L560.5,467.7L574.7,483.5L559.7,485.6L555.4,497.2L556,512.8L543.7,524.5L543.4,541.6L538.5,567.7L536.7,561.6L522.2,569.3L517.2,558.9L508.1,557.9L501.7,552.4L486.7,558.6L482,550.3L473.7,551.2L463.2,549.3L461.2,526.3L454.9,521.5L448.7,506.9L447,491.9L448.5,476L456,464.6L458.2,476.1L466.9,485.8L475.1,482.3L483.2,483.5L490.6,474.8L496.7,473.3L508.7,478.1L519.1,474.5L525.6,450.7L530.5,444.7L534.9,425.2L549.5,425.2ZM706.6,547L720.5,552L725.1,565.1L714.4,558L703.8,556.6L696.6,557.7L687.9,557.1L690.9,547.7ZM674.8,563.9L666,560.8L663.6,553.4L676.4,552.6L679.6,558.2ZM688.3,461.8L689.3,471.1L696.8,472.6L698,479.6L697.3,494.6L690.8,492.9L688.8,503.3L694.1,512.4L690.5,514.4L685.4,503.6L681.6,481.7L684.1,468ZM624.7,484L639.3,483.3L651.9,470.8L654.1,474.7L643.9,491.7L634.4,495L622.1,491.6L600.9,492.5L589.8,494.9L588,507.9L599.4,523.1L606.2,515.4L630,509.5L628.9,517.4L623.4,514.9L617.9,525L606.6,531.6L618.6,553.6L616.3,559.5L627.7,579.2L627.5,590.4L620.8,595.5L615.8,589.5L622,575.5L609.5,582.1L606.3,577.3L608,570.7L598.9,560.7L599.9,544L591.3,549.2L592.4,569.2L592.9,593.7L584.8,596.1L579.4,591.1L583,575.4L581.1,558.9L575.7,558.7L571.8,547L577.1,535.8L578.9,522.2L585.3,496.3L587.9,489.3L598.8,476.6L608.7,481.6ZM590.9,674.3L574.2,662.4L586,659L592.6,664.2L597,669.4L596.2,674ZM604.2,645L612.7,643.7L624,637.5L622.1,646.9L603.1,651.8L586.3,649.7L586.3,643.4L596.3,639.9ZM565.3,642L573.1,640.6L576.2,647.9L561.6,651.3L552.8,653.6L546,653.4L550.4,643.6L557.3,643.5L560.7,637.5ZM441.4,608.9L443.1,615L467.5,616.7L470.2,609.7L493.7,617.9L498.4,628.9L517.4,632L533,642.2L518.5,648.6L504.6,641.8L493.1,642.2L480,641L468.2,637.9L453.4,631.4L444.1,629.7L438.9,631.9L415.7,624.8L413.5,617.5L401.8,616.2L410.4,599.9L425.8,600.9L436.1,607.6ZM388.7,517.6L390.9,529.5L395.4,539.1L404.7,540.6L410.9,551.4L407.8,572.7L407.5,599.2L393.4,599.5L382.6,585.2L366.2,571.3L360.7,560.9L351,547L344.7,534.1L334.9,510.2L323.7,495.9L320,481.1L315.4,467.8L304,457L297.4,442.3L287.9,432.7L274.9,413.9L273.9,405.2L282,405.9L301.6,409.2L312.7,425.9L322.4,437.5L329.4,444.6L341.3,463L354.3,463.3L364.9,475L372.3,489.4L381.9,497.2L376.9,511.2L384.1,517.1Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Indonesia</title>
     </path>
-    <path class="mp-country" data-iso="TL" data-name="Timor-Leste" d="M650.1,651L651.6,647L662.5,643.2L671.3,642.6L675.3,640.5L680.1,642.6L675.4,647.2L662.2,654.7L651.5,659.6L651.3,654.4Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Timor-Leste</title>
-    </path>
-    <path class="mp-country" data-iso="KH" data-name="Cambodia" d="M367.9,291L365.3,270.6L373.7,256.5L389.9,253.3L401.7,255.7L411.9,262.4L417.8,250.8L428.8,256.9L431.5,268.2L429.7,288.5L408.4,301.5L413.8,311.8L400.5,313L389.5,319.8L379,317.3L374,308.5Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Cambodia</title>
+    <path class="mp-country" data-iso="MM" data-name="Myanmar" d="M340.9,153L333.7,156.9L326.2,164.1L317.5,164.8L311.1,182.8L305.8,185.8L311.2,200.5L318.7,212.7L323.4,223.7L318.5,238.3L314,241.4L316.8,249.9L324.7,263.3L325.9,272.7L325.6,280.5L330.1,296L322.9,311.8L316.4,329.3L315.4,316.6L319.6,303.6L315.6,293.6L317.1,275.2L312.2,266.4L308.7,246.3L307.1,225L302.2,211.1L293.7,219.6L279.1,231.5L272.1,230L264.6,226.1L269.7,205.3L267.8,189.7L259,170.5L260.8,164.5L253.6,162.4L245.6,148.9L245.6,135.6L249.7,138.1L250.7,126.2L256.9,122.3L256,115.4L259.1,109.8L260.7,92.8L269.9,96.6L276.2,83.1L277.3,75.2L284.8,61.6L285.1,52.3L301.3,41.2L309.8,44.1L309.4,34.2L313.8,31.3L313.3,25.2L320.3,24L323.8,33.4L328.8,37.3L328.5,49.6L327.3,62.9L315.1,76.5L312.7,95.8L325.7,93.1L327.9,108.1L335.5,111.3L331.3,125L340.1,131.2L345.4,134.2L354.5,129.4L354.7,136.2L343.8,146.9Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Myanmar</title>
     </path>
     <path class="mp-country" data-iso="TH" data-name="Thailand" d="M401.7,255.7L389.9,253.3L373.7,256.5L365.3,270.6L367.9,291L356.8,283.2L346,283.6L348.2,270.3L337.1,270.4L335.7,289L328.4,313.7L324,328.7L324.6,341.1L332.8,341.6L337.7,357.1L339.8,371.9L346.8,381.6L354.4,383.6L360.9,392.5L356.7,399.5L348.3,401.6L347.4,392.8L337.1,385.3L334.9,388.4L329.9,381.8L327.9,373.4L321.3,363.7L315.3,355.6L313,365.7L310.8,356.2L312.3,345.5L316.4,329.3L322.9,311.8L330.1,296L325.6,280.5L325.9,272.7L324.7,263.3L316.8,249.9L314,241.4L318.5,238.3L323.4,223.7L318.7,212.7L311.2,200.5L305.8,185.8L311.1,182.8L317.5,164.8L326.2,164.1L333.7,156.9L340.9,153L346.1,158.1L346.4,168.1L354.8,168.9L351.2,186.4L351,201.4L364.4,191.4L368,194.4L375.3,193.9L378,188.1L387.3,189.2L396.4,202.8L396.9,219.3L406.7,233.9L405.9,248.2Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Thailand</title>
     </path>
-    <path class="mp-country" data-iso="LA" data-name="Laos" d="M428.8,256.9L417.8,250.8L411.9,262.4L401.7,255.7L405.9,248.2L406.7,233.9L396.9,219.3L396.4,202.8L387.3,189.2L378,188.1L375.3,193.9L368,194.4L364.4,191.4L351,201.4L351.2,186.4L354.8,168.9L346.4,168.1L346.1,158.1L340.9,153L343.8,146.9L354.7,136.2L355.6,140.1L362.2,140.5L361,121.7L367.5,119.3L374.2,132.3L379.2,147.3L394.4,147.4L398.8,161.9L390.8,166.2L387,172.2L401.6,182.1L411.5,201.8L419.1,216.6L428.3,228.2L431.3,240.1Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Laos</title>
-    </path>
-    <path class="mp-country" data-iso="MM" data-name="Myanmar" d="M340.9,153L333.7,156.9L326.2,164.1L317.5,164.8L311.1,182.8L305.8,185.8L311.2,200.5L318.7,212.7L323.4,223.7L318.5,238.3L314,241.4L316.8,249.9L324.7,263.3L325.9,272.7L325.6,280.5L330.1,296L322.9,311.8L316.4,329.3L315.4,316.6L319.6,303.6L315.6,293.6L317.1,275.2L312.2,266.4L308.7,246.3L307.1,225L302.2,211.1L293.7,219.6L279.1,231.5L272.1,230L264.6,226.1L269.7,205.3L267.8,189.7L259,170.5L260.8,164.5L253.6,162.4L245.6,148.9L245.6,135.6L249.7,138.1L250.7,126.2L256.9,122.3L256,115.4L259.1,109.8L260.7,92.8L269.9,96.6L276.2,83.1L277.3,75.2L284.8,61.6L285.1,52.3L301.3,41.2L309.8,44.1L309.4,34.2L313.8,31.3L313.3,25.2L320.3,24L323.8,33.4L328.8,37.3L328.5,49.6L327.3,62.9L315.1,76.5L312.7,95.8L325.7,93.1L327.9,108.1L335.5,111.3L331.3,125L340.1,131.2L345.4,134.2L354.5,129.4L354.7,136.2L343.8,146.9Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Myanmar</title>
-    </path>
     <path class="mp-country" data-iso="VN" data-name="Vietnam" d="M389.5,319.8L400.5,313L413.8,311.8L408.4,301.5L429.7,288.5L431.5,268.2L428.8,256.9L431.3,240.1L428.3,228.2L419.1,216.6L411.5,201.8L401.6,182.1L387,172.2L390.8,166.2L398.8,161.9L394.4,147.4L379.2,147.3L374.2,132.3L367.5,119.3L374.2,115.3L383.9,115.3L395.9,113.5L406.6,104.7L412.3,110.9L423.4,113.9L421.2,123.3L426.9,130L439.2,134.3L422.4,148.4L411.8,164.1L408.8,175.6L417.9,193.2L429.1,215L440.3,225.4L447.7,238.9L453.1,270.1L451.1,299.8L440.5,311L425.9,321.9L415.4,336.1L399.5,351.9L395,341L398.7,329.5Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Vietnam</title>
+    </path>
+    <path class="mp-country" data-iso="MY" data-name="Malaysia" d="M334.9,388.4L337.1,385.3L347.4,392.8L348.3,401.6L356.7,399.5L360.9,392.5L363.8,394.1L371.2,404.4L376.4,415.9L377.1,427.4L375.7,435.2L376.9,441.1L377.8,451.2L382.2,455.9L387.2,471.1L386.9,476.8L377.9,478L365.9,465.3L350.9,451.7L349.5,443L342.2,431.5L340.6,417.4L336.1,408L337.6,395.6ZM560.5,428.1L549.5,425.2L534.9,425.2L530.5,444.7L525.6,450.7L519.1,474.5L508.7,478.1L496.7,473.3L490.6,474.8L483.2,483.5L475.1,482.3L466.9,485.8L458.2,476.1L456,464.6L465.4,470.5L475.2,467.3L477.8,452.8L483.2,449.6L498.4,445.8L507.6,432.3L513.8,421.5L519.6,430.4L522.3,424.5L528.3,425.1L529.1,414.2L529.7,405.7L539.5,393.8L545.8,380.5L551,380.4L557.5,389.1L558.1,396.5L566.4,401.3L577,406.4L576.1,413.1L567.6,414L569.9,422.3Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Malaysia</title>
     </path>
     <path class="mp-country" data-iso="PH" data-name="Philippines" d="M597.5,282.2L591,269.4L601.7,270L606.2,276.1L602.9,290.7ZM619.8,328.4L623,323.7L624.3,313.1L631.2,312.1L629.3,323.6L638.5,307.2L637.4,323.4L632.9,329L629.1,339.7L625.1,344.7L617.3,333ZM668,355.1L669.3,366.4L670.1,376L666,391.6L661.2,374.2L655.3,382.9L659.5,395.4L655.9,403.4L640.9,393.5L637.3,381.2L641.1,373.1L633,365L629.1,372.1L623.1,371.4L613.8,380.9L611.7,375.9L616.6,361.6L624.5,356.8L631.4,350.3L635.9,358.1L645.5,353.4L647.5,345.8L656.4,345.3L655.6,332.2L665.9,340.2L667,348.8ZM568.3,339.7L551.5,355.9L557.7,344L566.8,333.5L574.4,321.7L580.9,304.9L583.2,318.7L574.9,328ZM615.5,189.5L613.5,196.4L617.9,208.4L614.8,222.3L607.5,227.9L605.6,241.4L608.5,254.8L615.2,256.7L620.7,254.7L636.5,264.1L635.3,273.2L639.5,277.3L638.3,285.1L628.4,276.8L623.7,267.9L620.5,274.1L612.4,264L601,266.5L594.8,262.8L595.4,255.8L599.3,251.5L595.5,247.6L593.9,253.7L587.7,244L585.8,236.7L585.2,220.6L590.3,226.1L591.4,199.9L595.3,184.8L602.9,184.8L610.5,189.6L614.3,185.3ZM612.8,304.1L610.8,296L618.3,301.2L626.4,301.2L626.2,308.3L620.4,315.5L612.4,320.6L611.9,312.7ZM656.3,291.4L660,310.3L650.3,305.8L650.6,311.5L653.7,322L647.8,325.8L647.2,313.9L643.3,313L641.3,302.7L648.7,304.1L648.5,297.7L640.7,284.7L652.7,285.1Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Philippines</title>
     </path>
-    <path class="mp-country" data-iso="MY" data-name="Malaysia" d="M334.9,388.4L337.1,385.3L347.4,392.8L348.3,401.6L356.7,399.5L360.9,392.5L363.8,394.1L371.2,404.4L376.4,415.9L377.1,427.4L375.7,435.2L376.9,441.1L377.8,451.2L382.2,455.9L387.2,471.1L386.9,476.8L377.9,478L365.9,465.3L350.9,451.7L349.5,443L342.2,431.5L340.6,417.4L336.1,408L337.6,395.6ZM560.5,428.1L549.5,425.2L534.9,425.2L530.5,444.7L525.6,450.7L519.1,474.5L508.7,478.1L496.7,473.3L490.6,474.8L483.2,483.5L475.1,482.3L466.9,485.8L458.2,476.1L456,464.6L465.4,470.5L475.2,467.3L477.8,452.8L483.2,449.6L498.4,445.8L507.6,432.3L513.8,421.5L519.6,430.4L522.3,424.5L528.3,425.1L529.1,414.2L529.7,405.7L539.5,393.8L545.8,380.5L551,380.4L557.5,389.1L558.1,396.5L566.4,401.3L577,406.4L576.1,413.1L567.6,414L569.9,422.3Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Malaysia</title>
+    <path class="mp-country" data-iso="LA" data-name="Laos" d="M428.8,256.9L417.8,250.8L411.9,262.4L401.7,255.7L405.9,248.2L406.7,233.9L396.9,219.3L396.4,202.8L387.3,189.2L378,188.1L375.3,193.9L368,194.4L364.4,191.4L351,201.4L351.2,186.4L354.8,168.9L346.4,168.1L346.1,158.1L340.9,153L343.8,146.9L354.7,136.2L355.6,140.1L362.2,140.5L361,121.7L367.5,119.3L374.2,132.3L379.2,147.3L394.4,147.4L398.8,161.9L390.8,166.2L387,172.2L401.6,182.1L411.5,201.8L419.1,216.6L428.3,228.2L431.3,240.1Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Laos</title>
+    </path>
+    <path class="mp-country" data-iso="KH" data-name="Cambodia" d="M367.9,291L365.3,270.6L373.7,256.5L389.9,253.3L401.7,255.7L411.9,262.4L417.8,250.8L428.8,256.9L431.5,268.2L429.7,288.5L408.4,301.5L413.8,311.8L400.5,313L389.5,319.8L379,317.3L374,308.5Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Cambodia</title>
+    </path>
+    <path class="mp-country" data-iso="TL" data-name="Timor-Leste" d="M650.1,651L651.6,647L662.5,643.2L671.3,642.6L675.3,640.5L680.1,642.6L675.4,647.2L662.2,654.7L651.5,659.6L651.3,654.4Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Timor-Leste</title>
     </path>
     <path class="mp-country" data-iso="BN" data-name="Brunei" d="M529.7,405.7L529.1,414.2L528.3,425.1L522.3,424.5L519.6,430.4L513.8,421.5L518.9,415.1Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Brunei</title>
     </path>
   </g>
   <g class="mp-layer mp-terrain"/>
-  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-1galg56)">
+  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-0gbmtal)">
     <path class="mp-water" data-kind="river" fill="none" d="M280.7,-52L284.9,-52.4L290.2,-51.3L300.2,-43.9L305.2,-42.2L312.6,-33.4L314.6,-26.1L315.4,-19.9L321.4,-6.8L325.9,2.9L329.5,14L333,37.1L333.9,45L333.4,61.3L334,67.1L335.5,72.3L338.8,77.7L341.7,80.6L346,82.2L347.6,83.5L348.4,85.5L348.3,87.9L347.8,91.4L343.3,102.8L342.8,105.6L343.5,108.7L352.3,129.4L352.8,130.4L354.6,129.4L354.8,136.3L343.7,147.1L340.9,153L346,158L346.4,159.8L346.4,161.6L346.7,161.6L353,162.5L357.5,162.3L366.5,159.1L362.1,167.3L360.3,181.4L356.6,190.7L356.5,193.7L357.3,196.4L357.6,196.4L364.5,191.6L368,194.2L375.2,193.9L378,187.9L387.4,189.2L396.5,202.8L397,219.3L406.6,234.1L406.5,238L409.2,241.7L410.3,247.4L409.8,256.8L411.1,262.9L410.4,271.3L410.8,283L410.2,287.6L408.4,289.3L406.5,290.3L402.8,294.8L398.7,297.6L397.8,301.3L399.4,312.1L400.7,316.2L405.2,323.5L415,337.6" stroke="#7FA0B4" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g class="mp-layer mp-borders" fill="none">
-    <path class="mp-hatch" data-kind="breakaway" data-name="North Borneo" d="M558.2,424.7L543.1,387.2L543.1,387.1L543.5,386.4L546.2,379.6L546.5,379.4L547.2,380.1L547.4,382.1L547.3,383.1L546.9,384.5L546.7,385.9L546.9,385.9L548.2,385L549.6,382.6L550.3,380.6L551,379.7L552.2,380.2L552.5,380.6L552.5,382.1L552.5,383L553,384.7L554.1,385.9L555.7,386.6L557.1,387.6L557.6,388.3L557.8,388.9L558.1,390.3L558.2,391.7L557.2,392.9L557.6,395.1L557.4,396.3L557.2,397.3L555.7,398.3L559.7,397.3L560.7,396.8L562,395.4L562.8,396.6L563.5,398.7L562.9,399.2L561.1,399.9L561.1,400.2L561.6,401.2L562.4,401.2L563.8,400.6L565.2,399.4L565.8,399.4L566.5,399.5L567.9,400.4L568.5,400.9L569.1,401.8L569.5,403.3L571,403.8L574.2,406L574.7,406.2L575.3,406.2L577,406L577.5,406.4L578,407.1L578.1,408.1L578,409.1L577.9,410L577.5,410.6L576.4,411.7L573.6,413L570.5,414.1L569,413.9L566.8,413L566.1,413.2L565.3,413.6L564.4,416.3L566.1,419L569.1,421.9L569.7,422.6L569.5,423.5L569,424L568.4,424.3L566.6,424.7L565,425L563.6,425.5L562.2,426.2L560.8,426L558.7,424.7L558.2,424.7Z" fill="url(#mp-stripe-1galg56)" stroke="none"/>
+    <path class="mp-hatch" data-kind="breakaway" data-name="North Borneo" d="M558.2,424.7L543.1,387.2L543.1,387.1L543.5,386.4L546.2,379.6L546.5,379.4L547.2,380.1L547.4,382.1L547.3,383.1L546.9,384.5L546.7,385.9L546.9,385.9L548.2,385L549.6,382.6L550.3,380.6L551,379.7L552.2,380.2L552.5,380.6L552.5,382.1L552.5,383L553,384.7L554.1,385.9L555.7,386.6L557.1,387.6L557.6,388.3L557.8,388.9L558.1,390.3L558.2,391.7L557.2,392.9L557.6,395.1L557.4,396.3L557.2,397.3L555.7,398.3L559.7,397.3L560.7,396.8L562,395.4L562.8,396.6L563.5,398.7L562.9,399.2L561.1,399.9L561.1,400.2L561.6,401.2L562.4,401.2L563.8,400.6L565.2,399.4L565.8,399.4L566.5,399.5L567.9,400.4L568.5,400.9L569.1,401.8L569.5,403.3L571,403.8L574.2,406L574.7,406.2L575.3,406.2L577,406L577.5,406.4L578,407.1L578.1,408.1L578,409.1L577.9,410L577.5,410.6L576.4,411.7L573.6,413L570.5,414.1L569,413.9L566.8,413L566.1,413.2L565.3,413.6L564.4,416.3L566.1,419L569.1,421.9L569.7,422.6L569.5,423.5L569,424L568.4,424.3L566.6,424.7L565,425L563.6,425.5L562.2,426.2L560.8,426L558.7,424.7L558.2,424.7Z" fill="url(#mp-stripe-0gbmtal)" stroke="none"/>
     <path class="mp-border" data-kind="intl" d="M650.1,651L651.3,654.4L651.5,659.6M456,464.6L458.2,476.1L466.9,485.8L475.1,482.3L483.2,483.5L490.6,474.8L496.7,473.3L508.7,478.1L519.1,474.5L525.6,450.7L530.5,444.7L534.9,425.2L549.5,425.2L560.5,428.1M367.9,291L365.3,270.6L373.7,256.5L389.9,253.3L401.7,255.7L411.9,262.4L417.8,250.8L428.8,256.9L431.5,268.2L429.7,288.5L408.4,301.5L413.8,311.8L400.5,313L389.5,319.8M360.9,392.5L356.7,399.5L348.3,401.6L347.4,392.8L337.1,385.3L334.9,388.4M316.4,329.3L322.9,311.8L330.1,296L325.6,280.5L325.9,272.7L324.7,263.3L316.8,249.9L314,241.4L318.5,238.3L323.4,223.7L318.7,212.7L311.2,200.5L305.8,185.8L311.1,182.8L317.5,164.8L326.2,164.1L333.7,156.9L340.9,153L346.1,158.1L346.4,168.1L354.8,168.9L351.2,186.4L351,201.4L364.4,191.4L368,194.4L375.3,193.9L378,188.1L387.3,189.2L396.4,202.8L396.9,219.3L406.7,233.9L405.9,248.2L401.7,255.7M340.9,153L343.8,146.9L354.7,136.2M367.5,119.3L374.2,132.3L379.2,147.3L394.4,147.4L398.8,161.9L390.8,166.2L387,172.2L401.6,182.1L411.5,201.8L419.1,216.6L428.3,228.2L431.3,240.1L428.8,256.9M513.8,421.5L519.6,430.4L522.3,424.5L528.3,425.1L529.1,414.2L529.7,405.7" fill="none" stroke="#6E6152" stroke-width="1.4" stroke-dasharray="5 2.5" stroke-linejoin="round" stroke-linecap="round"/>
   </g>
   <g class="mp-layer mp-roads"/>

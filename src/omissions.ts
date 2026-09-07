@@ -31,6 +31,23 @@ export interface Omissions {
    * worth saying out loud rather than leaving for someone to notice.
    */
   readonly absent: readonly string[];
+  /**
+   * Codes that were drawn and are too small to be read on this canvas.
+   *
+   * The other half of the same defect, and the half that cannot be fixed by
+   * changing an option: Vatican is 0.2 x 0.1 user units on a 960x620 map of
+   * Europe and 0.5 x 0.5 at 4000x2000. There is no canvas size at which it
+   * appears. Monaco is the same story one order of magnitude up.
+   *
+   * Measured against the dot the map itself draws on the country — see
+   * `UNSEEN_EXTENT` — so it is a fact about this map rather than a judgement:
+   * these are the countries hidden underneath their own capitals.
+   *
+   * Every one of them also carries `data-unseen` in the markup, which is what
+   * lets a theme give them a stroke heavy enough to read as a dot without the
+   * library inventing any geometry.
+   */
+  readonly unseen: readonly string[];
 }
 
 /**
@@ -49,6 +66,7 @@ export interface Omissions {
 export function omissionsOf(
   requested: readonly string[],
   drawn: readonly string[],
+  unseen: readonly string[] = [],
 ): Omissions {
   const present = new Set(drawn);
   // Ordered as the caller wrote them, not sorted: a list that comes back in the
@@ -60,5 +78,7 @@ export function omissionsOf(
     seen.add(code);
     absent.push(code);
   }
-  return { absent };
+  // Deduplicated for the same reason `absent` is: a country arrives here once
+  // per drawn feature, and a MultiPolygon is still one country.
+  return { absent, unseen: [...new Set(unseen)] };
 }

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0dids21" role="img" aria-label="Central Asia">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-11odxky" role="img" aria-label="Central Asia">
   <title>Central Asia</title>
   <style>
-    .mp.mp-t-0dids21 {
+    .mp.mp-t-11odxky {
       --bg: #E8E8E8;
       --sea: #E8E8E8;
       --land: #FFFFFF;
@@ -55,92 +55,92 @@
       --pin-size: 7;
       --furniture-ink: #000000;
     }
-    .mp.mp-t-0dids21 .mp-bg {
+    .mp.mp-t-11odxky .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0dids21 .mp-sea {
+    .mp.mp-t-11odxky .mp-sea {
       fill: var(--sea);
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-grid {
+    .mp.mp-t-11odxky .mp-grid {
       fill: none;
       stroke: var(--graticule);
       stroke-width: var(--graticule-width);
     }
-    .mp.mp-t-0dids21 .mp-grid[data-kind="equator"], .mp.mp-t-0dids21 .mp-grid[data-kind="tropic"] {
+    .mp.mp-t-11odxky .mp-grid[data-kind="equator"], .mp.mp-t-11odxky .mp-grid[data-kind="tropic"] {
       stroke: var(--equator);
     }
-    .mp.mp-t-0dids21 .mp-neighbour {
+    .mp.mp-t-11odxky .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-country {
+    .mp.mp-t-11odxky .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-0dids21 .mp-country[data-bin="1"] {
+    .mp.mp-t-11odxky .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0dids21 .mp-country[data-bin="2"] {
+    .mp.mp-t-11odxky .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0dids21 .mp-country[data-bin="3"] {
+    .mp.mp-t-11odxky .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0dids21 .mp-country[data-bin="4"] {
+    .mp.mp-t-11odxky .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0dids21 .mp-country[data-bin="5"] {
+    .mp.mp-t-11odxky .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0dids21 .mp-country[data-fill="1"] {
+    .mp.mp-t-11odxky .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0dids21 .mp-country[data-fill="2"] {
+    .mp.mp-t-11odxky .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0dids21 .mp-country[data-fill="3"] {
+    .mp.mp-t-11odxky .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0dids21 .mp-country[data-fill="4"] {
+    .mp.mp-t-11odxky .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0dids21 .mp-country[data-fill="5"] {
+    .mp.mp-t-11odxky .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0dids21 .mp-country[data-fill="6"] {
+    .mp.mp-t-11odxky .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0dids21 .mp-country.is-highlighted {
+    .mp.mp-t-11odxky .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-0dids21 .mp-cover {
+    .mp.mp-t-11odxky .mp-cover {
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-cover[data-kind="desert"] {
+    .mp.mp-t-11odxky .mp-cover[data-kind="desert"] {
       fill: var(--desert);
     }
-    .mp.mp-t-0dids21 .mp-cover[data-kind="mountain"] {
+    .mp.mp-t-11odxky .mp-cover[data-kind="mountain"] {
       fill: var(--mountain);
     }
-    .mp.mp-t-0dids21 .mp-cover[data-kind="glacier"] {
+    .mp.mp-t-11odxky .mp-cover[data-kind="glacier"] {
       fill: var(--glacier);
     }
-    .mp.mp-t-0dids21 .mp-water[data-kind="lake"] {
+    .mp.mp-t-11odxky .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-water[data-kind="river"] {
+    .mp.mp-t-11odxky .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0dids21 .mp-border {
+    .mp.mp-t-11odxky .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -148,78 +148,84 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-0dids21 .mp-road {
+    .mp.mp-t-11odxky .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0dids21 .mp-place {
+    .mp.mp-t-11odxky .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-0dids21 .mp-prism-side {
+    .mp.mp-t-11odxky .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-prism-edge {
+    .mp.mp-t-11odxky .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0dids21 .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0dids21 .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-11odxky .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-0dids21 .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-11odxky .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-0dids21 .mp-hatch {
-      fill: url(#mp-stripe-0nr07fk);
+    .mp.mp-t-11odxky .mp-country[data-unseen] {
+      stroke: var(--border);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-11odxky .mp-hatch {
+      fill: url(#mp-stripe-18aredy);
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-hatch-line {
+    .mp.mp-t-11odxky .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-0dids21 .mp-label {
+    .mp.mp-t-11odxky .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
@@ -230,115 +236,115 @@
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-0dids21 .mp-label[data-kind="place"] {
+    .mp.mp-t-11odxky .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-0dids21 .mp-label[data-kind="grid"] {
+    .mp.mp-t-11odxky .mp-label[data-kind="grid"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
       letter-spacing: 0.04em;
     }
-    .mp.mp-t-0dids21 .mp-label[data-kind="sea"] {
+    .mp.mp-t-11odxky .mp-label[data-kind="sea"] {
       fill: var(--sea-ink);
       font-size: var(--place-label-size);
       font-style: italic;
       letter-spacing: 0.08em;
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-route-line {
+    .mp.mp-t-11odxky .mp-route-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0dids21 .mp-route-stop {
+    .mp.mp-t-11odxky .mp-route-stop {
       fill: var(--label-halo);
       stroke: var(--anno);
       stroke-width: 2.2;
     }
-    .mp.mp-t-0dids21 .mp-route-stop[data-kind="minor"] {
+    .mp.mp-t-11odxky .mp-route-stop[data-kind="minor"] {
       stroke-width: 1.6;
     }
-    .mp.mp-t-0dids21 .mp-label.is-highlighted {
+    .mp.mp-t-11odxky .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-0dids21 .mp-label[data-fit="0"] {
+    .mp.mp-t-11odxky .mp-label[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-0dids21 .mp-pin-mark {
+    .mp.mp-t-11odxky .mp-pin-mark {
       fill: var(--anno);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
     }
-    .mp.mp-t-0dids21 .mp-icon {
+    .mp.mp-t-11odxky .mp-icon {
       fill: var(--anno-ink);
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-label[data-kind="pin"] {
+    .mp.mp-t-11odxky .mp-label[data-kind="pin"] {
       font-size: var(--place-label-size);
       font-weight: 700;
     }
-    .mp.mp-t-0dids21 .mp-arrow-line {
+    .mp.mp-t-11odxky .mp-arrow-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2;
       stroke-linecap: round;
-      marker-end: url(#mp-arrowhead-0nr07fk);
+      marker-end: url(#mp-arrowhead-18aredy);
     }
-    .mp.mp-t-0dids21 .mp-arrow-head {
+    .mp.mp-t-11odxky .mp-arrow-head {
       fill: var(--anno);
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-callout-leader {
+    .mp.mp-t-11odxky .mp-callout-leader {
       fill: none;
       stroke: var(--anno);
       stroke-width: 1.25;
       stroke-linecap: round;
     }
-    .mp.mp-t-0dids21 .mp-callout-box {
+    .mp.mp-t-11odxky .mp-callout-box {
       fill: var(--anno);
       stroke: var(--anno-ink);
       stroke-width: 1;
     }
-    .mp.mp-t-0dids21 .mp-label[data-kind="callout"] {
+    .mp.mp-t-11odxky .mp-label[data-kind="callout"] {
       fill: var(--anno-ink);
       font-size: var(--place-label-size);
       font-weight: 500;
       stroke: none;
     }
-    .mp.mp-t-0dids21 .mp-anno[data-fit="0"] {
+    .mp.mp-t-11odxky .mp-anno[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-0dids21 .mp-credit, .mp.mp-t-0dids21 .mp-scale-label, .mp.mp-t-0dids21 .mp-compass-label {
+    .mp.mp-t-11odxky .mp-credit, .mp.mp-t-11odxky .mp-scale-label, .mp.mp-t-11odxky .mp-compass-label {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-size: var(--place-label-size);
       letter-spacing: var(--label-track);
     }
-    .mp.mp-t-0dids21 .mp-scale-bar {
+    .mp.mp-t-11odxky .mp-scale-bar {
       fill: none;
       stroke: var(--furniture-ink);
       stroke-width: 1.5;
     }
-    .mp.mp-t-0dids21 .mp-compass-needle {
+    .mp.mp-t-11odxky .mp-compass-needle {
       fill: var(--furniture-ink);
     }
-    .mp.mp-t-0dids21 .mp-watermark {
+    .mp.mp-t-11odxky .mp-watermark {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-weight: 600;
       letter-spacing: var(--label-track);
       opacity: 0.18;
     }
-    .mp.mp-t-0dids21 .mp-water[data-kind="lake"] {
+    .mp.mp-t-11odxky .mp-water[data-kind="lake"] {
       fill: var(--bg);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-0dids21 {
+      .mp.mp-t-11odxky {
         --bg: #171717;
         --sea: #171717;
         --land: #000000;
@@ -375,13 +381,13 @@
     }
   </style>
   <defs class="mp-defs">
-    <clipPath id="mp-land-clip-0nr07fk">
+    <clipPath id="mp-land-clip-18aredy">
       <path d="M603.9,225.8L593.6,241L581.6,243.5L581.6,265.5L573.5,275.7L543.8,268.8L532.8,308.1L524.8,312.9L494,320.8L506.9,359.3L495.8,364.6L496.7,377.2L486.9,373.6L479.1,365.4L455.5,361.7L429,359.2L423.1,361.1L401.3,349.7L391.8,353.3L387.9,365.8L362.5,355.1L351.6,356.7L346.7,365.7L336.9,368.3L313.2,380L303.5,394.2L297.3,393.3L294.7,382.3L274.3,377.7L274.4,359.5L266.7,357.8L272.3,336.5L256.9,316.9L230.1,312.5L211.3,311.2L201.7,288.3L191.6,276.9L172.9,255.3L170.7,252.6L128.9,253L104.1,329.8L95.8,328.1L90.5,308.2L82.2,298.7L63.3,296.7L54,301L55.1,295.7L62,288.6L61.8,280.4L47.2,266.7L47.8,245.8L41.8,237.4L44,230.6L57.4,238.2L63.8,223.5L77.3,225L88.7,232.8L98.7,213.7L100.9,200L86.5,195.7L76.5,186.1L56.8,188.5L42.1,187.4L36.4,181L42.3,171.3L39.4,154L29.1,150.2L24,131.4L38.5,119.7L36.6,113.9L56.9,96.5L65.1,114L73.1,99.9L108.8,88.7L129,96L152.4,120.8L165.1,134.7L182.1,130.5L203.3,136.6L217.3,152.6L223,147.4L241.7,153.5L247.7,144.2L230.1,123.7L245.6,116.7L244.8,110.2L258.7,107.9L253.3,90.7L261.1,84.8L310.5,88.6L317.9,84.5L351.2,82.5L364.2,75.3L386.2,83.7L386.9,107.2L401.2,103.7L416.9,113.3L414.5,125.2L427.3,125.4L461.9,107.3L456.6,113.9L472.2,132.3L499.8,190.1L507.6,178.8L526.5,192L546.6,186.4L554.3,190.4L561.2,203L571.1,207.1L577.5,216.3L595.7,212.7ZM104.1,329.8L128.9,253L170.7,252.6L172.9,255.3L191.6,276.9L201.7,288.3L211.3,311.2L230.1,312.5L256.9,316.9L272.3,336.5L266.7,357.8L274.4,359.5L274.3,377.7L294.7,382.3L297.3,393.3L303.5,394.2L313.2,380L336.9,368.3L346.7,365.7L351.2,368.5L335.5,380.5L346.4,390.5L358.7,386.7L376.6,400.5L353.5,413.5L341.2,409.6L334.3,409.1L332.9,402.8L337.8,393.2L315.1,394.9L307.6,407.9L297.6,418.4L283.9,414.9L277.8,423.7L289.2,431L290,447.7L276.5,467.9L264.3,460.9L254.9,458.9L257.9,445.8L237.4,432L222.2,417.6L213.7,405.1L198.6,385.9L196.2,362L191.8,356.7L174.3,353.1L169.5,347.1L172.5,329.8L154.8,312.7L138.1,320.9L122.6,323.9L121.8,335.2ZM609.5,223.7L624.3,219L649.9,197.9L670.1,185.5L683,190.9L697.6,189.3L708.3,198.3L722.4,197.1L743.7,199.3L754.6,181.8L746.7,170L756.7,144.8L773.5,150.9L786.2,150.9L803.4,153L809.7,168.5L831.3,172.9L843.3,165.7L859.7,158.2L874.2,157.2L890.5,163.5L902,171.7L914.7,167.5L933.1,165.2L943.8,155.8L960.3,146L974.4,124.1L983.1,123.2L992.8,127.3L1007.7,119.2L1007.7,137.3L1006.4,161.5L1013.3,168.4L1020,162.7L1034.8,160.2L1042,148.2L1055.6,149.9L1074.2,158.3L1076,166L1064.2,168.7L1045.3,180.1L1038,190L1033.2,207.7L1014.7,224.2L1004.4,240.6L987.8,241.9L979,243L975.9,259L983.5,265.3L988.3,271.3L980.2,281.9L973.1,296.6L957.6,309.8L934.7,317.7L911.8,332.2L896.5,348.6L887.8,343.8L868.7,348.6L842.3,341.1L826.1,341.4L805.7,348.6L772.1,349.8L754.7,353.1L743.5,341.7L733.4,322.8L723.5,321.8L703,310.7L682,310L663.4,308.1L657,299.1L660.5,273.1L648.7,256.4L627.1,249.7L614.1,238.9ZM254.9,458.9L264.3,460.9L276.5,467.9L281.3,471.5L295,466.7L300.1,471.9L307.3,462.9L317.5,464.9L320.6,462.2L323.7,453.7L332.2,447.2L340.7,453.5L337.9,459.9L343,461.6L338.8,479.7L344.8,487.8L351.5,484L359.4,482.8L371.4,474.3L383.2,477.3L401.1,479.2L403.6,485.7L393.2,487.2L383.9,490.3L363.5,490.5L344.2,492.7L332.5,500.8L335.5,510.6L336,521.8L325.8,529.7L325.3,538.2L319.3,545.4L302.1,542.1L307,557.7L294.5,561.4L284.5,573.4L283.4,586.7L275.1,591.7L268.5,588.4L253.8,588.7L250.5,594.5L236.6,591.8L223.8,602.2L219.3,620.7L192.7,624.7L179.8,619.8L174.9,623.7L164.1,618.3L144.3,617L115.6,597.7L137.7,582.6L139.7,568.3L126.8,561L129,547L127.7,528.2L138.6,518.6L131.6,513.4L140.7,499.1L154.9,474.5L170.6,487.2L184.4,487.5L190.4,478.7L204.9,478.7L216.1,474.4L223.3,458L238.7,456.9L243,449.8L249.8,457.2ZM276.5,467.9L290,447.7L289.2,431L277.8,423.7L283.9,414.9L297.6,418.4L307.6,407.9L315.1,394.9L337.8,393.2L332.9,402.8L334.3,409.1L341.2,409.6L334.2,415.4L316.7,409L313.1,421.2L331.4,422.3L351.1,432.3L383.4,433L385.4,453.6L391.3,452L401.1,458L399.7,466.4L401.1,479.2L383.2,477.3L371.4,474.3L359.4,482.8L351.5,484L344.8,487.8L338.8,479.7L343,461.6L337.9,459.9L340.7,453.5L332.2,447.2L323.7,453.7L320.6,462.2L317.5,464.9L307.3,462.9L300.1,471.9L295,466.7L281.3,471.5ZM346.7,365.7L351.6,356.7L362.5,355.1L387.9,365.8L391.8,353.3L401.3,349.7L423.1,361.1L429,359.2L455.5,361.7L479.1,365.4L486.9,373.6L496.7,377.2L494.2,382L468,392.7L461.7,401.1L440.4,402.3L433.1,415.8L415.8,411.3L403.9,414.5L386.9,423.1L388.7,428.5L383.4,433L351.1,432.3L331.4,422.3L313.1,421.2L316.7,409L334.2,415.4L341.2,409.6L353.5,413.5L376.6,400.5L358.7,386.7L346.4,390.5L335.5,380.5L351.2,368.5ZM54,301L63.3,296.7L82.2,298.7L90.5,308.2L95.8,328.1L104.1,329.8L121.8,335.2L122.6,323.9L138.1,320.9L154.8,312.7L172.5,329.8L169.5,347.1L174.3,353.1L191.8,356.7L196.2,362L198.6,385.9L213.7,405.1L222.2,417.6L237.4,432L257.9,445.8L254.9,458.9L249.8,457.2L243,449.8L238.7,456.9L223.3,458L216.1,474.4L204.9,478.7L190.4,478.7L184.4,487.5L170.6,487.2L154.9,474.5L158.2,456.1L145.7,452L131.6,427.8L119,421.5L103.8,405.2L92.8,399.6L84.3,401.1L73.5,396.8L57.8,404.7L41.9,403.6L44.1,387.9L54.2,367.2L44.3,355.7L53.5,343.1L43.5,338L53.4,322L66.3,332.4L82.3,330.7L75.4,314.3L75.2,300.9L61,301.7L53.9,316.1Z"/>
     </clipPath>
-    <pattern id="mp-stripe-0nr07fk" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <pattern id="mp-stripe-18aredy" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#000000" stroke-width="2.4"/>
     </pattern>
-    <marker id="mp-arrowhead-0nr07fk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <marker id="mp-arrowhead-18aredy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path class="mp-arrow-head" d="M0,0 L10,5 L0,10 Z" fill="#4A4A4A" stroke="none"/>
     </marker>
   </defs>
@@ -393,32 +399,32 @@
     <path class="mp-country" data-iso="KZ" data-name="Kazakhstan" d="M603.9,225.8L593.6,241L581.6,243.5L581.6,265.5L573.5,275.7L543.8,268.8L532.8,308.1L524.8,312.9L494,320.8L506.9,359.3L495.8,364.6L496.7,377.2L486.9,373.6L479.1,365.4L455.5,361.7L429,359.2L423.1,361.1L401.3,349.7L391.8,353.3L387.9,365.8L362.5,355.1L351.6,356.7L346.7,365.7L336.9,368.3L313.2,380L303.5,394.2L297.3,393.3L294.7,382.3L274.3,377.7L274.4,359.5L266.7,357.8L272.3,336.5L256.9,316.9L230.1,312.5L211.3,311.2L201.7,288.3L191.6,276.9L172.9,255.3L170.7,252.6L128.9,253L104.1,329.8L95.8,328.1L90.5,308.2L82.2,298.7L63.3,296.7L54,301L55.1,295.7L62,288.6L61.8,280.4L47.2,266.7L47.8,245.8L41.8,237.4L44,230.6L57.4,238.2L63.8,223.5L77.3,225L88.7,232.8L98.7,213.7L100.9,200L86.5,195.7L76.5,186.1L56.8,188.5L42.1,187.4L36.4,181L42.3,171.3L39.4,154L29.1,150.2L24,131.4L38.5,119.7L36.6,113.9L56.9,96.5L65.1,114L73.1,99.9L108.8,88.7L129,96L152.4,120.8L165.1,134.7L182.1,130.5L203.3,136.6L217.3,152.6L223,147.4L241.7,153.5L247.7,144.2L230.1,123.7L245.6,116.7L244.8,110.2L258.7,107.9L253.3,90.7L261.1,84.8L310.5,88.6L317.9,84.5L351.2,82.5L364.2,75.3L386.2,83.7L386.9,107.2L401.2,103.7L416.9,113.3L414.5,125.2L427.3,125.4L461.9,107.3L456.6,113.9L472.2,132.3L499.8,190.1L507.6,178.8L526.5,192L546.6,186.4L554.3,190.4L561.2,203L571.1,207.1L577.5,216.3L595.7,212.7Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
       <title>Kazakhstan</title>
     </path>
-    <path class="mp-country" data-iso="UZ" data-name="Uzbekistan" d="M104.1,329.8L128.9,253L170.7,252.6L172.9,255.3L191.6,276.9L201.7,288.3L211.3,311.2L230.1,312.5L256.9,316.9L272.3,336.5L266.7,357.8L274.4,359.5L274.3,377.7L294.7,382.3L297.3,393.3L303.5,394.2L313.2,380L336.9,368.3L346.7,365.7L351.2,368.5L335.5,380.5L346.4,390.5L358.7,386.7L376.6,400.5L353.5,413.5L341.2,409.6L334.3,409.1L332.9,402.8L337.8,393.2L315.1,394.9L307.6,407.9L297.6,418.4L283.9,414.9L277.8,423.7L289.2,431L290,447.7L276.5,467.9L264.3,460.9L254.9,458.9L257.9,445.8L237.4,432L222.2,417.6L213.7,405.1L198.6,385.9L196.2,362L191.8,356.7L174.3,353.1L169.5,347.1L172.5,329.8L154.8,312.7L138.1,320.9L122.6,323.9L121.8,335.2Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
-      <title>Uzbekistan</title>
-    </path>
     <path class="mp-country" data-iso="MN" data-name="Mongolia" d="M609.5,223.7L624.3,219L649.9,197.9L670.1,185.5L683,190.9L697.6,189.3L708.3,198.3L722.4,197.1L743.7,199.3L754.6,181.8L746.7,170L756.7,144.8L773.5,150.9L786.2,150.9L803.4,153L809.7,168.5L831.3,172.9L843.3,165.7L859.7,158.2L874.2,157.2L890.5,163.5L902,171.7L914.7,167.5L933.1,165.2L943.8,155.8L960.3,146L974.4,124.1L983.1,123.2L992.8,127.3L1007.7,119.2L1007.7,137.3L1006.4,161.5L1013.3,168.4L1020,162.7L1034.8,160.2L1042,148.2L1055.6,149.9L1074.2,158.3L1076,166L1064.2,168.7L1045.3,180.1L1038,190L1033.2,207.7L1014.7,224.2L1004.4,240.6L987.8,241.9L979,243L975.9,259L983.5,265.3L988.3,271.3L980.2,281.9L973.1,296.6L957.6,309.8L934.7,317.7L911.8,332.2L896.5,348.6L887.8,343.8L868.7,348.6L842.3,341.1L826.1,341.4L805.7,348.6L772.1,349.8L754.7,353.1L743.5,341.7L733.4,322.8L723.5,321.8L703,310.7L682,310L663.4,308.1L657,299.1L660.5,273.1L648.7,256.4L627.1,249.7L614.1,238.9Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
       <title>Mongolia</title>
     </path>
     <path class="mp-country" data-iso="AF" data-name="Afghanistan" d="M254.9,458.9L264.3,460.9L276.5,467.9L281.3,471.5L295,466.7L300.1,471.9L307.3,462.9L317.5,464.9L320.6,462.2L323.7,453.7L332.2,447.2L340.7,453.5L337.9,459.9L343,461.6L338.8,479.7L344.8,487.8L351.5,484L359.4,482.8L371.4,474.3L383.2,477.3L401.1,479.2L403.6,485.7L393.2,487.2L383.9,490.3L363.5,490.5L344.2,492.7L332.5,500.8L335.5,510.6L336,521.8L325.8,529.7L325.3,538.2L319.3,545.4L302.1,542.1L307,557.7L294.5,561.4L284.5,573.4L283.4,586.7L275.1,591.7L268.5,588.4L253.8,588.7L250.5,594.5L236.6,591.8L223.8,602.2L219.3,620.7L192.7,624.7L179.8,619.8L174.9,623.7L164.1,618.3L144.3,617L115.6,597.7L137.7,582.6L139.7,568.3L126.8,561L129,547L127.7,528.2L138.6,518.6L131.6,513.4L140.7,499.1L154.9,474.5L170.6,487.2L184.4,487.5L190.4,478.7L204.9,478.7L216.1,474.4L223.3,458L238.7,456.9L243,449.8L249.8,457.2Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
       <title>Afghanistan</title>
     </path>
-    <path class="mp-country" data-iso="TJ" data-name="Tajikistan" d="M276.5,467.9L290,447.7L289.2,431L277.8,423.7L283.9,414.9L297.6,418.4L307.6,407.9L315.1,394.9L337.8,393.2L332.9,402.8L334.3,409.1L341.2,409.6L334.2,415.4L316.7,409L313.1,421.2L331.4,422.3L351.1,432.3L383.4,433L385.4,453.6L391.3,452L401.1,458L399.7,466.4L401.1,479.2L383.2,477.3L371.4,474.3L359.4,482.8L351.5,484L344.8,487.8L338.8,479.7L343,461.6L337.9,459.9L340.7,453.5L332.2,447.2L323.7,453.7L320.6,462.2L317.5,464.9L307.3,462.9L300.1,471.9L295,466.7L281.3,471.5Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
-      <title>Tajikistan</title>
-    </path>
-    <path class="mp-country" data-iso="KG" data-name="Kyrgyzstan" d="M346.7,365.7L351.6,356.7L362.5,355.1L387.9,365.8L391.8,353.3L401.3,349.7L423.1,361.1L429,359.2L455.5,361.7L479.1,365.4L486.9,373.6L496.7,377.2L494.2,382L468,392.7L461.7,401.1L440.4,402.3L433.1,415.8L415.8,411.3L403.9,414.5L386.9,423.1L388.7,428.5L383.4,433L351.1,432.3L331.4,422.3L313.1,421.2L316.7,409L334.2,415.4L341.2,409.6L353.5,413.5L376.6,400.5L358.7,386.7L346.4,390.5L335.5,380.5L351.2,368.5Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
-      <title>Kyrgyzstan</title>
+    <path class="mp-country" data-iso="UZ" data-name="Uzbekistan" d="M104.1,329.8L128.9,253L170.7,252.6L172.9,255.3L191.6,276.9L201.7,288.3L211.3,311.2L230.1,312.5L256.9,316.9L272.3,336.5L266.7,357.8L274.4,359.5L274.3,377.7L294.7,382.3L297.3,393.3L303.5,394.2L313.2,380L336.9,368.3L346.7,365.7L351.2,368.5L335.5,380.5L346.4,390.5L358.7,386.7L376.6,400.5L353.5,413.5L341.2,409.6L334.3,409.1L332.9,402.8L337.8,393.2L315.1,394.9L307.6,407.9L297.6,418.4L283.9,414.9L277.8,423.7L289.2,431L290,447.7L276.5,467.9L264.3,460.9L254.9,458.9L257.9,445.8L237.4,432L222.2,417.6L213.7,405.1L198.6,385.9L196.2,362L191.8,356.7L174.3,353.1L169.5,347.1L172.5,329.8L154.8,312.7L138.1,320.9L122.6,323.9L121.8,335.2Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
+      <title>Uzbekistan</title>
     </path>
     <path class="mp-country" data-iso="TM" data-name="Turkmenistan" d="M54,301L63.3,296.7L82.2,298.7L90.5,308.2L95.8,328.1L104.1,329.8L121.8,335.2L122.6,323.9L138.1,320.9L154.8,312.7L172.5,329.8L169.5,347.1L174.3,353.1L191.8,356.7L196.2,362L198.6,385.9L213.7,405.1L222.2,417.6L237.4,432L257.9,445.8L254.9,458.9L249.8,457.2L243,449.8L238.7,456.9L223.3,458L216.1,474.4L204.9,478.7L190.4,478.7L184.4,487.5L170.6,487.2L154.9,474.5L158.2,456.1L145.7,452L131.6,427.8L119,421.5L103.8,405.2L92.8,399.6L84.3,401.1L73.5,396.8L57.8,404.7L41.9,403.6L44.1,387.9L54.2,367.2L44.3,355.7L53.5,343.1L43.5,338L53.4,322L66.3,332.4L82.3,330.7L75.4,314.3L75.2,300.9L61,301.7L53.9,316.1Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
       <title>Turkmenistan</title>
     </path>
+    <path class="mp-country" data-iso="KG" data-name="Kyrgyzstan" d="M346.7,365.7L351.6,356.7L362.5,355.1L387.9,365.8L391.8,353.3L401.3,349.7L423.1,361.1L429,359.2L455.5,361.7L479.1,365.4L486.9,373.6L496.7,377.2L494.2,382L468,392.7L461.7,401.1L440.4,402.3L433.1,415.8L415.8,411.3L403.9,414.5L386.9,423.1L388.7,428.5L383.4,433L351.1,432.3L331.4,422.3L313.1,421.2L316.7,409L334.2,415.4L341.2,409.6L353.5,413.5L376.6,400.5L358.7,386.7L346.4,390.5L335.5,380.5L351.2,368.5Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
+      <title>Kyrgyzstan</title>
+    </path>
+    <path class="mp-country" data-iso="TJ" data-name="Tajikistan" d="M276.5,467.9L290,447.7L289.2,431L277.8,423.7L283.9,414.9L297.6,418.4L307.6,407.9L315.1,394.9L337.8,393.2L332.9,402.8L334.3,409.1L341.2,409.6L334.2,415.4L316.7,409L313.1,421.2L331.4,422.3L351.1,432.3L383.4,433L385.4,453.6L391.3,452L401.1,458L399.7,466.4L401.1,479.2L383.2,477.3L371.4,474.3L359.4,482.8L351.5,484L344.8,487.8L338.8,479.7L343,461.6L337.9,459.9L340.7,453.5L332.2,447.2L323.7,453.7L320.6,462.2L317.5,464.9L307.3,462.9L300.1,471.9L295,466.7L281.3,471.5Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round">
+      <title>Tajikistan</title>
+    </path>
   </g>
   <g class="mp-layer mp-terrain"/>
-  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-0nr07fk)">
+  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-18aredy)">
     <path class="mp-water" data-kind="lake" fill="#E8E8E8" d="M480.5,280.3L484.8,282.4L479.1,288.5L471.9,289.7L453.6,286.1L430,281.8L427.6,278.1L426.6,282.4L418.9,283.2L416,289.3L408.7,291L403.6,312.5L394.7,298.1L395.2,293.7L400.5,289.7L399.9,286.1L404.9,286.2L406.5,281.1L420.2,274.3L439,276.7L453.4,280.6L463.7,281.3L470,285.6L471.9,281.8ZM173,255.3L176.7,247.2L183.2,248.5L186.5,254.6L190.7,242L193.5,243.9L197.3,248.8L196.2,252.8L193.4,254.1L190.3,259.8L194.2,259.8L191.7,277.1L185.5,287.1L181,287.9L171.4,280.6L179.6,268.6L180.7,264.6L176,259.2L173.8,264.7L171.6,272.2L161.8,281.7L160.2,275L162.8,266.2Z" stroke="#000000" stroke-width="2"/>
     <path class="mp-water" data-kind="river" fill="none" d="M649.4,257.5L648.2,262.7L641.6,268.7L636.4,271.1L631.5,271.2L599.3,260.3L591.1,256.3L574.5,253.7L561.4,259.9L553.3,253.2L550.2,249.7L549.2,247.3L548,236.9L550.2,234.3L553.7,231.4L555.7,228.3L553.7,224.3L546.5,218L534.1,208.9L529.1,206L524,204.4L504.7,201.1L478.9,191.3L462.5,165.9L459.4,160.1L455.1,146.8L452.1,142.1L442.7,132.6L439.2,127.8L437.3,123.2L436.2,119.5L436.1,116.5L430.8,107.2L429.5,105.8L426,102.9L423,100.3L421.4,98.8L420.5,98L418.4,95.8L417.6,94.3L414.4,85.8L415.1,84.3L418.2,81.5L422.7,79.1L430.8,75.9L433.7,73.7L436,70.3L437.7,66.4L437.7,61.8L437.3,56.6L436,51.4L434.1,47.6L427.2,41.6L418.1,36L401.8,29.2L388.5,20.6L371.6,15.8L369.6,14.8L366.5,12.4L364.4,11.4L365.1,9.8L365.9,7.9L369.3,3.9L371.3,-0.9L374.3,-5.7L378,-14.9L380.7,-18.2L383.1,-19.9L389.3,-23.8L389.7,-26.7L389.8,-29.3L391.2,-32.8L391.6,-38.6L391.4,-42.1L389.5,-46.2L388.5,-47.3L386.5,-50L384.4,-52.9L383.6,-54.5L383,-54.1L382.5,-53.7L379.1,-57.4L377.7,-63.1L372.6,-70.9L369.7,-79L360.9,-89.8L355.9,-96.1L353.8,-101.2L353.7,-106.5L356.4,-111.5L360.4,-117.6L363.9,-127.3L365.1,-129.3L366,-131.8L364.7,-144L365.3,-150L364.5,-151.9L364.9,-155.5L371.9,-169.5L373.5,-173.9L374.4,-178L380.6,-183.4L384.2,-185.7L387.8,-185.9L399.1,-183.4L407.5,-187.4L416.2,-184.5L424.5,-181L430.8,-180.6" stroke="#000000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g class="mp-layer mp-borders" fill="none">
-    <path class="mp-hatch" data-kind="disputed" data-name="Gilgit-Baltistan" d="M433.5,532.9L433,534L432.4,535.5L430.3,536.4L428.2,537.2L427.9,537.6L427.6,538.2L426.6,539.5L424.5,540.4L423.1,540.3L422.2,539.8L416.8,541.4L414.5,541.2L412.5,542.3L411,543.3L408.2,544.4L406.4,544.2L403.5,543.1L400.2,541.5L399,540.5L397.8,540.3L394.7,539.8L391.9,538.9L388.4,537.6L386.8,537.3L383.2,536L380.8,536.9L378.7,537.5L376.8,538L375.1,540.5L374.4,541.3L373.6,542.7L373.1,543.6L373.3,544.7L375.2,545.8L376,547L376.1,548.1L375.2,549.2L374.4,549.7L374.4,550.4L374.6,551.3L375.1,551.8L378,552.6L379.8,552.8L380.5,553.1L380.4,553.9L379.8,555.2L377.1,556L375.5,557L375,558.5L374.8,559.6L375.1,560.5L376.3,561.5L377.3,562.5L377.6,563.4L377.3,564.5L376.7,566.2L375.3,567.9L374,569.1L374,569.5L374.1,570.2L374.9,571.4L376.2,572.9L377.7,574.4L378.8,574.7L379.1,575.2L379.4,576.5L379.4,578.1L378.9,579.2L376.2,576.9L372.7,574.5L370.9,573.4L368.4,572.2L367.2,571.4L367.2,568.3L367.5,564.1L367.9,561.9L367.5,560.3L367.5,558.8L367.8,557.9L367.8,556.6L368,554.8L367.7,552.5L367.1,549.8L367.1,546.5L366.4,543L366.5,541.7L366.8,540.4L367.5,539.4L367.9,538.8L370.6,538.4L371.2,537.4L371.9,536.3L374.3,534.6L378.3,532.6L379.7,530.3L380.2,528.4L379.4,527.4L376.9,525.8L374.7,524.4L373.8,523.7L373.6,522.8L373.9,521.9L375.4,519.6L375.5,519L375,518.5L373.4,518.1L370.2,517.5L369.7,517L368.5,516.4L368.2,516.2L366.7,514.9L365.1,513.1L364.7,512.2L364.8,511.1L364.7,510.4L363.9,509.7L362.2,509.2L360.6,509L359.5,509.1L358,509.2L356.3,508.7L355.2,507.7L355.2,506.2L355.5,502L356.3,500.3L360.1,498.6L362.2,497L365.4,494.5L366.1,492.9L366.6,491.6L367.3,491.2L371.5,491L373.6,491.3L376.3,491.8L379,491.9L379.8,491.3L379.2,490.1L378.2,489.4L378.1,488.5L378.8,488.6L381.2,489.7L382.7,490.5L383.4,490.4L386.2,489.1L390.6,487.8L392.6,487.1L393.7,486.8L395.2,487L396.6,487.8L397.7,488.5L398.5,489.3L399.6,489L401.4,488.7L403.1,489.3L406.5,490.9L407,491.6L407.4,494.8L408.1,495L410.1,494.6L411.8,495.2L413.4,496.4L414.6,497.4L415.4,498.6L415.9,500.4L416.2,501.7L416.4,503.5L416,508.1L415.2,508.9L414.6,509.8L414.7,510.6L415.4,511.4L416.4,511.9L417.4,512.4L417.9,513.1L418.6,515.8L419.1,516.3L420.3,516.4L422.9,516L424.9,515.2L425.8,515.1L425.8,517.7L426.9,518.7L428.6,519.9L429.3,520.4L429.9,522.5L430.9,525.4L431.7,527.5L432.4,529.7L432.7,530.9Z" fill="url(#mp-stripe-0nr07fk)" stroke="none">
+    <path class="mp-hatch" data-kind="disputed" data-name="Gilgit-Baltistan" d="M433.5,532.9L433,534L432.4,535.5L430.3,536.4L428.2,537.2L427.9,537.6L427.6,538.2L426.6,539.5L424.5,540.4L423.1,540.3L422.2,539.8L416.8,541.4L414.5,541.2L412.5,542.3L411,543.3L408.2,544.4L406.4,544.2L403.5,543.1L400.2,541.5L399,540.5L397.8,540.3L394.7,539.8L391.9,538.9L388.4,537.6L386.8,537.3L383.2,536L380.8,536.9L378.7,537.5L376.8,538L375.1,540.5L374.4,541.3L373.6,542.7L373.1,543.6L373.3,544.7L375.2,545.8L376,547L376.1,548.1L375.2,549.2L374.4,549.7L374.4,550.4L374.6,551.3L375.1,551.8L378,552.6L379.8,552.8L380.5,553.1L380.4,553.9L379.8,555.2L377.1,556L375.5,557L375,558.5L374.8,559.6L375.1,560.5L376.3,561.5L377.3,562.5L377.6,563.4L377.3,564.5L376.7,566.2L375.3,567.9L374,569.1L374,569.5L374.1,570.2L374.9,571.4L376.2,572.9L377.7,574.4L378.8,574.7L379.1,575.2L379.4,576.5L379.4,578.1L378.9,579.2L376.2,576.9L372.7,574.5L370.9,573.4L368.4,572.2L367.2,571.4L367.2,568.3L367.5,564.1L367.9,561.9L367.5,560.3L367.5,558.8L367.8,557.9L367.8,556.6L368,554.8L367.7,552.5L367.1,549.8L367.1,546.5L366.4,543L366.5,541.7L366.8,540.4L367.5,539.4L367.9,538.8L370.6,538.4L371.2,537.4L371.9,536.3L374.3,534.6L378.3,532.6L379.7,530.3L380.2,528.4L379.4,527.4L376.9,525.8L374.7,524.4L373.8,523.7L373.6,522.8L373.9,521.9L375.4,519.6L375.5,519L375,518.5L373.4,518.1L370.2,517.5L369.7,517L368.5,516.4L368.2,516.2L366.7,514.9L365.1,513.1L364.7,512.2L364.8,511.1L364.7,510.4L363.9,509.7L362.2,509.2L360.6,509L359.5,509.1L358,509.2L356.3,508.7L355.2,507.7L355.2,506.2L355.5,502L356.3,500.3L360.1,498.6L362.2,497L365.4,494.5L366.1,492.9L366.6,491.6L367.3,491.2L371.5,491L373.6,491.3L376.3,491.8L379,491.9L379.8,491.3L379.2,490.1L378.2,489.4L378.1,488.5L378.8,488.6L381.2,489.7L382.7,490.5L383.4,490.4L386.2,489.1L390.6,487.8L392.6,487.1L393.7,486.8L395.2,487L396.6,487.8L397.7,488.5L398.5,489.3L399.6,489L401.4,488.7L403.1,489.3L406.5,490.9L407,491.6L407.4,494.8L408.1,495L410.1,494.6L411.8,495.2L413.4,496.4L414.6,497.4L415.4,498.6L415.9,500.4L416.2,501.7L416.4,503.5L416,508.1L415.2,508.9L414.6,509.8L414.7,510.6L415.4,511.4L416.4,511.9L417.4,512.4L417.9,513.1L418.6,515.8L419.1,516.3L420.3,516.4L422.9,516L424.9,515.2L425.8,515.1L425.8,517.7L426.9,518.7L428.6,519.9L429.3,520.4L429.9,522.5L430.9,525.4L431.7,527.5L432.4,529.7L432.7,530.9Z" fill="url(#mp-stripe-18aredy)" stroke="none">
       <title>Gilgit-Baltistan — Admin. by Pakistan; Claimed by India</title>
     </path>
     <path class="mp-border" data-kind="intl" d="M496.7,377.2L486.9,373.6L479.1,365.4L455.5,361.7L429,359.2L423.1,361.1L401.3,349.7L391.8,353.3L387.9,365.8L362.5,355.1L351.6,356.7L346.7,365.7L336.9,368.3L313.2,380L303.5,394.2L297.3,393.3L294.7,382.3L274.3,377.7L274.4,359.5L266.7,357.8L272.3,336.5L256.9,316.9L230.1,312.5L211.3,311.2L201.7,288.3L191.6,276.9L172.9,255.3L170.7,252.6L128.9,253L104.1,329.8L95.8,328.1L90.5,308.2L82.2,298.7L63.3,296.7L54,301M346.7,365.7L351.2,368.5L335.5,380.5L346.4,390.5L358.7,386.7L376.6,400.5L353.5,413.5L341.2,409.6L334.3,409.1L332.9,402.8L337.8,393.2L315.1,394.9L307.6,407.9L297.6,418.4L283.9,414.9L277.8,423.7L289.2,431L290,447.7L276.5,467.9L264.3,460.9L254.9,458.9L257.9,445.8L237.4,432L222.2,417.6L213.7,405.1L198.6,385.9L196.2,362L191.8,356.7L174.3,353.1L169.5,347.1L172.5,329.8L154.8,312.7L138.1,320.9L122.6,323.9L121.8,335.2L104.1,329.8M276.5,467.9L281.3,471.5L295,466.7L300.1,471.9L307.3,462.9L317.5,464.9L320.6,462.2L323.7,453.7L332.2,447.2L340.7,453.5L337.9,459.9L343,461.6L338.8,479.7L344.8,487.8L351.5,484L359.4,482.8L371.4,474.3L383.2,477.3L401.1,479.2M154.9,474.5L170.6,487.2L184.4,487.5L190.4,478.7L204.9,478.7L216.1,474.4L223.3,458L238.7,456.9L243,449.8L249.8,457.2L254.9,458.9M341.2,409.6L334.2,415.4L316.7,409L313.1,421.2L331.4,422.3L351.1,432.3L383.4,433" fill="none" stroke="#000000" stroke-width="3.5" stroke-dasharray="none" stroke-linejoin="round" stroke-linecap="round"/>
