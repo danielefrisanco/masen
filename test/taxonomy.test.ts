@@ -245,7 +245,11 @@ describe("custom geometry", () => {
   // arcs would draw boundaries that do not follow the geometry on screen.
   it("does not invent borders for geometry it did not supply", async () => {
     const custom = await masen({ region: collection, detail: "110m" });
-    expect(custom.svg).toContain('<g class="mp-layer mp-borders" fill="none"/>');
+    // The claim is about border *lines*, not about the layer being empty: the
+    // hatched overlays live in this layer too, and a caller's own geometry can
+    // legitimately have a contested area under it — this collection spans
+    // Somaliland and Kosovo, both of which are hatched.
+    expect(custom.svg).not.toContain('class="mp-border"');
   });
 
   it("rejects an empty collection", async () => {

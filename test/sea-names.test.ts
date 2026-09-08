@@ -182,3 +182,37 @@ describe("sea names", () => {
     expect(seaNames(map.svg)).toEqual([]);
   });
 });
+
+/**
+ * An anchor on land, refused at build time.
+ *
+ * The file this reads from carries an anchor and no polygon — the shapes are
+ * dropped at fetch time to save 1.5 MB — so nothing downstream can recompute a
+ * better interior point, and nothing downstream can tell that one is wrong.
+ * Four of them were.
+ *
+ * Measured against the country geometry that ships beside them, before the
+ * build learned to refuse: **Indian Ocean at 92.8°E, 80.6°S and Southern Ocean
+ * at 101.0°E, 80.6°S, both well inside Antarctica** at both tiers; and at 50m,
+ * **Luzon Strait inside Taiwan and Strait of Gibraltar inside Morocco.** The
+ * last is the one that mattered in practice — the oceans never draw, because an
+ * ocean's middle is never on a regional map, but a reader framing the western
+ * Mediterranean would have got "Strait of Gibraltar" set across Moroccan land.
+ *
+ * A pole of inaccessibility for a body of water cannot be on a continent. That
+ * is not a threshold and it is not a matter of taste, which is what makes it a
+ * test.
+ */
+describe("no sea is anchored on land", () => {
+  for (const tier of ["110m", "50m"] as const) {
+    it(`holds at ${tier}`, async () => {
+      const world = await loadWorld(tier);
+      const ashore = world.seas
+        .filter((sea) =>
+          world.countries.some((c) => geoContains(c.geometry as never, [...sea.position])),
+        )
+        .map((sea) => sea.name);
+      expect(ashore).toEqual([]);
+    }, 30_000);
+  }
+});

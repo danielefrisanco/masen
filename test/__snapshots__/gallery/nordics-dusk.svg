@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-01np43e" role="img" aria-label="The Nordics">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0xvq4xx" role="img" aria-label="The Nordics">
   <title>The Nordics</title>
   <style>
-    .mp.mp-t-01np43e {
+    .mp.mp-t-0xvq4xx {
       --bg: transparent;
       --sea: #DCE7EC;
       --land: #D8D8D2;
@@ -55,92 +55,92 @@
       --pin-size: 7;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-01np43e .mp-bg {
+    .mp.mp-t-0xvq4xx .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-01np43e .mp-sea {
+    .mp.mp-t-0xvq4xx .mp-sea {
       fill: var(--sea);
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-grid {
+    .mp.mp-t-0xvq4xx .mp-grid {
       fill: none;
       stroke: var(--graticule);
       stroke-width: var(--graticule-width);
     }
-    .mp.mp-t-01np43e .mp-grid[data-kind="equator"], .mp.mp-t-01np43e .mp-grid[data-kind="tropic"] {
+    .mp.mp-t-0xvq4xx .mp-grid[data-kind="equator"], .mp.mp-t-0xvq4xx .mp-grid[data-kind="tropic"] {
       stroke: var(--equator);
     }
-    .mp.mp-t-01np43e .mp-neighbour {
+    .mp.mp-t-0xvq4xx .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-country {
+    .mp.mp-t-0xvq4xx .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-01np43e .mp-country[data-bin="1"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-01np43e .mp-country[data-bin="2"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-01np43e .mp-country[data-bin="3"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-01np43e .mp-country[data-bin="4"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-01np43e .mp-country[data-bin="5"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-01np43e .mp-country[data-fill="1"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-01np43e .mp-country[data-fill="2"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-01np43e .mp-country[data-fill="3"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-01np43e .mp-country[data-fill="4"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-01np43e .mp-country[data-fill="5"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-01np43e .mp-country[data-fill="6"] {
+    .mp.mp-t-0xvq4xx .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-01np43e .mp-country.is-highlighted {
+    .mp.mp-t-0xvq4xx .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-01np43e .mp-cover {
+    .mp.mp-t-0xvq4xx .mp-cover {
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-cover[data-kind="desert"] {
+    .mp.mp-t-0xvq4xx .mp-cover[data-kind="desert"] {
       fill: var(--desert);
     }
-    .mp.mp-t-01np43e .mp-cover[data-kind="mountain"] {
+    .mp.mp-t-0xvq4xx .mp-cover[data-kind="mountain"] {
       fill: var(--mountain);
     }
-    .mp.mp-t-01np43e .mp-cover[data-kind="glacier"] {
+    .mp.mp-t-0xvq4xx .mp-cover[data-kind="glacier"] {
       fill: var(--glacier);
     }
-    .mp.mp-t-01np43e .mp-water[data-kind="lake"] {
+    .mp.mp-t-0xvq4xx .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-water[data-kind="river"] {
+    .mp.mp-t-0xvq4xx .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-01np43e .mp-border {
+    .mp.mp-t-0xvq4xx .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -148,78 +148,84 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-01np43e .mp-road {
+    .mp.mp-t-0xvq4xx .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-01np43e .mp-place {
+    .mp.mp-t-0xvq4xx .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-01np43e .mp-prism-side {
+    .mp.mp-t-0xvq4xx .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-prism-edge {
+    .mp.mp-t-0xvq4xx .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-01np43e .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-01np43e .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-01np43e .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-01np43e .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-01np43e .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-01np43e .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-01np43e .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-01np43e .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-01np43e .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-01np43e .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-01np43e .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-01np43e .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-0xvq4xx .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-01np43e .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-0xvq4xx .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-01np43e .mp-hatch {
-      fill: url(#mp-stripe-1wqpwic);
+    .mp.mp-t-0xvq4xx .mp-country[data-unseen] {
+      stroke: var(--border);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-0xvq4xx .mp-hatch {
+      fill: url(#mp-stripe-1kyhpn2);
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-hatch-line {
+    .mp.mp-t-0xvq4xx .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-01np43e .mp-label {
+    .mp.mp-t-0xvq4xx .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
@@ -230,102 +236,102 @@
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-01np43e .mp-label[data-kind="place"] {
+    .mp.mp-t-0xvq4xx .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-01np43e .mp-label[data-kind="grid"] {
+    .mp.mp-t-0xvq4xx .mp-label[data-kind="grid"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
       letter-spacing: 0.04em;
     }
-    .mp.mp-t-01np43e .mp-label[data-kind="sea"] {
+    .mp.mp-t-0xvq4xx .mp-label[data-kind="sea"] {
       fill: var(--sea-ink);
       font-size: var(--place-label-size);
       font-style: italic;
       letter-spacing: 0.08em;
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-route-line {
+    .mp.mp-t-0xvq4xx .mp-route-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-01np43e .mp-route-stop {
+    .mp.mp-t-0xvq4xx .mp-route-stop {
       fill: var(--label-halo);
       stroke: var(--anno);
       stroke-width: 2.2;
     }
-    .mp.mp-t-01np43e .mp-route-stop[data-kind="minor"] {
+    .mp.mp-t-0xvq4xx .mp-route-stop[data-kind="minor"] {
       stroke-width: 1.6;
     }
-    .mp.mp-t-01np43e .mp-label.is-highlighted {
+    .mp.mp-t-0xvq4xx .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-01np43e .mp-label[data-fit="0"] {
+    .mp.mp-t-0xvq4xx .mp-label[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-01np43e .mp-pin-mark {
+    .mp.mp-t-0xvq4xx .mp-pin-mark {
       fill: var(--anno);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
     }
-    .mp.mp-t-01np43e .mp-icon {
+    .mp.mp-t-0xvq4xx .mp-icon {
       fill: var(--anno-ink);
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-label[data-kind="pin"] {
+    .mp.mp-t-0xvq4xx .mp-label[data-kind="pin"] {
       font-size: var(--place-label-size);
       font-weight: 700;
     }
-    .mp.mp-t-01np43e .mp-arrow-line {
+    .mp.mp-t-0xvq4xx .mp-arrow-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2;
       stroke-linecap: round;
-      marker-end: url(#mp-arrowhead-1wqpwic);
+      marker-end: url(#mp-arrowhead-1kyhpn2);
     }
-    .mp.mp-t-01np43e .mp-arrow-head {
+    .mp.mp-t-0xvq4xx .mp-arrow-head {
       fill: var(--anno);
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-callout-leader {
+    .mp.mp-t-0xvq4xx .mp-callout-leader {
       fill: none;
       stroke: var(--anno);
       stroke-width: 1.25;
       stroke-linecap: round;
     }
-    .mp.mp-t-01np43e .mp-callout-box {
+    .mp.mp-t-0xvq4xx .mp-callout-box {
       fill: var(--anno);
       stroke: var(--anno-ink);
       stroke-width: 1;
     }
-    .mp.mp-t-01np43e .mp-label[data-kind="callout"] {
+    .mp.mp-t-0xvq4xx .mp-label[data-kind="callout"] {
       fill: var(--anno-ink);
       font-size: var(--place-label-size);
       font-weight: 500;
       stroke: none;
     }
-    .mp.mp-t-01np43e .mp-anno[data-fit="0"] {
+    .mp.mp-t-0xvq4xx .mp-anno[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-01np43e .mp-credit, .mp.mp-t-01np43e .mp-scale-label, .mp.mp-t-01np43e .mp-compass-label {
+    .mp.mp-t-0xvq4xx .mp-credit, .mp.mp-t-0xvq4xx .mp-scale-label, .mp.mp-t-0xvq4xx .mp-compass-label {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-size: var(--place-label-size);
       letter-spacing: var(--label-track);
     }
-    .mp.mp-t-01np43e .mp-scale-bar {
+    .mp.mp-t-0xvq4xx .mp-scale-bar {
       fill: none;
       stroke: var(--furniture-ink);
       stroke-width: 1.5;
     }
-    .mp.mp-t-01np43e .mp-compass-needle {
+    .mp.mp-t-0xvq4xx .mp-compass-needle {
       fill: var(--furniture-ink);
     }
-    .mp.mp-t-01np43e .mp-watermark {
+    .mp.mp-t-0xvq4xx .mp-watermark {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-weight: 600;
@@ -333,7 +339,7 @@
       opacity: 0.18;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-01np43e {
+      .mp.mp-t-0xvq4xx {
         --land: #2E3134;
         --sea: #16242C;
         --land-edge: #16181A;
@@ -368,7 +374,7 @@
         --furniture-ink: #85898D;
       }
     }
-    .mp.mp-t-01np43e {
+    .mp.mp-t-0xvq4xx {
       --bg: #0E1620;
       --sea: #0E1620;
       --land: #22303F;
@@ -410,13 +416,13 @@
     }
   </style>
   <defs class="mp-defs">
-    <clipPath id="mp-land-clip-1wqpwic">
+    <clipPath id="mp-land-clip-1kyhpn2">
       <path d="M610.7,-248.5L610.8,-262L620.3,-265.3L631.6,-253.9L661.7,-231.9L647.4,-212.4L649.7,-183.9L644.4,-175.3L647.2,-143.6L637.2,-140L615.1,-159.7L620.2,-174.3L606.6,-183.3L587.4,-213.5L578.4,-243L595.2,-259.2L601,-246.3ZM874.7,64.9L860.4,87.4L851.9,94.6L847.1,68.6L826.5,61.1L812.6,79.8L815.8,107.4L809.3,127L792.9,123.1L776.9,130L757.4,115.4L752.4,126.8L744.9,130.4L749.1,154.4L723,154.6L724,175.4L711,178.1L707.2,205.6L700.5,248.4L685.8,303.2L693.4,314.7L690.2,329.9L674.4,331.6L668.5,367.1L675.9,415.2L689.5,432.2L689.5,475.7L677.5,502.7L671.8,524.7L656.7,503.7L623.2,549.4L597.9,559.7L570.4,542.1L562.5,502.8L554.8,418.3L569.8,394.2L611.9,361L640.1,320.4L661.8,266.2L685.1,190.7L702.5,159.2L727.5,106.2L750.1,83.4L770.4,79.4L778.7,44.5L799.9,38.7L817.4,24L863.1,33.9L852.5,49.4ZM687.3,-285.5L685.1,-262.4L667.1,-251.4L645.3,-251.9L641.3,-261.9L631.6,-260.2L620.5,-276.1L637.4,-291.4L649,-284.9L651.9,-298L670.4,-293.8ZM697.8,-198.8L685.3,-178.4L668.9,-182.9L671.6,-193.9L663.7,-204.4L676.9,-216.3L684.2,-203.5ZM671.8,524.7L677.5,502.7L689.5,475.7L689.5,432.2L675.9,415.2L668.5,367.1L674.4,331.6L690.2,329.9L693.4,314.7L685.8,303.2L700.5,248.4L707.2,205.6L711,178.1L724,175.4L723,154.6L749.1,154.4L744.9,130.4L752.4,126.8L774.4,139.4L802.1,157.1L819.8,210.8L828.9,222.9L807.3,240.5L800.3,269.3L808.7,290.2L791.8,325.3L768.1,363.5L767,416.7L784.9,439.2L806.4,455.1L799.2,499.3L781.6,511.9L786.8,574L782.3,610.2L757.1,611.2L750.3,642L726.6,647.4L715,613.8L692.7,574.6ZM664.9,669.1L651.9,676L635.4,672.5L625.4,652.6L622.1,615L624.8,604.8L629.7,593.4L647,589.6L653.1,578.8L667.8,566.9L669.2,585.8L664.6,598.3L668,608.4L679.7,612.7L676.2,627.1L669.7,623.8L657.5,651.7ZM710.9,621.7L720,639.1L711.6,670.5L687,652.6L682.3,637.6ZM268.6,216.8L258.6,238.6L268.4,267.4L241.1,288.8L189.3,298.5L173.8,300.1L155.6,287.5L118.2,259.7L139,250.9L114.8,220.8L142.8,225.4L146.5,215.2L120.7,194.4L139.9,176.9L162.5,180.9L174.6,212.7L202.9,202.2L217,218.2L246,207.2ZM851.9,94.6L859.9,119.3L888.8,133.7L887.7,164.3L919.9,196L923,228.9L946.9,248.3L950.5,272.8L983.1,285.7L985.2,305.3L979.3,331.2L962.5,389.1L932.9,403.6L907.1,426.9L881,443.5L865.1,427.4L844.9,420.8L838.8,385L821.8,355.4L823.6,332.6L831.4,306.3L853.7,257.4L861,246.7L854.4,232.6L828.9,222.9L819.8,210.8L802.1,157.1L774.4,139.4L752.4,126.8L757.4,115.4L776.9,130L792.9,123.1L809.3,127L815.8,107.4L812.6,79.8L826.5,61.1L847.1,68.6Z"/>
     </clipPath>
-    <pattern id="mp-stripe-1wqpwic" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <pattern id="mp-stripe-1kyhpn2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#7B8B9C" stroke-width="1.6"/>
     </pattern>
-    <marker id="mp-arrowhead-1wqpwic" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <marker id="mp-arrowhead-1kyhpn2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path class="mp-arrow-head" d="M0,0 L10,5 L0,10 Z" fill="#F2A077" stroke="none"/>
     </marker>
   </defs>
@@ -431,18 +437,18 @@
     <path class="mp-country" data-iso="SE" data-name="Sweden" d="M671.8,524.7L677.5,502.7L689.5,475.7L689.5,432.2L675.9,415.2L668.5,367.1L674.4,331.6L690.2,329.9L693.4,314.7L685.8,303.2L700.5,248.4L707.2,205.6L711,178.1L724,175.4L723,154.6L749.1,154.4L744.9,130.4L752.4,126.8L774.4,139.4L802.1,157.1L819.8,210.8L828.9,222.9L807.3,240.5L800.3,269.3L808.7,290.2L791.8,325.3L768.1,363.5L767,416.7L784.9,439.2L806.4,455.1L799.2,499.3L781.6,511.9L786.8,574L782.3,610.2L757.1,611.2L750.3,642L726.6,647.4L715,613.8L692.7,574.6Z" fill="#22303F" stroke="#2E4053" stroke-width="0.5" stroke-linejoin="round">
       <title>Sweden</title>
     </path>
-    <path class="mp-country" data-iso="DK" data-name="Denmark" d="M664.9,669.1L651.9,676L635.4,672.5L625.4,652.6L622.1,615L624.8,604.8L629.7,593.4L647,589.6L653.1,578.8L667.8,566.9L669.2,585.8L664.6,598.3L668,608.4L679.7,612.7L676.2,627.1L669.7,623.8L657.5,651.7ZM710.9,621.7L720,639.1L711.6,670.5L687,652.6L682.3,637.6Z" fill="#22303F" stroke="#2E4053" stroke-width="0.5" stroke-linejoin="round">
-      <title>Denmark</title>
+    <path class="mp-country" data-iso="FI" data-name="Finland" d="M851.9,94.6L859.9,119.3L888.8,133.7L887.7,164.3L919.9,196L923,228.9L946.9,248.3L950.5,272.8L983.1,285.7L985.2,305.3L979.3,331.2L962.5,389.1L932.9,403.6L907.1,426.9L881,443.5L865.1,427.4L844.9,420.8L838.8,385L821.8,355.4L823.6,332.6L831.4,306.3L853.7,257.4L861,246.7L854.4,232.6L828.9,222.9L819.8,210.8L802.1,157.1L774.4,139.4L752.4,126.8L757.4,115.4L776.9,130L792.9,123.1L809.3,127L815.8,107.4L812.6,79.8L826.5,61.1L847.1,68.6Z" fill="#22303F" stroke="#2E4053" stroke-width="0.5" stroke-linejoin="round">
+      <title>Finland</title>
     </path>
     <path class="mp-country" data-iso="IS" data-name="Iceland" d="M268.6,216.8L258.6,238.6L268.4,267.4L241.1,288.8L189.3,298.5L173.8,300.1L155.6,287.5L118.2,259.7L139,250.9L114.8,220.8L142.8,225.4L146.5,215.2L120.7,194.4L139.9,176.9L162.5,180.9L174.6,212.7L202.9,202.2L217,218.2L246,207.2Z" fill="#22303F" stroke="#2E4053" stroke-width="0.5" stroke-linejoin="round">
       <title>Iceland</title>
     </path>
-    <path class="mp-country" data-iso="FI" data-name="Finland" d="M851.9,94.6L859.9,119.3L888.8,133.7L887.7,164.3L919.9,196L923,228.9L946.9,248.3L950.5,272.8L983.1,285.7L985.2,305.3L979.3,331.2L962.5,389.1L932.9,403.6L907.1,426.9L881,443.5L865.1,427.4L844.9,420.8L838.8,385L821.8,355.4L823.6,332.6L831.4,306.3L853.7,257.4L861,246.7L854.4,232.6L828.9,222.9L819.8,210.8L802.1,157.1L774.4,139.4L752.4,126.8L757.4,115.4L776.9,130L792.9,123.1L809.3,127L815.8,107.4L812.6,79.8L826.5,61.1L847.1,68.6Z" fill="#22303F" stroke="#2E4053" stroke-width="0.5" stroke-linejoin="round">
-      <title>Finland</title>
+    <path class="mp-country" data-iso="DK" data-name="Denmark" d="M664.9,669.1L651.9,676L635.4,672.5L625.4,652.6L622.1,615L624.8,604.8L629.7,593.4L647,589.6L653.1,578.8L667.8,566.9L669.2,585.8L664.6,598.3L668,608.4L679.7,612.7L676.2,627.1L669.7,623.8L657.5,651.7ZM710.9,621.7L720,639.1L711.6,670.5L687,652.6L682.3,637.6Z" fill="#22303F" stroke="#2E4053" stroke-width="0.5" stroke-linejoin="round">
+      <title>Denmark</title>
     </path>
   </g>
   <g class="mp-layer mp-terrain"/>
-  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-1wqpwic)">
+  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-1kyhpn2)">
     <path class="mp-water" data-kind="lake" fill="#35607A" d="M725.5,504.4L726.2,508.4L725.9,515.2L715.4,528.4L707.8,532.9L700.9,533.8L700.9,523.8L699.7,520.6L702.6,517.2L708.6,514.5L711.2,509.3L717.3,500.6Z" stroke="none"/>
   </g>
   <g class="mp-layer mp-borders" fill="none">

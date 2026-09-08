@@ -114,3 +114,61 @@ describe("notes beside a control", () => {
     expect(bare["gridLabels"]).toBeUndefined();
   });
 });
+
+/**
+ * The quietest failure the tool had.
+ *
+ * The Region picker's country list is built from the detail tier — 177 at
+ * 110m, 241 at 50m — so choosing the Maldives at 50m and switching to 110m
+ * took it off the map without a word. The note is the library's own
+ * `omissions()` answer, placed under the control that can act on it.
+ *
+ * Real maps here for the same reason as everywhere else in this file: a
+ * hand-written omission list is a fixture that can disagree with the library.
+ * The one synthetic case below is a formatting rule with no map behind it.
+ */
+describe("what the map left out", () => {
+  const built = async (config: Partial<Config>, detail: "110m" | "50m", size: [number, number]) => {
+    const drawn = await masen({
+      ...toOptions({ ...DEFAULTS, ...config }),
+      detail,
+      size,
+      theme: "minimal",
+    });
+    return notesFor(drawn.svg, { ...DEFAULTS, ...config, detail }, drawn.omissions());
+  };
+
+  it("names the six Europe loses at the coarse tier, under Detail", async () => {
+    const notes = await built({ region: "europe" }, "110m", [960, 620]);
+    for (const code of ["AD", "LI", "MT", "MC", "SM", "VA"]) {
+      expect(notes["detail"]).toContain(code);
+    }
+    expect(notes["detail"]).toContain("Switch to 50m");
+  }, 20_000);
+
+  it("says which countries are a mark rather than a shape, under Region", async () => {
+    const notes = await built({ region: "europe" }, "50m", [960, 620]);
+    expect(notes["region"]).toContain("VA");
+    expect(notes["region"]).toContain("city dot");
+    // Everything is in the 50m data, so there is nothing for Detail to say.
+    expect(notes["detail"]).toBeUndefined();
+  }, 20_000);
+
+  it("says nothing at all about a map that drew everything and drew it big", async () => {
+    // Three large countries and no enclaves. `west-europe` cannot be used for
+    // this any more: it carries the five microstates on purpose, because
+    // leaving them out left a hole in the middle of the drawn land rather than
+    // a country beyond the edge of it.
+    const notes = await built({ region: "FR,DE,ES" }, "50m", [960, 620]);
+    expect(notes["detail"]).toBeUndefined();
+    expect(notes["region"]).toBeUndefined();
+  }, 20_000);
+
+  it("keeps a long list readable", () => {
+    // No map behind this one: it is the sentence's own rule, and building a
+    // frame that loses eight countries to make the point would be a worse test.
+    const many = ["AD", "LI", "MT", "MC", "SM", "VA", "AX", "FO"];
+    const notes = notesFor("", { ...DEFAULTS, detail: "110m" }, { absent: many, unseen: [] });
+    expect(notes["detail"]).toContain("and 2 more");
+  });
+});

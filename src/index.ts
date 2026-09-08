@@ -3,6 +3,7 @@ import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { arrowLayer, calloutLayer, pinLayer, routeLayer } from "./annotations.js";
 import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
 import { measureDistortion, type Distortion } from "./distortion.js";
+import { omissionsOf, type Omissions } from "./omissions.js";
 import { watermarkLayer } from "./watermark.js";
 import { graticuleLayer, type GridMark } from "./graticule.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
@@ -90,6 +91,7 @@ export async function countryTable(detail: Detail = "110m"): Promise<readonly Co
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 export { FILL_COUNT, politicalFill } from "./political.js";
+export type { Omissions } from "./omissions.js";
 export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
 export { FILTER_NAMES } from "./filters.js";
@@ -165,6 +167,28 @@ const DEFAULT_PADDING = 24;
 const PLACE_RADIUS: Readonly<Record<1 | 2 | 3, number>> = { 1: 3.2, 2: 2.2, 3: 1.5 };
 
 /**
+ * Below this extent a country is drawn and cannot be read.
+ *
+ * **Measured, and deliberately not a round number.** `europe` at 50m on a
+ * 960x620 canvas was rendered and every microstate cropped at 1:1 and looked
+ * at: Vatican 0.2 x 0.1 user units, Monaco 0.8 x 0.7, San Marino 1.5 x 1.6,
+ * Liechtenstein 1.7 x 3.5, Andorra 4.3 x 3.6, Malta 5.4 x 4.6. Not one of them
+ * is distinguishable from the land around it. What every one of those crops
+ * *does* show is the capital's dot and the capital's name — so the map draws a
+ * circle on top of the country that is larger than the country.
+ *
+ * That is the threshold, and it comes from the document rather than from
+ * taste: **a rank-1 place dot is 6.4 user units across, and a country smaller
+ * than the dot standing on it cannot be seen underneath it.** It scales with
+ * the canvas the way the shapes do not — at 4000x2000 Malta reaches 18 x 16
+ * and passes, which is exactly the size at which looking at it shows an island.
+ *
+ * Extent rather than area: a country is unreadable when its *longest* side is
+ * short. Chile is thin and perfectly legible.
+ */
+const UNSEEN_EXTENT = PLACE_RADIUS[1] * 2;
+
+/**
  * Points along a geometry, for testing whether it touches a country.
  *
  * A bounding box is not enough: France's box spans Guadeloupe to Réunion
@@ -207,6 +231,14 @@ function intersectsBBox(country: CountryFeature, bbox: BBox): boolean {
 
 interface ResolvedRegion {
   readonly features: readonly CountryFeature[];
+  /**
+   * The ISO codes the caller named, resolved, before any of them were looked
+   * up in the data. This is the list the drawn map is measured against.
+   *
+   * Empty for a world map, a bounding box or caller-supplied GeoJSON: none of
+   * those names a country, so there is no list to fall short of.
+   */
+  readonly requested: readonly string[];
   /** What the camera frames — the bbox itself, when one was given. */
   readonly frame: FrameGeometry;
   /**
@@ -255,6 +287,7 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     const features = codes === null ? all : pick(codes, all);
     return {
       features,
+      requested: codes === null ? [] : resolveAll(codes),
       frame: framingGeometry(features),
       borderIds: features.map((f) => f.id),
       description: `Map of ${presetLabel(region)}`,
@@ -265,6 +298,7 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     const features = pick(region as readonly string[], all);
     return {
       features,
+      requested: resolveAll(region as readonly string[]),
       frame: framingGeometry(features),
       borderIds: features.map((f) => f.id),
       description: `Map of ${listNames(features.map((f) => f.name).filter(Boolean))}`,
@@ -309,6 +343,9 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     };
     return {
       features,
+      // A box names an area, not a list of countries: whatever falls inside it
+      // is the answer, so there is nothing it can fall short of.
+      requested: [],
       frame: {
         geometry: rectangle,
         bounds: [
@@ -336,6 +373,9 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     }
     return {
       features,
+      // The caller supplied the geometry. Every feature they gave is drawn, so
+      // the only list to compare against is the one they already hold.
+      requested: [],
       frame: framingGeometry(features),
       borderIds: [],
       description: `Map of ${features.length} custom ${features.length === 1 ? "feature" : "features"}`,
@@ -343,6 +383,25 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
   }
 
   throw new Error("masen: region must be a preset name, code list, bbox, or GeoJSON");
+}
+
+/**
+ * The same resolution `pick` does, without the lookup.
+ *
+ * Kept separate rather than returned from `pick`, because the two answer
+ * different questions: `pick` says what the data has, and this says what was
+ * asked for. Comparing them is the whole point — a function that returned only
+ * the intersection could not tell anyone what fell out of it.
+ */
+function resolveAll(codes: readonly string[]): string[] {
+  const resolved: string[] = [];
+  for (const code of codes) {
+    const id = resolveId(code);
+    // An unresolvable code has already thrown in `pick`. Skipping rather than
+    // throwing twice keeps the error message in one place.
+    if (id !== null) resolved.push(id);
+  }
+  return resolved;
 }
 
 function pick(codes: readonly string[], all: readonly CountryFeature[]): CountryFeature[] {
@@ -464,6 +523,22 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   function distortion(): Distortion {
     measured ??= measureDistortion(projectPoint, invertPoint, [width, height]);
     return measured;
+  }
+
+  /**
+   * What was asked for and is not on the map.
+   *
+   * Cheap enough to take eagerly — it is a set difference over at most a few
+   * hundred codes — but computed here beside `distortion()` because it answers
+   * the same kind of question, and because the answer should be reachable from
+   * the built map rather than recomputed by the caller against a list they
+   * would have to keep in step with the data.
+   */
+  const drawnIds = resolved.features.map((feature) => feature.id);
+  function omissions(): Omissions {
+    // `unseen` is filled as the land layer is built, which happens below this
+    // point, so the report is composed on demand rather than captured here.
+    return omissionsOf(resolved.requested, drawnIds, unseen);
   }
 
   function projectPoint(position: Position): Point | null {
@@ -605,14 +680,51 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   // the layer rather than only over the ones drawn after it.
   const hatched: SvgNode[] = [];
   const highlightedNames: string[] = [];
+  /** Drawn, and too small to be read. Reported by `omissions()`. */
+  const unseen: string[] = [];
+
+  /**
+   * Country paths with the size they came out, so the small ones can be drawn
+   * last.
+   *
+   * **An enclosed microstate was being painted over by the country around it.**
+   * The features arrive in the data's own order, which is not a drawing order:
+   * on `europe` at 50m the Vatican is path 0 and Italy is path 25, so Italy's
+   * fill goes straight over it, and San Marino, Monaco and Liechtenstein are
+   * the same story. Giving them a heavy outline did nothing, because the
+   * outline was underneath. Malta showed up immediately — it is an island, and
+   * nothing is drawn on top of it.
+   *
+   * So the land layer paints largest first. That is what a cartographer does
+   * by hand and it is the only order in which an enclave can be seen at all.
+   */
+  const shapes: { readonly extent: number; readonly node: SvgNode }[] = [];
+
   for (const country of frame.countries) {
     const d = path(country.geometry as never);
     if (!d) continue;
+    /**
+     * How big this country actually comes out, on this canvas, under this
+     * projection. The same `path.bounds` measurement the neighbour layer uses
+     * to decide what is in view, asked a different question.
+     *
+     * Non-finite for a country clipped away entirely — the far side of a globe
+     * — which is not the same as being too small, and is left alone here.
+     */
+    const [[left, top], [right, bottom]] = path.bounds(country.geometry as never);
+    const extent = Math.max(right - left, bottom - top);
+    const tooSmall = Number.isFinite(extent) && extent < UNSEEN_EXTENT;
+    if (tooSmall && country.id !== "") unseen.push(country.id);
     const isHighlighted = country.id !== "" && highlighted.has(country.id);
     const name = nameOf(country.id, country.name);
     if (isHighlighted && name) highlightedNames.push(name);
     const banded = bins?.get(country.id);
-    land.push(
+    shapes.push({
+      // A country whose bounds are not finite is one the projection clipped;
+      // it sorts to the bottom rather than the top, because "unknown size" is
+      // not a reason to paint it over everything else.
+      extent: Number.isFinite(extent) ? extent : Number.POSITIVE_INFINITY,
+      node:
       el(
         "path",
         {
@@ -623,6 +735,11 @@ export async function masen(options: MapOptions): Promise<MapResult> {
           "data-value": banded?.value,
           "data-fill": fillOf(country.id),
           "data-stripe": striped.has(country.id) ? "" : undefined,
+          // A fact, not an appearance: the library says the shape came out
+          // smaller than the dot standing on it, and the theme decides what to
+          // do about it. Nothing is moved, grown or invented — the polygon is
+          // exactly the one Natural Earth supplies.
+          "data-unseen": tooSmall ? "" : undefined,
           d,
         },
         // A per-feature title is a hover tooltip, not an accessibility tree:
@@ -630,12 +747,16 @@ export async function masen(options: MapOptions): Promise<MapResult> {
         // label once instead of announcing two hundred paths.
         name === "" ? [] : [el("title", {}, [text(name)])],
       ),
-    );
+    });
     if (striped.has(country.id)) {
       hatched.push(el("path", { class: "mp-hatch", "data-iso": country.id, d }));
     }
   }
-  land.push(...hatched);
+
+  // Largest first, so an enclave lands on top of whatever encloses it. Sorted
+  // rather than reversed: the data's order is arbitrary, not backwards.
+  shapes.sort((a, b) => b.extent - a.extent);
+  for (const shape of shapes) land.push(shape.node);
 
   /**
    * Disputed and breakaway areas, hatched over the countries rather than
@@ -719,7 +840,7 @@ export async function masen(options: MapOptions): Promise<MapResult> {
       }
       const props = area.properties ?? {};
       const areaName = props.n ?? "";
-      land.push(
+      hatched.push(
         el(
           "path",
           {
@@ -1049,12 +1170,34 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   if (wants("borders") && extrusion === null) {
     const borderGeometry =
       resolved.borderIds.length > 0 ? world.borders(resolved.borderIds) : null;
+    const lines: SvgNode[] = [];
     if (borderGeometry !== null) {
       const d = path(borderGeometry as never);
-      if (d) {
-        content.set("borders", [el("path", { class: "mp-border", "data-kind": "intl", d })]);
-      }
+      if (d) lines.push(el("path", { class: "mp-border", "data-kind": "intl", d }));
     }
+    /**
+     * The hatched overlays paint here, and not with the land they describe.
+     *
+     * **They were in `mp-land`, and land cover buried them.** The paint order
+     * is land, then terrain, then hydro, then borders — so on any map with
+     * `terrain` on, the desert wash went straight over the contested-area
+     * hatching and the caller's own `stripe`. Measured on the Sahara gallery
+     * map: the `W. Sahara` hatch is in the document, carries its pattern fill,
+     * and cannot be seen at any zoom. A map that makes a claim it then hides
+     * is the exact failure this phase exists for, and it was shipping by
+     * default since the overlay went in.
+     *
+     * `borders` is where they belong on the merits, not merely where they are
+     * visible: a contested-area hatch is a statement about a boundary, and the
+     * boundary lines drawing on top of it is the right stack — the line stays
+     * legible over its own hatching.
+     *
+     * Gated on the land layer because that is what they annotate: a hatch with
+     * no country under it is a smudge, which is the same reason the disputed
+     * pass tests for land beneath before drawing anything at all.
+     */
+    if (wants("land")) lines.unshift(...hatched);
+    if (lines.length > 0) content.set("borders", lines);
   }
 
   /**
@@ -1272,6 +1415,8 @@ export async function masen(options: MapOptions): Promise<MapResult> {
     invert: invertPoint,
 
     distortion,
+
+    omissions,
 
     toString() {
       return complete;

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-06m4hly" role="img" aria-label="A scale bar the frame has earned">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-12kzji9" role="img" aria-label="A scale bar the frame has earned">
   <title>A scale bar the frame has earned</title>
   <style>
-    .mp.mp-t-06m4hly {
+    .mp.mp-t-12kzji9 {
       --bg: #A8C0CC;
       --sea: #A8C0CC;
       --land: #F2EAD8;
@@ -55,92 +55,92 @@
       --pin-size: 7;
       --furniture-ink: #7A7263;
     }
-    .mp.mp-t-06m4hly .mp-bg {
+    .mp.mp-t-12kzji9 .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-06m4hly .mp-sea {
+    .mp.mp-t-12kzji9 .mp-sea {
       fill: var(--sea);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-grid {
+    .mp.mp-t-12kzji9 .mp-grid {
       fill: none;
       stroke: var(--graticule);
       stroke-width: var(--graticule-width);
     }
-    .mp.mp-t-06m4hly .mp-grid[data-kind="equator"], .mp.mp-t-06m4hly .mp-grid[data-kind="tropic"] {
+    .mp.mp-t-12kzji9 .mp-grid[data-kind="equator"], .mp.mp-t-12kzji9 .mp-grid[data-kind="tropic"] {
       stroke: var(--equator);
     }
-    .mp.mp-t-06m4hly .mp-neighbour {
+    .mp.mp-t-12kzji9 .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-country {
+    .mp.mp-t-12kzji9 .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="1"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="2"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="3"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="4"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-06m4hly .mp-country[data-bin="5"] {
+    .mp.mp-t-12kzji9 .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="1"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="2"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="3"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="4"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="5"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-06m4hly .mp-country[data-fill="6"] {
+    .mp.mp-t-12kzji9 .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-06m4hly .mp-country.is-highlighted {
+    .mp.mp-t-12kzji9 .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-06m4hly .mp-cover {
+    .mp.mp-t-12kzji9 .mp-cover {
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-cover[data-kind="desert"] {
+    .mp.mp-t-12kzji9 .mp-cover[data-kind="desert"] {
       fill: var(--desert);
     }
-    .mp.mp-t-06m4hly .mp-cover[data-kind="mountain"] {
+    .mp.mp-t-12kzji9 .mp-cover[data-kind="mountain"] {
       fill: var(--mountain);
     }
-    .mp.mp-t-06m4hly .mp-cover[data-kind="glacier"] {
+    .mp.mp-t-12kzji9 .mp-cover[data-kind="glacier"] {
       fill: var(--glacier);
     }
-    .mp.mp-t-06m4hly .mp-water[data-kind="lake"] {
+    .mp.mp-t-12kzji9 .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-water[data-kind="river"] {
+    .mp.mp-t-12kzji9 .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-06m4hly .mp-border {
+    .mp.mp-t-12kzji9 .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -148,78 +148,84 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-06m4hly .mp-road {
+    .mp.mp-t-12kzji9 .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-06m4hly .mp-place {
+    .mp.mp-t-12kzji9 .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-06m4hly .mp-prism-side {
+    .mp.mp-t-12kzji9 .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-prism-edge {
+    .mp.mp-t-12kzji9 .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-06m4hly .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-06m4hly .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-12kzji9 .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-06m4hly .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-12kzji9 .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-06m4hly .mp-hatch {
-      fill: url(#mp-stripe-0sc3p3f);
+    .mp.mp-t-12kzji9 .mp-country[data-unseen] {
+      stroke: var(--border);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-12kzji9 .mp-hatch {
+      fill: url(#mp-stripe-1fkyt04);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-hatch-line {
+    .mp.mp-t-12kzji9 .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-06m4hly .mp-label {
+    .mp.mp-t-12kzji9 .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
@@ -230,102 +236,102 @@
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="place"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="grid"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="grid"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
       letter-spacing: 0.04em;
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="sea"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="sea"] {
       fill: var(--sea-ink);
       font-size: var(--place-label-size);
       font-style: italic;
       letter-spacing: 0.08em;
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-route-line {
+    .mp.mp-t-12kzji9 .mp-route-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-06m4hly .mp-route-stop {
+    .mp.mp-t-12kzji9 .mp-route-stop {
       fill: var(--label-halo);
       stroke: var(--anno);
       stroke-width: 2.2;
     }
-    .mp.mp-t-06m4hly .mp-route-stop[data-kind="minor"] {
+    .mp.mp-t-12kzji9 .mp-route-stop[data-kind="minor"] {
       stroke-width: 1.6;
     }
-    .mp.mp-t-06m4hly .mp-label.is-highlighted {
+    .mp.mp-t-12kzji9 .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-06m4hly .mp-label[data-fit="0"] {
+    .mp.mp-t-12kzji9 .mp-label[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-06m4hly .mp-pin-mark {
+    .mp.mp-t-12kzji9 .mp-pin-mark {
       fill: var(--anno);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
     }
-    .mp.mp-t-06m4hly .mp-icon {
+    .mp.mp-t-12kzji9 .mp-icon {
       fill: var(--anno-ink);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="pin"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="pin"] {
       font-size: var(--place-label-size);
       font-weight: 700;
     }
-    .mp.mp-t-06m4hly .mp-arrow-line {
+    .mp.mp-t-12kzji9 .mp-arrow-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2;
       stroke-linecap: round;
-      marker-end: url(#mp-arrowhead-0sc3p3f);
+      marker-end: url(#mp-arrowhead-1fkyt04);
     }
-    .mp.mp-t-06m4hly .mp-arrow-head {
+    .mp.mp-t-12kzji9 .mp-arrow-head {
       fill: var(--anno);
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-callout-leader {
+    .mp.mp-t-12kzji9 .mp-callout-leader {
       fill: none;
       stroke: var(--anno);
       stroke-width: 1.25;
       stroke-linecap: round;
     }
-    .mp.mp-t-06m4hly .mp-callout-box {
+    .mp.mp-t-12kzji9 .mp-callout-box {
       fill: var(--anno);
       stroke: var(--anno-ink);
       stroke-width: 1;
     }
-    .mp.mp-t-06m4hly .mp-label[data-kind="callout"] {
+    .mp.mp-t-12kzji9 .mp-label[data-kind="callout"] {
       fill: var(--anno-ink);
       font-size: var(--place-label-size);
       font-weight: 500;
       stroke: none;
     }
-    .mp.mp-t-06m4hly .mp-anno[data-fit="0"] {
+    .mp.mp-t-12kzji9 .mp-anno[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-06m4hly .mp-credit, .mp.mp-t-06m4hly .mp-scale-label, .mp.mp-t-06m4hly .mp-compass-label {
+    .mp.mp-t-12kzji9 .mp-credit, .mp.mp-t-12kzji9 .mp-scale-label, .mp.mp-t-12kzji9 .mp-compass-label {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-size: var(--place-label-size);
       letter-spacing: var(--label-track);
     }
-    .mp.mp-t-06m4hly .mp-scale-bar {
+    .mp.mp-t-12kzji9 .mp-scale-bar {
       fill: none;
       stroke: var(--furniture-ink);
       stroke-width: 1.5;
     }
-    .mp.mp-t-06m4hly .mp-compass-needle {
+    .mp.mp-t-12kzji9 .mp-compass-needle {
       fill: var(--furniture-ink);
     }
-    .mp.mp-t-06m4hly .mp-watermark {
+    .mp.mp-t-12kzji9 .mp-watermark {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-weight: 600;
@@ -333,7 +339,7 @@
       opacity: 0.18;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-06m4hly {
+      .mp.mp-t-12kzji9 {
         --bg: #101D26;
         --sea: #101D26;
         --land: #2C2A24;
@@ -372,13 +378,13 @@
     }
   </style>
   <defs class="mp-defs">
-    <clipPath id="mp-land-clip-0sc3p3f">
+    <clipPath id="mp-land-clip-1fkyt04">
       <path d="M-1446.2,1006.5L-1485.2,1017.6L-1512.3,1030.6L-1532.8,1031.6L-1548,1021.3L-1544.6,1009.9L-1549.8,1003L-1565.4,1002.6L-1572.1,985.5L-1554.1,980.6L-1540,970.3L-1524.2,963L-1519.8,936.9L-1504.6,916.5L-1469.3,906.4L-1462.9,917.8L-1449,942.2L-1440.8,991.1ZM485,298.2L494.1,305.5L521.4,309.7L512.8,329.8L511.2,350.5L506,355.6L497.1,353.3L497.9,360.6L484,377.1L484,390.2L493.4,385.4L500.6,397.8L500.1,406L506.4,416.6L499.6,425.6L505.7,447.8L517.1,451L515.2,463.6L496.8,480.6L455.1,473.4L424.5,482.6L421.8,500L396.9,503.1L373.5,489.2L365.5,495L327.3,479.5L319.8,467.6L331.9,451.2L339.9,394.2L321.8,362.5L308.7,346.7L280.4,332.7L280.9,311.6L306,307.9L337.1,318L333.7,285L350.4,298.7L394.9,278.5L401.3,255.1L417.3,249.7L419.7,259.9L428.2,260.5L436.5,272.2L449.4,285.9L458.9,283.6L475.4,296.5L479.6,299ZM544.3,493L557.2,481.1L562.5,505.6L556.8,528.4L546.7,523.1L540.6,503.9ZM692.4,317.3L692.9,329.1L682.1,330.9L686.8,336.5L683.3,355.8L680.3,361.2L663.3,364.4L654.3,372.2L637.8,372.2L608.8,368L603.4,358.5L584.5,365.3L582.8,370.9L570.5,367.9L560.4,367.9L551.2,363.2L553.7,356L552.6,351L558.3,348.9L568.8,356.2L570.9,348.4L588.1,348.1L601.4,341.6L610.8,341.5L617.4,346.7L618.7,341.7L613.9,323.3L620.3,318.9L625.4,304.9L640.5,312.4L649.6,299.3L655.9,296.2L671.7,302.7L680.3,299.9L689.8,303.9L688.9,307.7ZM617.4,163.9L623.3,178L619.5,186.3L627.1,195.7L633.5,210.4L633.4,220.5L643.2,237.8L635.6,241.9L630.5,239.2L626.6,245.2L614.3,252.4L608.4,260.3L595.7,268L599.9,276.2L603.1,288L613.4,293.9L625.4,304.9L620.3,318.9L613.9,323.3L618.7,341.7L617.4,346.7L610.8,341.5L601.4,341.6L588.1,348.1L570.9,348.4L568.8,356.2L558.3,348.9L552.6,351L531.3,343.4L527.7,349.9L511.2,350.5L512.8,329.8L521.4,309.7L494.1,305.5L485,298.2L485.8,285.5L481.9,279.1L483.5,259.6L479.8,229.4L490.5,229.1L494.6,218.1L498,191.5L494.5,181.8L497.6,175.6L511.9,173.4L515.4,179.6L526.2,164.7L521.8,154.1L520.1,137.7L532.9,140.7L543.3,135.6L544.3,146.7L561.9,152.1L562.6,162.4L579.3,155.4L588,146.5L608.2,155.7ZM552.6,351L553.7,356L551.2,363.2L560.4,367.9L570.5,367.9L569.9,379.8L561.5,385.3L546.6,382.6L543,394.5L533.6,396L529.9,391.6L519.1,401.9L509.5,403.7L500.6,397.8L493.4,385.4L484,390.2L484,377.1L497.9,360.6L497.1,353.3L506,355.6L511.2,350.5L527.7,349.9L531.3,343.4ZM481.9,279.1L485.8,285.5L485,298.2L479.6,299L475.4,296.5L477.1,280.3ZM483.5,259.6L481.9,279.1L477.1,280.3L475.4,296.5L458.9,283.6L449.4,285.9L436.5,272.2L428.2,260.5L419.7,259.9L417.3,249.7L431.8,244.3L445.1,246.7L461.7,240.6L473.4,253ZM494.5,181.8L498,191.5L494.6,218.1L490.5,229.1L479.8,229.4L483.5,259.6L473.4,253L461.7,240.6L445.1,246.7L431.8,244.3L441.2,236.4L456.7,193.9L480.2,181.4ZM163.9,492.9L172.8,487L182.1,484.3L185.2,499.1L197.8,501L202,498L214.2,500.8L218.3,516L207.2,522.3L203.7,544.7L199.5,548.4L196.7,561.9L186.8,562.8L193.1,581.4L184,599.4L190.6,609.1L186.3,616.5L176.2,626.1L176.6,635.9L166.2,642L154.7,635.9L142.3,637.1L149.6,615.2L150.4,597.1L140.8,592.7L137.4,580.9L142.5,562.5L153.1,553.6L156.7,542.3L164.2,525.9L165.7,513.7L163.2,502.7ZM176.6,635.9L176.2,626.1L186.3,616.5L190.6,609.1L184,599.4L193.1,581.4L186.8,562.8L196.7,561.9L199.5,548.4L203.7,544.7L207.2,522.3L218.3,516L214.2,500.8L202,498L197.8,501L185.2,499.1L182.1,484.3L172.8,487L163.9,492.9L168.5,472.8L162,459L194.8,443.4L219.3,452.3L247.1,455.9L268.7,463.4L286.2,463.7L319.8,467.6L327.3,479.5L365.5,495L373.5,489.2L396.9,503.1L421.8,500L422.7,516.8L401.7,535.6L373.6,540.8L371.1,550.4L356.8,565.8L346.9,588.9L354.7,606L340.9,618.2L334.7,636.9L316.8,641.5L298.6,662.6L268.9,660.4L246.7,657.5L230.8,666.1L220.5,676L209.3,672.1L201.9,661.2L197.5,643.5ZM270.7,159.4L270.7,180.3L254.1,204.1L220.2,216.1L196.1,207.5L215.5,180.3L211.8,149.7L238.4,131.2L253,119.8L254,135.7L248.2,150.6L258.7,151.7ZM570.5,367.9L582.8,370.9L584.5,365.3L603.4,358.5L608.8,368L637.8,372.2L637.3,386.5L643.6,398.1L627.2,395.8L612,407.8L614.6,421.9L612.9,430.3L621.2,444.2L642.3,456.5L655.7,478.8L682.4,498.8L699,496.2L705.1,501.7L700,508.3L720.9,515.7L738.2,521.6L759.4,533.2L762.6,538.2L760.4,549.1L745.9,537.9L726.1,536.5L719.9,556.5L737.6,564.5L737.5,580L728.4,583.2L720.2,609.7L711.1,613.4L709.8,604.6L712.2,588.4L716.1,581.5L704.9,566.2L696,552.7L686.4,550.4L678.2,538.8L663.5,535.5L652.7,525.1L636.4,525.1L618.2,513.9L596.8,497L581,481.7L572.3,453.7L561.8,451.1L544.4,442.7L535.1,447.1L523.7,461.1L515.2,463.6L517.1,451L505.7,447.8L499.6,425.6L506.4,416.6L500.1,406L500.6,397.8L509.5,403.7L519.1,401.9L529.9,391.6L533.6,396L543,394.5L546.6,382.6L561.5,385.3L569.9,379.8ZM689.1,609.6L706,604.7L701.1,628.6L705.8,637.1L703,652.6L683.7,644.1L671.6,642.5L637.7,631.4L639.3,616.2L666.3,615.7ZM546.4,543L556.8,533.3L571.2,553L570.8,591.5L560.5,590.4L551.9,600.6L542.9,593.4L540.2,558.4L534.3,542.1ZM543.3,135.6L532.9,140.7L520.1,137.7L512.5,121.9L510.5,92.1L512.8,84.2L516.9,75.2L530.7,72.5L535.7,64.1L547.7,54.8L548.4,69.9L544.4,79.7L547,87.8L556.1,91.4L553,102.7L547.9,100L537.7,121.8ZM580.5,99.3L587.2,113.3L579.8,137.7L560.9,123.1L557.6,111.2ZM270.7,159.4L258.7,151.7L248.2,150.6L254,135.7L253,119.8L266.9,120.6L282.3,140.8ZM322.1,178.9L322.2,178.9L326.2,162.3L316.6,143.5L316.4,143L296.7,135.7L293.7,127.4L301.2,115.2L296.8,106.6L286.3,119.2L288.9,91.2L282.8,75.4L292.4,46.2L307.3,24L319.2,27.7L337.9,27.2L318.2,57.1L334.5,54.7L351.5,56.3L345.5,79.7L328.7,104.5L345.4,107.9L346.4,111L358.6,146.3L369.8,151.7L378.4,185.3L382.8,197L403.8,203.4L401,221.8L391.6,229.9L398.2,245.1L381.2,259.5L356.9,257.8L325.2,263.4L317.2,257L303.9,269.3L287.3,264.2L273.1,273.6L264,266.7L294.2,239.7L311,235.3L310.8,235.2L283.4,227.4L279.8,215.4L299.3,208.6L291.5,192L296.9,173.6Z"/>
     </clipPath>
-    <pattern id="mp-stripe-0sc3p3f" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <pattern id="mp-stripe-1fkyt04" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6E6152" stroke-width="1.8"/>
     </pattern>
-    <marker id="mp-arrowhead-0sc3p3f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <marker id="mp-arrowhead-1fkyt04" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path class="mp-arrow-head" d="M0,0 L10,5 L0,10 Z" fill="#5E2230" stroke="none"/>
     </marker>
   </defs>
@@ -390,45 +396,45 @@
     <path class="mp-country" data-iso="FR" data-name="France" d="M-1446.2,1006.5L-1485.2,1017.6L-1512.3,1030.6L-1532.8,1031.6L-1548,1021.3L-1544.6,1009.9L-1549.8,1003L-1565.4,1002.6L-1572.1,985.5L-1554.1,980.6L-1540,970.3L-1524.2,963L-1519.8,936.9L-1504.6,916.5L-1469.3,906.4L-1462.9,917.8L-1449,942.2L-1440.8,991.1ZM485,298.2L494.1,305.5L521.4,309.7L512.8,329.8L511.2,350.5L506,355.6L497.1,353.3L497.9,360.6L484,377.1L484,390.2L493.4,385.4L500.6,397.8L500.1,406L506.4,416.6L499.6,425.6L505.7,447.8L517.1,451L515.2,463.6L496.8,480.6L455.1,473.4L424.5,482.6L421.8,500L396.9,503.1L373.5,489.2L365.5,495L327.3,479.5L319.8,467.6L331.9,451.2L339.9,394.2L321.8,362.5L308.7,346.7L280.4,332.7L280.9,311.6L306,307.9L337.1,318L333.7,285L350.4,298.7L394.9,278.5L401.3,255.1L417.3,249.7L419.7,259.9L428.2,260.5L436.5,272.2L449.4,285.9L458.9,283.6L475.4,296.5L479.6,299ZM544.3,493L557.2,481.1L562.5,505.6L556.8,528.4L546.7,523.1L540.6,503.9Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>France</title>
     </path>
-    <path class="mp-country" data-iso="AT" data-name="Austria" d="M692.4,317.3L692.9,329.1L682.1,330.9L686.8,336.5L683.3,355.8L680.3,361.2L663.3,364.4L654.3,372.2L637.8,372.2L608.8,368L603.4,358.5L584.5,365.3L582.8,370.9L570.5,367.9L560.4,367.9L551.2,363.2L553.7,356L552.6,351L558.3,348.9L568.8,356.2L570.9,348.4L588.1,348.1L601.4,341.6L610.8,341.5L617.4,346.7L618.7,341.7L613.9,323.3L620.3,318.9L625.4,304.9L640.5,312.4L649.6,299.3L655.9,296.2L671.7,302.7L680.3,299.9L689.8,303.9L688.9,307.7Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Austria</title>
-    </path>
-    <path class="mp-country" data-iso="DE" data-name="Germany" d="M617.4,163.9L623.3,178L619.5,186.3L627.1,195.7L633.5,210.4L633.4,220.5L643.2,237.8L635.6,241.9L630.5,239.2L626.6,245.2L614.3,252.4L608.4,260.3L595.7,268L599.9,276.2L603.1,288L613.4,293.9L625.4,304.9L620.3,318.9L613.9,323.3L618.7,341.7L617.4,346.7L610.8,341.5L601.4,341.6L588.1,348.1L570.9,348.4L568.8,356.2L558.3,348.9L552.6,351L531.3,343.4L527.7,349.9L511.2,350.5L512.8,329.8L521.4,309.7L494.1,305.5L485,298.2L485.8,285.5L481.9,279.1L483.5,259.6L479.8,229.4L490.5,229.1L494.6,218.1L498,191.5L494.5,181.8L497.6,175.6L511.9,173.4L515.4,179.6L526.2,164.7L521.8,154.1L520.1,137.7L532.9,140.7L543.3,135.6L544.3,146.7L561.9,152.1L562.6,162.4L579.3,155.4L588,146.5L608.2,155.7Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Germany</title>
-    </path>
-    <path class="mp-country" data-iso="CH" data-name="Switzerland" d="M552.6,351L553.7,356L551.2,363.2L560.4,367.9L570.5,367.9L569.9,379.8L561.5,385.3L546.6,382.6L543,394.5L533.6,396L529.9,391.6L519.1,401.9L509.5,403.7L500.6,397.8L493.4,385.4L484,390.2L484,377.1L497.9,360.6L497.1,353.3L506,355.6L511.2,350.5L527.7,349.9L531.3,343.4Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Switzerland</title>
-    </path>
-    <path class="mp-country" data-iso="LU" data-name="Luxembourg" d="M481.9,279.1L485.8,285.5L485,298.2L479.6,299L475.4,296.5L477.1,280.3Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Luxembourg</title>
-    </path>
-    <path class="mp-country" data-iso="BE" data-name="Belgium" d="M483.5,259.6L481.9,279.1L477.1,280.3L475.4,296.5L458.9,283.6L449.4,285.9L436.5,272.2L428.2,260.5L419.7,259.9L417.3,249.7L431.8,244.3L445.1,246.7L461.7,240.6L473.4,253Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Belgium</title>
-    </path>
-    <path class="mp-country" data-iso="NL" data-name="Netherlands" d="M494.5,181.8L498,191.5L494.6,218.1L490.5,229.1L479.8,229.4L483.5,259.6L473.4,253L461.7,240.6L445.1,246.7L431.8,244.3L441.2,236.4L456.7,193.9L480.2,181.4Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Netherlands</title>
-    </path>
-    <path class="mp-country" data-iso="PT" data-name="Portugal" d="M163.9,492.9L172.8,487L182.1,484.3L185.2,499.1L197.8,501L202,498L214.2,500.8L218.3,516L207.2,522.3L203.7,544.7L199.5,548.4L196.7,561.9L186.8,562.8L193.1,581.4L184,599.4L190.6,609.1L186.3,616.5L176.2,626.1L176.6,635.9L166.2,642L154.7,635.9L142.3,637.1L149.6,615.2L150.4,597.1L140.8,592.7L137.4,580.9L142.5,562.5L153.1,553.6L156.7,542.3L164.2,525.9L165.7,513.7L163.2,502.7Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Portugal</title>
+    <path class="mp-country" data-iso="IT" data-name="Italy" d="M570.5,367.9L582.8,370.9L584.5,365.3L603.4,358.5L608.8,368L637.8,372.2L637.3,386.5L643.6,398.1L627.2,395.8L612,407.8L614.6,421.9L612.9,430.3L621.2,444.2L642.3,456.5L655.7,478.8L682.4,498.8L699,496.2L705.1,501.7L700,508.3L720.9,515.7L738.2,521.6L759.4,533.2L762.6,538.2L760.4,549.1L745.9,537.9L726.1,536.5L719.9,556.5L737.6,564.5L737.5,580L728.4,583.2L720.2,609.7L711.1,613.4L709.8,604.6L712.2,588.4L716.1,581.5L704.9,566.2L696,552.7L686.4,550.4L678.2,538.8L663.5,535.5L652.7,525.1L636.4,525.1L618.2,513.9L596.8,497L581,481.7L572.3,453.7L561.8,451.1L544.4,442.7L535.1,447.1L523.7,461.1L515.2,463.6L517.1,451L505.7,447.8L499.6,425.6L506.4,416.6L500.1,406L500.6,397.8L509.5,403.7L519.1,401.9L529.9,391.6L533.6,396L543,394.5L546.6,382.6L561.5,385.3L569.9,379.8ZM689.1,609.6L706,604.7L701.1,628.6L705.8,637.1L703,652.6L683.7,644.1L671.6,642.5L637.7,631.4L639.3,616.2L666.3,615.7ZM546.4,543L556.8,533.3L571.2,553L570.8,591.5L560.5,590.4L551.9,600.6L542.9,593.4L540.2,558.4L534.3,542.1Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Italy</title>
     </path>
     <path class="mp-country" data-iso="ES" data-name="Spain" d="M176.6,635.9L176.2,626.1L186.3,616.5L190.6,609.1L184,599.4L193.1,581.4L186.8,562.8L196.7,561.9L199.5,548.4L203.7,544.7L207.2,522.3L218.3,516L214.2,500.8L202,498L197.8,501L185.2,499.1L182.1,484.3L172.8,487L163.9,492.9L168.5,472.8L162,459L194.8,443.4L219.3,452.3L247.1,455.9L268.7,463.4L286.2,463.7L319.8,467.6L327.3,479.5L365.5,495L373.5,489.2L396.9,503.1L421.8,500L422.7,516.8L401.7,535.6L373.6,540.8L371.1,550.4L356.8,565.8L346.9,588.9L354.7,606L340.9,618.2L334.7,636.9L316.8,641.5L298.6,662.6L268.9,660.4L246.7,657.5L230.8,666.1L220.5,676L209.3,672.1L201.9,661.2L197.5,643.5Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Spain</title>
     </path>
+    <path class="mp-country" data-iso="GB" data-name="United Kingdom" d="M270.7,159.4L258.7,151.7L248.2,150.6L254,135.7L253,119.8L266.9,120.6L282.3,140.8ZM322.1,178.9L322.2,178.9L326.2,162.3L316.6,143.5L316.4,143L296.7,135.7L293.7,127.4L301.2,115.2L296.8,106.6L286.3,119.2L288.9,91.2L282.8,75.4L292.4,46.2L307.3,24L319.2,27.7L337.9,27.2L318.2,57.1L334.5,54.7L351.5,56.3L345.5,79.7L328.7,104.5L345.4,107.9L346.4,111L358.6,146.3L369.8,151.7L378.4,185.3L382.8,197L403.8,203.4L401,221.8L391.6,229.9L398.2,245.1L381.2,259.5L356.9,257.8L325.2,263.4L317.2,257L303.9,269.3L287.3,264.2L273.1,273.6L264,266.7L294.2,239.7L311,235.3L310.8,235.2L283.4,227.4L279.8,215.4L299.3,208.6L291.5,192L296.9,173.6Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>United Kingdom</title>
+    </path>
+    <path class="mp-country" data-iso="DE" data-name="Germany" d="M617.4,163.9L623.3,178L619.5,186.3L627.1,195.7L633.5,210.4L633.4,220.5L643.2,237.8L635.6,241.9L630.5,239.2L626.6,245.2L614.3,252.4L608.4,260.3L595.7,268L599.9,276.2L603.1,288L613.4,293.9L625.4,304.9L620.3,318.9L613.9,323.3L618.7,341.7L617.4,346.7L610.8,341.5L601.4,341.6L588.1,348.1L570.9,348.4L568.8,356.2L558.3,348.9L552.6,351L531.3,343.4L527.7,349.9L511.2,350.5L512.8,329.8L521.4,309.7L494.1,305.5L485,298.2L485.8,285.5L481.9,279.1L483.5,259.6L479.8,229.4L490.5,229.1L494.6,218.1L498,191.5L494.5,181.8L497.6,175.6L511.9,173.4L515.4,179.6L526.2,164.7L521.8,154.1L520.1,137.7L532.9,140.7L543.3,135.6L544.3,146.7L561.9,152.1L562.6,162.4L579.3,155.4L588,146.5L608.2,155.7Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Germany</title>
+    </path>
+    <path class="mp-country" data-iso="PT" data-name="Portugal" d="M163.9,492.9L172.8,487L182.1,484.3L185.2,499.1L197.8,501L202,498L214.2,500.8L218.3,516L207.2,522.3L203.7,544.7L199.5,548.4L196.7,561.9L186.8,562.8L193.1,581.4L184,599.4L190.6,609.1L186.3,616.5L176.2,626.1L176.6,635.9L166.2,642L154.7,635.9L142.3,637.1L149.6,615.2L150.4,597.1L140.8,592.7L137.4,580.9L142.5,562.5L153.1,553.6L156.7,542.3L164.2,525.9L165.7,513.7L163.2,502.7Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Portugal</title>
+    </path>
+    <path class="mp-country" data-iso="AT" data-name="Austria" d="M692.4,317.3L692.9,329.1L682.1,330.9L686.8,336.5L683.3,355.8L680.3,361.2L663.3,364.4L654.3,372.2L637.8,372.2L608.8,368L603.4,358.5L584.5,365.3L582.8,370.9L570.5,367.9L560.4,367.9L551.2,363.2L553.7,356L552.6,351L558.3,348.9L568.8,356.2L570.9,348.4L588.1,348.1L601.4,341.6L610.8,341.5L617.4,346.7L618.7,341.7L613.9,323.3L620.3,318.9L625.4,304.9L640.5,312.4L649.6,299.3L655.9,296.2L671.7,302.7L680.3,299.9L689.8,303.9L688.9,307.7Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Austria</title>
+    </path>
     <path class="mp-country" data-iso="IE" data-name="Ireland" d="M270.7,159.4L270.7,180.3L254.1,204.1L220.2,216.1L196.1,207.5L215.5,180.3L211.8,149.7L238.4,131.2L253,119.8L254,135.7L248.2,150.6L258.7,151.7Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Ireland</title>
     </path>
-    <path class="mp-country" data-iso="IT" data-name="Italy" d="M570.5,367.9L582.8,370.9L584.5,365.3L603.4,358.5L608.8,368L637.8,372.2L637.3,386.5L643.6,398.1L627.2,395.8L612,407.8L614.6,421.9L612.9,430.3L621.2,444.2L642.3,456.5L655.7,478.8L682.4,498.8L699,496.2L705.1,501.7L700,508.3L720.9,515.7L738.2,521.6L759.4,533.2L762.6,538.2L760.4,549.1L745.9,537.9L726.1,536.5L719.9,556.5L737.6,564.5L737.5,580L728.4,583.2L720.2,609.7L711.1,613.4L709.8,604.6L712.2,588.4L716.1,581.5L704.9,566.2L696,552.7L686.4,550.4L678.2,538.8L663.5,535.5L652.7,525.1L636.4,525.1L618.2,513.9L596.8,497L581,481.7L572.3,453.7L561.8,451.1L544.4,442.7L535.1,447.1L523.7,461.1L515.2,463.6L517.1,451L505.7,447.8L499.6,425.6L506.4,416.6L500.1,406L500.6,397.8L509.5,403.7L519.1,401.9L529.9,391.6L533.6,396L543,394.5L546.6,382.6L561.5,385.3L569.9,379.8ZM689.1,609.6L706,604.7L701.1,628.6L705.8,637.1L703,652.6L683.7,644.1L671.6,642.5L637.7,631.4L639.3,616.2L666.3,615.7ZM546.4,543L556.8,533.3L571.2,553L570.8,591.5L560.5,590.4L551.9,600.6L542.9,593.4L540.2,558.4L534.3,542.1Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>Italy</title>
+    <path class="mp-country" data-iso="CH" data-name="Switzerland" d="M552.6,351L553.7,356L551.2,363.2L560.4,367.9L570.5,367.9L569.9,379.8L561.5,385.3L546.6,382.6L543,394.5L533.6,396L529.9,391.6L519.1,401.9L509.5,403.7L500.6,397.8L493.4,385.4L484,390.2L484,377.1L497.9,360.6L497.1,353.3L506,355.6L511.2,350.5L527.7,349.9L531.3,343.4Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Switzerland</title>
     </path>
     <path class="mp-country" data-iso="DK" data-name="Denmark" d="M543.3,135.6L532.9,140.7L520.1,137.7L512.5,121.9L510.5,92.1L512.8,84.2L516.9,75.2L530.7,72.5L535.7,64.1L547.7,54.8L548.4,69.9L544.4,79.7L547,87.8L556.1,91.4L553,102.7L547.9,100L537.7,121.8ZM580.5,99.3L587.2,113.3L579.8,137.7L560.9,123.1L557.6,111.2Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
       <title>Denmark</title>
     </path>
-    <path class="mp-country" data-iso="GB" data-name="United Kingdom" d="M270.7,159.4L258.7,151.7L248.2,150.6L254,135.7L253,119.8L266.9,120.6L282.3,140.8ZM322.1,178.9L322.2,178.9L326.2,162.3L316.6,143.5L316.4,143L296.7,135.7L293.7,127.4L301.2,115.2L296.8,106.6L286.3,119.2L288.9,91.2L282.8,75.4L292.4,46.2L307.3,24L319.2,27.7L337.9,27.2L318.2,57.1L334.5,54.7L351.5,56.3L345.5,79.7L328.7,104.5L345.4,107.9L346.4,111L358.6,146.3L369.8,151.7L378.4,185.3L382.8,197L403.8,203.4L401,221.8L391.6,229.9L398.2,245.1L381.2,259.5L356.9,257.8L325.2,263.4L317.2,257L303.9,269.3L287.3,264.2L273.1,273.6L264,266.7L294.2,239.7L311,235.3L310.8,235.2L283.4,227.4L279.8,215.4L299.3,208.6L291.5,192L296.9,173.6Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
-      <title>United Kingdom</title>
+    <path class="mp-country" data-iso="NL" data-name="Netherlands" d="M494.5,181.8L498,191.5L494.6,218.1L490.5,229.1L479.8,229.4L483.5,259.6L473.4,253L461.7,240.6L445.1,246.7L431.8,244.3L441.2,236.4L456.7,193.9L480.2,181.4Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Netherlands</title>
+    </path>
+    <path class="mp-country" data-iso="BE" data-name="Belgium" d="M483.5,259.6L481.9,279.1L477.1,280.3L475.4,296.5L458.9,283.6L449.4,285.9L436.5,272.2L428.2,260.5L419.7,259.9L417.3,249.7L431.8,244.3L445.1,246.7L461.7,240.6L473.4,253Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Belgium</title>
+    </path>
+    <path class="mp-country" data-iso="LU" data-name="Luxembourg" d="M481.9,279.1L485.8,285.5L485,298.2L479.6,299L475.4,296.5L477.1,280.3Z" fill="#F2EAD8" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
+      <title>Luxembourg</title>
     </path>
   </g>
   <g class="mp-layer mp-terrain"/>
-  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-0sc3p3f)">
+  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-1fkyt04)">
     <path class="mp-water" data-kind="river" fill="none" d="M525.3,337.1L531.6,339.1L547.8,333.2L571.5,317L589.5,311.3L595.7,303.8L597.8,304.7L602.1,305.2L604.8,306L607.8,306.9L614.2,309.6L621.4,312.6L624.2,313.7L648.8,320.4L654.4,320.3L665.9,313.9L671.5,313.7L690.2,316.6L703.1,322.6L710.6,325.1L726.3,318.4L730.9,319.9L733.7,323.5L734.3,337.7L737.2,348.6L738.4,363.3L737.6,370.2L738,372.2L739,374.1L740.9,376.4L744,381L746,383.9L748.6,385.4L752.3,388.5L754,390.2L756.3,390.4L762.1,390.4L767.6,390.7L769.7,390.9L779.6,398.2L784.4,399L796,393.8L800,394.9L814.1,400.3L818.3,392.2L824.2,394.6L821,400.7L825.7,404.3L834.3,414.4L841.9,410.5L858.2,411.1L888.4,404.6L895.7,394.5L917.6,381.4L918.3,381.7L919.3,382.1L920.4,380.5L924.1,377.3L927.6,374L929.6,372.8L931.8,370L930.4,367.7L925.3,361.8L923.4,348.2L923.6,346L925.3,342.1L925.5,340L928.4,339.9L933.3,340.5L935.9,341.4L943.3,334.2L953.8,335.5" stroke="#7FA0B4" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g class="mp-layer mp-borders" fill="none">

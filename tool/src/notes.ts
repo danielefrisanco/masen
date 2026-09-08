@@ -41,8 +41,60 @@ const COVER_NAMES: Readonly<Record<string, string>> = {
   glacier: "glaciers",
 };
 
-export function notesFor(svg: string, config: Config): Notes {
+/**
+ * What the library says it could not draw.
+ *
+ * Read off the built map exactly like everything else here — `omissions()` is
+ * the library's own answer, not a second copy of its rules — and shaped to fit
+ * this file's rule that a note sits under the control that could act on it.
+ * The cure for an absent country is the Detail dropdown, so that is where the
+ * sentence goes; the cure for one drawn too small is a bigger canvas, or
+ * nothing at all, so that one sits under Region and says so.
+ */
+export interface Missing {
+  readonly absent: readonly string[];
+  readonly unseen: readonly string[];
+}
+
+/** At most this many codes in a note before it stops being readable. */
+const NAMED = 6;
+
+function list(codes: readonly string[]): string {
+  if (codes.length <= NAMED) return codes.join(", ");
+  return `${codes.slice(0, NAMED).join(", ")} and ${codes.length - NAMED} more`;
+}
+
+export function notesFor(svg: string, config: Config, missing?: Missing): Notes {
   const notes: Record<string, string> = {};
+
+  /**
+   * The quietest failure this tool had, and the reason this phase exists.
+   *
+   * The country list offered by the Region picker is built from the detail
+   * tier, so choosing the Maldives at 50m and switching to 110m removes it from
+   * the map without a word — 177 countries at the coarse tier against 241 at
+   * the fine one. `europe` names 45 and draws 39.
+   */
+  if (missing !== undefined && missing.absent.length > 0) {
+    const many = missing.absent.length > 1;
+    notes["detail"] =
+      `Not in the ${config.detail} data, so ${many ? "these are" : "this is"} not on the map: ` +
+      `${list(missing.absent)}.` +
+      (config.detail === "110m" ? " Switch to 50m to draw them." : "");
+  }
+
+  /**
+   * Drawn, and smaller than the dot the map puts on top of it.
+   *
+   * Said rather than silently fixed: the shapes are real and the outline the
+   * theme gives them is what makes them findable, but a reader who counts the
+   * countries in a frame should be told which ones are a mark rather than a
+   * shape.
+   */
+  if (missing !== undefined && missing.unseen.length > 0) {
+    notes["region"] =
+      `Smaller than a city dot at this canvas size, and drawn as a mark: ${list(missing.unseen)}.`;
+  }
 
   for (const kind of config.terrain) {
     if (!svg.includes(`<path class="mp-cover" data-kind="${kind}"`)) {
