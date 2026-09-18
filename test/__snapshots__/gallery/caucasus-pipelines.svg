@@ -457,48 +457,48 @@
     </g>
     <g class="mp-anno mp-pin" data-kind="oil" data-fit="1">
       <title>Baku</title>
-      <circle class="mp-pin-mark" cx="928.6" cy="428.6" r="10" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
-      <g class="mp-icon" data-icon="oil" transform="translate(922.6,422.6) scale(0.8)" fill="#F2EAD8" stroke="none">
+      <circle class="mp-pin-mark" cx="928.6" cy="428.6" r="13" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="oil" transform="translate(920.6,420.6) scale(1.067)" fill="#F2EAD8" stroke="none">
         <path d="M9 8.2C9 8.2 10 14 10 14C10 14 11.5 14 11.5 14C12 14 12 15 11.5 15C11.5 15 3.5 15 3.5 15C3 15 3 14 3.5 14C3.5 14 5 14 5 14C5 14 6 8.2 6 8.2C7 8.88 8 8.88 9 8.2zM8.4 12L6.6 12L6.3 14L8.7 14L8.4 12zM8 9.25C8 9.25 7 9.25 7 9.25L6.75 11L8.25 11C8.25 11 8 9.25 8 9.25zM9.75 6.63C9.73 7 9.56 7.59 9.25 7.9C9.25 7.9 13 9.38 13 9.38L13 14.63C13 15.13 14 15.13 14 14.63L14 9.75C14.75 10 15.25 8.7 14.5 8.45C14.5 8.45 9.75 6.63 9.75 6.63zM3.5 1C0 1 -1 9.5 1.25 9.5C2 9.5 3.24 5.6 3.24 5.6C3.24 5.6 5.25 6.35 5.25 6.35C5.25 5.94 5.5 5.38 5.77 5.09C5.77 5.09 3.71 4.31 3.71 4.31C3.71 4.31 4.5 1.85 4.5 1.5C4.5 1.25 4 1 3.5 1zM7.5 8C8.38 8 9 7.38 9 6.5C9 5.63 8.38 5 7.5 5C6.63 5 6 5.64 6 6.52C6 7.39 6.63 8 7.5 8z"/>
       </g>
-      <text class="mp-label" data-kind="pin" x="944.6" y="428.6" text-anchor="start" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Baku</text>
+      <text class="mp-label" data-kind="pin" x="947.6" y="428.6" text-anchor="start" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Baku</text>
     </g>
     <g class="mp-anno mp-pin" data-kind="pipeline" data-fit="1">
       <title>Sangachal</title>
-      <circle class="mp-pin-mark" cx="890.7" cy="458.9" r="10" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
-      <g class="mp-icon" data-icon="pipeline" transform="translate(884.7,452.9) scale(0.8)" fill="#F2EAD8" stroke="none">
+      <circle class="mp-pin-mark" cx="890.7" cy="458.9" r="13" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="pipeline" transform="translate(882.7,450.9) scale(1.067)" fill="#F2EAD8" stroke="none">
         <path d="M0.5,8 H14.5 V11.5 H0.5 Z M3,6.5 H5 V13 H3 Z M10,6.5 H12 V13 H10 Z M6.75,3.5 H8.25 V8.5 H6.75 Z M5,3 A2.5,2.5 0 1 1 10,3 A2.5,2.5 0 1 1 5,3 Z M6.3,3 A1.2,1.2 0 1 0 8.7,3 A1.2,1.2 0 1 0 6.3,3 Z"/>
       </g>
       <text class="mp-label" data-kind="pin" x="890.7" y="480.9" text-anchor="middle" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sangachal</text>
     </g>
     <g class="mp-anno mp-pin" data-kind="pipeline" data-fit="1">
       <title>Supsa</title>
-      <circle class="mp-pin-mark" cx="178.4" cy="238.7" r="10" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
-      <g class="mp-icon" data-icon="pipeline" transform="translate(172.4,232.7) scale(0.8)" fill="#F2EAD8" stroke="none">
+      <circle class="mp-pin-mark" cx="178.4" cy="238.7" r="13" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="pipeline" transform="translate(170.4,230.7) scale(1.067)" fill="#F2EAD8" stroke="none">
         <path d="M0.5,8 H14.5 V11.5 H0.5 Z M3,6.5 H5 V13 H3 Z M10,6.5 H12 V13 H10 Z M6.75,3.5 H8.25 V8.5 H6.75 Z M5,3 A2.5,2.5 0 1 1 10,3 A2.5,2.5 0 1 1 5,3 Z M6.3,3 A1.2,1.2 0 1 0 8.7,3 A1.2,1.2 0 1 0 6.3,3 Z"/>
       </g>
-      <text class="mp-label" data-kind="pin" x="194.4" y="238.7" text-anchor="start" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Supsa</text>
+      <text class="mp-label" data-kind="pin" x="197.4" y="238.7" text-anchor="start" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Supsa</text>
     </g>
     <g class="mp-anno mp-pin" data-kind="military" data-fit="1">
       <title>Gyumri</title>
-      <circle class="mp-pin-mark" cx="365.4" cy="392.7" r="10" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
-      <g class="mp-icon" data-icon="military" transform="translate(359.4,386.7) scale(0.8)" fill="#F2EAD8" stroke="none">
+      <circle class="mp-pin-mark" cx="365.4" cy="392.7" r="13" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="military" transform="translate(357.4,384.7) scale(1.067)" fill="#F2EAD8" stroke="none">
         <path d="M4.72 15L5.25 12.11L3 10.06L6.11 9.63L7.5 7L8.89 9.63L12 10.06L9.75 12.11L10.28 15L7.5 13.63zM3 4C3 4 7.5 7 7.5 7C7.5 7 12 4 12 4C12 4 12 0 12 0C12 0 3 0 3 0"/>
       </g>
-      <text class="mp-label" data-kind="pin" x="381.4" y="392.7" text-anchor="start" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gyumri</text>
+      <text class="mp-label" data-kind="pin" x="384.4" y="392.7" text-anchor="start" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gyumri</text>
     </g>
     <g class="mp-anno mp-pin" data-kind="border-crossing" data-fit="1">
       <title>Verkhny Lars</title>
-      <circle class="mp-pin-mark" cx="439.5" cy="154.7" r="10" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
-      <g class="mp-icon" data-icon="border-crossing" transform="translate(433.5,148.7) scale(0.8)" fill="#F2EAD8" stroke="none">
+      <circle class="mp-pin-mark" cx="439.5" cy="154.7" r="13" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="border-crossing" transform="translate(431.5,146.7) scale(1.067)" fill="#F2EAD8" stroke="none">
         <path d="M4.34 6.15L12.39 1.5L13.89 4.1L6 8.65L6 14L1 14L1 8.5C1 7.12 2.12 6 3.5 6C3.8 6 4.08 6.05 4.34 6.15L4.34 6.15ZM5.29 6.76C5.52 6.99 5.71 7.28 5.83 7.6L7.33 6.73L6.83 5.87L5.29 6.76L5.29 6.76ZM8.2 6.23L9.93 5.23L9.43 4.37L7.7 5.37L8.2 6.23ZM10.79 4.73L12.53 3.73L12.03 2.87L10.29 3.87L10.79 4.73ZM3.5 9.5C4.05 9.5 4.5 9.05 4.5 8.5C4.5 7.95 4.05 7.5 3.5 7.5C2.95 7.5 2.5 7.95 2.5 8.5C2.5 9.05 2.95 9.5 3.5 9.5Z"/>
       </g>
-      <text class="mp-label" data-kind="pin" x="455.5" y="154.7" text-anchor="start" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Verkhny Lars</text>
+      <text class="mp-label" data-kind="pin" x="458.5" y="154.7" text-anchor="start" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Verkhny Lars</text>
     </g>
     <g class="mp-anno mp-pin" data-kind="conflict" data-fit="1">
       <title>Fighting, Aug 2008</title>
-      <circle class="mp-pin-mark" cx="379" cy="215.7" r="10" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
-      <g class="mp-icon" data-icon="conflict" transform="translate(373,209.7) scale(0.8)" fill="#F2EAD8" stroke="none">
+      <circle class="mp-pin-mark" cx="379" cy="215.7" r="13" fill="#5E2230" stroke="#F2EAD8" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="conflict" transform="translate(371,207.7) scale(1.067)" fill="#F2EAD8" stroke="none">
         <path d="M7.5,0.3 L8.64,3.25 L10.81,1.76 L10.61,4.39 L13.74,3.9 L11.33,6.48 L14.7,7.5 L11.75,8.64 L13.42,10.92 L10.61,10.61 L11.1,13.74 L8.5,11.24 L7.5,14.7 L6.36,11.75 L4.19,13.24 L4.39,10.61 L1.26,11.1 L3.67,8.52 L0.3,7.5 L3.25,6.36 L1.58,4.08 L4.39,4.39 L3.9,1.26 L6.5,3.76 Z"/>
       </g>
       <text class="mp-label" data-kind="pin" x="379" y="237.7" text-anchor="middle" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="11" font-weight="700" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Fighting, Aug 2008</text>
