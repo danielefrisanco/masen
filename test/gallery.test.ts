@@ -625,6 +625,49 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       credit: "Boundaries: Natural Earth · masen",
     },
   ],
+  // The geopolitical half of the vocabulary — Temaki's eleven and the two drawn
+  // here, `pipeline` and `conflict` — on the kind of map it exists for. The
+  // Baku–Tbilisi–Ceyhan line is real and so are its terminals and the base at
+  // Gyumri. The burst is a dated fact rather than a demonstration: the first
+  // draft put an "example incident" on Nagorno-Karabakh, which is the Phase 16
+  // mistake in miniature — a gallery map asserting a clash on a disputed
+  // territory nobody asked it about. Turkey is context, so Ceyhan is off the
+  // frame and the route runs to the edge carrying `data-fit="0"` on that stop.
+  [
+    "caucasus-pipelines",
+    {
+      region: "caucasus",
+      detail: "50m",
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [1000, 720],
+      neighbours: true,
+      // No settlement dots or names: the first render drew "Baku" twice, once
+      // as the capital and once as the pin's label, on the same pixels.
+      placeRank: 0,
+      labelRank: 0,
+      pins: [
+        { at: [49.87, 40.41], kind: "oil", label: "Baku" },
+        { at: [49.45, 40.18], kind: "pipeline", label: "Sangachal", offset: [0, 22] },
+        { at: [41.78, 42.0], kind: "pipeline", label: "Supsa" },
+        { at: [43.85, 40.79], kind: "military", label: "Gyumri" },
+        { at: [44.63, 42.73], kind: "border-crossing", label: "Verkhny Lars" },
+        { at: [43.97, 42.23], kind: "conflict", label: "Fighting, Aug 2008", offset: [0, 22] },
+      ],
+      routes: [
+        {
+          stops: [
+            { at: [49.45, 40.18] },
+            { at: [44.79, 41.69], label: "Tbilisi" },
+            { at: [42.98, 41.64] },
+            { at: [35.64, 36.92], label: "Ceyhan" },
+          ],
+        },
+      ],
+      title: "A news map that can say pipeline, and conflict",
+      credit: "Boundaries: Natural Earth · masen",
+    },
+  ],
   // The furniture layer, which is the only one that is not geographic. The
   // credit sits at a canvas position and stays there however the map beneath it
   // is reframed — which is the whole reason it is a layer of its own.

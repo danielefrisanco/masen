@@ -39,7 +39,7 @@ for the places that show a card rather than play a video. All four are made by
 interface moves rather than left to go quietly out of date.
 
 **Or see what it draws first: [the gallery](https://danielefrisanco.github.io/masen/gallery.html)** —
-every committed snapshot on one page, sixty of them, which is faster than
+every committed snapshot on one page, sixty-two of them, which is faster than
 reading any of what follows.
 
 A page over this library: pick a region, a projection, a theme, the layers you
@@ -1142,12 +1142,14 @@ on working. `ICON_NAMES` is exported if you want to check first, and
 
 The sets are **[Maki](https://github.com/mapbox/maki)** and
 **[Temaki](https://github.com/rapideditor/temaki)**, both **CC0** — public
-domain, no attribution obligation. That is the whole reason they are the sets
-this library uses: anything under MIT or ISC would propagate a credit-line
-requirement into every map anyone generates, and quietly doing that to you is
-not something a map library should do. Nothing in your output credits anyone.
+domain, no attribution obligation — plus two glyphs drawn for this library and
+dedicated to the public domain the same way. That is the whole reason they are
+the sets this library uses: anything under MIT or ISC would propagate a
+credit-line requirement into every map anyone generates, and quietly doing that
+to you is not something a map library should do. Nothing in your output credits
+anyone.
 
-Forty icons, grouped by what a map is usually saying:
+Forty-two icons, grouped by what a map is usually saying:
 
 | | |
 |---|---|
@@ -1157,8 +1159,8 @@ Forty icons, grouped by what a map is usually saying:
 | Settlement | `town` `city` `village` |
 | Land and landmark | `mountain` `park` `lighthouse` `monument` |
 | Situation | `danger` `roadblock` `shelter` |
-| Energy and extraction | `oil` `natural-gas` `storage-tank` `mine` `power-station` `nuclear` |
-| Borders and conflict | `military` `bunker` `camp` `border-crossing` `ruins` |
+| Energy and extraction | `oil` `natural-gas` `storage-tank` `mine` `power-station` `nuclear` `pipeline` |
+| Borders and conflict | `military` `bunker` `camp` `border-crossing` `ruins` `conflict` |
 
 Deliberately small: a vocabulary nobody can hold in their head is one where
 every author picks a different icon for the same thing.
@@ -1181,9 +1183,14 @@ the way in, because Temaki names a file for the object drawn and this vocabulary
 is named for what a map is saying with it — `lift_gate` is a barrier arm,
 `border-crossing` is why anyone puts one on a map.
 
-**`pipeline` is the one named gap left**, and it does have to be drawn: Temaki's
-`pipe` is a tobacco pipe. `ruins` is a proxy for conflict rather than an answer
-to it.
+**Two were still missing after that, and they are drawn here** — in `icons/`,
+on the same grid, through the same checks, CC0. `pipeline` is a pipe with two
+flange collars and a valve wheel, because Temaki's `pipe` is a tobacco pipe and
+the elbow-with-flanges alternative read as the letter L at pin size. `conflict`
+is the starburst every news desk uses for fighting or a strike — twelve points
+with the inner radius varied, because the regular eight- and ten-point versions
+rendered as a badge star beside `military`. Both were chosen by rendering the
+candidates at pin size next to the vendored sets, not by looking at them large.
 
 The glyph is inked from `--anno-ink` on a mark filled with `--anno`, and the
 mark grows to hold it. The path is **inlined into each pin** rather than
@@ -1486,11 +1493,12 @@ kept on public-domain sources on purpose rather than by luck.
 | Topology decoding | `topojson-client` | ISC | None |
 | Pin icons | [Maki](https://labs.mapbox.com/maki-icons/) by Mapbox, vendored into `src/icons.ts` | CC0-1.0 | None |
 | Pin icons | [Temaki](https://github.com/rapideditor/temaki) by the iD/Rapid editor team, vendored into `src/icons.ts` | CC0-1.0 | None |
+| Pin icons | `pipeline` and `conflict`, drawn for this library in `icons/` | CC0-1.0 | None |
 
 `d3-geo` and `topojson-client` are ordinary dependencies rather than bundled
 into `dist`, so their own licence files arrive with them and their terms are
 satisfied without this package restating anything. Maki and Temaki are CC0 and
-vendored, because 40 inlined path strings is cheaper than two dependencies. The Natural Earth
+vendored, because 42 inlined path strings is cheaper than two dependencies. The Natural Earth
 extracts under `vendor/` are committed rather than fetched, which is why
 `npm run build:data` needs no network — and why a publish does not either.
 
