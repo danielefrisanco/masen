@@ -1,0 +1,9 @@
+<!--
+  pipeline — drawn for masen, dedicated to the public domain (CC0 1.0).
+
+  A straight pipe with two flange collars and a valve wheel on a stem. Neither
+  Maki nor Temaki carries one: Temaki's `pipe` is a tobacco pipe. Drawn to
+  Maki's 15x15 grid and weight so a map using all three sets shows one house
+  style. The elbow-with-flanges alternative read as the letter L at pin size.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path d="M0.5,8 H14.5 V11.5 H0.5 Z M3,6.5 H5 V13 H3 Z M10,6.5 H12 V13 H10 Z M6.75,3.5 H8.25 V8.5 H6.75 Z M5,3 A2.5,2.5 0 1 1 10,3 A2.5,2.5 0 1 1 5,3 Z M6.3,3 A1.2,1.2 0 1 0 8.7,3 A1.2,1.2 0 1 0 6.3,3 Z"/></svg>

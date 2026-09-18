@@ -37,14 +37,24 @@ const PIN_RADIUS = 7;
 /**
  * Mark radius when the pin carries an icon, in user units.
  *
- * Bigger than a plain mark because it has to hold something. A 15-unit Maki
- * glyph set at 12 needs about 17 units of clear diameter once the casing has
- * taken 1.2 off each side, and ten gives that with a little air around it.
+ * Bigger than a plain mark because it has to hold something. A glyph drawn at
+ * 16 needs about 18.5 units of clear diameter once the casing has taken 1.2
+ * off each side, and thirteen gives that with a little air around it.
  */
-const PIN_ICON_RADIUS = 10;
+const PIN_ICON_RADIUS = 13;
 
-/** How wide an icon is drawn, in user units. Maki's grid is 15. */
-const ICON_SIZE = 12;
+/**
+ * How wide an icon is drawn, in user units.
+ *
+ * Maki and Temaki are drawn on a 15-unit grid *for* 15 pixels — that is the
+ * size their authors consider the floor, and below it the glyphs stop being
+ * readable rather than getting smaller. This was 12 for six versions, so every
+ * icon shipped at four fifths of its own floor, and the first person to put
+ * eight of them on one map said so. Sixteen rather than fifteen because a map
+ * in a page is usually shown a little under 1:1 — the tool's own preview fits
+ * the column — and a unit of margin costs nothing a fifteen would not.
+ */
+const ICON_SIZE = 16;
 
 /**
  * How far a coordinate may move through a round trip before the pixel it was

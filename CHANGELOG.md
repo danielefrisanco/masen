@@ -16,6 +16,73 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [0.19.0] — 2026-09-18
+
+**Phase 13 closes: the two icons nothing public-domain carried are drawn — and
+every icon is now drawn at the size its set was drawn for.**
+
+A minor rather than a patch, for the reason 0.17.0 and 0.18.0 gave: nothing is
+renamed and nothing reordered, but **every existing map with an icon on it
+comes out different** — the mark is bigger. The two new names alone would have
+been a patch.
+
+### Changed — icons are drawn at 16 units, in a radius-13 mark
+
+Maki and Temaki are drawn on a 15-unit grid *for* 15 pixels; that is the size
+their authors consider the floor, and below it a glyph stops being readable
+rather than getting smaller. Since 0.11 every icon was drawn at **12** — four
+fifths of its own floor — inside a radius-10 mark, and the first map with
+eight of them on it made the problem obvious: the harbor, the windmill and the
+skull were all the same dark dot. Sixteen rather than fifteen because a map in
+a page is usually shown a little under 1:1 (the tool's own preview fits the
+column), and a unit of margin costs nothing a fifteen would not.
+
+`--pin-size` still scales the whole pin, so a caller who preferred the old
+size sets it to `5.25`. Plain marks are unchanged.
+
+### Added — `pipeline` and `conflict`
+
+Forty-two icons now. **`pipeline`** is a straight pipe with two flange collars
+and a valve wheel on a stem. **`conflict`** is the starburst every news desk
+uses for fighting, a strike or an explosion — twelve points, the inner radius
+varied so it reads as a burst rather than a badge star. Both live in `icons/`
+as ordinary 15×15 SVGs, are read by `scripts/build-icons.mjs` through the same
+viewBox and shape checks Maki and Temaki pass, and are dedicated to the public
+domain (CC0 1.0), so the vocabulary keeps one licence and nothing in anyone's
+output credits anyone.
+
+### Why these two and not others
+
+Both were chosen by rendering candidates *at pin size* beside `military`, `oil`
+and `danger`, which is the only size that matters and the one a picker never
+shows:
+
+- The elbow-with-flanges pipe — the shape most icon sets call "pipe" — read as
+  the letter L at 8 to 16 pixels. The valve on a straight pipe did not.
+- The regular eight- and ten-point bursts read as a sheriff's star next to the
+  `military` medal. Twelve points with a slightly irregular inner radius read
+  as an explosion at every size tried.
+
+### Added — a gallery map that uses the geopolitical set
+
+`caucasus-pipelines`: the Baku–Tbilisi–Ceyhan line as a `route` with its
+terminals as `pipeline` pins, `oil` at Baku, `military` at Gyumri,
+`border-crossing` at Verkhny Lars, and a `conflict` burst at Tskhinvali dated
+August 2008. Two things came out of rendering it and looking:
+
+- **The first draft asserted a clash it had no business asserting.** An
+  "example incident" burst was placed on Nagorno-Karabakh for demonstration —
+  which is exactly the Phase 16 mistake in miniature, a map making a claim on a
+  disputed territory nobody asked it about. A gallery map is still a map. It is
+  a dated, settled fact now.
+- **"Baku" was drawn twice on the same pixels**, once as the capital's label
+  and once as the pin's. The map turns settlement names off; the pins say what
+  matters.
+
+Note what "a news map can say *pipeline*" turned out to mean: the icon marks
+the terminals and the line itself is a `route`. That is the right division and
+it needed no new API.
+
 ## [0.18.0] — 2026-09-07
 
 **Phase 15: the map now says what it left out, and four things it was hiding

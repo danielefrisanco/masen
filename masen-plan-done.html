@@ -519,7 +519,7 @@
     </svg>
 
     <div class="head-inner">
-      <div class="eyebrow">Shipped record · phases 00–10b · <code>masen-map</code> 0.17.0</div>
+      <div class="eyebrow">Shipped record · phases 00–10b, 16, 15, 13 · <code>masen-map</code> 0.19.0</div>
       <h1>Masen Shipped Phases</h1>
       <p class="standfirst">A TypeScript library that turns a region and a stylesheet into a standalone SVG map. Deterministic geometry, CSS theming, public-domain data.</p>
       <p class="t-note" style="max-width:56ch;margin:-1.4rem 0 2rem;">Called <b>mapper</b> through Phase 6, then <b>neatline</b> to 0.15.1, and <b>masen</b> from 0.16.0. <i>mapper</i> went because npm had the name. <i>neatline</i> went for a better reason: <b>somebody else's map software already had the word</b> — an Omeka plugin from the Scholars' Lab, fourteen years old, holding <code>neatline.org</code>. Never a registry collision, since it has never been on npm; a collision in the only place that matters for a launch, which is what a person finds when they go looking. <i>masen</i> was picked for having nothing behind it at all. The <code>mp-</code> prefix has survived both renames, because <code>mp</code> is short for <i>map</i>, not for the project.</p>
@@ -527,10 +527,10 @@
       <p class="t-note" style="max-width:56ch;margin:0 0 2rem;"><b>This page is the record, not the plan.</b> Every phase here shipped, and each keeps its <i>Delivered</i> note — including the ones where the plan turned out to be wrong and measurement said so, which are the entries worth re-reading. The work still open lives in <a href="masen-plan.html">the build plan</a>.</p>
 
       <dl class="meta">
-        <div><dt>Shipped</dt><dd>Phases 0–10b</dd></div>
+        <div><dt>Shipped</dt><dd>Phases 0–10b, 16, 15, 13</dd></div>
         <div><dt>Runtime deps</dt><dd>2</dd></div>
         <div><dt>Licence</dt><dd>MIT</dd></div>
-        <div><dt>Published</dt><dd><code>masen-map</code> 0.17.0</dd></div>
+        <div><dt>Published</dt><dd><code>masen-map</code> 0.19.0</dd></div>
         <div><dt>Built for</dt><dd>Newsrooms, company sites</dd></div>
       </dl>
     </div>
@@ -978,6 +978,27 @@
       </div>
     </div>
     <div class="phase">
+      <div class="phase-mark"><span class="phase-num">16</span><span class="phase-days">1 day</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The map makes a claim nobody asked it to make</h3>
+
+        <p><b>Worked 2026-09-06, shipped in 0.17.0.</b> Disputed and breakaway areas draw as a hatched overlay from <code>ne_50m_admin_0_breakaway_disputed_areas</code> — 28 areas, 35 KB — <b>on by default</b>, with a <code>disputed</code> option to turn it off; the default is the reason 0.17.0 is a minor and not a patch. The overlays are <code>.mp-hatch</code> features carrying <code>data-kind</code> and <code>data-name</code>, no new layer slot, and each carries Natural Earth's own status line in a <code>&lt;title&gt;</code> — Crimea's reads <i>"Admin. by Russia; Claimed by Ukraine"</i>, quoted rather than composed. <b>Measuring found four things this page did not know:</b> <code>NAME</code> is the claimant, not the territory, and the build fails if <code>BRK_NAME</code> is ever absent; the overlay had to be clipped, or a map of Ukraine emitted Arunachal Pradesh; clipping was not enough, because the Golan Heights and the Ilemi Triangle sit inside the Sahara's longitudes with no land under them, so areas are matched against the countries actually drawn; and the 110m file is a 404, so a 110m map draws nothing here and the README says so. Phase 15 then found the hatch invisible under land cover and moved it to <code>borders</code>. The reasoning as first written, on 2026-09-05:</p>
+        <p><b>Crimea is drawn as Russia.</b> Verified against the bundled data at both tiers: Simferopol at 34.10°E, 44.95°N falls inside feature <b>643, "Russia"</b>. Ukraine is feature 804 and does not contain it. This is inherited from <code>world-atlas</code>, and through it from Natural Earth's default country layer, which resolves disputed territory <i>de facto</i>.</p>
+        <p><b>This is a different kind of failure from Phase 15, and a worse one.</b> Those are omissions — the map fails to say something. This is an assertion: the map says something contested, in the library's own voice, without being asked and without saying so. The audience named at the top of this plan is newsrooms. <b>A journalist who draws Ukraine with this and does not zoom in has published a claim they did not make and were not told about</b>, and the UN General Assembly, the EU and most European publishers hold the opposite one.</p>
+        <p><b>The editorial position is decided: lean to the European line.</b> This is written by someone in Europe for a European audience, and a library that ships a default has taken a position whether or not it admits to one. Pretending otherwise is how the current default arrived — nobody chose it, it came in with the data. <b>Choosing badly and saying so is better than choosing by accident and staying quiet.</b></p>
+        <p><b>Natural Earth already separates the claim from the geometry, and this library simply does not load it.</b> <code>ne_50m_admin_0_breakaway_disputed_areas</code> is <b>28 features and 144 KB raw</b> — comparable to the sea names and far below the 815 KB the land cover already costs. Crimea is in it explicitly, as <code>NAME: "Crimea"</code>, <code>TYPE: "Disputed"</code>, <code>SOVEREIGNT: "Russia"</code>. So does the Golan Heights, Somaliland, Western Sahara, Northern Cyprus, the Kashmir claims, Abkhazia and South Ossetia, Transnistria, Nagorno-Karabakh, and the Ukrainian breakaway oblasts — each tagged <i>Disputed</i>, <i>Breakaway</i> or <i>Indeterminate</i>.</p>
+        <ul>
+          <li><b>Draw the disputed areas as an overlay, not as a reassignment.</b> The machinery exists: <code>stripe</code> already hatches a country as an overlay rather than a fill, precisely so two readings can stack, and it was built in Phase 5 for exactly this — "the thing a map has to say that is not a quantity: disputed, claimed, excluded". A disputed polygon hatched over the default geometry marks the contested edge instead of silently resolving it</li>
+          <li><b>It is 50m and 10m only.</b> <code>ne_110m_admin_0_breakaway_disputed_areas</code> does not exist — checked, 404. So a 110m map cannot carry this, and that limit has to be stated rather than discovered. The same shape of problem as land cover, whose classification exists at 10m alone</li>
+          <li><b>A point-of-view country layer exists too, and only at 10m.</b> <code>ne_10m_admin_0_countries_ukr</code> is Natural Earth's Ukrainian-view country set; there is no 50m or 110m equivalent — both 404. So <i>reassigning</i> Crimea rather than hatching it means the 10m tier, which is the tier this project has deferred twice for weight. <b>The overlay is the affordable answer and the honest one</b>: it says the border is contested, which is true, rather than swapping one silent claim for another</li>
+          <li><b>Whatever ships, the README has to say what the data does.</b> That is the minimum and it is not optional — silence is the one position that cannot be defended, because it is the position the library holds today by accident</li>
+        </ul>
+        <p><b>Why this is its own phase rather than a line in Phase 15.</b> Phase 15 is about a map that is incomplete. This is about a map that is wrong in a way that looks right, on a subject where being wrong has consequences for the person who published it. It is also the only item in this plan where the correct answer is partly not an engineering question, and pretending it is would be the mistake.</p>
+        <div class="out"><b>Delivered</b><b>Done:</b> Disputed and breakaway areas as a hatched overlay at 50m, a README that states what the country geometry does and does not decide, and a default that was chosen on purpose.</div>
+      </div>
+    </div>
+
+    <div class="phase">
       <div class="phase-mark"><span class="phase-num">15</span><span class="phase-days">1 day</span><span class="phase-status">shipped</span></div>
       <div class="phase-body">
         <h3>The map does not say what it left out</h3>
@@ -1011,6 +1032,24 @@
       </div>
     </div>
 
+    <div class="phase">
+      <div class="phase-mark"><span class="phase-num">13</span><span class="phase-days">1 day · 0.19.0</span><span class="phase-status">shipped</span></div>
+      <div class="phase-body">
+        <h3>The icons that have to be drawn</h3>
+        <p><b>Phase 8's one leftover, given a number rather than left open behind it.</b> Maki shipped — 29 icons, CC0, covering what sits on the ground: airport, rail, hospital, factory, port. What it does not cover is the geopolitical half a news map runs on, and that was <i>measured</i> rather than asserted: <b>Maki has 215 icons and none of <code>oil</code>, <code>natural-gas</code>, <code>pipeline</code> or <code>mine</code></b>.</p>
+        <p><b>Closed 2026-09-18.</b> The two drawings exist: <code>pipeline</code> and <code>conflict</code>, in <code>icons/</code>, read through the same vendoring script and the same grid check as Maki and Temaki, and dedicated to the public domain so the vocabulary keeps one licence. Both were chosen by rendering candidates at pin size beside <code>military</code>, <code>oil</code> and <code>danger</code> rather than by looking at them large: the elbow-with-flanges pipe read as the letter L and lost to a straight pipe with two collars and a valve wheel; the regular eight- and ten-point bursts read as badge stars and lost to a twelve-point burst with its inner radius varied. Forty-two icons. <b>The gallery gained the map this phase exists for</b> — the Caucasus with the Baku–Tbilisi–Ceyhan line, its terminals, the base at Gyumri, the Lars crossing — and rendering it found two things: the first draft put an <i>"example incident"</i> burst on Nagorno-Karabakh, which is Phase 16's mistake in miniature and became a dated fact at Tskhinvali instead; and "Baku" was drawn twice, as the capital and as the pin's label, on the same pixels. The <code>pipeline</code> icon is placed on the <i>terminals</i>; the line itself is a <code>route</code>, which is what the plan's "a news map can say pipeline" turns out to mean in practice. <b>And the user, looking at the running tool, said every icon was hard to read — not the two new ones, all of them.</b> Measured: a glyph was drawn at 12 units inside a radius-10 mark, four fifths of the 15 its own set is drawn for. Now 16 in a radius-13 mark; plain marks unchanged, <code>--pin-size</code> still scales everything. A minor, because every existing map with an icon changes.</p>
+        <p><b>Worked 2026-09-06, and the premise was wrong.</b> This page said for six phases that the geopolitical vocabulary existed in no public-domain set and would have to be drawn. That was asserted rather than measured. <b>Temaki</b> — the iD/Rapid team's expansion pack for Maki, also CC0, 557 icons — carries most of it, and eleven were vendored in 0.17.0: <code>oil</code>, <code>natural-gas</code>, <code>storage-tank</code>, <code>mine</code>, <code>power-station</code>, <code>nuclear</code>, <code>military</code>, <code>bunker</code>, <code>camp</code>, <code>border-crossing</code>, <code>ruins</code>. Forty in the vocabulary now. Two guards came out of rendering the candidates rather than reading their names: <b>Temaki's grid is not uniform</b> — 485 of 557 are 15×15 and the rest are drawn at 48, 50 or 100, so the vendoring script now refuses anything off the grid — and <b>its line-drawn glyphs die at pin size</b>, so what was taken is deliberately the solid half. Two candidates were rejected on what they depict: Temaki's <code>gas</code> is a flame and Maki's <code>fire-station</code> already is one, and <code>pipe</code> is a tobacco pipe. <b>What is left is two drawings where this page had budgeted a set:</b> <code>pipeline</code>, the one gap Temaki genuinely does not fill, and a true conflict glyph, for which <code>ruins</code> is a proxy rather than an answer.</p>
+        <p><b>Nothing engineering-shaped remains in it</b>, which is exactly why it had to leave Phase 8. A pin's <code>kind</code> already names an icon, the glyphs are already inlined per mark rather than referenced from a <code>&lt;symbol&gt;</code>, and a kind naming no icon already degrades to a plain mark that keeps its <code>data-kind</code>. Every hook is in place. What is left is drawing, and drawing does not finish because an engineer keeps working.</p>
+        <ul>
+          <li class="is-done"><b>The vocabulary first, and it is the part that can go wrong.</b> Capitals, military, oil and gas, pipelines, border crossings, conflict. Kept small for the reason the Maki subset was kept small: a set nobody can hold in their head is one where two authors pick different icons for the same thing</li>
+          <li class="is-done"><b>Drawn to Maki's weight and grid</b> — 15×15, the same stroke, the same optical size — or a map that uses both shows two house styles side by side, and the reader sees the seam rather than the subject</li>
+          <li class="is-done"><b>Public domain, and that is a constraint rather than a preference.</b> A set requiring a credit line propagates the obligation into every map anyone generates, which is what ruled out Tabler (MIT) and Lucide (ISC) however good they look. It is why Maki was chosen, and it does not relax for the half being drawn by hand</li>
+          <li><b>Weather no longer travels with it — it went to Phase 17.</b> Sun, cloud, rain, snow, wind and storm are the same drawing job under a different heading, and Maki has none of them either. What moved it out is the rest of the vocabulary that arrived with it: <b>isobars, fronts, isotherms and wind barbs are not icons</b>, they are lines over a field this package does not carry, and that is a phase rather than a bullet. The pictograms are drawn to this grid whenever either phase gets there; the geopolitical set stays the commitment here</li>
+          <li><b>The honest alternative is on the table.</b> Deciding the geopolitical half is not worth drawing is a real outcome, and a cheaper one — what is not acceptable is the question sitting open behind a finished phase for another six</li>
+        </ul>
+        <div class="out"><b>Delivered</b>One icon set, forty-two glyphs at one weight on one grid, that a news map can say <i>pipeline</i> and <i>conflict</i> with — eleven found by measuring, two drawn, and a gallery map that uses them. Weather stays in Phase 17.</div>
+      </div>
+    </div>
   </section>
 
 </div>

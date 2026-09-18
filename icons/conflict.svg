@@ -1,0 +1,9 @@
+<!--
+  conflict — drawn for masen, dedicated to the public domain (CC0 1.0).
+
+  The starburst every news desk uses for fighting, a strike, an explosion:
+  twelve points on a 15x15 grid, the inner radius varied so it reads as a burst
+  rather than as a badge star — the regular eight- and ten-point versions did
+  not, rendered at pin size beside `military` and `danger`.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path d="M7.5,0.3 L8.64,3.25 L10.81,1.76 L10.61,4.39 L13.74,3.9 L11.33,6.48 L14.7,7.5 L11.75,8.64 L13.42,10.92 L10.61,10.61 L11.1,13.74 L8.5,11.24 L7.5,14.7 L6.36,11.75 L4.19,13.24 L4.39,10.61 L1.26,11.1 L3.67,8.52 L0.3,7.5 L3.25,6.36 L1.58,4.08 L4.39,4.39 L3.9,1.26 L6.5,3.76 Z"/></svg>
