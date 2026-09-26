@@ -123,7 +123,7 @@ function round(value: number): number {
  * writing about anywhere east of Corsica. A swap that stays in range is a real
  * place and no validation can find it.
  */
-function assertPosition(at: Position, index: number, what: string, field: string): void {
+export function assertPosition(at: Position, index: number, what: string, field: string): void {
   const where = `masen: ${what}[${index}].${field}`;
   if (!Array.isArray(at) || at.length !== 2) {
     throw new Error(`${where} must be a [lon, lat] pair`);
@@ -173,7 +173,7 @@ function labelAt(
  * point of it: a pin and a callout that validated differently, or guarded the
  * globe differently, would be two vocabularies wearing one name.
  */
-function resolve(
+export function resolve(
   at: Position,
   index: number,
   what: string,

@@ -38,6 +38,8 @@ export const sand = `
   --neighbour: #EFE7D6;
   --anno: #24463A;
   --anno-ink: #F6F1E7;
+  --pressure-low: #A0432A;
+  --pressure-high: #2F5F8F;
   --furniture-ink: #8A7C63;
 }
 `.trim();

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0da72bc" role="img" aria-label="Where we operate">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-14kxxpi" role="img" aria-label="Where we operate">
   <title>Where we operate</title>
   <style>
-    .mp.mp-t-0da72bc {
+    .mp.mp-t-14kxxpi {
       --bg: transparent;
       --sea: #DCE7EC;
       --land: #D8D8D2;
@@ -52,95 +52,97 @@
       --neighbour: #F0F0EE;
       --anno: #8E2F1C;
       --anno-ink: #FFFFFF;
+      --pressure-low: #B8412B;
+      --pressure-high: #2F6FA8;
       --pin-size: 7;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-0da72bc .mp-bg {
+    .mp.mp-t-14kxxpi .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0da72bc .mp-sea {
+    .mp.mp-t-14kxxpi .mp-sea {
       fill: var(--sea);
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-grid {
+    .mp.mp-t-14kxxpi .mp-grid {
       fill: none;
       stroke: var(--graticule);
       stroke-width: var(--graticule-width);
     }
-    .mp.mp-t-0da72bc .mp-grid[data-kind="equator"], .mp.mp-t-0da72bc .mp-grid[data-kind="tropic"] {
+    .mp.mp-t-14kxxpi .mp-grid[data-kind="equator"], .mp.mp-t-14kxxpi .mp-grid[data-kind="tropic"] {
       stroke: var(--equator);
     }
-    .mp.mp-t-0da72bc .mp-neighbour {
+    .mp.mp-t-14kxxpi .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-country {
+    .mp.mp-t-14kxxpi .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-0da72bc .mp-country[data-bin="1"] {
+    .mp.mp-t-14kxxpi .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0da72bc .mp-country[data-bin="2"] {
+    .mp.mp-t-14kxxpi .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0da72bc .mp-country[data-bin="3"] {
+    .mp.mp-t-14kxxpi .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0da72bc .mp-country[data-bin="4"] {
+    .mp.mp-t-14kxxpi .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0da72bc .mp-country[data-bin="5"] {
+    .mp.mp-t-14kxxpi .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0da72bc .mp-country[data-fill="1"] {
+    .mp.mp-t-14kxxpi .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0da72bc .mp-country[data-fill="2"] {
+    .mp.mp-t-14kxxpi .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0da72bc .mp-country[data-fill="3"] {
+    .mp.mp-t-14kxxpi .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0da72bc .mp-country[data-fill="4"] {
+    .mp.mp-t-14kxxpi .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0da72bc .mp-country[data-fill="5"] {
+    .mp.mp-t-14kxxpi .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0da72bc .mp-country[data-fill="6"] {
+    .mp.mp-t-14kxxpi .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0da72bc .mp-country.is-highlighted {
+    .mp.mp-t-14kxxpi .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-0da72bc .mp-cover {
+    .mp.mp-t-14kxxpi .mp-cover {
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-cover[data-kind="desert"] {
+    .mp.mp-t-14kxxpi .mp-cover[data-kind="desert"] {
       fill: var(--desert);
     }
-    .mp.mp-t-0da72bc .mp-cover[data-kind="mountain"] {
+    .mp.mp-t-14kxxpi .mp-cover[data-kind="mountain"] {
       fill: var(--mountain);
     }
-    .mp.mp-t-0da72bc .mp-cover[data-kind="glacier"] {
+    .mp.mp-t-14kxxpi .mp-cover[data-kind="glacier"] {
       fill: var(--glacier);
     }
-    .mp.mp-t-0da72bc .mp-water[data-kind="lake"] {
+    .mp.mp-t-14kxxpi .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-water[data-kind="river"] {
+    .mp.mp-t-14kxxpi .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0da72bc .mp-border {
+    .mp.mp-t-14kxxpi .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -148,84 +150,84 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-0da72bc .mp-road {
+    .mp.mp-t-14kxxpi .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0da72bc .mp-place {
+    .mp.mp-t-14kxxpi .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-0da72bc .mp-prism-side {
+    .mp.mp-t-14kxxpi .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-prism-edge {
+    .mp.mp-t-14kxxpi .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0da72bc .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0da72bc .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-14kxxpi .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-0da72bc .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-14kxxpi .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-0da72bc .mp-country[data-unseen] {
+    .mp.mp-t-14kxxpi .mp-country[data-unseen] {
       stroke: var(--border);
       stroke-width: 3;
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-0da72bc .mp-hatch {
-      fill: url(#mp-stripe-1p2pgrv);
+    .mp.mp-t-14kxxpi .mp-hatch {
+      fill: url(#mp-stripe-1ya55ed);
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-hatch-line {
+    .mp.mp-t-14kxxpi .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-0da72bc .mp-label {
+    .mp.mp-t-14kxxpi .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
@@ -236,102 +238,171 @@
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-0da72bc .mp-label[data-kind="place"] {
+    .mp.mp-t-14kxxpi .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-0da72bc .mp-label[data-kind="grid"] {
+    .mp.mp-t-14kxxpi .mp-label[data-kind="grid"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
       letter-spacing: 0.04em;
     }
-    .mp.mp-t-0da72bc .mp-label[data-kind="sea"] {
+    .mp.mp-t-14kxxpi .mp-label[data-kind="sea"] {
       fill: var(--sea-ink);
       font-size: var(--place-label-size);
       font-style: italic;
       letter-spacing: 0.08em;
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-route-line {
+    .mp.mp-t-14kxxpi .mp-route-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0da72bc .mp-route-stop {
+    .mp.mp-t-14kxxpi .mp-route-stop {
       fill: var(--label-halo);
       stroke: var(--anno);
       stroke-width: 2.2;
     }
-    .mp.mp-t-0da72bc .mp-route-stop[data-kind="minor"] {
+    .mp.mp-t-14kxxpi .mp-route-stop[data-kind="minor"] {
       stroke-width: 1.6;
     }
-    .mp.mp-t-0da72bc .mp-label.is-highlighted {
+    .mp.mp-t-14kxxpi .mp-pressure-band {
+      stroke: none;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-kind="low"] {
+      fill: var(--pressure-low);
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-kind="high"] {
+      fill: var(--pressure-high);
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-depth="1"] {
+      fill-opacity: 0.14;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-depth="2"] {
+      fill-opacity: 0.20;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-depth="3"] {
+      fill-opacity: 0.26;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-depth="4"] {
+      fill-opacity: 0.32;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-depth="5"] {
+      fill-opacity: 0.38;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-depth="6"] {
+      fill-opacity: 0.44;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-depth="7"] {
+      fill-opacity: 0.50;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-band[data-depth="8"] {
+      fill-opacity: 0.56;
+    }
+    .mp.mp-t-14kxxpi .mp-isobar {
+      fill: none;
+      stroke: var(--ink-muted);
+      stroke-width: 1.1;
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-14kxxpi .mp-wind {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 1.1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-14kxxpi .mp-label[data-kind="isobar"] {
+      fill: var(--ink-muted);
+      font-size: var(--place-label-size);
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-mark {
+      font-family: var(--font);
+      font-size: 30;
+      font-weight: 700;
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-mark[data-kind="low"] {
+      fill: var(--pressure-low);
+    }
+    .mp.mp-t-14kxxpi .mp-pressure-mark[data-kind="high"] {
+      fill: var(--pressure-high);
+    }
+    .mp.mp-t-14kxxpi .mp-label[data-kind="pressure"] {
+      font-size: var(--place-label-size);
       font-weight: 700;
     }
-    .mp.mp-t-0da72bc .mp-label[data-fit="0"] {
+    .mp.mp-t-14kxxpi .mp-label.is-highlighted {
+      font-weight: 700;
+    }
+    .mp.mp-t-14kxxpi .mp-label[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-0da72bc .mp-pin-mark {
+    .mp.mp-t-14kxxpi .mp-pin-mark {
       fill: var(--anno);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
     }
-    .mp.mp-t-0da72bc .mp-icon {
+    .mp.mp-t-14kxxpi .mp-icon {
       fill: var(--anno-ink);
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-label[data-kind="pin"] {
+    .mp.mp-t-14kxxpi .mp-label[data-kind="pin"] {
       font-size: var(--place-label-size);
       font-weight: 700;
     }
-    .mp.mp-t-0da72bc .mp-arrow-line {
+    .mp.mp-t-14kxxpi .mp-arrow-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2;
       stroke-linecap: round;
-      marker-end: url(#mp-arrowhead-1p2pgrv);
+      marker-end: url(#mp-arrowhead-1ya55ed);
     }
-    .mp.mp-t-0da72bc .mp-arrow-head {
+    .mp.mp-t-14kxxpi .mp-arrow-head {
       fill: var(--anno);
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-callout-leader {
+    .mp.mp-t-14kxxpi .mp-callout-leader {
       fill: none;
       stroke: var(--anno);
       stroke-width: 1.25;
       stroke-linecap: round;
     }
-    .mp.mp-t-0da72bc .mp-callout-box {
+    .mp.mp-t-14kxxpi .mp-callout-box {
       fill: var(--anno);
       stroke: var(--anno-ink);
       stroke-width: 1;
     }
-    .mp.mp-t-0da72bc .mp-label[data-kind="callout"] {
+    .mp.mp-t-14kxxpi .mp-label[data-kind="callout"] {
       fill: var(--anno-ink);
       font-size: var(--place-label-size);
       font-weight: 500;
       stroke: none;
     }
-    .mp.mp-t-0da72bc .mp-anno[data-fit="0"] {
+    .mp.mp-t-14kxxpi .mp-anno[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-0da72bc .mp-credit, .mp.mp-t-0da72bc .mp-scale-label, .mp.mp-t-0da72bc .mp-compass-label {
+    .mp.mp-t-14kxxpi .mp-credit, .mp.mp-t-14kxxpi .mp-scale-label, .mp.mp-t-14kxxpi .mp-compass-label {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-size: var(--place-label-size);
       letter-spacing: var(--label-track);
     }
-    .mp.mp-t-0da72bc .mp-scale-bar {
+    .mp.mp-t-14kxxpi .mp-scale-bar {
       fill: none;
       stroke: var(--furniture-ink);
       stroke-width: 1.5;
     }
-    .mp.mp-t-0da72bc .mp-compass-needle {
+    .mp.mp-t-14kxxpi .mp-compass-needle {
       fill: var(--furniture-ink);
     }
-    .mp.mp-t-0da72bc .mp-watermark {
+    .mp.mp-t-14kxxpi .mp-watermark {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-weight: 600;
@@ -339,7 +410,7 @@
       opacity: 0.18;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-0da72bc {
+      .mp.mp-t-14kxxpi {
         --land: #2E3134;
         --sea: #16242C;
         --land-edge: #16181A;
@@ -371,20 +442,22 @@
         --neighbour: #202325;
         --anno: #F79A78;
         --anno-ink: #16181A;
+        --pressure-low: #F08A5D;
+        --pressure-high: #5FA3D9;
         --furniture-ink: #85898D;
       }
     }
-    .mp.mp-t-0da72bc {
+    .mp.mp-t-14kxxpi {
       --land: #0B5D3B;
       --land-edge: #F4F1E8;
       --bg: #F4F1E8;
     }
   </style>
   <defs class="mp-defs">
-    <pattern id="mp-stripe-1p2pgrv" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <pattern id="mp-stripe-1ya55ed" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6E6E68" stroke-width="1.6"/>
     </pattern>
-    <marker id="mp-arrowhead-1p2pgrv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <marker id="mp-arrowhead-1ya55ed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path class="mp-arrow-head" d="M0,0 L10,5 L0,10 Z" fill="#8E2F1C" stroke="none"/>
     </marker>
   </defs>
@@ -401,6 +474,7 @@
   <g class="mp-layer mp-hydro"/>
   <g class="mp-layer mp-borders" fill="none"/>
   <g class="mp-layer mp-roads"/>
+  <g class="mp-layer mp-weather"/>
   <g class="mp-layer mp-places">
     <circle class="mp-place" data-name="Rome" data-iso="IT" data-rank="1" data-pop="3339000" cx="293.732" cy="411.79" r="3.2" fill="#2B2B29" stroke="none">
       <title>Rome</title>

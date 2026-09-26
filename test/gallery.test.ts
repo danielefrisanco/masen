@@ -938,6 +938,35 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "A route is an ordered list of places, and a branch is another one",
     },
   ],
+  // The weather layer, and a real day rather than an invented one: the chart
+  // over Indochina on 26 September 2026 as Windy drew it, its isobars traced
+  // and the centres fitted to them. Only the L and the H carry letters; the
+  // Bay of Bengal low, the ridge out of China and the high to the south shape
+  // the lines from off the frame, which is what `mark: false` is for.
+  [
+    "indochina-pressure",
+    {
+      region: ["MM", "TH", "LA", "KH", "VN"],
+      detail: "50m",
+      projection: "mercator",
+      theme: "minimal",
+      size: [873, 1020],
+      neighbours: true,
+      pressure: {
+        centres: [
+          { at: [100, 14.6], value: 1009.6, radius: 140, stretch: 1.2, angle: -10 },
+          { at: [108, 13.2], value: 1014.9, radius: 150, stretch: 1.7, angle: -4 },
+          { at: [90.3, 18.5], value: 1010.6, radius: 620, stretch: 2.7, angle: -68, mark: false },
+          { at: [102, 24], value: 1016, radius: 180, stretch: 3.5, angle: -20, mark: false },
+          { at: [98.1, -1.4], value: 1018.7, radius: 660, stretch: 2.9, angle: 89, mark: false },
+        ],
+        interval: 2,
+        shading: true,
+      },
+      title: "Indochina, 26 September 2026: a monsoon low over Thailand",
+      credit: "Isobars after Windy · Boundaries: Natural Earth",
+    },
+  ],
 ];
 
 describe("gallery", () => {

@@ -62,6 +62,8 @@ export const minimal = compose({
   --neighbour: #F0F0EE;
   --anno: #8E2F1C;
   --anno-ink: #FFFFFF;
+  --pressure-low: #B8412B;
+  --pressure-high: #2F6FA8;
   --pin-size: 7;
   --furniture-ink: #80807A;`,
   dark: `
@@ -98,5 +100,7 @@ export const minimal = compose({
   --neighbour: #202325;
   --anno: #F79A78;
   --anno-ink: #16181A;
+  --pressure-low: #F08A5D;
+  --pressure-high: #5FA3D9;
   --furniture-ink: #85898D;`,
 });

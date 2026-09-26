@@ -84,6 +84,8 @@ export const contrast = compose({
   --neighbour: #C8C8C8;
   --anno: #4A4A4A;
   --anno-ink: #FFFFFF;
+  --pressure-low: #000000;
+  --pressure-high: #7A7A7A;
   --pin-size: 7;
   --furniture-ink: #000000;`,
   dark: `
@@ -127,6 +129,8 @@ export const contrast = compose({
   --neighbour: #3A3A3A;
   --anno: #B8B8B8;
   --anno-ink: #000000;
+  --pressure-low: #FFFFFF;
+  --pressure-high: #8A8A8A;
   --stripe: #FFFFFF;
   --furniture-ink: #FFFFFF;`,
   extra: `

@@ -1,6 +1,7 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { arrowLayer, calloutLayer, pinLayer, routeLayer } from "./annotations.js";
+import { weatherLayer } from "./weather.js";
 import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
 import { measureDistortion, type Distortion } from "./distortion.js";
 import { omissionsOf, type Omissions } from "./omissions.js";
@@ -137,6 +138,8 @@ export type {
   Pin,
   Point,
   Position,
+  Pressure,
+  PressureCentre,
   ProjectionName,
   Region,
   RegionPreset,
@@ -1244,8 +1247,23 @@ export async function masen(options: MapOptions): Promise<MapResult> {
     routes.length === 0
       ? { nodes: [], labels: [] }
       : routeLayer(routes, projectPoint, invertPoint, [width, height]);
+  // Validated whether or not the layer is drawn, for the pins' reason. Its H
+  // and L marks ride in the annotations, above the names; switching weather
+  // off takes them too, since a centre with no isobars is a letter on a map.
+  const weather =
+    options.pressure === undefined
+      ? { chart: [], marks: [] }
+      : weatherLayer(options.pressure, projectPoint, invertPoint, [width, height]);
+  const charted = wants("weather");
+  if (charted && weather.chart.length > 0) content.set("weather", [...weather.chart]);
   const annotated = wants("annotations");
-  const drawn = [...flows.nodes, ...lines.nodes, ...marks.nodes, ...captions.nodes];
+  const drawn = [
+    ...flows.nodes,
+    ...lines.nodes,
+    ...(charted ? weather.marks : []),
+    ...marks.nodes,
+    ...captions.nodes,
+  ];
   if (annotated && drawn.length > 0) content.set("annotations", drawn);
 
   /**

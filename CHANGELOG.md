@@ -16,6 +16,78 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [0.20.0] — 2026-09-26
+
+**Phase 17 begins: the map can draw a pressure chart from centres you place,
+tint the ground between its isobars, and draw the wind they imply.**
+
+A minor, and a breaking one by the taxonomy's own rule: **a thirteenth layer is
+inserted mid-stack**, between `.mp-roads` and `.mp-places`. That is the one
+thing the fixed stack exists to prevent, and it is done now, under `1.0.0`, on
+purpose — isobars belong over the land and under the names, and after the
+freeze that slot could never be claimed. A theme that selects layers by name is
+unaffected; one that counts them with `:nth-child` is off by one from here.
+
+### Added — `pressure`
+
+`pressure: { centres, interval?, labels?, shading? }`. Each centre is a place,
+a value in hectopascals and optionally a `radius` in kilometres, a `stretch` and
+an `angle`; the field is a 1013 hPa baseline that each centre pulls down or up,
+and the isobars are its contours every `interval` (default 4). No data and no
+network — the same centres always draw the same chart. Values are written along
+the lines, and move along their own line rather than sit on each other when the
+rings of a deep low crowd.
+
+The value printed under an H or an L is the chart's pressure at that point,
+not the number the centre was given, so it always agrees with the rings round
+it. `mark: false` gives a centre that shapes the field with no letter — a
+trough, a ridge, or a system beyond the frame.
+
+The contouring is marching squares written here rather than `d3-contour`, so
+the runtime stays at two dependencies. A value outside 850–1100 hPa, or a
+centre written `[lat, lon]`, throws.
+
+### Added — `shading`
+
+Filled bands between the isobars, one path per band, drawn with the even-odd
+rule so no two overlap — which is what lets them be translucent. Deeper by
+`data-depth` 1–8, in steps fixed in hectopascals (1.5, 3, 5, 8, 12, 18, 26 from
+normal) so a band means the same departure whatever the interval, and
+stretching so a 3 hPa tropical low and a 50 hPa typhoon are both graded. Only a
+band with 1013 inside it is left bare.
+On a globe the bands stop on the limb itself. Off by default.
+
+### Added — `wind`
+
+Arrows for the surface wind the chart implies, on a grid, with no data behind
+them but the centres: along the isobars, anticlockwise round a low in the north
+and clockwise in the south, turned 20° toward the low for friction, and scaled
+by speed. The speed is the gradient wind, from how tightly the isobars crowd
+*and* how sharply they curve — the geostrophic formula alone gave a 962 hPa
+typhoon four hundred knots — and it is held at its 15° value toward the
+equator, where a floor at 5° gave a monsoon breeze 82 knots. `data-speed` is
+in knots, which is what barbs will want.
+
+### Added — to the taxonomy
+
+- Layer `.mp-weather`, feature `.mp-isobar` (`data-value`) and
+  `.mp-pressure-band` (`data-kind`, `data-depth`, `data-from`, `data-to`).
+- `.mp-wind` in `.mp-weather` (`data-speed`, knots).
+- `.mp-pressure` and `.mp-pressure-mark` in `.mp-annotations`: the H or L and
+  the value under it.
+- Tokens `--pressure-low` and `--pressure-high`, set by every theme and
+  palette. A high was first tinted with `--water` and was blue on a blue sea —
+  shaped right, in the markup, and not on the map — so the contrast suite now
+  measures both tints *over* the sea and the land, not on their own.
+
+### Added — the tool
+
+A Weather tab: a click places a low or a high; each centre's position,
+pressure (to a tenth), size, stretch and angle can be edited, and whether it
+prints its letter; "Colour the field" switches the shading and "Wind arrows"
+the wind. All of it rides
+in the link (`wx=`, `isobarInterval=`, `shading=`, `wind=`).
+
 ## [0.19.0] — 2026-09-18
 
 **Phase 13 closes: the two icons nothing public-domain carried are drawn — and

@@ -1,5 +1,5 @@
 import { isIconName, resolveId } from "../../src/index.js";
-import type { Arrow, Pin, Position, Route } from "../../src/index.js";
+import type { Arrow, Pin, Position, PressureCentre, Route } from "../../src/index.js";
 
 /**
  * The marks a pointer makes, and the query string they survive in.
@@ -25,9 +25,22 @@ import type { Arrow, Pin, Position, Route } from "../../src/index.js";
  * page.
  */
 
-export type Mode = "none" | "highlight" | "pin" | "arrow" | "route";
+export type Mode = "none" | "highlight" | "pin" | "arrow" | "route" | "low" | "high";
 
+/** The gestures the Marks group offers. */
 export const MODES: readonly Mode[] = ["none", "highlight", "pin", "arrow", "route"];
+
+/**
+ * The gestures the Weather tab offers: a click drops a low or a high.
+ *
+ * Two modes rather than one with a setting beside it, because the choice is
+ * made before the click and a reader should see which one is armed in the same
+ * place they chose it.
+ */
+export const WEATHER_MODES: readonly Mode[] = ["none", "low", "high"];
+
+/** What a freshly dropped centre reads, before anyone edits it. */
+export const NEW_CENTRE: Readonly<Record<"low" | "high", number>> = { low: 992, high: 1028 };
 
 export interface Marks {
   /** ISO codes drawn with `.is-highlighted`. */
@@ -35,12 +48,14 @@ export interface Marks {
   readonly pins: readonly Pin[];
   readonly arrows: readonly Arrow[];
   readonly routes: readonly Route[];
+  /** Pressure centres, placed from the Weather tab. */
+  readonly centres: readonly PressureCentre[];
 }
 
-export const NO_MARKS: Marks = { highlight: [], pins: [], arrows: [], routes: [] };
+export const NO_MARKS: Marks = { highlight: [], pins: [], arrows: [], routes: [], centres: [] };
 
 /** The keys `encodeMarks` writes, so the general encoder can leave them alone. */
-export const MARK_KEYS = ["highlight", "pins", "arrows", "routes"] as const;
+export const MARK_KEYS = ["highlight", "pins", "arrows", "routes", "centres"] as const;
 
 /**
  * How much of a link a crafted one may take up.
@@ -56,6 +71,7 @@ const LIMITS = {
   arrows: 100,
   routes: 20,
   stops: 200,
+  centres: 30,
   label: 40,
 } as const;
 
@@ -119,6 +135,23 @@ export function encodeMarks(marks: Marks, params: URLSearchParams): void {
     // the one mark that is itself a list.
     params.set("route", marks.routes.map((r) => r.stops.map((s) => pair(s.at)).join(";")).join("|"));
   }
+  if (marks.centres.length > 0) {
+    // `lon,lat,value` then radius, stretch, angle and a 0 for a centre with no
+    // letter — each written only when it or a field after it differs from the
+    // default, so a plain low stays three numbers long. The value keeps a
+    // decimal: a whole hectopascal is too coarse to set a trough by.
+    params.set(
+      "wx",
+      marks.centres
+        .map((centre) => {
+          const tail = [centre.radius, centre.stretch, centre.angle, centre.mark === false ? 0 : undefined];
+          while (tail.length > 0 && tail[tail.length - 1] === undefined) tail.pop();
+          const value = Math.round(centre.value * 10) / 10;
+          return [pair(centre.at), value, ...tail.map((v) => v ?? "")].join(",");
+        })
+        .join(";"),
+    );
+  }
 }
 
 /**
@@ -136,6 +169,7 @@ export function decodeMarks(params: URLSearchParams): Marks {
     pins: readPins(params.get("pin")),
     arrows: readArrows(params.get("arrow")),
     routes: readRoutes(params.get("route")),
+    centres: readCentres(params.get("wx")),
   };
 }
 
@@ -206,6 +240,43 @@ function readRoutes(raw: string | null): readonly Route[] {
     if (stops.length > 0) routes.push({ stops });
   }
   return routes;
+}
+
+/**
+ * Centres back from a link.
+ *
+ * Every number is clamped into what the library accepts rather than handed on,
+ * because the library throws on a pressure it does not believe and a thrown
+ * render takes the whole map with it.
+ */
+function readCentres(raw: string | null): readonly PressureCentre[] {
+  if (raw === null) return [];
+  const centres: PressureCentre[] = [];
+  for (const token of raw.split(";")) {
+    if (centres.length >= LIMITS.centres) break;
+    const parts = token.split(",");
+    const at = coordinate(parts[0], parts[1]);
+    const value = Number(parts[2]);
+    if (at === null || !Number.isFinite(value)) continue;
+    const optional = (index: number, low: number, high: number): number | undefined => {
+      const raw = parts[index];
+      if (raw === undefined || raw === "") return undefined;
+      const number = Number(raw);
+      return Number.isFinite(number) ? Math.min(high, Math.max(low, number)) : undefined;
+    };
+    const radius = optional(3, 100, 5000);
+    const stretch = optional(4, 1, 5);
+    const angle = optional(5, -180, 180);
+    centres.push({
+      at,
+      value: Math.min(1080, Math.max(900, Math.round(value * 10) / 10)),
+      ...(radius === undefined ? {} : { radius }),
+      ...(stretch === undefined ? {} : { stretch }),
+      ...(angle === undefined ? {} : { angle }),
+      ...(parts[6] === "0" ? { mark: false } : {}),
+    });
+  }
+  return centres;
 }
 
 /** Two strings into a coordinate, or nothing. Out of range is not repaired. */

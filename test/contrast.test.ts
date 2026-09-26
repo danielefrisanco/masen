@@ -198,3 +198,58 @@ describe("every preset keeps its coastlines findable", () => {
     }
   });
 });
+
+/**
+ * The same question asked of the pressure tint, which is translucent: what
+ * matters is the ground with the band over it, not the token on its own.
+ *
+ * Found by rendering. The first cut tinted a high with `--water`, and a high is
+ * mostly over the sea, so on every preset with a blue sea the high was blue on
+ * blue — in the markup, correctly shaped, and not on the map. So both sides are
+ * measured over both grounds: the deepest step has to clear the coastline
+ * floor, and the first step, which is meant to be faint, only the floor that
+ * context is held to.
+ */
+const DEEPEST = 0.56;
+const FIRST = 0.14;
+
+function over(colour: Rgb, ground: Rgb, opacity: number): Rgb {
+  return colour.map((c, i) => c * opacity + (ground[i] as number) * (1 - opacity)) as Rgb;
+}
+
+describe("every preset tints a pressure system visibly", () => {
+  it.each(presets)("%s with palette %s", async (theme, palette) => {
+    const map = await masen({
+      region: ["CH"],
+      detail: "110m",
+      size: [10, 10],
+      theme,
+      ...(palette === null ? {} : { palette }),
+    });
+    const both = schemes(map.css);
+    for (const scheme of ["light", "dark"] as const) {
+      const tokens = both[scheme];
+      for (const side of ["--pressure-low", "--pressure-high"]) {
+        const tint = rgb(tokens[side]);
+        expect(tint, `${theme}/${palette} ${scheme}: ${side} is not a colour`).not.toBeNull();
+        for (const under of ["--sea", "--land"]) {
+          const ground = rgb(tokens[under]) as Rgb;
+          const deepest = difference(ground, over(tint as Rgb, ground, DEEPEST));
+          const first = difference(ground, over(tint as Rgb, ground, FIRST));
+          const where = `${theme}/${palette} ${scheme}: ${side} over ${under}`;
+          expect(deepest, `${where} is ${deepest.toFixed(1)} at its deepest`).toBeGreaterThanOrEqual(FLOOR);
+          expect(first, `${where} is ${first.toFixed(1)} at its first step`).toBeGreaterThanOrEqual(
+            NEIGHBOUR_FLOOR,
+          );
+        }
+      }
+      // And a low and a high must not be the same tint at their deepest.
+      const land = rgb(tokens["--land"]) as Rgb;
+      const apart = difference(
+        over(rgb(tokens["--pressure-low"]) as Rgb, land, DEEPEST),
+        over(rgb(tokens["--pressure-high"]) as Rgb, land, DEEPEST),
+      );
+      expect(apart, `${theme}/${palette} ${scheme}: a low and a high are ${apart.toFixed(1)} apart`).toBeGreaterThanOrEqual(FLOOR);
+    }
+  });
+});

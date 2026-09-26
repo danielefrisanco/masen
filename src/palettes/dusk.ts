@@ -48,6 +48,8 @@ export const dusk = `
   --neighbour: #17222D;
   --anno: #F2A077;
   --anno-ink: #0E1620;
+  --pressure-low: #F2A077;
+  --pressure-high: #6FB0E0;
   --furniture-ink: #7B8B9C;
 }
 `.trim();

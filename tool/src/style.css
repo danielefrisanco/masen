@@ -993,3 +993,83 @@ input[type="search"] {
   color: var(--ink, #1a1a18);
   font-weight: 600;
 }
+
+/* ---- the two tabs, and the weather tab's centres ---- */
+
+/*
+ * Two tabs over one form. The selected one takes the accent as a rule under
+ * it — the same mark the section headings carry — rather than a filled pill,
+ * so the bar reads as navigation and not as two more buttons.
+ */
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.tab {
+  padding: 0.35rem 0.7rem;
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.tab[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.tab:hover,
+.tab:focus-visible {
+  color: var(--ink);
+}
+
+.centre {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem 0.5rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.centre > .mark {
+  grid-column: 1 / -1;
+}
+
+.centre-kind {
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.centre-kind.is-low { color: #b3432b; }
+.centre-kind.is-high { color: #2f6f9f; }
+
+.centre-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.centre-field input {
+  width: 100%;
+  padding: 0.2rem 0.35rem;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.centre-kind.is-unmarked {
+  opacity: 0.35;
+}
+.centre > .check {
+  grid-column: 1 / -1;
+}

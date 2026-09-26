@@ -74,6 +74,11 @@ describe("public contract", () => {
       "hydro",
       "borders",
       "roads",
+      // Weather joined in 0.20, before the freeze and on purpose: the one
+      // layer inserted mid-stack, which is only ever affordable under 1.0.
+      // Over the ground so an isobar crosses land and sea alike, under the
+      // names so it never strikes one through.
+      "weather",
       "places",
       "labels",
       "annotations",

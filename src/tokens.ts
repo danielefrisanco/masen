@@ -99,6 +99,11 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   // filling that with this and casing it in `--label-halo` paints white on
   // white.
   { name: "--anno-ink", status: "live", controls: "Text drawn on an annotation, against --anno" },
+  // Weather's own pair, because borrowing did not survive the shading: a high
+  // tinted with --water is blue on a blue sea, and on noir the H itself was
+  // barely there. Each preset picks the two against its own sea and land.
+  { name: "--pressure-low", status: "live", controls: "A low's L and the tint around it" },
+  { name: "--pressure-high", status: "live", controls: "A high's H and the tint around it" },
   { name: "--furniture-ink", status: "live", controls: "Credit lines, watermarks and legends, on the canvas" },
 ]);
 

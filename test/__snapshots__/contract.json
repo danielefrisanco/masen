@@ -54,6 +54,12 @@
       "status": "reserved"
     },
     {
+      "name": "weather",
+      "className": "mp-weather",
+      "feature": "mp-isobar",
+      "status": "live"
+    },
+    {
       "name": "places",
       "className": "mp-places",
       "feature": "mp-place",
@@ -96,6 +102,9 @@
     "mp-legend",
     "mp-pin",
     "mp-pin-mark",
+    "mp-pressure",
+    "mp-pressure-band",
+    "mp-pressure-mark",
     "mp-prism",
     "mp-prism-side",
     "mp-prism-top",
@@ -106,7 +115,8 @@
     "mp-scale-bar",
     "mp-scale-label",
     "mp-symbol",
-    "mp-watermark"
+    "mp-watermark",
+    "mp-wind"
   ],
   "tokens": [
     "--bg (live)",
@@ -160,6 +170,8 @@
     "--anno (live)",
     "--pin-size (live)",
     "--anno-ink (live)",
+    "--pressure-low (live)",
+    "--pressure-high (live)",
     "--furniture-ink (live)"
   ],
   "presets": {

@@ -44,6 +44,8 @@ export const slate = `
   --neighbour: #E4E7EB;
   --anno: #134E75;
   --anno-ink: #FFFFFF;
+  --pressure-low: #A5452F;
+  --pressure-high: #1F5599;
   --furniture-ink: #6F7B89;
 }
 `.trim();

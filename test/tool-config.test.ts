@@ -65,9 +65,50 @@ const CHOSEN: Config = {
   pins: [{ at: [23.73, 37.98], label: "Athens" }],
   arrows: [{ from: [23.73, 37.98], to: [28.98, 41.01] }],
   routes: [{ stops: [{ at: [23.73, 37.98] }, { at: [23.32, 42.7] }] }],
+  centres: [
+    { at: [-18, 60], value: 976, radius: 1100, stretch: 1.6, angle: 60 },
+    { at: [28, 52], value: 1026 },
+  ],
+  isobarInterval: 2,
+  shading: true,
+  wind: true,
 };
 
 const round = (search: string): Config => decode(search, VOCABULARY);
+
+describe("pressure centres in the URL", () => {
+  it("drop a value the library would refuse rather than failing the map", () => {
+    const config = round("wx=10,50,5000;10,50,abc;12,44,1004,999999,0,700");
+    expect(config.centres).toEqual([
+      { at: [10, 50], value: 1080 },
+      { at: [12, 44], value: 1004, radius: 5000, stretch: 1, angle: 180 },
+    ]);
+  });
+
+  it("reach the library as a pressure option", () => {
+    const options = toOptions({ ...DEFAULTS, centres: [{ at: [0, 50], value: 990 }] });
+    expect(options.pressure).toEqual({ centres: [{ at: [0, 50], value: 990 }], interval: 4 });
+    expect(toOptions(DEFAULTS).pressure).toBeUndefined();
+  });
+
+  it("keep a tenth of a hectopascal and a centre with no letter", () => {
+    const decoded = decode("wx=100,14.6,1009.6,140,1.2,-10;90.3,18.5,1010.6,620,2.7,-68,0", VOCABULARY);
+    expect(decoded.centres).toEqual([
+      { at: [100, 14.6], value: 1009.6, radius: 140, stretch: 1.2, angle: -10 },
+      { at: [90.3, 18.5], value: 1010.6, radius: 620, stretch: 2.7, angle: -68, mark: false },
+    ]);
+    expect(decode(encode(decoded), VOCABULARY).centres).toEqual(decoded.centres);
+  });
+
+  it("ask for shading only when it is switched on", () => {
+    const centres = [{ at: [0, 50], value: 990 }] as const;
+    expect(toOptions({ ...DEFAULTS, centres, shading: true }).pressure?.shading).toBe(true);
+    expect(toOptions({ ...DEFAULTS, centres }).pressure).not.toHaveProperty("shading");
+    expect(decode("shading=1", VOCABULARY).shading).toBe(true);
+    expect(toOptions({ ...DEFAULTS, centres, wind: true }).pressure?.wind).toBe(true);
+    expect(toOptions({ ...DEFAULTS, centres }).pressure).not.toHaveProperty("wind");
+  });
+});
 
 describe("the tool's URL", () => {
   it("is empty when nothing was chosen", () => {
