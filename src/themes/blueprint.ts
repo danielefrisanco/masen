@@ -65,6 +65,8 @@ export const blueprint = compose({
   --neighbour: #133F68;
   --anno: #EF8A3C;
   --anno-ink: #10395E;
+  --pressure-low: #EF8A3C;
+  --pressure-high: #E8F2FF;
   --pin-size: 7;
   --furniture-ink: #8FB4D4;`,
   dark: `

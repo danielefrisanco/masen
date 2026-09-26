@@ -1067,3 +1067,9 @@ input[type="search"] {
   border: 1px solid var(--line);
   border-radius: 4px;
 }
+.centre-kind.is-unmarked {
+  opacity: 0.35;
+}
+.centre > .check {
+  grid-column: 1 / -1;
+}

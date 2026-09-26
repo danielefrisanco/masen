@@ -29,6 +29,7 @@
 
 const BANDS = [1, 2, 3, 4, 5];
 const FILLS = [1, 2, 3, 4, 5, 6];
+const DEPTHS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const rules = (build: (n: number) => string, over: readonly number[]): string =>
   over.map(build).join("\n");
@@ -223,15 +224,26 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
 .mp .mp-route-stop[data-kind="minor"] { stroke-width: 1.6; }
 
 /*
- * The weather layer: isobars, the values on them, and the H and L marks.
+ * The weather layer: the shading, the isobars, the values on them, and the H
+ * and L marks.
  *
- * No tokens of its own yet. The lines take --ink-muted because an isobar is
- * context the reader looks through, like the graticule, but it has to survive
- * a choropleth under it, which --graticule does not. A low is --anno and a high
- * is --water: warm and cool, the way every broadcast chart has them, and both
- * already set by every preset and palette. Widths and the letter size are
- * literals, like the arrow's, until somebody asks to change them.
+ * The lines take --ink-muted because an isobar is context the reader looks
+ * through, like the graticule, but it has to survive a choropleth under it,
+ * which --graticule does not. A low and a high have tokens of their own, and a
+ * low's pool is the colour of its L. Widths and the letter size are literals,
+ * like the arrow's, until somebody asks to change them.
+ *
+ * The shading deepens by opacity rather than by a ramp of tokens: one colour a
+ * side is what a preset can be asked to choose, and a translucent band keeps
+ * the coast and the borders under it legible. The first step is 0.14 and not
+ * less: a tenth was measured at 4–9 ΔE on every preset and still read as
+ * nothing on the dark ones, where a translucent colour over near-black stays
+ * near-black whatever the arithmetic says.
  */
+.mp .mp-pressure-band { stroke: none; }
+.mp .mp-pressure-band[data-kind="low"] { fill: var(--pressure-low); }
+.mp .mp-pressure-band[data-kind="high"] { fill: var(--pressure-high); }
+${rules((n) => `.mp .mp-pressure-band[data-depth="${n}"] { fill-opacity: ${(0.08 + n * 0.06).toFixed(2)}; }`, DEPTHS)}
 .mp .mp-isobar {
   fill: none;
   stroke: var(--ink-muted);
@@ -251,8 +263,8 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
   stroke-linejoin: round;
   paint-order: stroke;
 }
-.mp .mp-pressure-mark[data-kind="low"] { fill: var(--anno); }
-.mp .mp-pressure-mark[data-kind="high"] { fill: var(--water); }
+.mp .mp-pressure-mark[data-kind="low"] { fill: var(--pressure-low); }
+.mp .mp-pressure-mark[data-kind="high"] { fill: var(--pressure-high); }
 .mp .mp-label[data-kind="pressure"] {
   font-size: var(--place-label-size);
   font-weight: 700;

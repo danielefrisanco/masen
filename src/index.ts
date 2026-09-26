@@ -1252,10 +1252,10 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   // off takes them too, since a centre with no isobars is a letter on a map.
   const weather =
     options.pressure === undefined
-      ? { lines: [], marks: [] }
+      ? { chart: [], marks: [] }
       : weatherLayer(options.pressure, projectPoint, invertPoint, [width, height]);
   const charted = wants("weather");
-  if (charted && weather.lines.length > 0) content.set("weather", [...weather.lines]);
+  if (charted && weather.chart.length > 0) content.set("weather", [...weather.chart]);
   const annotated = wants("annotations");
   const drawn = [
     ...flows.nodes,

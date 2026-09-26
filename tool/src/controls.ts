@@ -609,7 +609,7 @@ function weatherGroup(
     const head = document.createElement("div");
     head.className = "mark";
     const kind = document.createElement("span");
-    kind.className = `centre-kind is-${centre.value < 1013 ? "low" : "high"}`;
+    kind.className = `centre-kind is-${centre.value < 1013 ? "low" : "high"}${centre.mark === false ? " is-unmarked" : ""}`;
     kind.textContent = centre.value < 1013 ? "L" : "H";
     const at = document.createElement("span");
     at.className = "mark-note";
@@ -620,7 +620,13 @@ function weatherGroup(
     const where = readCoordinate(centre.at);
     card.append(
       head,
-      numberField("Pressure, hPa", centre.value, [900, 1080, 1], `Pressure at ${where}`, (value) =>
+      numberField("Longitude", centre.at[0], [-180, 180, 0.1], `Longitude of the centre at ${where}`, (lon) =>
+        update(index, { at: [lon, centre.at[1]] }),
+      ),
+      numberField("Latitude", centre.at[1], [-85, 85, 0.1], `Latitude of the centre at ${where}`, (lat) =>
+        update(index, { at: [centre.at[0], lat] }),
+      ),
+      numberField("Pressure, hPa", centre.value, [900, 1080, 0.1], `Pressure at ${where}`, (value) =>
         update(index, { value }),
       ),
       numberField("Size, km", centre.radius ?? 1200, [100, 5000, 50], `Size of the centre at ${where}`, (value) =>
@@ -631,6 +637,11 @@ function weatherGroup(
       ),
       numberField("Angle, °", centre.angle ?? 0, [-180, 180, 5], `Angle of the centre at ${where}`, (value) =>
         update(index, { angle: value }),
+      ),
+      // A trough, a ridge, or a system off the edge: it bends the lines, and a
+      // letter on it would name a centre the chart does not have.
+      checkbox("Print its letter", centre.mark !== false, (on) =>
+        update(index, { mark: on ? undefined : false }),
       ),
     );
     list.append(card);
@@ -651,9 +662,15 @@ function weatherGroup(
       slider(config.isobarInterval, [1, 10, 1], (value) => onChange({ isobarInterval: value })),
       "Hectopascals between lines. Four is the synoptic convention",
     ),
+    checkbox(
+      "Colour the field",
+      config.shading,
+      (on) => onChange({ shading: on }),
+      "Deeper toward each low and high. Near normal pressure stays bare",
+    ),
     list,
     button("Load an example over Europe", () =>
-      onChange({ region: "europe", centres: EXAMPLE }),
+      onChange({ region: "europe", centres: EXAMPLE, shading: true }),
     ),
     ...(config.centres.length > 0
       ? [button("Clear the weather", () => onChange({ centres: [] }))]

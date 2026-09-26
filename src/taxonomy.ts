@@ -124,7 +124,7 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     className: "mp-weather",
     feature: "mp-isobar",
     status: "live",
-    carries: "Isobars and pressure centres — over the ground, under the names",
+    carries: "Isobars and the tint between them — over the ground, under the names",
   },
   {
     name: "places",
@@ -249,6 +249,9 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   // and coloured by `data-kind` so a low and a high read apart at a glance.
   "mp-pressure",
   "mp-pressure-mark",
+  // The tint between two isobars, in `.mp-weather` under the lines. Classed
+  // apart from the isobar because it is an area and the isobar is an edge.
+  "mp-pressure-band",
 ]);
 
 export function layer(name: LayerName): LayerSpec {

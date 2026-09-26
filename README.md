@@ -79,12 +79,12 @@ it over.
 ## Status
 
 Early, but complete enough to use, and **on npm**. Phases 0–10b, 13, 15 and 16
-are done: the library, and [a tool over it](https://danielefrisanco.github.io/masen/)
+are done, and 17 — weather — has begun with a pressure chart: the library, and [a tool over it](https://danielefrisanco.github.io/masen/)
 where you pick a region, a projection and a theme, click the map to mark it, and
 take the result away as a file. The package builds under both ESM and CJS, resolves
 real geometry, emits the frozen document shape below, themes it, and carries
-lakes, rivers, cities, names, the sea, land cover, a graticule and four kinds of
-annotation.
+lakes, rivers, cities, names, the sea, land cover, a graticule, four kinds of
+annotation and isobars.
 
 ```sh
 npm i masen-map
@@ -104,7 +104,7 @@ would be promising to hold still, and it has not been in enough hands yet to
 know which of its names are wrong. Being on npm before that promise is how it
 gets into those hands; the version number is the disclaimer.
 
-Eleven of the twelve layer slots carry something. **Roads is the last one still
+Twelve of the thirteen layer slots carry something. **Roads is the last one still
 empty**, and it is waiting on data rather than on code: of the roads Natural
 Earth publishes, 1.7% of Africa's road length carries a classification, so the
 layer would be a lie outside two continents. A legend is deferred to v2. The
@@ -119,7 +119,7 @@ versioned like a function signature and change only on a major.
 The root is `<svg class="mp">` — `mp` for *map*, not for the library, which is
 why the prefix survived the rename from `mapper` and will survive the next one.
 
-Inside it, a `.mp-bg` rectangle covers the canvas, then twelve layer groups in
+Inside it, a `.mp-bg` rectangle covers the canvas, then thirteen layer groups in
 **fixed paint order**, bottom to top. Every slot is emitted on every map, empty
 or not: inserting one later would restack everything above it and break themes
 in the wild.
@@ -134,6 +134,7 @@ in the wild.
 | `.mp-hydro` | `.mp-water` | `data-kind` | Lakes and rivers, drawn over the land |
 | `.mp-borders` | `.mp-border`, `.mp-hatch` | `data-kind`, `data-name` | Shared boundaries, each drawn once, over the hatched overlays they qualify |
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
+| `.mp-weather` | `.mp-isobar`, `.mp-pressure-band` | `data-value`, `data-kind`, `data-depth`, `data-from`, `data-to` | Isobars and the tint between them, over the ground and under the names |
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
 | `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins, callouts and arrows |
@@ -435,6 +436,7 @@ every theme in the wild.
 | `--neighbour` | Context countries |
 | `--anno` | The mark a pin is drawn with, and a callout's box and leader |
 | `--anno-ink` | Ink on an annotation: a callout's caption, a pin's icon |
+| `--pressure-low` / `--pressure-high` | A low's L and a high's H, and the tint around each |
 | `--furniture-ink` | Text and marks on the canvas — a credit, a watermark, a scale bar, a north arrow |
 | `--ink` / `--ink-muted` | Country names / settlement names |
 | `--font` / `--label-size` / `--place-label-size` | Type |
@@ -1273,6 +1275,55 @@ line is one path of several subpaths, one per visible run.
 A route is **not** a road. A road is a fact about the world that has to arrive
 from Natural Earth; a route is a claim you are making. That is why routes are
 annotations and `.mp-roads` is still an empty layer.
+
+### A pressure chart
+
+```ts
+await masen({
+  region: "europe",
+  pressure: {
+    centres: [
+      { at: [-18, 60], value: 976, stretch: 1.6, angle: 60 },
+      { at: [-22, 40], value: 1032, radius: 1600 },
+    ],
+    shading: true,
+  },
+});
+```
+
+You place the lows and the highs; the library draws the chart. Each centre
+pulls a 1013 hPa baseline down or up around itself, fading with distance on the
+ground — `radius` in kilometres (default 1200), `stretch` and `angle` for the
+elongated low a real chart has — and the sum of them is a field. Isobars are its
+contours every `interval` hectopascals (default 4, the synoptic convention),
+with the value written along each line long enough to carry one. Two centres
+near each other make a trough or a ridge between them because the field is a
+sum, not because anyone drew one.
+
+**Nothing is downloaded and nothing is measured.** There is no pressure anywhere
+in Natural Earth, and this is not a forecast: it is an illustration of a weather
+situation, and the same centres always draw the same chart.
+
+The isobars are in `.mp-weather`, over the land and under the names. The H and
+L marks are `.mp-pressure` groups in `.mp-annotations`, a `.mp-pressure-mark`
+letter over a `.mp-label[data-kind="pressure"]` value, since they are a place
+you chose rather than context. **The value is the chart's pressure at the
+letter**, not the number the centre was given: two lows of 1000 placed close
+together deepen each other, and printing 1000 inside the 988 ring round them
+would be a chart contradicting itself.
+
+`mark: false` on a centre shapes the field without a letter — a trough or a
+ridge, which a chart draws and never names, or a system beyond the edge of the
+map whose isobars still reach into it.
+
+`shading: true` tints the ground between the lines: toward `--pressure-low`
+wherever the chart is under 1013 hPa and `--pressure-high` wherever it is over,
+deeper in eight steps (`data-depth`) that stretch as they go — 1.5, 3, 5, 8,
+12, 18 and 26 hPa from normal — so a tropical low 3 hPa under normal is as
+plainly tinted as a typhoon's core is dark. Only a band with 1013 inside it is
+left bare. The bands
+never overlap, so they can be translucent and the coast still reads through
+them. It is off by default, because a synoptic chart is lines.
 
 ### Cities
 

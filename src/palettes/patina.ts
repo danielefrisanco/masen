@@ -57,6 +57,8 @@ export const patina = `
   --neighbour: #D2C09A;
   --anno: #8E2A20;
   --anno-ink: #F2E7CE;
+  --pressure-low: #B03A2A;
+  --pressure-high: #1E3F8A;
   --furniture-ink: #D9C7A0;
 }
 `.trim();

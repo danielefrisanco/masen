@@ -70,6 +70,8 @@ export const noir = compose({
   --neighbour: #171E25;
   --anno: #E5762B;
   --anno-ink: #0B0E11;
+  --pressure-low: #E5762B;
+  --pressure-high: #4D9BE0;
   --pin-size: 7;
   --furniture-ink: #7A848F;`,
   dark: `

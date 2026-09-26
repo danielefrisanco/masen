@@ -70,6 +70,7 @@ const CHOSEN: Config = {
     { at: [28, 52], value: 1026 },
   ],
   isobarInterval: 2,
+  shading: true,
 };
 
 const round = (search: string): Config => decode(search, VOCABULARY);
@@ -87,6 +88,22 @@ describe("pressure centres in the URL", () => {
     const options = toOptions({ ...DEFAULTS, centres: [{ at: [0, 50], value: 990 }] });
     expect(options.pressure).toEqual({ centres: [{ at: [0, 50], value: 990 }], interval: 4 });
     expect(toOptions(DEFAULTS).pressure).toBeUndefined();
+  });
+
+  it("keep a tenth of a hectopascal and a centre with no letter", () => {
+    const decoded = decode("wx=100,14.6,1009.6,140,1.2,-10;90.3,18.5,1010.6,620,2.7,-68,0", VOCABULARY);
+    expect(decoded.centres).toEqual([
+      { at: [100, 14.6], value: 1009.6, radius: 140, stretch: 1.2, angle: -10 },
+      { at: [90.3, 18.5], value: 1010.6, radius: 620, stretch: 2.7, angle: -68, mark: false },
+    ]);
+    expect(decode(encode(decoded), VOCABULARY).centres).toEqual(decoded.centres);
+  });
+
+  it("ask for shading only when it is switched on", () => {
+    const centres = [{ at: [0, 50], value: 990 }] as const;
+    expect(toOptions({ ...DEFAULTS, centres, shading: true }).pressure?.shading).toBe(true);
+    expect(toOptions({ ...DEFAULTS, centres }).pressure).not.toHaveProperty("shading");
+    expect(decode("shading=1", VOCABULARY).shading).toBe(true);
   });
 });
 

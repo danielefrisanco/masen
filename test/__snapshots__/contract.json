@@ -103,6 +103,7 @@
     "mp-pin",
     "mp-pin-mark",
     "mp-pressure",
+    "mp-pressure-band",
     "mp-pressure-mark",
     "mp-prism",
     "mp-prism-side",
@@ -168,6 +169,8 @@
     "--anno (live)",
     "--pin-size (live)",
     "--anno-ink (live)",
+    "--pressure-low (live)",
+    "--pressure-high (live)",
     "--furniture-ink (live)"
   ],
   "presets": {

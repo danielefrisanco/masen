@@ -35,6 +35,37 @@ const DEFAULT_INTERVAL = 4;
 const STEP = 6;
 /** An isobar shorter than this, in user units, is not given a value. */
 const LABEL_MIN_LENGTH = 140;
+/**
+ * Where along an isobar its value may go, in the order they are tried.
+ *
+ * Halfway first. But the rings round one centre are all walked from the same
+ * side, so their halfway points line up, and a deep low wrote its dozen values
+ * in a single column, each on top of the next. A value that would touch one
+ * already written moves along its own line instead, and a line with no room
+ * anywhere goes without.
+ */
+const LABEL_STOPS = [0.5, 0.25, 0.75, 0.125, 0.375, 0.625, 0.875];
+/**
+ * The room a value takes, as a circle: half its width at a place-label size of
+ * 11, which is what four of the five themes set, plus a gap. A circle because
+ * the value turns with its line and a circle does not care which way.
+ */
+const LABEL_RADIUS_PER_DIGIT = 3.4;
+const LABEL_GAP = 3;
+/**
+ * The departures from normal, in hectopascals, at which the tint deepens a step
+ * — eight steps, the last open-ended.
+ *
+ * Fixed in pressure rather than counted in isobars, so a band means the same
+ * departure whatever interval the lines are drawn at. And stretching rather
+ * than even, because charts live at both ends: a tropical low is 3 hPa under
+ * normal and a typhoon 50. Even 4 hPa steps left the whole of a tropical chart
+ * bare — an H of 1014 got no tint at all — while steps this fine all the way
+ * down would flatten a typhoon's core into one colour ten rings out.
+ */
+const DEPTH_FROM = [1.5, 3, 5, 8, 12, 18, 26];
+/** How far, in user units, thinning may move a line. A third of a pixel. */
+const TOLERANCE = 0.3;
 /** Earth's mean radius, for turning angular distance into kilometres. */
 const EARTH_KM = 6371;
 const RADIANS = Math.PI / 180;
@@ -100,6 +131,8 @@ interface Grid {
   readonly ys: readonly number[];
   /** Row-major, `ys.length` rows of `xs.length`. */
   readonly values: Float64Array;
+  /** Kept to find where the ground ends between two nodes. */
+  readonly invert: (point: Point) => Position | null;
 }
 
 function axis(extent: number): number[] {
@@ -123,21 +156,58 @@ function sample(
       values[row * xs.length + column] = ground === null ? Number.NaN : pressureAt(centres, ground);
     });
   });
-  return { xs, ys, values };
+  return { xs, ys, values, invert };
 }
 
 /**
- * One isobar level as polylines, by marching squares.
+ * Where the ground ends between a node on it and a node off it: the limb of a
+ * globe, found by halving the gap until it is far below a pixel.
+ */
+function limb(invert: (point: Point) => Position | null, on: Point, off: Point): Point {
+  let inside = on;
+  let outside = off;
+  for (let i = 0; i < 16; i += 1) {
+    const middle: Point = [(inside[0] + outside[0]) / 2, (inside[1] + outside[1]) / 2];
+    if (invert(middle) === null) outside = middle;
+    else inside = middle;
+  }
+  return inside;
+}
+
+interface Line {
+  readonly points: Point[];
+  readonly closed: boolean;
+}
+
+/**
+ * One isobar level as polylines, by marching squares — or, with `fill`, the
+ * outline of everywhere at or above it, as closed rings.
  *
  * Every crossing is keyed by the grid edge it lies on, not by its coordinates,
  * so the two cells sharing an edge agree on the point exactly and the pieces
- * join without a tolerance. A cell with a hole at any corner draws nothing, so
- * a line reaching the limb of a globe stops there rather than running along it.
+ * join without a tolerance. For a line, a cell with a hole at any corner draws
+ * nothing, so a line reaching the limb of a globe stops there rather than
+ * running along it.
+ *
+ * A region has to close, so `fill` walks one ring of phantom nodes beyond the
+ * grid and counts them, and every node off the globe, as below any level. The
+ * edge of a region that runs off the canvas is then drawn half a step outside
+ * it, where the viewport cuts it square, and the edge that runs off a globe is
+ * drawn on the limb itself rather than a cell short of it.
  */
-function contour(grid: Grid, level: number): { points: Point[]; closed: boolean }[] {
+function contour(grid: Grid, level: number, fill = false): Line[] {
   const { xs, ys, values } = grid;
   const columns = xs.length;
-  const at = (column: number, row: number): number => values[row * columns + column] as number;
+  const rows = ys.length;
+  const inGrid = (column: number, row: number): boolean =>
+    column >= 0 && row >= 0 && column < columns && row < rows;
+  const at = (column: number, row: number): number =>
+    inGrid(column, row) ? (values[row * columns + column] as number) : Number.NaN;
+  const place = (column: number, row: number): Point => [
+    column < 0 ? -STEP : column >= columns ? (xs[columns - 1] as number) + STEP : (xs[column] as number),
+    row < 0 ? -STEP : row >= rows ? (ys[rows - 1] as number) + STEP : (ys[row] as number),
+  ];
+  const above = (value: number): boolean => !Number.isNaN(value) && value >= level;
 
   const crossings = new Map<string, Point>();
   const links = new Map<string, string[]>();
@@ -148,13 +218,21 @@ function contour(grid: Grid, level: number): { points: Point[]; closed: boolean 
     if (!crossings.has(key)) {
       const v0 = at(c0, r0);
       const v1 = at(c1, r1);
-      const t = v1 === v0 ? 0.5 : (level - v0) / (v1 - v0);
-      const x0 = xs[c0] as number;
-      const y0 = ys[r0] as number;
-      crossings.set(key, [
-        x0 + t * ((xs[c1] as number) - x0),
-        y0 + t * ((ys[r1] as number) - y0),
-      ]);
+      const p0 = place(c0, r0);
+      const p1 = place(c1, r1);
+      let point: Point;
+      if (!Number.isNaN(v0) && !Number.isNaN(v1)) {
+        const t = v1 === v0 ? 0.5 : (level - v0) / (v1 - v0);
+        point = [p0[0] + t * (p1[0] - p0[0]), p0[1] + t * (p1[1] - p0[1])];
+      } else {
+        // Only a region reaches here: one end is the node inside it, and the
+        // other is off the canvas or off the globe.
+        const [on, off, offColumn, offRow] = Number.isNaN(v0) ? [p1, p0, c0, r0] : [p0, p1, c1, r1];
+        point = inGrid(offColumn, offRow)
+          ? limb(grid.invert, on, off)
+          : [(on[0] + off[0]) / 2, (on[1] + off[1]) / 2];
+      }
+      crossings.set(key, point);
     }
     return key;
   };
@@ -163,13 +241,16 @@ function contour(grid: Grid, level: number): { points: Point[]; closed: boolean 
     links.set(b, [...(links.get(b) ?? []), a]);
   };
 
-  for (let row = 0; row < ys.length - 1; row += 1) {
-    for (let column = 0; column < columns - 1; column += 1) {
+  const first = fill ? -1 : 0;
+  for (let row = first; row < rows - 1 - first; row += 1) {
+    for (let column = first; column < columns - 1 - first; column += 1) {
       const tl = at(column, row);
       const tr = at(column + 1, row);
       const br = at(column + 1, row + 1);
       const bl = at(column, row + 1);
-      if (Number.isNaN(tl) || Number.isNaN(tr) || Number.isNaN(br) || Number.isNaN(bl)) continue;
+      if (!fill && (Number.isNaN(tl) || Number.isNaN(tr) || Number.isNaN(br) || Number.isNaN(bl))) {
+        continue;
+      }
 
       const top = (): string => crossing(column, row, column + 1, row);
       const right = (): string => crossing(column + 1, row, column + 1, row + 1);
@@ -177,7 +258,7 @@ function contour(grid: Grid, level: number): { points: Point[]; closed: boolean 
       const left = (): string => crossing(column, row, column, row + 1);
 
       const index =
-        (tl >= level ? 8 : 0) | (tr >= level ? 4 : 0) | (br >= level ? 2 : 0) | (bl >= level ? 1 : 0);
+        (above(tl) ? 8 : 0) | (above(tr) ? 4 : 0) | (above(br) ? 2 : 0) | (above(bl) ? 1 : 0);
       switch (index) {
         case 0:
         case 15:
@@ -207,10 +288,13 @@ function contour(grid: Grid, level: number): { points: Point[]; closed: boolean 
           link(left(), top());
           break;
         // The two saddles: opposite corners above the level. The middle of the
-        // cell decides whether the high corners are joined across it or cut off.
+        // cell decides whether the high corners are joined across it or cut
+        // off — the same answer for a line and a region, so a band's edge is
+        // always the isobar drawn on it. A hole at a corner leaves the middle
+        // undecided, and undecided is low.
         case 5:
         case 10: {
-          const middleHigh = (tl + tr + br + bl) / 4 >= level;
+          const middleHigh = above((tl + tr + br + bl) / 4);
           const tlHigh = index === 10;
           if (middleHigh === tlHigh) {
             link(left(), bottom());
@@ -228,8 +312,8 @@ function contour(grid: Grid, level: number): { points: Point[]; closed: boolean 
   // Walk the links into lines. Open lines start at an end, so they are taken
   // first; whatever is left over is a ring.
   const seen = new Set<string>();
-  const lines: { points: Point[]; closed: boolean }[] = [];
-  const walk = (start: string): { points: Point[]; closed: boolean } => {
+  const lines: Line[] = [];
+  const walk = (start: string): Line => {
     const keys = [start];
     seen.add(start);
     let current = start;
@@ -274,6 +358,68 @@ function smooth(points: readonly Point[], closed: boolean): Point[] {
   return out;
 }
 
+/**
+ * Drop the points a line would pass within `TOLERANCE` of anyway, by
+ * Douglas–Peucker.
+ *
+ * Smoothing quadruples the points, and most of them sit on a line that is
+ * nearly straight at that scale — a band along the frame is a straight run of
+ * hundreds. Measured on Europe at 800 × 700, the shading was 530 KB before this
+ * and the isobars 114 KB, for a picture a third of a unit would not change.
+ */
+function simplify(points: readonly Point[], closed: boolean): Point[] {
+  if (points.length < 4) return [...points];
+  const keep = new Uint8Array(points.length);
+  const distance = (p: Point, a: Point, b: Point): number => {
+    const dx = b[0] - a[0];
+    const dy = b[1] - a[1];
+    const length = Math.hypot(dx, dy);
+    if (length === 0) return Math.hypot(p[0] - a[0], p[1] - a[1]);
+    return Math.abs(dx * (a[1] - p[1]) - dy * (a[0] - p[0])) / length;
+  };
+  // A ring has no ends to anchor on, so it is cut at its first point and the
+  // point farthest from it, and each half is simplified as a line.
+  let far = points.length - 1;
+  if (closed) {
+    const first = points[0] as Point;
+    let most = -1;
+    points.forEach((p, i) => {
+      const d = Math.hypot(p[0] - first[0], p[1] - first[1]);
+      if (d > most) {
+        most = d;
+        far = i;
+      }
+    });
+  }
+  const spans: [number, number][] = closed ? [[0, far], [far, points.length]] : [[0, far]];
+  keep[0] = 1;
+  keep[far] = 1;
+  while (spans.length > 0) {
+    const [start, end] = spans.pop() as [number, number];
+    const a = points[start] as Point;
+    const b = points[end % points.length] as Point;
+    let worst = -1;
+    let at = -1;
+    for (let i = start + 1; i < end; i += 1) {
+      const d = distance(points[i] as Point, a, b);
+      if (d > worst) {
+        worst = d;
+        at = i;
+      }
+    }
+    if (worst > TOLERANCE) {
+      keep[at] = 1;
+      spans.push([start, at], [at, end]);
+    }
+  }
+  return points.filter((_, i) => keep[i] === 1);
+}
+
+/** Smoothed, then thinned: the shape a contour is drawn in. */
+function drawn(points: readonly Point[], closed: boolean): Point[] {
+  return simplify(smooth(smooth(points, closed), closed), closed);
+}
+
 function lengthOf(points: readonly Point[]): number {
   let total = 0;
   for (let i = 1; i < points.length; i += 1) {
@@ -285,13 +431,14 @@ function lengthOf(points: readonly Point[]): number {
 }
 
 /**
- * The point halfway along a line, by length, and the line's direction there.
+ * The point a fraction of the way along a line, by length, and the line's
+ * direction there.
  *
  * The direction is in degrees and kept between -90 and 90, so a value written
  * along the line is never upside down, whichever way the contour was walked.
  */
-function midpoint(points: readonly Point[]): { at: Point; angle: number } {
-  let remaining = lengthOf(points) / 2;
+function along(points: readonly Point[], fraction: number): { at: Point; angle: number } {
+  let remaining = lengthOf(points) * fraction;
   for (let i = 1; i < points.length; i += 1) {
     const a = points[i - 1] as Point;
     const b = points[i] as Point;
@@ -316,24 +463,82 @@ function pathOf(points: readonly Point[], closed: boolean): string {
 }
 
 /**
+ * The tint between isobars, one path per band.
+ *
+ * A band is everywhere between two levels, and it is drawn as the rings of
+ * both with the even-odd rule: the region above the lower level with the
+ * region above the upper one cut out of it. So the bands never overlap, which
+ * is what lets them be translucent — and each band's edge is the same ring its
+ * neighbour's is cut by, so no ground is left between them.
+ *
+ * Only the band that holds normal pressure itself is left bare, where 1013
+ * falls inside it rather than on its edge. Everything under it is the low's
+ * colour and everything over it the high's, however faintly, so a weak system
+ * is tinted out to the line where the chart turns — the tint does not stop
+ * short of it and leave the system floating on bare ground.
+ */
+function shading(grid: Grid, levels: readonly number[], low: number, high: number): SvgNode[] {
+  const rings = new Map<number, string>();
+  const ringsAt = (level: number): string => {
+    if (!rings.has(level)) {
+      const outline = contour(grid, level, true)
+        .filter((ring) => ring.points.length >= 3)
+        .map((ring) => pathOf(drawn(ring.points, true), true))
+        .join("");
+      rings.set(level, outline);
+    }
+    return rings.get(level) as string;
+  };
+
+  const bands: SvgNode[] = [];
+  // The first band starts at the ground itself, and the last runs to the top.
+  const bounds = [-Infinity, ...levels, Infinity];
+  for (let k = 0; k < bounds.length - 1; k += 1) {
+    const from = bounds[k] as number;
+    const to = bounds[k + 1] as number;
+    if (from < BASELINE && to > BASELINE) continue;
+    // A band the field never enters: the ground far from every centre reads
+    // 1013 exactly, which puts it on the 1013 line and in no band below it.
+    if (Math.min(to, high) <= Math.max(from, low)) continue;
+    const middle = (Math.max(from, low) + Math.min(to, high)) / 2;
+    const departure = Math.abs(middle - BASELINE);
+    const depth = 1 + DEPTH_FROM.filter((step) => departure >= step).length;
+    const d = ringsAt(from) + (to === Infinity ? "" : ringsAt(to));
+    if (d === "") continue;
+    bands.push(
+      el("path", {
+        class: "mp-pressure-band",
+        "data-kind": middle < BASELINE ? "low" : "high",
+        "data-depth": depth,
+        "data-from": from === -Infinity ? undefined : from,
+        "data-to": to === Infinity ? undefined : to,
+        "fill-rule": "evenodd",
+        d,
+      }),
+    );
+  }
+  return bands;
+}
+
+/**
  * What the pressure option draws, split by the layer it belongs in.
  *
- * The isobars and their values are context and go in `.mp-weather`, under the
- * names, so a line never strikes through a city. The H and L marks are the
+ * The shading, the isobars and their values are context and go in
+ * `.mp-weather`, under the names, so a line never strikes through a city. The H and L marks are the
  * point of the chart and a coordinate the caller placed, which is what the
  * annotation layer is for — drawn there, under the names they would otherwise
  * disappear beneath on the first render, which put "Belarus" across an H.
  */
 export interface WeatherLayer {
-  readonly lines: readonly SvgNode[];
+  readonly chart: readonly SvgNode[];
   readonly marks: readonly SvgNode[];
 }
 
 /**
  * Build the weather layer.
  *
- * Isobars first, then the values written on them, so a value's halo breaks
- * every line it sits across rather than only its own.
+ * Shading first, then the isobars on it, then the values written on them, so a
+ * value's halo breaks every line it sits across rather than only its own.
  */
 export function weatherLayer(
   pressure: Pressure,
@@ -347,7 +552,7 @@ export function weatherLayer(
   if (!(Number.isFinite(interval) && interval > 0)) {
     throw new Error(`masen: pressure.interval must be a positive number, got ${interval}`);
   }
-  if (centres.length === 0) return { lines: [], marks: [] };
+  if (centres.length === 0) return { chart: [], marks: [] };
 
   const grid = sample(centres, invert, size);
   let low = Infinity;
@@ -357,16 +562,31 @@ export function weatherLayer(
     low = Math.min(low, value);
     high = Math.max(high, value);
   }
-  if (low === Infinity) return { lines: [], marks: [] };
+  if (low === Infinity) return { chart: [], marks: [] };
 
   // Levels are multiples of the interval, so 4 hPa draws 1008, 1012, 1016 and
   // never 1013 — the baseline itself is flat and has no line to draw.
+  const levels: number[] = [];
+  for (let level = Math.ceil(low / interval) * interval; level <= high; level += interval) {
+    levels.push(level);
+  }
+  // The marks are obstacles too: a value written under an L reads as its own.
+  const taken: { x: number; y: number; r: number }[] = [];
+  for (const centre of centres) {
+    if (centre.mark === false) continue;
+    const point = project(centre.at);
+    if (point !== null) taken.push({ x: point[0], y: point[1] + 10, r: 26 });
+  }
+  const room = (x: number, y: number, r: number): boolean =>
+    x >= r && y >= r && x <= size[0] - r && y <= size[1] - r &&
+    taken.every((other) => Math.hypot(other.x - x, other.y - y) >= other.r + r);
+
   const lines: SvgNode[] = [];
   const values: SvgNode[] = [];
-  for (let level = Math.ceil(low / interval) * interval; level <= high; level += interval) {
+  for (const level of levels) {
     for (const line of contour(grid, level)) {
       if (line.points.length < 2) continue;
-      const points = smooth(smooth(line.points, line.closed), line.closed);
+      const points = drawn(line.points, line.closed);
       lines.push(
         el("path", {
           class: "mp-isobar",
@@ -378,8 +598,14 @@ export function weatherLayer(
       if (pressure.labels !== false && lengthOf(points) >= LABEL_MIN_LENGTH) {
         // Written along the line, the way a chart has it: the halo breaks the
         // stroke under the number, so the value reads as part of the line.
-        const { at, angle } = midpoint(points);
+        const r = String(level).length * LABEL_RADIUS_PER_DIGIT + LABEL_GAP;
+        const spot = LABEL_STOPS.map((stop) => along(points, stop)).find(({ at }) =>
+          room(at[0], at[1], r),
+        );
+        if (spot === undefined) continue;
+        const { at, angle } = spot;
         const [x, y] = at;
+        taken.push({ x, y, r });
         values.push(
           el(
             "text",
@@ -401,6 +627,7 @@ export function weatherLayer(
 
   const marks: SvgNode[] = [];
   centres.forEach((centre, index) => {
+    if (centre.mark === false) return;
     const point = resolve(centre.at, index, "pressure.centres", project, invert);
     if (point === null) return;
     const [x, y] = point;
@@ -429,11 +656,16 @@ export function weatherLayer(
             "text-anchor": "middle",
             "dominant-baseline": "central",
           },
-          [text(String(Math.round(centre.value)))],
+          // The pressure the chart has there, not the number the centre was
+          // given: a centre's own pull is only part of the field under it, and a
+          // low of 1008 placed inside a trough sits at 1006. Printing 1008 put
+          // the number inside the 1008 ring that contradicted it.
+          [text(String(Math.round(pressureAt(centres, centre.at))))],
         ),
       ]),
     );
   });
 
-  return { lines: [...lines, ...values], marks };
+  const bands = pressure.shading === true ? shading(grid, levels, low, high) : [];
+  return { chart: [...bands, ...lines, ...values], marks };
 }

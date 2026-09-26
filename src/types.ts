@@ -301,7 +301,13 @@ export interface Route {
 export interface PressureCentre {
   /** Where the centre is, in `[lon, lat]`. */
   readonly at: Position;
-  /** The pressure at the centre, in hectopascals. Below 1013 is a low. */
+  /**
+   * The centre's own pressure, in hectopascals. Below 1013 is a low.
+   *
+   * It is exact when the centre stands alone. Near another centre the two pulls
+   * add, and the value printed under the letter is the chart's pressure at that
+   * point rather than this number, so the number and the rings never disagree.
+   */
   readonly value: number;
   /**
    * How far the system reaches, in kilometres — the distance at which its pull
@@ -319,6 +325,14 @@ export interface PressureCentre {
   readonly stretch?: number;
   /** The direction of the long axis, in degrees clockwise from north. @default 0 */
   readonly angle?: number;
+  /**
+   * Whether the centre is marked with an H or an L. `false` shapes the field
+   * without a letter: a trough or a ridge, which a chart draws but never names,
+   * or a system beyond the edge of the map whose isobars reach into it.
+   *
+   * @default true
+   */
+  readonly mark?: boolean;
   /** The caller's handle, written out as `data-id`. */
   readonly id?: string;
 }
@@ -345,6 +359,13 @@ export interface Pressure {
   readonly interval?: number;
   /** Write the value on each isobar long enough to carry one. @default true */
   readonly labels?: boolean;
+  /**
+   * Tint the ground between isobars by how far it is from normal pressure:
+   * deeper toward a low's colour, deeper toward a high's. Off by default, since
+   * a synoptic chart is lines, and the tint roughly doubles the layer's bytes.
+   * @default false
+   */
+  readonly shading?: boolean;
 }
 
 /**

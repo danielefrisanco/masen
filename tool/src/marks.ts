@@ -136,16 +136,18 @@ export function encodeMarks(marks: Marks, params: URLSearchParams): void {
     params.set("route", marks.routes.map((r) => r.stops.map((s) => pair(s.at)).join(";")).join("|"));
   }
   if (marks.centres.length > 0) {
-    // `lon,lat,value` then radius, stretch and angle — each written only when
-    // it or a field after it differs from the default, so a plain low stays
-    // three numbers long.
+    // `lon,lat,value` then radius, stretch, angle and a 0 for a centre with no
+    // letter — each written only when it or a field after it differs from the
+    // default, so a plain low stays three numbers long. The value keeps a
+    // decimal: a whole hectopascal is too coarse to set a trough by.
     params.set(
       "wx",
       marks.centres
         .map((centre) => {
-          const tail = [centre.radius, centre.stretch, centre.angle];
+          const tail = [centre.radius, centre.stretch, centre.angle, centre.mark === false ? 0 : undefined];
           while (tail.length > 0 && tail[tail.length - 1] === undefined) tail.pop();
-          return [pair(centre.at), Math.round(centre.value), ...tail.map((v) => v ?? "")].join(",");
+          const value = Math.round(centre.value * 10) / 10;
+          return [pair(centre.at), value, ...tail.map((v) => v ?? "")].join(",");
         })
         .join(";"),
     );
@@ -267,10 +269,11 @@ function readCentres(raw: string | null): readonly PressureCentre[] {
     const angle = optional(5, -180, 180);
     centres.push({
       at,
-      value: Math.min(1080, Math.max(900, Math.round(value))),
+      value: Math.min(1080, Math.max(900, Math.round(value * 10) / 10)),
       ...(radius === undefined ? {} : { radius }),
       ...(stretch === undefined ? {} : { stretch }),
       ...(angle === undefined ? {} : { angle }),
+      ...(parts[6] === "0" ? { mark: false } : {}),
     });
   }
   return centres;

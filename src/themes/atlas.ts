@@ -62,6 +62,8 @@ export const atlas = compose({
   --neighbour: #E6DEC9;
   --anno: #5E2230;
   --anno-ink: #F2EAD8;
+  --pressure-low: #A63A3A;
+  --pressure-high: #2E5F8F;
   --pin-size: 7;
   --furniture-ink: #7A7263;`,
   dark: `
@@ -106,5 +108,7 @@ export const atlas = compose({
   --neighbour: #1B2A33;
   --anno: #D9848F;
   --anno-ink: #101D26;
+  --pressure-low: #E07A85;
+  --pressure-high: #6AA6D6;
   --furniture-ink: #948B78;`,
 });

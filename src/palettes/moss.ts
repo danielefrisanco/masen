@@ -44,6 +44,8 @@ export const moss = `
   --neighbour: #E2E1D2;
   --anno: #71361A;
   --anno-ink: #EDEBDD;
+  --pressure-low: #9C4A26;
+  --pressure-high: #2F5F80;
   --furniture-ink: #6E735E;
 }
 `.trim();

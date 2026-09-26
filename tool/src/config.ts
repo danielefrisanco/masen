@@ -104,6 +104,8 @@ export interface Config extends Marks {
   credit: string;
   /** Hectopascals between isobars, when there are pressure centres to draw. */
   isobarInterval: number;
+  /** Tint the ground between isobars toward the low's and the high's colour. */
+  shading: boolean;
 }
 
 export const DEFAULTS: Config = {
@@ -134,6 +136,7 @@ export const DEFAULTS: Config = {
   scaleBar: false,
   credit: "Natural Earth",
   isobarInterval: 4,
+  shading: false,
 };
 
 const COVERS: readonly Cover[] = ["desert", "mountain", "glacier"];
@@ -151,7 +154,16 @@ const NUMBERS = [
   "pinSize",
   "isobarInterval",
 ] as const;
-const FLAGS = ["sea", "seaNames", "graticule", "gridLabels", "neighbours", "scaleBar", "disputed"] as const;
+const FLAGS = [
+  "sea",
+  "seaNames",
+  "graticule",
+  "gridLabels",
+  "neighbours",
+  "scaleBar",
+  "disputed",
+  "shading",
+] as const;
 
 /**
  * The config as a query string, carrying only what was actually chosen.
@@ -355,7 +367,13 @@ export function toOptions(config: Config): MapOptions {
     ...(config.arrows.length > 0 ? { arrows: config.arrows } : {}),
     ...(config.routes.length > 0 ? { routes: config.routes } : {}),
     ...(config.centres.length > 0
-      ? { pressure: { centres: config.centres, interval: config.isobarInterval } }
+      ? {
+          pressure: {
+            centres: config.centres,
+            interval: config.isobarInterval,
+            ...(config.shading ? { shading: true } : {}),
+          },
+        }
       : {}),
     placeRank: config.placeRank,
     labelRank: config.labelRank,
