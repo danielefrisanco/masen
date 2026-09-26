@@ -46,6 +46,8 @@ const FEATURES = [
   ["arrows", (s) => s.includes('class="mp-anno mp-arrow"')],
   ["icons", (s) => s.includes('class="mp-icon"')],
   ["credit", (s) => s.includes('class="mp-credit"')],
+  ["isobars", (s) => s.includes('class="mp-isobar"')],
+  ["shading", (s) => s.includes('class="mp-pressure-band"')],
 ];
 
 const escape = (s) =>
