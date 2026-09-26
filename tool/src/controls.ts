@@ -2,7 +2,16 @@ import type { CountryName } from "../../src/index.js";
 import type { Config } from "./config.js";
 import type { Notes } from "./notes.js";
 import { helpFor } from "./help.js";
-import { markCount, MODES, readCoordinate, relabelPin, repinIcon, type Mode } from "./marks.js";
+import type { PressureCentre } from "../../src/index.js";
+import {
+  markCount,
+  MODES,
+  readCoordinate,
+  relabelPin,
+  repinIcon,
+  WEATHER_MODES,
+  type Mode,
+} from "./marks.js";
 import { buildPicker } from "./picker.js";
 
 /**
@@ -197,7 +206,12 @@ const RANKS = (none: string): { value: string; label: string }[] => [
  * rather than the map. The marks themselves are in the URL; the gesture that
  * placed them is not.
  */
+/** Which half of the sidebar is showing. Not in the URL, like the gesture. */
+export type Tab = "map" | "weather";
+
 export interface Editing {
+  readonly tab: Tab;
+  readonly onTab: (tab: Tab) => void;
   readonly mode: Mode;
   /** Whether the last route is still being extended by clicks. */
   readonly openRoute: boolean;
@@ -211,6 +225,8 @@ const MODE_LABELS: Readonly<Record<Mode, string>> = {
   pin: "drop a pin",
   arrow: "draw an arrow",
   route: "trace a route",
+  low: "place a low",
+  high: "place a high",
 };
 
 /**
@@ -226,6 +242,8 @@ const MODE_HINTS: Readonly<Record<Mode, string>> = {
   pin: "Click anywhere on the ground, or tab to the map and use the arrows and Enter. Name the pin in the list below.",
   arrow: "Click where the arrow starts, then where it points. The arrows and Enter do the same from the keyboard.",
   route: "Click each stop in order, then finish the line. The arrows and Enter do the same from the keyboard.",
+  low: "Click where the low is centred. Its pressure, size and shape are set in the list below.",
+  high: "Click where the high is centred. Its pressure, size and shape are set in the list below.",
 };
 
 /**
@@ -270,6 +288,12 @@ export function buildForm(
     section.append(head, ...children);
     return section;
   };
+
+  host.append(tabBar(editing));
+  if (editing.tab === "weather") {
+    host.append(weatherGroup(config, onChange, editing, group));
+    return;
+  }
 
   const isPreset = vocabulary.regions.includes(config.region);
   const regions = document.createElement("div");
@@ -521,6 +545,147 @@ export function buildForm(
       field("Credit", textBox(config.credit, (value) => onChange({ credit: value }))),
     ]),
   );
+}
+
+/**
+ * Map and Weather, as two tabs over one form.
+ *
+ * Weather needs the same region, projection, theme, link and download as every
+ * other map, so it is a view of the same config rather than a page of its own —
+ * a second page would have to duplicate all of that. What it does have is
+ * enough controls of its own that folding them into the main form would make
+ * that form longer for everybody who never draws a chart.
+ */
+function tabBar(editing: Editing): HTMLElement {
+  const bar = document.createElement("div");
+  bar.className = "tabs";
+  bar.setAttribute("role", "tablist");
+  for (const [tab, label] of [["map", "Map"], ["weather", "Weather"]] as const) {
+    const element = document.createElement("button");
+    element.type = "button";
+    element.className = "tab";
+    element.setAttribute("role", "tab");
+    element.setAttribute("aria-selected", String(editing.tab === tab));
+    element.textContent = label;
+    element.addEventListener("click", () => editing.onTab(tab));
+    bar.append(element);
+  }
+  return bar;
+}
+
+/**
+ * An illustrative chart over Europe, for somebody who wants to see what the tab
+ * does before placing anything. The same four centres the tests and the plan's
+ * renders use.
+ */
+const EXAMPLE: readonly PressureCentre[] = [
+  { at: [-18, 60], value: 976, radius: 1100, stretch: 1.6, angle: 60 },
+  { at: [-22, 40], value: 1032, radius: 1600 },
+  { at: [28, 52], value: 1026, radius: 1300 },
+  { at: [12, 44], value: 1004, radius: 500 },
+];
+
+function weatherGroup(
+  config: Config,
+  onChange: Change,
+  editing: Editing,
+  group: (title: string, children: readonly HTMLElement[], topic?: string) => HTMLElement,
+): HTMLElement {
+  const list = document.createElement("div");
+  list.className = "marks";
+  if (config.centres.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "marks-empty";
+    empty.textContent = "No pressure centres yet. Choose “place a low” above and click the map.";
+    list.append(empty);
+  }
+  const update = (index: number, patch: Partial<PressureCentre>): void =>
+    onChange({
+      centres: config.centres.map((centre, i) => (i === index ? { ...centre, ...patch } : centre)),
+    });
+  for (const [index, centre] of config.centres.entries()) {
+    const card = document.createElement("div");
+    card.className = "centre";
+    const head = document.createElement("div");
+    head.className = "mark";
+    const kind = document.createElement("span");
+    kind.className = `centre-kind is-${centre.value < 1013 ? "low" : "high"}`;
+    kind.textContent = centre.value < 1013 ? "L" : "H";
+    const at = document.createElement("span");
+    at.className = "mark-note";
+    at.textContent = readCoordinate(centre.at);
+    head.append(kind, at, remove("Remove this centre", () =>
+      onChange({ centres: config.centres.filter((_, i) => i !== index) }),
+    ));
+    const where = readCoordinate(centre.at);
+    card.append(
+      head,
+      numberField("Pressure, hPa", centre.value, [900, 1080, 1], `Pressure at ${where}`, (value) =>
+        update(index, { value }),
+      ),
+      numberField("Size, km", centre.radius ?? 1200, [100, 5000, 50], `Size of the centre at ${where}`, (value) =>
+        update(index, { radius: value }),
+      ),
+      numberField("Stretch", centre.stretch ?? 1, [1, 5, 0.1], `Stretch of the centre at ${where}`, (value) =>
+        update(index, { stretch: value }),
+      ),
+      numberField("Angle, °", centre.angle ?? 0, [-180, 180, 5], `Angle of the centre at ${where}`, (value) =>
+        update(index, { angle: value }),
+      ),
+    );
+    list.append(card);
+  }
+
+  return group("Pressure", [
+    field(
+      "Clicking the map",
+      select(
+        WEATHER_MODES.map((mode) => ({ value: mode, label: MODE_LABELS[mode] })),
+        editing.mode,
+        (value) => editing.onMode(value as Mode),
+      ),
+      MODE_HINTS[editing.mode],
+    ),
+    field(
+      "Isobar every",
+      slider(config.isobarInterval, [1, 10, 1], (value) => onChange({ isobarInterval: value })),
+      "Hectopascals between lines. Four is the synoptic convention",
+    ),
+    list,
+    button("Load an example over Europe", () =>
+      onChange({ region: "europe", centres: EXAMPLE }),
+    ),
+    ...(config.centres.length > 0
+      ? [button("Clear the weather", () => onChange({ centres: [] }))]
+      : []),
+  ]);
+}
+
+/** A labelled number input on one line, clamped to its range on change. */
+function numberField(
+  label: string,
+  value: number,
+  [low, high, step]: readonly [number, number, number],
+  description: string,
+  onChange: (value: number) => void,
+): HTMLElement {
+  const wrap = document.createElement("label");
+  wrap.className = "centre-field";
+  const name = document.createElement("span");
+  name.textContent = label;
+  const input = document.createElement("input");
+  input.type = "number";
+  input.min = String(low);
+  input.max = String(high);
+  input.step = String(step);
+  input.value = String(value);
+  input.setAttribute("aria-label", description);
+  input.addEventListener("change", () => {
+    const next = Number(input.value);
+    if (Number.isFinite(next)) onChange(Math.min(high, Math.max(low, next)));
+  });
+  wrap.append(name, input);
+  return wrap;
 }
 
 function button(label: string, onClick: () => void): HTMLElement {

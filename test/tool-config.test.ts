@@ -65,9 +65,30 @@ const CHOSEN: Config = {
   pins: [{ at: [23.73, 37.98], label: "Athens" }],
   arrows: [{ from: [23.73, 37.98], to: [28.98, 41.01] }],
   routes: [{ stops: [{ at: [23.73, 37.98] }, { at: [23.32, 42.7] }] }],
+  centres: [
+    { at: [-18, 60], value: 976, radius: 1100, stretch: 1.6, angle: 60 },
+    { at: [28, 52], value: 1026 },
+  ],
+  isobarInterval: 2,
 };
 
 const round = (search: string): Config => decode(search, VOCABULARY);
+
+describe("pressure centres in the URL", () => {
+  it("drop a value the library would refuse rather than failing the map", () => {
+    const config = round("wx=10,50,5000;10,50,abc;12,44,1004,999999,0,700");
+    expect(config.centres).toEqual([
+      { at: [10, 50], value: 1080 },
+      { at: [12, 44], value: 1004, radius: 5000, stretch: 1, angle: 180 },
+    ]);
+  });
+
+  it("reach the library as a pressure option", () => {
+    const options = toOptions({ ...DEFAULTS, centres: [{ at: [0, 50], value: 990 }] });
+    expect(options.pressure).toEqual({ centres: [{ at: [0, 50], value: 990 }], interval: 4 });
+    expect(toOptions(DEFAULTS).pressure).toBeUndefined();
+  });
+});
 
 describe("the tool's URL", () => {
   it("is empty when nothing was chosen", () => {

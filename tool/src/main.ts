@@ -13,10 +13,10 @@ import {
   type Position,
 } from "../../src/index.js";
 import { decode, encode, toOptions, type Config, type Vocabulary } from "./config.js";
-import { buildForm, type Editing } from "./controls.js";
+import { buildForm, type Editing, type Tab } from "./controls.js";
 import { exportSizes, fileName, type ExportSize } from "./export.js";
 import { rasterise, save } from "./raster.js";
-import { place, readCoordinate, type Mode } from "./marks.js";
+import { MODES, NEW_CENTRE, place, readCoordinate, WEATHER_MODES, type Mode } from "./marks.js";
 import { forget, recall, recallZoom, remember, rememberZoom } from "./memory.js";
 import { notesFor, type Notes } from "./notes.js";
 import { mountFeedback } from "./feedback.js";
@@ -110,6 +110,8 @@ let drawn: MapResult | null = null;
 
 /** What a click on the map means. Not in the URL: see {@link Editing}. */
 let mode: Mode = "none";
+/** Which half of the sidebar is showing. */
+let tab: Tab = "map";
 /** An arrow that has a tail and is waiting for its head. */
 let arrowTail: Position | null = null;
 /** Whether clicks are still adding stops to the last route. */
@@ -146,7 +148,7 @@ function say(text: string, state: "" | "busy" | "error" = ""): void {
 }
 
 function editing(): Editing {
-  return { mode, openRoute, onMode: setMode, onFinishRoute: finishRoute };
+  return { tab, onTab: setTab, mode, openRoute, onMode: setMode, onFinishRoute: finishRoute };
 }
 
 function refreshForm(): void {
@@ -164,6 +166,19 @@ function setMode(next: Mode): void {
   arrowTail = null;
   if (next !== "route") openRoute = false;
   refreshForm();
+}
+
+/**
+ * Switch tabs, and disarm a gesture that belongs to the other one.
+ *
+ * A click armed to drop a pin must not keep dropping pins while the Weather
+ * tab is showing, where nothing on screen says a pin gesture is live.
+ */
+function setTab(next: Tab): void {
+  tab = next;
+  const offered = next === "weather" ? WEATHER_MODES : MODES;
+  if (!offered.includes(mode)) setMode("none");
+  else refreshForm();
 }
 
 function finishRoute(): void {
@@ -406,6 +421,11 @@ function act(x: number, y: number): void {
     // map: the next one can be something else.
     const kind = config.pinIcon === "" ? {} : { kind: config.pinIcon };
     apply({ pins: [...config.pins, { at, ...kind }] });
+    return;
+  }
+
+  if (mode === "low" || mode === "high") {
+    apply({ centres: [...config.centres, { at, value: NEW_CENTRE[mode] }] });
     return;
   }
 

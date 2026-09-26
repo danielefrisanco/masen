@@ -102,6 +102,8 @@ export interface Config extends Marks {
    */
   scaleBar: boolean;
   credit: string;
+  /** Hectopascals between isobars, when there are pressure centres to draw. */
+  isobarInterval: number;
 }
 
 export const DEFAULTS: Config = {
@@ -131,6 +133,7 @@ export const DEFAULTS: Config = {
   pinSize: 7,
   scaleBar: false,
   credit: "Natural Earth",
+  isobarInterval: 4,
 };
 
 const COVERS: readonly Cover[] = ["desert", "mountain", "glacier"];
@@ -146,6 +149,7 @@ const NUMBERS = [
   "landEdgeWidth",
   "labelSize",
   "pinSize",
+  "isobarInterval",
 ] as const;
 const FLAGS = ["sea", "seaNames", "graticule", "gridLabels", "neighbours", "scaleBar", "disputed"] as const;
 
@@ -253,6 +257,8 @@ export function decode(search: string, vocabulary: Vocabulary): Config {
       config[key] = clamp(value, -1, 6, DEFAULTS[key]);
     } else if (key === "pinSize") {
       config[key] = clamp(value, 2, 24, DEFAULTS[key]);
+    } else if (key === "isobarInterval") {
+      config[key] = clamp(Math.round(value), 1, 10, DEFAULTS[key]);
     } else {
       config[key] = clamp(value, 6, 40, DEFAULTS[key]);
     }
@@ -348,6 +354,9 @@ export function toOptions(config: Config): MapOptions {
     ...(config.pins.length > 0 ? { pins: config.pins } : {}),
     ...(config.arrows.length > 0 ? { arrows: config.arrows } : {}),
     ...(config.routes.length > 0 ? { routes: config.routes } : {}),
+    ...(config.centres.length > 0
+      ? { pressure: { centres: config.centres, interval: config.isobarInterval } }
+      : {}),
     placeRank: config.placeRank,
     labelRank: config.labelRank,
     ...(config.scaleBar ? { scaleBar: true as const } : {}),
