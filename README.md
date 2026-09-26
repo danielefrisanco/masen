@@ -134,7 +134,7 @@ in the wild.
 | `.mp-hydro` | `.mp-water` | `data-kind` | Lakes and rivers, drawn over the land |
 | `.mp-borders` | `.mp-border`, `.mp-hatch` | `data-kind`, `data-name` | Shared boundaries, each drawn once, over the hatched overlays they qualify |
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
-| `.mp-weather` | `.mp-isobar`, `.mp-pressure-band` | `data-value`, `data-kind`, `data-depth`, `data-from`, `data-to` | Isobars and the tint between them, over the ground and under the names |
+| `.mp-weather` | `.mp-isobar`, `.mp-pressure-band`, `.mp-wind` | `data-value`, `data-kind`, `data-depth`, `data-from`, `data-to`, `data-speed` | Isobars, the tint between them and the wind, over the ground and under the names |
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
 | `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins, callouts and arrows |
@@ -1321,7 +1321,17 @@ wherever the chart is under 1013 hPa and `--pressure-high` wherever it is over,
 deeper in eight steps (`data-depth`) that stretch as they go — 1.5, 3, 5, 8,
 12, 18 and 26 hPa from normal — so a tropical low 3 hPa under normal is as
 plainly tinted as a typhoon's core is dark. Only a band with 1013 inside it is
-left bare. The bands
+left bare.
+
+`wind: true` draws the surface wind the field implies, as an arrow on a grid
+across the map: along the isobars, anticlockwise round a low north of the
+equator and clockwise south of it, turned about 20° toward the low as friction
+does near the ground, and longer where the lines crowd. Each `.mp-wind` carries
+its speed in knots as `data-speed`, and calm ground gets no arrow. The speed is
+the gradient wind rather than the geostrophic one — it knows how sharply the
+isobars curve as well as how tightly they crowd, which is the difference
+between a typhoon of 70 knots and one of 400 — and it is held at its 15°
+value nearer the equator, where the balance it comes from stops holding. The bands
 never overlap, so they can be translucent and the coast still reads through
 them. It is off by default, because a synoptic chart is lines.
 

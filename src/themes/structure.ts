@@ -250,6 +250,17 @@ ${rules((n) => `.mp .mp-pressure-band[data-depth="${n}"] { fill-opacity: ${(0.08
   stroke-width: 1.1;
   stroke-linejoin: round;
 }
+/*
+ * Wind in --ink, the one colour every preset guarantees reads on its ground,
+ * and thin: there are dozens of arrows and each is context, like an isobar.
+ */
+.mp .mp-wind {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .mp .mp-label[data-kind="isobar"] {
   fill: var(--ink-muted);
   font-size: var(--place-label-size);

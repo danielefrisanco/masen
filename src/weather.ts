@@ -66,6 +66,24 @@ const LABEL_GAP = 3;
 const DEPTH_FROM = [1.5, 3, 5, 8, 12, 18, 26];
 /** How far, in user units, thinning may move a line. A third of a pixel. */
 const TOLERANCE = 0.3;
+/**
+ * The wind grid: an arrow every `WIND_SPACING` user units, none within
+ * `WIND_CLEAR` of a letter, none below `WIND_CALM` knots.
+ */
+const WIND_SPACING = 44;
+const WIND_CLEAR = 30;
+const WIND_CALM = 3;
+/** Air density at sea level, kg/m³, and the Earth's rotation, rad/s. */
+const AIR = 1.2;
+const OMEGA = 7.2921e-5;
+/**
+ * What friction does to the wind the isobars imply, near the ground: it slows
+ * to about 0.7 of it and turns about 20° toward the lower pressure. Both vary
+ * between sea and land; one value each is what an illustration needs.
+ */
+const SURFACE = 0.7;
+const INFLOW = 20;
+const KNOTS = 1.943844;
 /** Earth's mean radius, for turning angular distance into kilometres. */
 const EARTH_KM = 6371;
 const RADIANS = Math.PI / 180;
@@ -520,6 +538,135 @@ function shading(grid: Grid, levels: readonly number[], low: number, high: numbe
   return bands;
 }
 
+/** A place `east` and `north` kilometres from `at`, on a local flat patch. */
+function offset(at: Position, east: number, north: number): Position {
+  const lat = at[1] + north / 111.32;
+  const lon = at[0] + east / (111.32 * Math.max(0.01, Math.cos(at[1] * RADIANS)));
+  return [lon, lat];
+}
+
+/**
+ * The surface wind at a place, as a speed in knots and a bearing in degrees
+ * clockwise from north — or `null` where it is calm.
+ *
+ * The balance is the gradient wind rather than the geostrophic one, because the
+ * geostrophic wind knows only how tightly the isobars crowd and not how sharply
+ * they curve. On a flat chart that is the same answer. Round a typhoon it is
+ * not: the geostrophic formula gave a 962 hPa storm at 16°N a wind of four
+ * hundred knots, where the curved balance gives the seventy a storm of that
+ * depth has. The curvature is read off the field itself — the curvature of the
+ * isobar through the point, from the field's first and second derivatives —
+ * so a trough bends it and a ridge does not need a centre to.
+ */
+function windAt(centres: readonly PressureCentre[], at: Position): { knots: number; bearing: number } | null {
+  const h = 25; // km
+  const p = (east: number, north: number): number => pressureAt(centres, offset(at, east, north));
+  const p0 = p(0, 0);
+  const pe = p(h, 0);
+  const pw = p(-h, 0);
+  const pn = p(0, h);
+  const ps = p(0, -h);
+  // hPa per km, then Pa per metre.
+  const gx = ((pe - pw) / (2 * h)) * 0.1;
+  const gy = ((pn - ps) / (2 * h)) * 0.1;
+  const gradient = Math.hypot(gx, gy);
+  if (gradient === 0) return null;
+  // hPa per km², then Pa per m².
+  const gxx = ((pe - 2 * p0 + pw) / (h * h)) * 1e-4;
+  const gyy = ((pn - 2 * p0 + ps) / (h * h)) * 1e-4;
+  const gxy = ((p(h, h) - p(h, -h) - p(-h, h) + p(-h, -h)) / (4 * h * h)) * 1e-4;
+  // Positive where the isobar bends round lower pressure, as round a low.
+  const curvature = (gxx * gy * gy - 2 * gxy * gx * gy + gyy * gx * gx) / gradient ** 3;
+
+  // The Coriolis parameter, held at its value for 15° nearer the equator. The
+  // balance the arrows are drawn from weakens toward the equator and fails on
+  // it, and taking it at face value there is not caution but noise: a floor at
+  // 5° gave the Indochina chart 82 knots at 4°N off a 5 hPa gradient, where
+  // the real day had a monsoon breeze.
+  const lat = Math.sign(at[1] || 1) * Math.max(15, Math.abs(at[1]));
+  const f = 2 * OMEGA * Math.abs(Math.sin(lat * RADIANS));
+  const push = gradient / AIR;
+  let speed: number;
+  if (Math.abs(curvature) < 1e-9) speed = push / f;
+  else if (curvature > 0) speed = (-f + Math.sqrt(f * f + 4 * curvature * push)) / (2 * curvature);
+  else {
+    // Round a high the balance has a ceiling, and a field steeper than it
+    // allows is drawn at the ceiling rather than at no answer at all.
+    const k = -curvature;
+    const room = f * f - 4 * k * push;
+    speed = room >= 0 ? (f - Math.sqrt(room)) / (2 * k) : f / (2 * k);
+  }
+  const knots = speed * SURFACE * KNOTS;
+  if (!(knots >= WIND_CALM)) return null;
+
+  // Along the isobars with low pressure on the left north of the equator and
+  // on the right south of it — the gradient turned a quarter — and then the
+  // friction's turn further toward the low.
+  const turn = (at[1] >= 0 ? 1 : -1) * (90 + INFLOW);
+  const toHigh = Math.atan2(gx, gy) / RADIANS; // bearing of the gradient
+  const bearing = toHigh - turn;
+  return { knots: Math.min(knots, 150), bearing: ((bearing % 360) + 360) % 360 };
+}
+
+/**
+ * The arrows, on a grid over the canvas.
+ *
+ * Each is worked out on the ground and then projected, so a wind that blows
+ * north is drawn along the local meridian however the projection leans it.
+ */
+function windArrows(
+  centres: readonly PressureCentre[],
+  project: (position: Position) => Point | null,
+  invert: (point: Point) => Position | null,
+  [width, height]: Size,
+): SvgNode[] {
+  const letters: Point[] = [];
+  for (const centre of centres) {
+    if (centre.mark === false) continue;
+    const point = project(centre.at);
+    if (point !== null) letters.push([point[0], point[1] + 10]);
+  }
+  const arrows: SvgNode[] = [];
+  for (let y = WIND_SPACING / 2; y < height; y += WIND_SPACING) {
+    for (let x = WIND_SPACING / 2; x < width; x += WIND_SPACING) {
+      if (letters.some((l) => Math.hypot(l[0] - x, l[1] - y) < WIND_CLEAR)) continue;
+      const ground = invert([x, y]);
+      if (ground === null) continue;
+      const wind = windAt(centres, ground);
+      if (wind === null) continue;
+      const b = wind.bearing * RADIANS;
+      const ahead = project(offset(ground, 10 * Math.sin(b), 10 * Math.cos(b)));
+      const here = project(ground);
+      if (ahead === null || here === null) continue;
+      const dx = ahead[0] - here[0];
+      const dy = ahead[1] - here[1];
+      const norm = Math.hypot(dx, dy);
+      if (norm === 0) continue;
+      const [ux, uy] = [dx / norm, dy / norm];
+      const length = Math.min(WIND_SPACING * 0.75, Math.max(10, 8 + wind.knots * 0.9));
+      const tail: Point = [x - (ux * length) / 2, y - (uy * length) / 2];
+      const tip: Point = [x + (ux * length) / 2, y + (uy * length) / 2];
+      const head = Math.min(6, length * 0.35);
+      const side = (sign: number): Point => {
+        const a = Math.atan2(uy, ux) + Math.PI + sign * 0.5;
+        return [tip[0] + head * Math.cos(a), tip[1] + head * Math.sin(a)];
+      };
+      const [l, r] = [side(1), side(-1)];
+      arrows.push(
+        el("path", {
+          class: "mp-wind",
+          "data-speed": Math.round(wind.knots),
+          fill: "none",
+          d:
+            `M${round(tail[0])},${round(tail[1])}L${round(tip[0])},${round(tip[1])}` +
+            `M${round(l[0])},${round(l[1])}L${round(tip[0])},${round(tip[1])}L${round(r[0])},${round(r[1])}`,
+        }),
+      );
+    }
+  }
+  return arrows;
+}
+
 /**
  * What the pressure option draws, split by the layer it belongs in.
  *
@@ -537,8 +684,8 @@ export interface WeatherLayer {
 /**
  * Build the weather layer.
  *
- * Shading first, then the isobars on it, then the values written on them, so a
- * value's halo breaks every line it sits across rather than only its own.
+ * Shading first, then the isobars on it, then the wind, then the values
+ * written on them, so a value's halo breaks every line and arrow it sits across.
  */
 export function weatherLayer(
   pressure: Pressure,
@@ -667,5 +814,6 @@ export function weatherLayer(
   });
 
   const bands = pressure.shading === true ? shading(grid, levels, low, high) : [];
-  return { chart: [...bands, ...lines, ...values], marks };
+  const wind = pressure.wind === true ? windArrows(centres, project, invert, size) : [];
+  return { chart: [...bands, ...lines, ...wind, ...values], marks };
 }

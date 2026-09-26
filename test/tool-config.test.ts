@@ -71,6 +71,7 @@ const CHOSEN: Config = {
   ],
   isobarInterval: 2,
   shading: true,
+  wind: true,
 };
 
 const round = (search: string): Config => decode(search, VOCABULARY);
@@ -104,6 +105,8 @@ describe("pressure centres in the URL", () => {
     expect(toOptions({ ...DEFAULTS, centres, shading: true }).pressure?.shading).toBe(true);
     expect(toOptions({ ...DEFAULTS, centres }).pressure).not.toHaveProperty("shading");
     expect(decode("shading=1", VOCABULARY).shading).toBe(true);
+    expect(toOptions({ ...DEFAULTS, centres, wind: true }).pressure?.wind).toBe(true);
+    expect(toOptions({ ...DEFAULTS, centres }).pressure).not.toHaveProperty("wind");
   });
 });
 

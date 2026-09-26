@@ -106,6 +106,8 @@ export interface Config extends Marks {
   isobarInterval: number;
   /** Tint the ground between isobars toward the low's and the high's colour. */
   shading: boolean;
+  /** Draw the wind the isobars imply, as arrows. */
+  wind: boolean;
 }
 
 export const DEFAULTS: Config = {
@@ -137,6 +139,7 @@ export const DEFAULTS: Config = {
   credit: "Natural Earth",
   isobarInterval: 4,
   shading: false,
+  wind: false,
 };
 
 const COVERS: readonly Cover[] = ["desert", "mountain", "glacier"];
@@ -163,6 +166,7 @@ const FLAGS = [
   "scaleBar",
   "disputed",
   "shading",
+  "wind",
 ] as const;
 
 /**
@@ -372,6 +376,7 @@ export function toOptions(config: Config): MapOptions {
             centres: config.centres,
             interval: config.isobarInterval,
             ...(config.shading ? { shading: true } : {}),
+            ...(config.wind ? { wind: true } : {}),
           },
         }
       : {}),

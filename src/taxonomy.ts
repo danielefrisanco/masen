@@ -252,6 +252,8 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   // The tint between two isobars, in `.mp-weather` under the lines. Classed
   // apart from the isobar because it is an area and the isobar is an edge.
   "mp-pressure-band",
+  // A wind arrow, in `.mp-weather` over the isobars, carrying `data-speed`.
+  "mp-wind",
 ]);
 
 export function layer(name: LayerName): LayerSpec {

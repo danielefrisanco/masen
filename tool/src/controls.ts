@@ -668,6 +668,12 @@ function weatherGroup(
       (on) => onChange({ shading: on }),
       "Deeper toward each low and high. Near normal pressure stays bare",
     ),
+    checkbox(
+      "Wind arrows",
+      config.wind,
+      (on) => onChange({ wind: on }),
+      "Along the isobars, anticlockwise round a low in the north. Longer where the lines crowd",
+    ),
     list,
     button("Load an example over Europe", () =>
       onChange({ region: "europe", centres: EXAMPLE, shading: true }),

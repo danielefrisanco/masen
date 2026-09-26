@@ -366,6 +366,15 @@ export interface Pressure {
    * @default false
    */
   readonly shading?: boolean;
+  /**
+   * Draw the surface wind the field implies, as arrows on a grid: along the
+   * isobars, anticlockwise round a low north of the equator and clockwise
+   * south of it, turned a little toward the low as friction does, and longer
+   * where the lines crowd. Calm ground gets no arrow. Each carries its speed in
+   * knots as `data-speed`.
+   * @default false
+   */
+  readonly wind?: boolean;
 }
 
 /**

@@ -19,7 +19,7 @@ signature — themes in the wild depend on those names.
 ## [0.20.0] — 2026-09-26
 
 **Phase 17 begins: the map can draw a pressure chart from centres you place,
-and tint the ground between its isobars.**
+tint the ground between its isobars, and draw the wind they imply.**
 
 A minor, and a breaking one by the taxonomy's own rule: **a thirteenth layer is
 inserted mid-stack**, between `.mp-roads` and `.mp-places`. That is the one
@@ -57,10 +57,22 @@ stretching so a 3 hPa tropical low and a 50 hPa typhoon are both graded. Only a
 band with 1013 inside it is left bare.
 On a globe the bands stop on the limb itself. Off by default.
 
+### Added — `wind`
+
+Arrows for the surface wind the chart implies, on a grid, with no data behind
+them but the centres: along the isobars, anticlockwise round a low in the north
+and clockwise in the south, turned 20° toward the low for friction, and scaled
+by speed. The speed is the gradient wind, from how tightly the isobars crowd
+*and* how sharply they curve — the geostrophic formula alone gave a 962 hPa
+typhoon four hundred knots — and it is held at its 15° value toward the
+equator, where a floor at 5° gave a monsoon breeze 82 knots. `data-speed` is
+in knots, which is what barbs will want.
+
 ### Added — to the taxonomy
 
 - Layer `.mp-weather`, feature `.mp-isobar` (`data-value`) and
   `.mp-pressure-band` (`data-kind`, `data-depth`, `data-from`, `data-to`).
+- `.mp-wind` in `.mp-weather` (`data-speed`, knots).
 - `.mp-pressure` and `.mp-pressure-mark` in `.mp-annotations`: the H or L and
   the value under it.
 - Tokens `--pressure-low` and `--pressure-high`, set by every theme and
@@ -72,8 +84,9 @@ On a globe the bands stop on the limb itself. Off by default.
 
 A Weather tab: a click places a low or a high; each centre's position,
 pressure (to a tenth), size, stretch and angle can be edited, and whether it
-prints its letter; and "Colour the field" switches the shading. All of it rides
-in the link (`wx=`, `isobarInterval=`, `shading=`).
+prints its letter; "Colour the field" switches the shading and "Wind arrows"
+the wind. All of it rides
+in the link (`wx=`, `isobarInterval=`, `shading=`, `wind=`).
 
 ## [0.19.0] — 2026-09-18
 

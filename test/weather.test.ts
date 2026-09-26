@@ -285,6 +285,107 @@ describe("isobar values", () => {
   });
 });
 
+interface Arrow {
+  speed: number;
+  tail: [number, number];
+  tip: [number, number];
+}
+
+function arrows(svg: string): Arrow[] {
+  return [
+    ...svg.matchAll(/<path class="mp-wind" data-speed="(\d+)" fill="none" d="M(-?[\d.]+),(-?[\d.]+)L(-?[\d.]+),(-?[\d.]+)/g),
+  ].map((m) => ({
+    speed: Number(m[1]),
+    tail: [Number(m[2]), Number(m[3])],
+    tip: [Number(m[4]), Number(m[5])],
+  }));
+}
+
+/**
+ * Which way an arrow turns about a point, on the page: negative is
+ * anticlockwise, since y runs down the page and north is up it.
+ */
+function turn(arrow: Arrow, [cx, cy]: readonly [number, number]): number {
+  const mx = (arrow.tail[0] + arrow.tip[0]) / 2 - cx;
+  const my = (arrow.tail[1] + arrow.tip[1]) / 2 - cy;
+  const dx = arrow.tip[0] - arrow.tail[0];
+  const dy = arrow.tip[1] - arrow.tail[1];
+  return mx * dy - my * dx;
+}
+
+const masenPlain = (await masen({ region: "europe", detail: "110m", size: [800, 700], pressure: LOW })).svg;
+
+describe("wind", async () => {
+  const north = await masen({
+    region: "europe",
+    detail: "110m",
+    size: [800, 700],
+    pressure: { centres: [{ at: [0, 50], value: 980, radius: 900 }], wind: true },
+  });
+  const south = await masen({
+    region: ["AU"],
+    detail: "110m",
+    size: [800, 700],
+    pressure: { centres: [{ at: [134, -26], value: 985, radius: 900 }], wind: true },
+  });
+  const near = (map: typeof north, at: [number, number]): { arrows: Arrow[]; centre: [number, number] } => {
+    const centre = map.project(at);
+    if (centre === null) throw new Error("the low is on the map");
+    const list = arrows(map.svg).filter((arrow) => Math.hypot(arrow.tail[0] - centre[0], arrow.tail[1] - centre[1]) < 200);
+    return { arrows: list, centre: [centre[0], centre[1]] };
+  };
+
+  it("is off unless asked for", () => {
+    expect(arrows(masenPlain)).toEqual([]);
+  });
+
+  it("goes anticlockwise round a low in the north, and clockwise in the south", () => {
+    const a = near(north, [0, 50]);
+    const b = near(south, [134, -26]);
+    expect(a.arrows.length).toBeGreaterThan(8);
+    expect(b.arrows.length).toBeGreaterThan(8);
+    for (const arrow of a.arrows) expect(turn(arrow, a.centre)).toBeLessThan(0);
+    for (const arrow of b.arrows) expect(turn(arrow, b.centre)).toBeGreaterThan(0);
+  });
+
+  it("leans in toward the low, as friction turns it", () => {
+    const { arrows: list, centre } = near(north, [0, 50]);
+    const inward = list.filter((arrow) => {
+      const out = [arrow.tail[0] - centre[0], arrow.tail[1] - centre[1]];
+      const along = [arrow.tip[0] - arrow.tail[0], arrow.tip[1] - arrow.tail[1]];
+      return (out[0] as number) * (along[0] as number) + (out[1] as number) * (along[1] as number) < 0;
+    });
+    expect(inward.length).toBe(list.length);
+  });
+
+  it("blows a typhoon at the speed a typhoon has, not the four hundred knots straight isobars would give", async () => {
+    const map = await masen({
+      region: { bbox: [100, 5, 130, 28] },
+      detail: "110m",
+      size: [800, 700],
+      pressure: { centres: [{ at: [115, 16.5], value: 962, radius: 420 }], wind: true },
+    });
+    const fastest = Math.max(...arrows(map.svg).map((arrow) => arrow.speed));
+    expect(fastest).toBeGreaterThan(40);
+    expect(fastest).toBeLessThan(120);
+  });
+
+  it("leaves calm ground without an arrow, and the letters clear", () => {
+    const all = arrows(north.svg);
+    const centre = north.project([0, 50]) as [number, number];
+    // Far from the only centre the field is flat, and flat is calm.
+    const far = all.filter((arrow) => {
+      const ground = north.invert(arrow.tail);
+      return ground !== null && Math.hypot(ground[0], ground[1] - 50) > 30;
+    });
+    expect(far).toEqual([]);
+    for (const arrow of all) {
+      const mid = [(arrow.tail[0] + arrow.tip[0]) / 2, (arrow.tail[1] + arrow.tip[1]) / 2];
+      expect(Math.hypot((mid[0] as number) - centre[0], (mid[1] as number) + -centre[1] - 10)).toBeGreaterThan(25);
+    }
+  });
+});
+
 describe("marks", () => {
   it("print the chart's pressure under the letter, which two close lows deepen", async () => {
     // Alone, each would read 1000. Together each sits in the other's pull, and

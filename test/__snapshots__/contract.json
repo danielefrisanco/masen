@@ -115,7 +115,8 @@
     "mp-scale-bar",
     "mp-scale-label",
     "mp-symbol",
-    "mp-watermark"
+    "mp-watermark",
+    "mp-wind"
   ],
   "tokens": [
     "--bg (live)",
