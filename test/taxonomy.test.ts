@@ -73,6 +73,7 @@ describe("layer stack", () => {
       "mp-hydro",
       "mp-borders",
       "mp-roads",
+      "mp-weather",
       "mp-places",
       "mp-labels",
       "mp-annotations",

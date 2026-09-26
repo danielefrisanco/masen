@@ -5,7 +5,7 @@
  * this project makes. These names are versioned like a function signature and
  * change only on a major. The order of `LAYERS` is the paint order, and it is
  * part of that promise: a layer inserted between two existing ones would
- * silently restack every theme in the wild, so all twelve slots are emitted from
+ * silently restack every theme in the wild, so every slot is emitted from
  * v1 onward, empty where the feature does not exist yet.
  *
  * The graticule and land cover were both reserved before anyone asked for
@@ -37,6 +37,7 @@ export type LayerName =
   | "hydro"
   | "borders"
   | "roads"
+  | "weather"
   | "places"
   | "labels"
   | "annotations"
@@ -117,6 +118,13 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     feature: "mp-road",
     status: "reserved",
     carries: "Motorway, trunk and primary routes",
+  },
+  {
+    name: "weather",
+    className: "mp-weather",
+    feature: "mp-isobar",
+    status: "live",
+    carries: "Isobars and pressure centres — over the ground, under the names",
   },
   {
     name: "places",
@@ -236,6 +244,11 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   "mp-compass",
   "mp-compass-needle",
   "mp-compass-label",
+  // A high or a low: a group holding the letter and the value under it. The
+  // letter is a class of its own because it is not a name — it is set larger,
+  // and coloured by `data-kind` so a low and a high read apart at a glance.
+  "mp-pressure",
+  "mp-pressure-mark",
 ]);
 
 export function layer(name: LayerName): LayerSpec {

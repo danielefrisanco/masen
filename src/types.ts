@@ -290,6 +290,64 @@ export interface Route {
 }
 
 /**
+ * A high or a low, placed by the caller.
+ *
+ * A point and a pressure, which is how a forecaster marks one: the H or the L
+ * goes at a point, and the shape of the system is whatever the isobars around
+ * it turn out to be. The library builds a smooth field from every centre on the
+ * map and contours it, so two centres near each other bend into a trough or a
+ * ridge without anyone drawing one.
+ */
+export interface PressureCentre {
+  /** Where the centre is, in `[lon, lat]`. */
+  readonly at: Position;
+  /** The pressure at the centre, in hectopascals. Below 1013 is a low. */
+  readonly value: number;
+  /**
+   * How far the system reaches, in kilometres — the distance at which its pull
+   * on the surrounding pressure has fallen to about a third.
+   *
+   * @default 1200
+   */
+  readonly radius?: number;
+  /**
+   * How much longer the system is along `angle` than across it. `1` is round;
+   * `2` is a low twice as long as it is wide.
+   *
+   * @default 1
+   */
+  readonly stretch?: number;
+  /** The direction of the long axis, in degrees clockwise from north. @default 0 */
+  readonly angle?: number;
+  /** The caller's handle, written out as `data-id`. */
+  readonly id?: string;
+}
+
+/**
+ * A surface pressure chart: centres in, isobars out.
+ *
+ * ```ts
+ * pressure: {
+ *   centres: [
+ *     { at: [-20, 58], value: 978 },
+ *     { at: [-25, 38], value: 1032, radius: 1800 },
+ *   ],
+ * }
+ * ```
+ *
+ * Nothing is downloaded and nothing is measured: the field is built from the
+ * centres alone, so the same centres always draw the same chart. It is an
+ * illustration of a weather situation, not a forecast.
+ */
+export interface Pressure {
+  readonly centres: readonly PressureCentre[];
+  /** Hectopascals between isobars. @default 4 */
+  readonly interval?: number;
+  /** Write the value on each isobar long enough to carry one. @default true */
+  readonly labels?: boolean;
+}
+
+/**
  * One of nine positions on the canvas.
  *
  * What `at` is to an annotation, this is to the furniture — and the difference
@@ -677,6 +735,11 @@ export interface MapOptions {
    * arrows, because a route is context for the marks on it. See {@link Route}.
    */
   readonly routes?: readonly Route[];
+  /**
+   * Isobars and pressure centres, drawn into `.mp-weather` — over the ground
+   * and under the names. See {@link Pressure}.
+   */
+  readonly pressure?: Pressure;
   /**
    * A line of text on the canvas — a source, a byline, a date.
    *

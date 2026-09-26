@@ -54,6 +54,12 @@
       "status": "reserved"
     },
     {
+      "name": "weather",
+      "className": "mp-weather",
+      "feature": "mp-isobar",
+      "status": "live"
+    },
+    {
       "name": "places",
       "className": "mp-places",
       "feature": "mp-place",
@@ -96,6 +102,8 @@
     "mp-legend",
     "mp-pin",
     "mp-pin-mark",
+    "mp-pressure",
+    "mp-pressure-mark",
     "mp-prism",
     "mp-prism-side",
     "mp-prism-top",

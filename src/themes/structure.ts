@@ -222,6 +222,42 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
 }
 .mp .mp-route-stop[data-kind="minor"] { stroke-width: 1.6; }
 
+/*
+ * The weather layer: isobars, the values on them, and the H and L marks.
+ *
+ * No tokens of its own yet. The lines take --ink-muted because an isobar is
+ * context the reader looks through, like the graticule, but it has to survive
+ * a choropleth under it, which --graticule does not. A low is --anno and a high
+ * is --water: warm and cool, the way every broadcast chart has them, and both
+ * already set by every preset and palette. Widths and the letter size are
+ * literals, like the arrow's, until somebody asks to change them.
+ */
+.mp .mp-isobar {
+  fill: none;
+  stroke: var(--ink-muted);
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+}
+.mp .mp-label[data-kind="isobar"] {
+  fill: var(--ink-muted);
+  font-size: var(--place-label-size);
+}
+.mp .mp-pressure-mark {
+  font-family: var(--font);
+  font-size: 30;
+  font-weight: 700;
+  stroke: var(--label-halo);
+  stroke-width: var(--label-halo-width);
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+.mp .mp-pressure-mark[data-kind="low"] { fill: var(--anno); }
+.mp .mp-pressure-mark[data-kind="high"] { fill: var(--water); }
+.mp .mp-label[data-kind="pressure"] {
+  font-size: var(--place-label-size);
+  font-weight: 700;
+}
+
 .mp .mp-label.is-highlighted { font-weight: 700; }
 
 .mp .mp-label[data-fit="0"] { display: none; }
