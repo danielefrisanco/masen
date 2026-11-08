@@ -93,6 +93,38 @@ function rowAndColumn(anchor: Anchor): [row: string, column: string] {
  * the map, which is not something the map is *of* — announcing it before the
  * geography would put the byline ahead of the subject.
  */
+const CREDIT_SLACK = 1.35;
+
+/**
+ * The room a credit takes, from its anchor and an estimated width, so the
+ * weather can keep its arrows and values off it: the furniture is drawn last
+ * and on top, but a line of small print with arrows through it is not read.
+ */
+export function creditBox(
+  credit: Credit,
+  size: Size,
+  inset: number,
+  fontSize: number,
+  width: number,
+): [number, number, number, number] | null {
+  if (credit.text === "") return null;
+  const anchor = credit.anchor ?? "bottom-right";
+  if (!isAnchor(anchor)) return null;
+  const at = place(size, anchor, inset);
+  // Wide on purpose. The estimate errs low so a name is never hidden for a
+  // width it did not have, but here erring high only costs an arrow, and a
+  // wide fallback face (DejaVu Sans, at about 0.74 em) set the credit a
+  // quarter longer than estimated, with arrows through its first word.
+  width *= CREDIT_SLACK;
+  const left = at.textAnchor === "start" ? at.x : at.textAnchor === "end" ? at.x - width : at.x - width / 2;
+  const top =
+    at.baseline === "hanging" ? at.y : at.baseline === "auto" ? at.y - fontSize : at.y - fontSize / 2;
+  // The width is an estimate from an average advance, so a margin keeps an
+  // arrow that ends a hair short of it from touching the first letter.
+  const margin = fontSize * 0.4;
+  return [left - margin, top - margin, left + width + margin, top + fontSize + margin];
+}
+
 export function creditLayer(credit: Credit, size: Size, inset: number): SvgNode[] {
   if (credit.text === "") return [];
   const anchor = credit.anchor ?? "bottom-right";

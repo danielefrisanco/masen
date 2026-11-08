@@ -405,8 +405,8 @@ const STEP = 1.4;
  * Country names step aside from settlement names; settlement names never move.
  *
  * This is not the collision engine v1 does not have. It resolves exactly one
- * conflict, between two things this function can see at once, with one move up
- * and one move down and no search — but that one conflict is the common case
+ * conflict, between two things this function can see at once, with a few
+ * steps up and down and no wider search — but that one conflict is the common case
  * rather than an edge case, because a capital usually sits near the middle of
  * its country and that is precisely where the country's own name goes. Left
  * alone it put "Madrid" through "Spain", "Bern" through "Switzerland" and
@@ -428,8 +428,13 @@ function stepAside(
   if (clear(y)) return y;
   // A step that leaves the country is not a step aside, it is a mislabelling:
   // moving "Belgium" clear of "Brussels" by putting it in France helps nobody.
-  for (const offset of [-STEP * size, STEP * size]) {
-    if (clear(y + offset) && onCountry([x, y + offset])) return y + offset;
+  // Up to three steps each way, nearest first: one clears a city name, but an
+  // H or an L with its value under it is four lines tall, and one step left
+  // "Thailand" across the L of a low on Bangkok.
+  for (const steps of [1, 2, 3]) {
+    for (const offset of [-steps * STEP * size, steps * STEP * size]) {
+      if (clear(y + offset) && onCountry([x, y + offset])) return y + offset;
+    }
   }
   return y;
 }
@@ -476,8 +481,12 @@ export function labelLayer(
   places: readonly Placed[],
   seas: readonly Placed[] = [],
   grid: readonly Placed[] = [],
+  // Marks drawn above the names that no name may sit under — the H and L of a
+  // pressure chart. A name that could not step clear of one is hidden rather
+  // than shown half covered: "Croati H" is neither the name nor the mark.
+  blocked: readonly LabelBox[] = [],
 ): SvgNode[] {
-  const taken: LabelBox[] = [];
+  const taken: LabelBox[] = [...blocked];
   const hidden = new Set<SvgElement>();
 
   // Grid numbers are judged first because they are the only labels that cannot

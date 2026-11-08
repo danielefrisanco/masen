@@ -1,4 +1,5 @@
 import { assertPosition, resolve } from "./annotations.js";
+import type { LabelBox } from "./labels.js";
 import { el, text, type SvgNode } from "./svg.js";
 import type { Point, Position, Pressure, PressureCentre, Size } from "./types.js";
 
@@ -619,6 +620,7 @@ function windArrows(
   project: (position: Position) => Point | null,
   invert: (point: Point) => Position | null,
   [width, height]: Size,
+  avoid: readonly LabelBox[],
 ): SvgNode[] {
   const letters: Point[] = [];
   for (const centre of centres) {
@@ -652,6 +654,15 @@ function windArrows(
         return [tip[0] + head * Math.cos(a), tip[1] + head * Math.sin(a)];
       };
       const [l, r] = [side(1), side(-1)];
+      // An arrow drawn through a name strikes it out, and the names were
+      // there first: the grid has a gap there instead, as round the letters.
+      const box: LabelBox = [
+        Math.min(tail[0], tip[0]),
+        Math.min(tail[1], tip[1]),
+        Math.max(tail[0], tip[0]),
+        Math.max(tail[1], tip[1]),
+      ];
+      if (avoid.some((other) => overlaps(box, other))) continue;
       arrows.push(
         el("path", {
           class: "mp-wind",
@@ -682,6 +693,46 @@ export interface WeatherLayer {
 }
 
 /**
+ * The room an H or an L takes with its value under it: a 30-unit letter on the
+ * point, and a place-sized number 22 below.
+ */
+const MARK_BOX = { half: 14, above: 15, below: 28 } as const;
+
+/**
+ * The room each H and L takes, for the country names to step around.
+ *
+ * Asked for before the names are placed and the rest of the chart after, since
+ * the two move differently: a letter is pinned to its centre and a name can
+ * step aside from it, while a value can walk along its line and so goes last,
+ * around both.
+ */
+export function markBoxes(
+  pressure: Pressure,
+  project: (position: Position) => Point | null,
+): LabelBox[] {
+  const boxes: LabelBox[] = [];
+  for (const centre of pressure.centres) {
+    if (centre.mark === false) continue;
+    const point = project(centre.at);
+    if (point === null) continue;
+    const [x, y] = point;
+    boxes.push([x - MARK_BOX.half, y - MARK_BOX.above, x + MARK_BOX.half, y + MARK_BOX.below]);
+  }
+  return boxes;
+}
+
+function overlaps(a: LabelBox, b: LabelBox): boolean {
+  return a[0] <= b[2] && a[2] >= b[0] && a[1] <= b[3] && a[3] >= b[1];
+}
+
+/** How far a circle at `x, y` stands from a box, zero when inside it. */
+function gapTo(box: LabelBox, x: number, y: number): number {
+  const dx = Math.max(box[0] - x, 0, x - box[2]);
+  const dy = Math.max(box[1] - y, 0, y - box[3]);
+  return Math.hypot(dx, dy);
+}
+
+/**
  * Build the weather layer.
  *
  * Shading first, then the isobars on it, then the wind, then the values
@@ -692,6 +743,9 @@ export function weatherLayer(
   project: (position: Position) => Point | null,
   invert: (point: Point) => Position | null,
   size: Size,
+  // The names already placed, and the settlement dots: a value they cover is
+  // not read, and they are settled by now, so the value goes along its line.
+  avoid: readonly LabelBox[] = [],
 ): WeatherLayer {
   const centres = pressure.centres;
   centres.forEach(assertCentre);
@@ -726,7 +780,8 @@ export function weatherLayer(
   }
   const room = (x: number, y: number, r: number): boolean =>
     x >= r && y >= r && x <= size[0] - r && y <= size[1] - r &&
-    taken.every((other) => Math.hypot(other.x - x, other.y - y) >= other.r + r);
+    taken.every((other) => Math.hypot(other.x - x, other.y - y) >= other.r + r) &&
+    avoid.every((box) => gapTo(box, x, y) >= r);
 
   const lines: SvgNode[] = [];
   const values: SvgNode[] = [];
@@ -814,6 +869,6 @@ export function weatherLayer(
   });
 
   const bands = pressure.shading === true ? shading(grid, levels, low, high) : [];
-  const wind = pressure.wind === true ? windArrows(centres, project, invert, size) : [];
+  const wind = pressure.wind === true ? windArrows(centres, project, invert, size, avoid) : [];
   return { chart: [...bands, ...lines, ...wind, ...values], marks };
 }
