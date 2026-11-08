@@ -429,3 +429,126 @@ describe("pressure validation", () => {
     ).rejects.toThrow(/\[lon, lat\]/);
   });
 });
+
+/**
+ * The chart shares the ground with the names, and each gives way the way it
+ * can: a settlement name never moves, a country name steps aside from a letter,
+ * and a value walks along its line, so it goes last, around all of them.
+ */
+describe("names and the chart", () => {
+  type Box = [number, number, number, number];
+  const SIZE = 11;
+  const ADVANCE = 0.58;
+  const overlap = (a: Box, b: Box): boolean => a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1];
+
+  function shown(svg: string, kind: string): { name: string; box: Box; iso?: string }[] {
+    return [
+      ...svg.matchAll(
+        new RegExp(`<text class="mp-label[^"]*" data-kind="${kind}"([^>]*)>([\\s\\S]*?)</text>`, "g"),
+      ),
+    ]
+      .filter((m) => !(m[1] as string).includes('data-fit="0"'))
+      .map((m) => {
+        const attrs = m[1] as string;
+        const x = Number(/ x="([\d.-]+)"/.exec(attrs)?.[1]);
+        const y = Number(/ y="([\d.-]+)"/.exec(attrs)?.[1]);
+        const name = (m[2] as string).replace(/<[^>]+>/g, "");
+        const width = name.length * SIZE * ADVANCE;
+        const left = attrs.includes('text-anchor="start"') ? x : x - width / 2;
+        return {
+          name,
+          iso: /data-iso="([A-Z-]+)"/.exec(attrs)?.[1],
+          box: [left, y - SIZE / 2, left + width, y + SIZE / 2] as Box,
+        };
+      });
+  }
+
+  function letters(svg: string): Box[] {
+    return [...svg.matchAll(/<text class="mp-pressure-mark" data-kind="\w+" x="([\d.-]+)" y="([\d.-]+)"/g)].map(
+      (m) => {
+        const [x, y] = [Number(m[1]), Number(m[2])];
+        return [x - 14, y - 15, x + 14, y + 28] as Box;
+      },
+    );
+  }
+
+  const INDOCHINA = {
+    region: ["MM", "TH", "LA", "KH", "VN"],
+    detail: "110m" as const,
+    size: [800, 700] as [number, number],
+    theme: "minimal" as const,
+    places: true,
+  };
+
+  it("steps a country name clear of the letter that lands on it", async () => {
+    const plain = await masen(INDOCHINA);
+    const name = shown(plain.svg, "country").find((label) => label.iso === "TH");
+    expect(name).toBeDefined();
+    const [x0, y0, x1, y1] = name!.box;
+    const at = plain.invert([(x0 + x1) / 2, (y0 + y1) / 2]);
+    expect(at).not.toBeNull();
+
+    const map = await masen({ ...INDOCHINA, pressure: { centres: [{ at: at!, value: 1000, radius: 300 }] } });
+    const moved = shown(map.svg, "country").find((label) => label.iso === "TH");
+    expect(moved).toBeDefined();
+    for (const letter of letters(map.svg)) expect(overlap(moved!.box, letter)).toBe(false);
+  });
+
+  it("hides a name that cannot step clear inside its own country", async () => {
+    // An H on Zagreb: Croatia is too thin to step a name three lines away and
+    // stay in Croatia, and "Croati H" is neither the name nor the mark.
+    const map = await masen({
+      region: "europe",
+      detail: "110m",
+      size: [800, 640],
+      pressure: { centres: [{ at: [16.0, 45.8], value: 1034, radius: 1100 }] },
+    });
+    for (const label of shown(map.svg, "country")) {
+      for (const letter of letters(map.svg)) expect(overlap(label.box, letter), label.name).toBe(false);
+    }
+  });
+
+  it("writes no isobar value on a settlement name, and draws no arrow through a name or the credit", async () => {
+    const map = await masen({
+      ...INDOCHINA,
+      pressure: {
+        centres: [
+          { at: [99.5, 16], value: 1004, radius: 300 },
+          { at: [108, 13.2], value: 1018, radius: 300 },
+        ],
+        interval: 2,
+        wind: true,
+      },
+      credit: "Isobars and wind derived from two centres · Boundaries: Natural Earth",
+    });
+    const places = shown(map.svg, "place");
+    const names = [...places, ...shown(map.svg, "country")];
+    expect(places.some((place) => place.name === "Bangkok")).toBe(true);
+
+    const values = [
+      ...map.svg.matchAll(/<text class="mp-label" data-kind="isobar" x="([\d.]+)" y="([\d.]+)"[^>]*>(\d+)</g),
+    ];
+    expect(values.length).toBeGreaterThan(2);
+    for (const [, x, y, value] of values) {
+      const r = (value as string).length * 3.4;
+      const box: Box = [Number(x) - r, Number(y) - r, Number(x) + r, Number(y) + r];
+      for (const place of places) expect(overlap(box, place.box), `${value} on ${place.name}`).toBe(false);
+    }
+
+    const credit = /<text class="mp-credit"[^>]* x="([\d.]+)" y="([\d.]+)"/.exec(map.svg);
+    expect(credit).not.toBeNull();
+    const creditBox: Box = [Number(credit![1]) - 380, Number(credit![2]) - SIZE, Number(credit![1]), Number(credit![2])];
+    const drawn = arrows(map.svg);
+    expect(drawn.length).toBeGreaterThan(20);
+    for (const arrow of drawn) {
+      const box: Box = [
+        Math.min(arrow.tail[0], arrow.tip[0]),
+        Math.min(arrow.tail[1], arrow.tip[1]),
+        Math.max(arrow.tail[0], arrow.tip[0]),
+        Math.max(arrow.tail[1], arrow.tip[1]),
+      ];
+      for (const name of names) expect(overlap(box, name.box), `arrow through ${name.name}`).toBe(false);
+      expect(overlap(box, creditBox), "arrow through the credit").toBe(false);
+    }
+  });
+});

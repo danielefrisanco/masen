@@ -1,8 +1,8 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { arrowLayer, calloutLayer, pinLayer, routeLayer } from "./annotations.js";
-import { weatherLayer } from "./weather.js";
-import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
+import { markBoxes, weatherLayer } from "./weather.js";
+import { compassLayer, creditBox, creditLayer, scaleLayer } from "./furniture.js";
 import { measureDistortion, type Distortion } from "./distortion.js";
 import { omissionsOf, type Omissions } from "./omissions.js";
 import { watermarkLayer } from "./watermark.js";
@@ -15,6 +15,7 @@ import {
   labelLayer,
   labelSizes,
   placeLabel,
+  textWidth,
   seaLabels,
   type LabelBox,
   type Placed,
@@ -1113,6 +1114,25 @@ export async function masen(options: MapOptions): Promise<MapResult> {
    * shape it belongs to, and everything carries a rank so a theme can thin the
    * rest away in one rule.
    */
+  // The H and L letters are pinned to their centres, so the country names
+  // step around them; the rest of the weather is built after the names.
+  const lettered =
+    options.pressure !== undefined && wants("weather") && wants("annotations")
+      ? markBoxes(options.pressure, projectPoint)
+      : [];
+  const settled: LabelBox[] = [...placeBoxes];
+  if (options.credit !== undefined && wants("furniture")) {
+    const credit = typeof options.credit === "string" ? { text: options.credit } : options.credit;
+    const box = creditBox(
+      credit,
+      [width, height],
+      padding,
+      sizes.place,
+      textWidth(credit.text, sizes.place, sizes.advance),
+    );
+    if (box !== null) settled.push(box);
+  }
+
   if (wants("labels")) {
     const names = countryLabels(
       frame.countries.map((country) => ({
@@ -1129,7 +1149,7 @@ export async function masen(options: MapOptions): Promise<MapResult> {
       [width, height],
       sizes.country,
       sizes.advance,
-      placeBoxes,
+      [...placeBoxes, ...lettered],
     );
     /**
      * Sea names, judged after everything on land.
@@ -1162,7 +1182,15 @@ export async function masen(options: MapOptions): Promise<MapResult> {
             sizes.advance,
           );
 
-    const all = labelLayer(names, placeNames, seas, gridLabels(gridMarks, sizes.place, sizes.advance));
+    // A name too big for its country is hidden later and reserves nothing.
+    settled.push(...names.filter((name) => name.fits).map((name) => name.box));
+    const all = labelLayer(
+      names,
+      placeNames,
+      seas,
+      gridLabels(gridMarks, sizes.place, sizes.advance),
+      lettered,
+    );
     if (all.length > 0) content.set("labels", all);
   }
 
@@ -1216,6 +1244,18 @@ export async function masen(options: MapOptions): Promise<MapResult> {
   const callouts = options.callouts ?? [];
   const arrows = options.arrows ?? [];
   const routes = options.routes ?? [];
+  // Validated whether or not the layer is drawn, for the pins' reason. Its H
+  // and L marks ride in the annotations, above the names; switching weather
+  // off takes them too, since a centre with no isobars is a letter on a map.
+  //
+  // Built after the names, because an isobar's value is the one thing on the
+  // map that can move along its line to clear them: left before, "Bangkok"
+  // covered the 1010 on its own ring.
+  const weather =
+    options.pressure === undefined
+      ? { chart: [], marks: [] }
+      : weatherLayer(options.pressure, projectPoint, invertPoint, [width, height], settled);
+  const charted = wants("weather");
   // Built even when the layer is switched off, so a coordinate that cannot be
   // one is still rejected rather than quietly ignored: turning a layer off
   // controls what is drawn, never whether the options were valid.
@@ -1247,14 +1287,6 @@ export async function masen(options: MapOptions): Promise<MapResult> {
     routes.length === 0
       ? { nodes: [], labels: [] }
       : routeLayer(routes, projectPoint, invertPoint, [width, height]);
-  // Validated whether or not the layer is drawn, for the pins' reason. Its H
-  // and L marks ride in the annotations, above the names; switching weather
-  // off takes them too, since a centre with no isobars is a letter on a map.
-  const weather =
-    options.pressure === undefined
-      ? { chart: [], marks: [] }
-      : weatherLayer(options.pressure, projectPoint, invertPoint, [width, height]);
-  const charted = wants("weather");
   if (charted && weather.chart.length > 0) content.set("weather", [...weather.chart]);
   const annotated = wants("annotations");
   const drawn = [

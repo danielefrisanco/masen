@@ -16,6 +16,30 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [Unreleased]
+
+**The weather gives way to the names it shares the ground with.**
+
+### Fixed
+
+- **An isobar's value no longer sits on a settlement name.** The chart is built
+  after the names now, and a value walks along its line until it clears them,
+  the country names and the credit — on the Indochina map "Bangkok" covered the
+  1010 on its own ring.
+- **A country name steps clear of an H or an L**, up to three lines up or down
+  and never out of its own country. A name that still cannot clear the letter
+  is hidden (`data-fit="0"`) rather than drawn half under it.
+- **Wind arrows leave a gap round names and the credit**, as they already did
+  round the letters.
+
+### Changed
+
+- **Country names step further aside from city names too** — up to three steps
+  where it was one, so some gallery maps move a name: "United Kingdom" off
+  London, "Argentina" off Santiago, and "Slovenia", previously hidden, is shown.
+- **The gallery's `indochina-pressure` draws the wind**, credited as derived
+  from its isobars rather than measured.
+
 ## [0.20.0] — 2026-09-26
 
 **Phase 17 begins: the map can draw a pressure chart from centres you place,
