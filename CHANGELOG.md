@@ -16,7 +16,7 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
-## [Unreleased]
+## [0.20.1] — 2026-11-08
 
 **The weather gives way to the names it shares the ground with.**
 
