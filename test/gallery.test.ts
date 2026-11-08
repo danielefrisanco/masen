@@ -962,9 +962,12 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
         ],
         interval: 2,
         shading: true,
+        // Derived from the isobars, not taken from Windy, and the credit says
+        // so: no measured wind was compared against it.
+        wind: true,
       },
       title: "Indochina, 26 September 2026: a monsoon low over Thailand",
-      credit: "Isobars after Windy · Boundaries: Natural Earth",
+      credit: "Isobars after Windy, wind derived from them · Boundaries: Natural Earth",
     },
   ],
 ];
