@@ -277,6 +277,9 @@ export function mountFeedback(
           // A field of its own rather than glued onto the message, so it
           // arrives as its own line and stays clickable.
           map: mapLink(),
+          // So a message can be matched to the release that drew the map.
+          // Replaced at build time by Vite; "dev" anywhere it was not.
+          version: typeof __MASEN_VERSION__ === "string" ? __MASEN_VERSION__ : "dev",
           botcheck: current.botcheck.checked,
         }),
       });

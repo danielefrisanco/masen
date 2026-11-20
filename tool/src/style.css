@@ -132,6 +132,24 @@ body {
   text-decoration: underline;
 }
 
+/* The version, beside the name it belongs to. Small and quiet: it is there to
+   be found when someone needs it — a feedback message, a screenshot, "has the
+   deploy caught up" — not to be read on every visit. Tabular figures so a
+   double-digit minor does not shift the tagline. */
+.version {
+  margin-left: -0.45rem;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.version:hover,
+.version:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 .tagline {
   margin: 0;
   color: var(--ink-soft);

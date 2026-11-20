@@ -9,6 +9,16 @@
   <body>
     <header class="bar">
       <h1><a href="https://danielefrisanco.github.io/masen">masen</a></h1>
+      <!-- Filled in at build time from package.json (see `version()` in
+           vite.config.ts), so it is the release that drew the map and cannot
+           drift from it. Links to that version's changelog entry. -->
+      <a
+        class="version"
+        href="%MASEN_CHANGELOG%"
+        target="_blank"
+        rel="noopener"
+        title="What changed in masen-map %MASEN_VERSION%"
+      >v%MASEN_VERSION%</a>
       <p class="tagline">A region and a stylesheet, as a standalone SVG map.</p>
       <nav class="by">
         <!-- All three leave the tool, so all three open beside it: someone in

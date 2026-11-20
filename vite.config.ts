@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -79,10 +80,60 @@ function dataPresent(): Plugin {
   };
 }
 
+/**
+ * The version the page was built from, and where to read what it changed.
+ *
+ * Read from `package.json` at build time rather than typed into the page, so
+ * it cannot drift from the release: the reason to show it at all is to match a
+ * feedback message — or a screenshot — to the `masen-map` that drew the map,
+ * and to see whether the deploy has caught up with npm.
+ *
+ * The link goes to the version's own CHANGELOG entry, not to a GitHub Release:
+ * the site deploys on merge, and the release is created by hand afterwards, so
+ * for a while the release page does not exist and the link would 404. The
+ * changelog entry is on `main` by the time the page is.
+ *
+ * **A version with no changelog entry fails the build**, because the anchor
+ * would point at nothing and nobody would notice until someone clicked it.
+ */
+function version(): Plugin {
+  const pkg = JSON.parse(readFileSync(resolve(here, "package.json"), "utf8")) as { version: string };
+  const changelog = readFileSync(resolve(here, "CHANGELOG.md"), "utf8");
+  const heading = changelog
+    .split("\n")
+    .find((line) => line.startsWith(`## [${pkg.version}]`));
+  // GitHub's heading anchor: lowercased, punctuation dropped, each space a
+  // hyphen — "## [0.20.1] — 2026-11-08" becomes "0201--2026-11-08".
+  const anchor = heading
+    ?.slice(3)
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N} _-]/gu, "")
+    .replace(/ /g, "-");
+  const link = `https://github.com/danielefrisanco/masen/blob/main/CHANGELOG.md#${anchor ?? ""}`;
+
+  return {
+    name: "masen-version",
+    buildStart() {
+      if (heading === undefined) {
+        this.error(
+          `masen: package.json says ${pkg.version} and CHANGELOG.md has no "## [${pkg.version}]" entry — ` +
+            "the tool links its version to that entry.",
+        );
+      }
+    },
+    config: () => ({ define: { __MASEN_VERSION__: JSON.stringify(pkg.version) } }),
+    transformIndexHtml: {
+      order: "pre",
+      handler: (html) =>
+        html.replaceAll("%MASEN_VERSION%", pkg.version).replaceAll("%MASEN_CHANGELOG%", link),
+    },
+  };
+}
+
 export default defineConfig({
   root: resolve(here, "tool"),
   base: BASE,
-  plugins: [dataPresent()],
+  plugins: [dataPresent(), version()],
   build: {
     outDir: resolve(here, "tool/dist"),
     emptyOutDir: true,
