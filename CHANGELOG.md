@@ -16,6 +16,19 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [0.20.2] — 2026-11-20
+
+**The tool says which version drew the map.**
+
+### Added
+
+- **The tool shows its version** beside the name in the header, linked to that
+  version's entry here. It is read from `package.json` at build time, so it
+  cannot drift from the release, and the build fails if this file has no entry
+  for it. The library itself is unchanged.
+- **Feedback sent from the tool carries the version**, so a message can be
+  matched to the release that drew the map.
+
 ## [0.20.1] — 2026-11-08
 
 **The weather gives way to the names it shares the ground with.**

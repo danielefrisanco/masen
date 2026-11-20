@@ -92,4 +92,19 @@ await stat(join(root, ".nojekyll")).catch(() => {
 });
 console.log("  ✓ .nojekyll");
 
+/**
+ * The version in the header, which is only worth showing if it is the right one.
+ *
+ * Checked against package.json rather than trusted to the plugin, and a
+ * placeholder left in the page is its own failure: `v%MASEN_VERSION%` in the
+ * header would be a plugin that silently stopped running.
+ */
+const { version } = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
+assert.ok(!index.includes("%MASEN_"), "masen: index.html still has a %MASEN_…% placeholder in it");
+assert.ok(
+  index.includes(`>v${version}</a>`),
+  `masen: the header does not show v${version}, which is what package.json says`,
+);
+console.log(`  ✓ header shows v${version}`);
+
 console.log("the built site is complete");
